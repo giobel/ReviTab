@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
     <Compile Include="Buttons\CreateSections.cs" />
+    <Compile Include="Buttons\CreateViewSet.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
     <Compile Include="Resources\FormCreateSections.cs">

@@ -232,9 +232,6 @@ namespace ReviTab
             }
         }
 
-        
-        
-
         /// <summary>
         /// Text Box Event handler
         /// </summary>
@@ -242,7 +239,8 @@ namespace ReviTab
         /// <param name="args"></param>
         public void MyTextBoxEnter(object sender, TextBoxEnterPressedEventArgs args)
         {
-                        
+            UIDocument uiDoc = args.Application.ActiveUIDocument;
+
             Autodesk.Revit.UI.TextBox textBox = sender as Autodesk.Revit.UI.TextBox;
 
             string message = textBox.Value.ToString();
@@ -261,11 +259,11 @@ namespace ReviTab
             if (message.StartsWith("*"))
                 caseSwitch = "select";
 
-            if (message.StartsWith("+"))
-                caseSwitch = "create";
-
             if (message.StartsWith("-"))
                 caseSwitch = "delete";
+
+            if (message.StartsWith("+viewset"))
+                caseSwitch = "createViewSet";
 
             switch (caseSwitch)
             {
@@ -282,10 +280,10 @@ namespace ReviTab
                     Helpers.AddTwoIntegers(message);
                     break;
                 case "select":
-                    UIDocument uiDoc = args.Application.ActiveUIDocument;
                     Helpers.selectAllTypes(uiDoc, message);
                     break;
-                case "create":
+                case "createViewSet":
+                    Helpers.CreateViewset(uiDoc, message);
                     break;
                 case "delete":
                     break;

@@ -10,11 +10,33 @@ namespace ReviTab
 {
     class Helpers
     {
+        /// <summary>
+        /// Hello World
+        /// </summary>
+        public static void leannSays()
+        {
+            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "I smash you", "You I know can you guys delete it after finish ready. Thanks" };
+
+            Random rand = new Random();
+
+            int index = rand.Next(leanneDictionary.Length);
+
+            // Begin Code Here
+            TaskDialog.Show("Leanne says", leanneDictionary[index]);
+        }
+
+        /// <summary>
+        /// Hello Christmas
+        /// </summary>
         public static void Christams()
         {
             TaskDialog.Show("ohohoh", "Merry Christmas");
         }
 
+        /// <summary>
+        /// Calc the sum
+        /// </summary>
+        /// <param name="message"></param>
         public static void AddTwoIntegers(string message)
         {
 
@@ -64,7 +86,11 @@ namespace ReviTab
 
         }//close method
 
-
+        /// <summary>
+        /// Get the View Family Type of a Section
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
         private static ViewFamilyType viewFamilyType(Document doc)
         {
             ViewFamilyType vft = new FilteredElementCollector(doc)
@@ -74,7 +100,6 @@ namespace ReviTab
 
             return vft;
         }//close method
-
 
         /// <summary>
         /// Create Section Perpendicular to the selected elements (must have location curves)
@@ -202,20 +227,10 @@ namespace ReviTab
         }
 
         /// <summary>
-        /// Hello World
+        /// Select All Text notes and runs the grammar check.
         /// </summary>
-        public static void leannSays()
-        {
-            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "I smash you", "You I know can you guys delete it after finish ready. Thanks" };
-            
-            Random rand = new Random();
-
-            int index = rand.Next(leanneDictionary.Length);
-
-            // Begin Code Here
-            TaskDialog.Show("Leanne says", leanneDictionary[index]);
-        }
-
+        /// <param name="uidoc"></param>
+        /// <param name="uiapp"></param>
         public static void selectAllText(UIDocument uidoc, UIApplication uiapp)
         {
 
@@ -235,5 +250,68 @@ namespace ReviTab
                 uiapp.PostCommand(commandId);
             }
         }
+
+        public static void CreateViewset(UIDocument uidoc, string message)
+        {
+
+            Document doc = uidoc.Document;
+
+            string sheetNumber = message;
+
+            string[] split = sheetNumber.Split(' ');
+
+            string viewSetName = split[1];
+
+            ViewSet myViewSet = new ViewSet();
+
+            FilteredElementIterator elemItr = new FilteredElementCollector(doc).OfClass(typeof(ViewSheetSet)).GetElementIterator();
+
+            elemItr.Reset();
+
+            Element existingViewSet = null;
+
+            while (elemItr.MoveNext())
+            {
+                if (elemItr.Current.Name == viewSetName)
+                    existingViewSet = elemItr.Current;
+            }
+
+            IEnumerable<ViewSheet> sheetItr = new FilteredElementCollector(doc).OfClass(typeof(ViewSheet)).ToElements().Cast<ViewSheet>();
+
+            foreach (ViewSheet e in sheetItr)
+            {
+                if (sheetNumber.Contains(e.SheetNumber))
+                    myViewSet.Insert(e);
+            }
+
+
+
+            using (Transaction t = new Transaction(doc))
+            {
+                t.Start("Create View Set");
+
+                //If exists, delete existing viewset
+                try
+                {
+                    doc.Delete(existingViewSet.Id);
+                }
+                catch
+                {
+                    //if the view set does not exists, don't crash
+                }
+
+                //Create the new viewset		
+                PrintManager printMan = doc.PrintManager;
+                printMan.PrintRange = PrintRange.Select;
+                ViewSheetSetting viewSetting = printMan.ViewSheetSetting;
+                viewSetting.CurrentViewSheetSet.Views = myViewSet;
+                viewSetting.SaveAs(viewSetName);
+
+                t.Commit();
+
+            }
+            
+        }//close macro
+
     }
 }
