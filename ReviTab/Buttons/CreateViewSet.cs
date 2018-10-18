@@ -24,7 +24,25 @@ namespace ReviTab
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            Helpers.selectAllText(uidoc, uiapp);
+            using (var form = new FormCreateViewSet())
+            {
+                //use ShowDialog to show the form as a modal dialog box. 
+                form.ShowDialog();
+
+                //if the user hits cancel just drop out of macro
+                if (form.DialogResult == winForm.DialogResult.Cancel)
+                {
+                    return Result.Cancelled;
+                }
+
+                string text = "+viewset " + form.tBoxViewsetName + " " + form.tBoxSheetNumber;
+
+                Helpers.CreateViewset(uidoc, text);
+
+            }
+
+
+            
 
             return Result.Succeeded;
         }

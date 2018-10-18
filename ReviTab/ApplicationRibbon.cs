@@ -43,6 +43,12 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                if (AddPushButton(toolsPanel, "btnCreateViewset", "Create Viewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers ") == false)
+                {
+                    MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
                 if (AddTextBox(commandPanel, "btnCommandLine","Type some text and hit Enter") == false)
                 {
                     MessageBox.Show("Failed to add Text Box", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
