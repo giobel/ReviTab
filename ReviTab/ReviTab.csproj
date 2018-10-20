@@ -58,6 +58,8 @@
     <Compile Include="ApplicationRibbon.cs" />
     <Compile Include="Buttons\CreateSections.cs" />
     <Compile Include="Buttons\CreateViewSet.cs" />
+    <Compile Include="Buttons\DisallowBeamJoins.cs" />
+    <Compile Include="Buttons\PrintInBackground.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
     <Compile Include="Resources\FormCreateSections.cs">
@@ -84,8 +86,8 @@
   <ItemGroup>
     <Resource Include="Resources\addView.png" />
     <Resource Include="Resources\multipleSections.png" />
-    <Resource Include="Resources\createViewSet.png" />
     <Resource Include="Resources\selectText.png" />
+    <Resource Include="Resources\createViewSet.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

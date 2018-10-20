@@ -13,6 +13,17 @@ using System.Windows.Forms;
 
 namespace ReviTab
 {
+    public class Availability : IExternalCommandAvailability
+    {
+        public bool IsCommandAvailable(
+          UIApplication a,
+          CategorySet b)
+        {
+            return true;
+        }
+    }
+
+    [Regeneration(RegenerationOption.Manual)]
     class ApplicationRibbon : IExternalApplication
     {
 
@@ -28,24 +39,31 @@ namespace ReviTab
 
                 RibbonPanel commandPanel = GetSetRibbonPanel(a, "SuperTab", "Command Line");
 
-                if (AddPushButton(toolsPanel, "btnSheetAddCurrentView", "Add View \n to Sheet", "", "pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet", "Add the active view to a sheet") == false)
+                RibbonPanel zeroState = GetSetRibbonPanel(a, "SuperTab", "Zero State");
+
+                if (AddPushButton(toolsPanel, "btnSheetAddCurrentView", "Add View" + Environment.NewLine + "to Sheet", "", "pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet", "Add the active view to a sheet") == false)
                 {
                     MessageBox.Show("Failed to add button Add View to Sheet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnCreateSections", "Create Multiple \n Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections from selected elements (must have location curve i.e. beams, walls, lines...)") == false)
+                if (AddPushButton(toolsPanel, "btnCreateSections", "Create Multiple" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections from selected elements (must have location curve i.e. beams, walls, lines...)") == false)
                 {
                     MessageBox.Show("Failed to add button Create Multiple Sections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnSelectText", "Select All Text", "", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "ReviTab.SelectAllText", "Select all text notes in the project. Useful if you want to run the check the spelling.") == false)
+                if (AddPushButton(toolsPanel, "btnSelectText", "Select All" + Environment.NewLine + "Text", "", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "ReviTab.SelectAllText", "Select all text notes in the project. Useful if you want to run the check the spelling.") == false)
                 {
                     MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnCreateViewset", "Create Viewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers ") == false)
+                if (AddPushButton(toolsPanel, "btnCreateViewset", "Create" + Environment.NewLine + "Viewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers ") == false)
                 {
                     MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
+                {
+                    MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
 
@@ -211,6 +229,64 @@ namespace ReviTab
         }
 
         /// <summary>
+        /// Add a push button visible in Revit Zero State mode
+        /// </summary>
+        /// <param name="Panel"></param>
+        /// <param name="ButtonName"></param>
+        /// <param name="ButtonText"></param>
+        /// <param name="ImagePath16"></param>
+        /// <param name="ImagePath32"></param>
+        /// <param name="dllClass"></param>
+        /// <param name="Tooltip"></param>
+        /// <returns></returns>
+        private Boolean AddZeroStatePushButton(RibbonPanel Panel, string ButtonName, string ButtonText, string ImagePath16, string ImagePath32, string dllClass, string Tooltip, string Availability)
+        {
+
+            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+
+            try
+            {
+                PushButtonData m_pbData = new PushButtonData(ButtonName, ButtonText, thisAssemblyPath, dllClass);
+
+                m_pbData.AvailabilityClassName = Availability;
+
+                if (ImagePath16 != "")
+                {
+                    try
+                    {
+                        m_pbData.Image = new BitmapImage(new Uri(ImagePath16));
+                    }
+                    catch
+                    {
+                        //Could not find the image
+                    }
+                }
+                if (ImagePath32 != "")
+                {
+                    try
+                    {
+                        m_pbData.LargeImage = new BitmapImage(new Uri(ImagePath32));
+                    }
+                    catch
+                    {
+                        //Could not find the image
+                    }
+                }
+
+                m_pbData.ToolTip = Tooltip;
+
+
+                PushButton m_pb = Panel.AddItem(m_pbData) as PushButton;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Add a Text Box to the Ribbon Panel
         /// </summary>
         /// <param name="Panel"></param>
@@ -246,6 +322,7 @@ namespace ReviTab
         public void MyTextBoxEnter(object sender, TextBoxEnterPressedEventArgs args)
         {
             UIDocument uiDoc = args.Application.ActiveUIDocument;
+            Document doc = uiDoc.Document;
 
             Autodesk.Revit.UI.TextBox textBox = sender as Autodesk.Revit.UI.TextBox;
 
@@ -289,7 +366,7 @@ namespace ReviTab
                     Helpers.selectAllTypes(uiDoc, message);
                     break;
                 case "createViewSet":
-                    Helpers.CreateViewset(uiDoc, message);
+                    Helpers.CreateViewset(doc, message);
                     break;
                 case "delete":
                     break;

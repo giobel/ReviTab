@@ -251,11 +251,8 @@ namespace ReviTab
             }
         }
 
-        public static void CreateViewset(UIDocument uidoc, string message)
+        public static ViewSet CreateViewset(Document doc, string message)
         {
-
-            Document doc = uidoc.Document;
-
             string sheetNumber = message;
 
             string[] split = sheetNumber.Split(' ');
@@ -310,8 +307,153 @@ namespace ReviTab
                 t.Commit();
 
             }
+
+            return myViewSet;
             
         }//close macro
+
+        public static ViewSheet FindViewSheetByName(Document doc, string ViewSheetName)
+        {
+            FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
+            filteredElementCollector.OfClass(typeof(ViewSheet));
+            ViewSheet result;
+            using (IEnumerator<Element> enumerator = filteredElementCollector.ToElements().GetEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    ViewSheet viewSheet = (ViewSheet)enumerator.Current;
+                    bool flag = viewSheet.Name == ViewSheetName;
+                    if (flag)
+                    {
+                        result = viewSheet;
+                        return result;
+                    }
+                }
+            }
+            result = null;
+            return result;
+        }
+
+        public static List<ViewSheet> FindViewSheetByNumber(Document doc, string viewSheetNumbers)
+        {
+
+            List<ViewSheet> listSheets = new List<ViewSheet>();
+
+            FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
+            filteredElementCollector.OfClass(typeof(ViewSheet));
+
+            using (IEnumerator<Element> enumerator = filteredElementCollector.ToElements().GetEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    ViewSheet viewSheet = (ViewSheet)enumerator.Current;
+                    bool flag = viewSheetNumbers.Contains(viewSheet.SheetNumber);
+                    if (flag)
+                    {
+                        listSheets.Add(viewSheet);
+                    }
+                }
+            }
+
+            return listSheets;
+        }
+
+        public static int PrintDrawingsFromList(Document doc, ViewSet viewSetToPrint, string destinationFile)
+        {
+
+            int result = 0;
+
+            using (Transaction transaction = new Transaction(doc, "Print ViewSheetSet"))
+            {
+                try
+                {
+                    transaction.Start();
+
+                    PrintManager printMan = doc.PrintManager;
+                    printMan.PrintRange = PrintRange.Select; //A range that represents a list of selected views and sheets. 
+
+                    //ViewSet viewSet = printMan.ViewSheetSetting.CurrentViewSheetSet.Views; //viewset to print
+
+                    printMan.CombinedFile = false; //do not combine the pdfs
+                    printMan.Apply();
+
+                    printMan.PrintToFile = true;
+                    printMan.Apply();
+
+                    printMan.PrintToFileName = destinationFile;
+                    printMan.Apply();
+
+
+                    printMan.SubmitPrint();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    TaskDialog.Show("error", ex.Message);
+                }
+
+            }
+
+            return result;
+
+        }//close method
+
+        public static string CollectViewSheet(Document doc)
+        {
+            FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
+            filteredElementCollector.OfClass(typeof(ViewSheet));
+            string result = "";
+            using (IEnumerator<Element> enumerator = filteredElementCollector.ToElements().GetEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    ViewSheet viewSheet = (ViewSheet)enumerator.Current;
+                    result += viewSheet.SheetNumber + "\n";
+
+                }
+            }
+            return result;
+        }
+
+        public static string GetAvailablePrinterSetups(Document doc, string mustContain)
+        {
+            List<string> list = new List<string>();
+            string names = "";
+            FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
+            filteredElementCollector.OfClass(typeof(PrintSetting));
+            using (IEnumerator<Element> enumerator = filteredElementCollector.ToElements().GetEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    PrintSetting printSetting = (PrintSetting)enumerator.Current;
+                    //bool flag = mustContain.Length == 0 || printSetting.Name.Contains(mustContain);
+                    bool flag = true;
+                    if (flag)
+                    {
+                        list.Add(printSetting.Name);
+                        names += printSetting.Name + "\n";
+                    }
+                }
+            }
+            return names;
+        }
+
+        public static string GetCurrentPrintSetup(Document doc)
+        {
+            PrintManager printManager = doc.PrintManager;
+            bool flag = printManager != null && printManager.PrinterName != null;
+            string result;
+            if (flag)
+            {
+                result = printManager.PrinterName;
+            }
+            else
+            {
+                result = "";
+            }
+            return result;
+        }
 
     }
 }

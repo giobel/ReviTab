@@ -37,7 +37,7 @@ namespace ReviTab
 
                 string text = "+viewset " + form.tBoxViewsetName + " " + form.tBoxSheetNumber;
 
-                Helpers.CreateViewset(uidoc, text);
+                Helpers.CreateViewset(doc, text);
 
             }
 
