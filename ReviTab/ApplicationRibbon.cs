@@ -32,7 +32,7 @@ namespace ReviTab
 
             try
             {
-
+                               
                 AddRibbonPanel(a,"SuperTab","Tools");
 
                 RibbonPanel toolsPanel = GetSetRibbonPanel(a, "SuperTab", "Tools");
@@ -61,7 +61,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
+                if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -363,7 +363,7 @@ namespace ReviTab
                     Helpers.AddTwoIntegers(message);
                     break;
                 case "select":
-                    Helpers.selectAllTypes(uiDoc, message);
+                    Helpers.SelectAllTypes(uiDoc, message);
                     break;
                 case "createViewSet":
                     Helpers.CreateViewset(doc, message);

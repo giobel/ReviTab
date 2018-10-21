@@ -24,9 +24,12 @@ namespace ReviTab
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            Helpers.selectAllText(uidoc, uiapp);
-
+            Helpers.SelectAllText(uidoc, uiapp);
+            
             return Result.Succeeded;
+
+            
+
         }
     }
 }

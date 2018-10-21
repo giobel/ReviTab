@@ -62,24 +62,36 @@
     <Compile Include="Buttons\PrintInBackground.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
-    <Compile Include="Resources\FormCreateSections.cs">
+    <Compile Include="Forms\FormPickSheets.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Resources\FormCreateSections.designer.cs">
+    <Compile Include="Forms\FormPickSheets.designer.cs">
+      <DependentUpon>FormPickSheets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormOpenFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormOpenFile.designer.cs">
+      <DependentUpon>FormOpenFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCreateSections.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCreateSections.designer.cs">
       <DependentUpon>FormCreateSections.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\FormAddActiveView.cs">
+    <Compile Include="Forms\FormAddActiveView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Resources\FormAddActiveView.designer.cs">
+    <Compile Include="Forms\FormAddActiveView.designer.cs">
       <DependentUpon>FormAddActiveView.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Buttons\SelectAllText.cs" />
-    <Compile Include="Resources\FormCreateViewSet.cs">
+    <Compile Include="Forms\FormCreateViewSet.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Resources\FormCreateViewSet.Designer.cs">
+    <Compile Include="Forms\FormCreateViewSet.Designer.cs">
       <DependentUpon>FormCreateViewSet.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -88,18 +100,29 @@
     <Resource Include="Resources\multipleSections.png" />
     <Resource Include="Resources\selectText.png" />
     <Resource Include="Resources\createViewSet.png" />
+    <Content Include="Resources\backgroundPrint.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\FormCreateSections.resx">
+    <EmbeddedResource Include="Forms\FormPickSheets.resx">
+      <DependentUpon>FormPickSheets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormOpenFile.resx">
+      <DependentUpon>FormOpenFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCreateSections.resx">
       <DependentUpon>FormCreateSections.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\FormAddActiveView.resx">
+    <EmbeddedResource Include="Forms\FormAddActiveView.resx">
       <DependentUpon>FormAddActiveView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\FormCreateViewSet.resx">
+    <EmbeddedResource Include="Forms\FormCreateViewSet.resx">
       <DependentUpon>FormCreateViewSet.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\Select\" />
+    <Folder Include="Commands\Views and Sheets\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
