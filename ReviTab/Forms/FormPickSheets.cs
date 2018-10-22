@@ -21,6 +21,10 @@ namespace ReviTab
 
         public Dictionary<string, string> dictSheetSetsNames = new Dictionary<string, string>();
 
+        public List<string> printSettings;
+        public int pickedPrintSet = 0;
+
+
         public FormPickSheets()
 		{
 			
@@ -35,6 +39,11 @@ namespace ReviTab
 			for (int i=0; i<sheetNames.Count; i++){
 				sheetCheckedList.Items.Add(sheetNumbers[i] + "-" + sheetNames[i]);
 			}
+
+            foreach (string ps in printSettings)
+            {
+                cBoxPrintSettings.Items.Add(ps);
+            }
 
             foreach (string s in dictSheetSetsNames.Keys)
             {
@@ -141,5 +150,9 @@ namespace ReviTab
 
         #endregion
 
+        private void cBoxPrintSettings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pickedPrintSet = cBoxPrintSettings.SelectedIndex;
+        }
     }
 }

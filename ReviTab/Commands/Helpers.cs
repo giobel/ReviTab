@@ -54,7 +54,7 @@ namespace ReviTab
 
         #region PRINT
 
-        public static int PrintDrawingsFromList(Document doc, ViewSheet sheet, string destinationFile)
+        public static int PrintDrawingsFromList(Document doc, ViewSheet sheet, string destinationFile, PrintSetting printSetting)
         {
             int result = 0;
 
@@ -76,6 +76,8 @@ namespace ReviTab
 
                     printMan.PrintToFileName = destinationFile;
                     printMan.Apply();
+
+                    printMan.PrintSetup.CurrentPrintSetting = printSetting;
 
                     printMan.SubmitPrint();
 
@@ -540,5 +542,28 @@ namespace ReviTab
             }
         }
         #endregion
+
+
+        public static Dictionary<string, PrintSetting> GetPrintersSettings(Document doc)
+        {
+
+            Dictionary<string, PrintSetting> printSettingNames = new Dictionary<string, PrintSetting>();
+
+            FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
+            filteredElementCollector.OfClass(typeof(PrintSetting));
+            IEnumerator<Element> enumerator = filteredElementCollector.ToElements().GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                PrintSetting printSetting = (PrintSetting)enumerator.Current;
+                bool flag = true;
+                if (flag)
+                {
+                    printSettingNames.Add(printSetting.Name, printSetting);
+
+                }
+            }
+            return printSettingNames;
+        }
     }
 }

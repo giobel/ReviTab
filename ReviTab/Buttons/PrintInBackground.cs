@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using winForms = System.Windows.Forms;
+using System.Linq;
 
 
 namespace ReviTab
@@ -66,6 +67,9 @@ namespace ReviTab
                             form.dictSheetSetsNames.Add(vs.Name, Helpers.SheetInViewSheetsSets(vs));
                         }
 
+                        Dictionary<string, PrintSetting> printSetting = Helpers.GetPrintersSettings(openDoc);
+
+                        form.printSettings = printSetting.Keys.ToList();
 
                         form.ShowDialog();
 
@@ -80,17 +84,19 @@ namespace ReviTab
 
                         List<ViewSheet> sheetList = Helpers.FindViewSheetByNumber(openDoc, form.pickedNumbers);
 
+                        PrintSetting chosenPrintSet = printSetting.Values.ElementAt(form.pickedPrintSet);
+
                         foreach (ViewSheet sheet in sheetList)
                         {
                             ViewSet vs = Helpers.CreateViewset(openDoc, sheet.SheetNumber);//create a viewset with each view to be printed (only way to be able to set the file names)
-                            Helpers.PrintDrawingsFromList(openDoc, sheet, destination + form.prefix + sheet.SheetNumber + Helpers.SheetRevision(sheet) + ".pdf");
+                            Helpers.PrintDrawingsFromList(openDoc, sheet, destination + form.prefix + sheet.SheetNumber + Helpers.SheetRevision(sheet) + ".pdf", chosenPrintSet);
                         }
 
                         openDoc.Close(false);
                         check += -1;
 
                         if (check == 0)
-                            TaskDialog.Show("Result", "The pdfs will appear in the Documents folder soon. Don't rush, they are not ready yet.");
+                            TaskDialog.Show("Result", "The pdfs will appear in the printer default folder \n (something like C:\\Users\\[your name]\\Documents)");
                         else
                             TaskDialog.Show("Result", "Something went wrong");
                     }

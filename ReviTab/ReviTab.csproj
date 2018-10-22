@@ -124,6 +124,13 @@
     <Folder Include="Commands\Select\" />
     <Folder Include="Commands\Views and Sheets\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helpers\HelperMe.csproj">
+      <Project>{528b2314-3813-45ad-8be3-c43d57a4a6ce}</Project>
+      <Name>HelperMe</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\REVIT\Addins\2019"

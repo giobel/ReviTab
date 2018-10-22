@@ -46,6 +46,9 @@ namespace ReviTab
             this.btn_check = new System.Windows.Forms.Button();
             this.btn_Uncheck = new System.Windows.Forms.Button();
             this.comboBoxViewset = new System.Windows.Forms.ComboBox();
+            this.cBoxPrintSettings = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // sheetCheckedList
@@ -142,17 +145,47 @@ namespace ReviTab
             // comboBoxViewset
             // 
             this.comboBoxViewset.FormattingEnabled = true;
-            this.comboBoxViewset.Location = new System.Drawing.Point(417, 198);
+            this.comboBoxViewset.Location = new System.Drawing.Point(417, 215);
             this.comboBoxViewset.Name = "comboBoxViewset";
             this.comboBoxViewset.Size = new System.Drawing.Size(121, 21);
             this.comboBoxViewset.TabIndex = 11;
             this.comboBoxViewset.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
+            // 
+            // cBoxPrintSettings
+            // 
+            this.cBoxPrintSettings.FormattingEnabled = true;
+            this.cBoxPrintSettings.Location = new System.Drawing.Point(290, 215);
+            this.cBoxPrintSettings.Name = "cBoxPrintSettings";
+            this.cBoxPrintSettings.Size = new System.Drawing.Size(121, 21);
+            this.cBoxPrintSettings.TabIndex = 12;
+            this.cBoxPrintSettings.SelectedIndexChanged += new System.EventHandler(this.cBoxPrintSettings_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(290, 197);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(106, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Select a Print Setting";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(414, 196);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(85, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Existing ViewSet";
             // 
             // FormPickSheets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(562, 319);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.cBoxPrintSettings);
             this.Controls.Add(this.comboBoxViewset);
             this.Controls.Add(this.btn_Uncheck);
             this.Controls.Add(this.btn_check);
@@ -181,5 +214,8 @@ namespace ReviTab
 		private System.Windows.Forms.TextBox tBoxSheetNumbers;
 		private System.Windows.Forms.CheckedListBox sheetCheckedList;
         private System.Windows.Forms.ComboBox comboBoxViewset;
+        private System.Windows.Forms.ComboBox cBoxPrintSettings;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
     }
 }
