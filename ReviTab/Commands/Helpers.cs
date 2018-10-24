@@ -18,7 +18,7 @@ namespace ReviTab
         /// </summary>
         public static void leannSays()
         {
-            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "I smash you", "You I know can you guys delete it after finish ready. Thanks" };
+            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "I smash you", "You I know can you guys delete it after finish ready. Thanks", "book my set tomorrow. donot forget thanks", "i am coming back on thuesday. \nthis is the day i will in office",   };
 
             Random rand = new Random();
 

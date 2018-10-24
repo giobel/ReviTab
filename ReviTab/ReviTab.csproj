@@ -60,6 +60,7 @@
     <Compile Include="Buttons\CreateViewSet.cs" />
     <Compile Include="Buttons\DisallowBeamJoins.cs" />
     <Compile Include="Buttons\PrintInBackground.cs" />
+    <Compile Include="Buttons\SwapGridBubble.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
     <Compile Include="Forms\FormPickSheets.cs">
@@ -101,6 +102,7 @@
     <Resource Include="Resources\selectText.png" />
     <Resource Include="Resources\createViewSet.png" />
     <Resource Include="Resources\backgroundPrint.png" />
+    <Resource Include="Resources\swapGrids.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
@@ -123,13 +125,6 @@
   <ItemGroup>
     <Folder Include="Commands\Select\" />
     <Folder Include="Commands\Views and Sheets\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Helpers\HelperMe.csproj">
-      <Project>{528b2314-3813-45ad-8be3-c43d57a4a6ce}</Project>
-      <Name>HelperMe</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
