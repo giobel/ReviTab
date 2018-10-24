@@ -125,7 +125,9 @@ namespace ReviTab
 
             string sheetNumber = message;
 
-            string viewSetName = "remote printer";
+            string[] split = sheetNumber.Split(' ');
+
+            string viewSetName = split[1];
 
             ViewSet myViewSet = new ViewSet();
 
