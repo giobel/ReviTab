@@ -55,7 +55,9 @@ namespace ReviTab
 
             string output = "";
 
-            using (Transaction t = new Transaction(doc, "Add views"))
+                    int count = 0;
+
+                    using (Transaction t = new Transaction(doc, "Add views"))
             {
 
                 t.Start();
@@ -63,8 +65,14 @@ namespace ReviTab
                 foreach (ElementId e in refe)
                 {
                     output += e.ToString() + "\n";
-                    Viewport newvp = Viewport.Create(doc, viewSh.Id, e, new XYZ(1.38, .974, 0));
-                }
+                            double offset = 2.29 / refe.Count;
+                            Viewport vp = Viewport.Create(doc, viewSh.Id, e, new XYZ(1.38, .974, 0));
+                            Outline vpOutline = vp.GetBoxOutline();
+                            double vpWidth = vpOutline.MaximumPoint.X - vpOutline.MinimumPoint.X;
+                            XYZ newCenter = new XYZ(vp.GetBoxCenter().X + vpWidth / 2, .974, 0);
+                            vp.SetBoxCenter(newCenter);
+                            count += 1;
+                        }
 
 
                 t.Commit();

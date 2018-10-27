@@ -60,10 +60,17 @@
     <Compile Include="Buttons\CreateSections.cs" />
     <Compile Include="Buttons\CreateViewSet.cs" />
     <Compile Include="Buttons\DisallowBeamJoins.cs" />
+    <Compile Include="Buttons\VoidByFace.cs" />
     <Compile Include="Buttons\PrintInBackground.cs" />
     <Compile Include="Buttons\SwapGridBubble.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
+    <Compile Include="Forms\FormPlaceFamilyByFace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPlaceFamilyByFace.designer.cs">
+      <DependentUpon>FormPlaceFamilyByFace.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormPickSheets.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +115,9 @@
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\FormPlaceFamilyByFace.resx">
+      <DependentUpon>FormPlaceFamilyByFace.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPickSheets.resx">
       <DependentUpon>FormPickSheets.cs</DependentUpon>
     </EmbeddedResource>

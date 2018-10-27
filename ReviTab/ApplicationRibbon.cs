@@ -70,15 +70,18 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+
+                if (AddPushButton(toolsPanel, "btnPlaceFamilyByFace", "Place Family" + Environment.NewLine + "By Face", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.VoidByFace", "Place a family instance on a face") == false)
+                {
+                    MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
 
                 if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-
-                
                 if (AddTextBox(commandPanel, "btnCommandLine","Type some text and hit Enter") == false)
                 {
                     MessageBox.Show("Failed to add Text Box", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
