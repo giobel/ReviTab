@@ -13,7 +13,7 @@ using forms = System.Windows.Forms;
 namespace ReviTab
 {
     [Transaction(TransactionMode.Manual)]
-    public class FamilyInstanceByFace : IExternalCommand
+    public class VoidByFace : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -48,9 +48,18 @@ namespace ReviTab
                             {
                                 try
                                 {
-                                    Helpers.PlaceOpening(doc, r, Int16.Parse(s));
+                                if (Helpers.HasSymbolGeometry(r, doc) == 1)
+                                {
+                                    Helpers.PlaceOpeningSymbolGeometry(doc, r, Int16.Parse(s));
+                                    count += 1;
+
+                                }
+                                else
+                                {
+                                    Helpers.PlaceOpeningSolidGeometry(doc, r, Int16.Parse(s));
                                     count += 1;
                                 }
+                            }
                                 catch
                                 {
                                     errors += 1;

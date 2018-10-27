@@ -55,7 +55,7 @@ namespace ReviTab
 
             string output = "";
 
-                    int count = 0;
+                    int count = 1;
 
                     using (Transaction t = new Transaction(doc, "Add views"))
             {
@@ -69,7 +69,7 @@ namespace ReviTab
                             Viewport vp = Viewport.Create(doc, viewSh.Id, e, new XYZ(1.38, .974, 0));
                             Outline vpOutline = vp.GetBoxOutline();
                             double vpWidth = vpOutline.MaximumPoint.X - vpOutline.MinimumPoint.X;
-                            XYZ newCenter = new XYZ(vp.GetBoxCenter().X + vpWidth / 2, .974, 0);
+                            XYZ newCenter = new XYZ((vp.GetBoxCenter().X + vpWidth / 2)*count, .974, 0);
                             vp.SetBoxCenter(newCenter);
                             count += 1;
                         }

@@ -599,16 +599,23 @@ namespace ReviTab
 
         }//close method
 
-        public static void PlaceOpening(Document doc, Reference selectedElement, int distanceFromStart)
+
+        private static Options pickOptions(Document doc)
+        {
+            Options geomOptions = new Options();
+            geomOptions.ComputeReferences = true;
+            geomOptions.View = doc.ActiveView;
+
+            return geomOptions;
+        }
+
+        public static void PlaceOpeningSolidGeometry(Document doc, Reference selectedElement, int distanceFromStart)
         {
             Element ele = doc.GetElement(selectedElement.ElementId);
 
             Face webFace = null;
-
-            Options geomOptions = new Options();
-            geomOptions.ComputeReferences = true;
-            geomOptions.View = doc.ActiveView;
-            GeometryElement beamGeom = ele.get_Geometry(geomOptions);
+            
+            GeometryElement beamGeom = ele.get_Geometry(pickOptions(doc));
 
             Dictionary<int, Face> areas = new Dictionary<int, Face>();
 
@@ -628,19 +635,7 @@ namespace ReviTab
                         }
                     }
                 }
-                else
-                {
-                    try
-                    {
-                        GetInstanceGeometry(obj, areas);
-                    }
-                    catch
-                    {
-
-                    }
-
-                }
-            }
+            }//close foreach
 
             int total = areas.Keys.Count;
 
@@ -656,16 +651,7 @@ namespace ReviTab
             XYZ normal = webFace.ComputeNormal(center);
             XYZ refDir = normal.CrossProduct(XYZ.BasisZ);
 
-            FilteredElementCollector ope = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_StructConnections).WhereElementIsElementType();
-
-            FamilySymbol fs = null;
-
-            foreach (FamilySymbol f in ope)
-            {
-                if (f.FamilyName == "Web Penetration with Stiffeners")
-                    fs = f as FamilySymbol;
-
-            }
+            FamilySymbol fs = GetFamilySymbolByName(doc, "Web Penetration with Stiffeners");
 
             FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, location, refDir, fs);
 
@@ -679,6 +665,127 @@ namespace ReviTab
 
 
         }//close method
+
+
+        private static void GetSymbolGeometry(GeometryObject obj, Dictionary<int, Face> areas, out Transform instanceTransform)
+        {
+
+            GeometryInstance instance = obj as GeometryInstance;
+
+            instanceTransform = instance.Transform;
+
+            if (null != instance)
+            {
+                GeometryElement symbolGeometryElement = instance.GetSymbolGeometry();
+
+                foreach (GeometryObject instanceObj in symbolGeometryElement)
+                {
+                    Solid instanceGeomSolid = instanceObj as Solid;
+
+                    if (null != instanceGeomSolid)
+                    {
+                        foreach (Face geomFace in instanceGeomSolid.Faces)
+                        {
+                            try
+                            {
+                                areas.Add((int)geomFace.Area, geomFace);
+                            }
+                            catch
+                            {
+                                //TaskDialog.Show("Result", "Solid geometry not found");
+                            }
+                        }
+                    }
+
+                }
+
+            }//close object array
+
+        }//close method
+
+
+
+        public static void PlaceOpeningSymbolGeometry(Document doc, Reference selectedElement, int distanceFromStart)
+        {
+            Element ele = doc.GetElement(selectedElement.ElementId);
+
+            Face webFace = null;
+
+            GeometryElement beamGeom = ele.get_Geometry(pickOptions(doc));
+
+            Dictionary<int, Face> areas = new Dictionary<int, Face>();
+
+            Transform instanceTransform = null;
+
+            foreach (GeometryObject obj in beamGeom)
+            {
+
+                GetSymbolGeometry(obj, areas, out instanceTransform);
+            }
+
+            int total = areas.Keys.Count;
+
+            int maxArea = areas.Keys.Max();
+            webFace = areas[maxArea];
+
+            BoundingBoxUV bboxUV = webFace.GetBoundingBox();
+
+            //UV center = (bboxUV.Max + bboxUV.Min) * 0.5;
+            UV start = bboxUV.Min;
+            XYZ location = webFace.Evaluate(start);
+
+            XYZ transformedPoint = instanceTransform.OfPoint(location);
+            LocationCurve lc = ele.Location as LocationCurve;
+            XYZ direction = lc.Curve.GetEndPoint(0) - lc.Curve.GetEndPoint(1);
+
+            FamilySymbol fs = GetFamilySymbolByName(doc, "Web Penetration with Stiffeners");
+
+            FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, transformedPoint, direction, fs);
+
+
+            foreach (Parameter p in instance.Parameters)
+            {
+                if (p.Definition.Name == "Distance from Start")
+                {
+                    p.Set(distanceFromStart / 304.8);
+                }
+            }
+
+
+        }//close method
+
+
+        public static FamilySymbol GetFamilySymbolByName(Document doc, string name)
+        {
+            FilteredElementCollector fec = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_StructConnections).WhereElementIsElementType();
+
+            FamilySymbol fs = null;
+
+            foreach (FamilySymbol f in fec)
+            {
+                if (f.FamilyName == name)
+                    fs = f as FamilySymbol;
+
+            }
+
+            return fs;
+        }
+
+        public static int HasSymbolGeometry(Reference selectedElement, Document doc)
+        {
+
+            Element ele = doc.GetElement(selectedElement.ElementId);
+
+            Options geomOptions = new Options();
+            geomOptions.ComputeReferences = true;
+
+            GeometryElement beamGeom = ele.get_Geometry(geomOptions);
+
+            if (beamGeom.Count() == 1)
+                return 1;
+            else
+                return 0;
+        }
 
         #endregion
     }
