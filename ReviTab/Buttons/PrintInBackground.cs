@@ -88,7 +88,14 @@ namespace ReviTab
 
                         foreach (ViewSheet sheet in sheetList)
                         {
-                            ViewSet vs = Helpers.CreateViewset(openDoc, sheet.SheetNumber);//create a viewset with each view to be printed (only way to be able to set the file names)
+                            try
+                            {
+                                ViewSet vs = Helpers.CreateViewset(openDoc, sheet.SheetNumber);//create a viewset with each view to be printed (only way to be able to set the file names)
+                            }
+                            catch
+                            {
+                                TaskDialog.Show("Error", "Can't create ViewSet");
+                            }
                             Helpers.PrintDrawingsFromList(openDoc, sheet, destination + form.prefix + sheet.SheetNumber + Helpers.SheetRevision(sheet) + ".pdf", chosenPrintSet);
                         }
 
@@ -96,7 +103,7 @@ namespace ReviTab
                         check += -1;
 
                         if (check == 0)
-                            TaskDialog.Show("Result", "The pdfs will appear in the printer default folder \n (something like C:\\Users\\[your name]\\Documents)");
+                            TaskDialog.Show("Result", "The pdfs will appear in the printer default folder (something like C:\\Users\\[your name]\\Documents)");
                         else
                             TaskDialog.Show("Result", "Something went wrong");
                     }
