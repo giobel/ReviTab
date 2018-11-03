@@ -776,6 +776,10 @@ namespace ReviTab
                     fs = f as FamilySymbol;
             }
 
+
+            if (!fs.IsActive)
+            { fs.Activate(); doc.Regenerate(); }
+
             // the element does not have available solid geometries. Need to use its geometry instance first and transform the point to the project coordinates.
             if (beamGeom.Count() == 1)
             {
