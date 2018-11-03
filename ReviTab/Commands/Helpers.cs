@@ -432,6 +432,27 @@ namespace ReviTab
             //TaskDialog.Show("Success", eleType);
 
         }//close method}
+
+        public static Dictionary<string, FamilySymbol> SelectFamilies(Document doc)
+        {
+            ICollection<Element> eleFamily = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).ToElements();
+
+            Dictionary<string, FamilySymbol> categoryList = new Dictionary<string, FamilySymbol>();
+
+            foreach (FamilySymbol e in eleFamily)
+            {
+                try
+                {
+                    categoryList.Add(e.Name, e);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            return categoryList;
+        }
         #endregion
 
         #region SHEET VIEWS
@@ -568,38 +589,7 @@ namespace ReviTab
         }
 
         #region STRUCTURAL FRAMINGS
-
-        public static void GetInstanceGeometry(GeometryObject obj, Dictionary<int, Face> areas)
-        {
-
-            GeometryInstance instance = obj as GeometryInstance;
-            if (null != instance)
-            {
-                GeometryElement instanceGeometryElement = instance.GetInstanceGeometry();
-                foreach (GeometryObject instanceObj in instanceGeometryElement)
-                {
-                    Solid instanceGeomSolid = instanceObj as Solid;
-                    if (null != instanceGeomSolid)
-                    {
-                        foreach (Face geomFace in instanceGeomSolid.Faces)
-                        {
-                            try
-                            {
-                                areas.Add((int)geomFace.Area, geomFace);
-                            }
-                            catch
-                            {
-                            }
-                        }
-                    }
-
-                }
-
-            }//close object array
-
-        }//close method
-
-
+        
         private static Options pickOptions(Document doc)
         {
             Options geomOptions = new Options();
@@ -609,70 +599,12 @@ namespace ReviTab
             return geomOptions;
         }
 
-        public static void PlaceOpeningSolidGeometry(Document doc, Reference selectedElement, int distanceFromStart)
+        public static void GetSymbolGeometry(GeometryObject obj, Dictionary<int, Face> areas, out Transform instanceTransform)
         {
-            Element ele = doc.GetElement(selectedElement.ElementId);
-
-            Face webFace = null;
-            
-            GeometryElement beamGeom = ele.get_Geometry(pickOptions(doc));
-
-            Dictionary<int, Face> areas = new Dictionary<int, Face>();
-
-            foreach (GeometryObject obj in beamGeom)
-            {
-                Solid geomSolid = obj as Solid;
-                if (null != geomSolid)
-                {
-                    foreach (Face geomFace in geomSolid.Faces)
-                    {
-                        try
-                        {
-                            areas.Add((int)geomFace.Area, geomFace);
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-            }//close foreach
-
-            int total = areas.Keys.Count;
-
-            int maxArea = areas.Keys.Max();
-            webFace = areas[maxArea];
-
-            BoundingBoxUV bboxUV = webFace.GetBoundingBox();
-
-            UV center = (bboxUV.Max + bboxUV.Min) * 0.5;
-            UV start = bboxUV.Min;
-            XYZ location = webFace.Evaluate(start);
-
-            XYZ normal = webFace.ComputeNormal(center);
-            XYZ refDir = normal.CrossProduct(XYZ.BasisZ);
-
-            FamilySymbol fs = GetFamilySymbolByName(doc, "Web Penetration with Stiffeners");
-
-            FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, location, refDir, fs);
-
-            foreach (Parameter p in instance.Parameters)
-            {
-                if (p.Definition.Name == "Distance from Start")
-                {
-                    p.Set(distanceFromStart / 304.8);
-                }
-            }
-
-
-        }//close method
-
-
-        private static void GetSymbolGeometry(GeometryObject obj, Dictionary<int, Face> areas, out Transform instanceTransform)
-        {
-
             GeometryInstance instance = obj as GeometryInstance;
 
             instanceTransform = instance.Transform;
+
 
             if (null != instance)
             {
@@ -692,7 +624,7 @@ namespace ReviTab
                             }
                             catch
                             {
-                                //TaskDialog.Show("Result", "Solid geometry not found");
+                                //							TaskDialog.Show("Result", "Solid geometry not found");
                             }
                         }
                     }
@@ -703,24 +635,77 @@ namespace ReviTab
 
         }//close method
 
-
-
-        public static void PlaceOpeningSymbolGeometry(Document doc, Reference selectedElement, int distanceFromStart)
+        private static void GetInstanceGeometry(GeometryObject obj, Dictionary<int, Face> areas)
         {
+
+            GeometryInstance instance = obj as GeometryInstance;
+            if (null != instance)
+            {
+                GeometryElement instanceGeometryElement = instance.GetInstanceGeometry();
+                foreach (GeometryObject instanceObj in instanceGeometryElement)
+                {
+                    Solid instanceGeomSolid = instanceObj as Solid;
+                    if (null != instanceGeomSolid)
+                    {
+                        foreach (Face geomFace in instanceGeomSolid.Faces)
+                        {
+                            try
+                            {
+                                areas.Add((int)geomFace.Area, geomFace);
+                            }
+                            catch
+                            {
+                                //							TaskDialog.Show("Result", "Solid geometry not found");
+                            }
+                        }
+                    }
+
+                }
+
+            }//close object array
+
+        }//close method
+
+        public static void PlaceOpening(Document doc, Reference selectedElement, int distanceFromStart, string FamilyName, string position, int width, int height)
+        {
+
+            double newDistance = distanceFromStart / 304.8;
+
+            //Reference selectedElement = uidoc.Selection.PickObject(ObjectType.Element, "Select a beam");
+
             Element ele = doc.GetElement(selectedElement.ElementId);
 
             Face webFace = null;
 
-            GeometryElement beamGeom = ele.get_Geometry(pickOptions(doc));
+            Options geomOptions = pickOptions(doc);
+
+            GeometryElement beamGeom = ele.get_Geometry(geomOptions);
+
+            Transform instTransform = null;
 
             Dictionary<int, Face> areas = new Dictionary<int, Face>();
 
-            Transform instanceTransform = null;
-
             foreach (GeometryObject obj in beamGeom)
             {
+                Solid geomSolid = obj as Solid;
+                if (null != geomSolid)
+                {
+                    foreach (Face geomFace in geomSolid.Faces)
+                    {
+                        try
+                        {
+                            areas.Add((int)geomFace.Area, geomFace);
 
-                GetSymbolGeometry(obj, areas, out instanceTransform);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+                else
+                {
+                    GetSymbolGeometry(obj, areas, out instTransform);
+                }
             }
 
             int total = areas.Keys.Count;
@@ -728,32 +713,83 @@ namespace ReviTab
             int maxArea = areas.Keys.Max();
             webFace = areas[maxArea];
 
+
             BoundingBoxUV bboxUV = webFace.GetBoundingBox();
 
-            //UV center = (bboxUV.Max + bboxUV.Min) * 0.5;
             UV start = bboxUV.Min;
-            XYZ location = webFace.Evaluate(start);
+            UV end = bboxUV.Max;
+            UV center = (bboxUV.Max + bboxUV.Min) * 0.5;
+            double length = Math.Abs(bboxUV.Min.U - bboxUV.Max.U);
 
-            XYZ transformedPoint = instanceTransform.OfPoint(location);
-            LocationCurve lc = ele.Location as LocationCurve;
-            XYZ direction = lc.Curve.GetEndPoint(0) - lc.Curve.GetEndPoint(1);
+            double midV = Math.Abs(start.V - end.V) / 2;
 
-            FamilySymbol fs = GetFamilySymbolByName(doc, "Web Penetration with Stiffeners");
+            UV startUmidV = new UV(start.U, midV);
 
-            FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, transformedPoint, direction, fs);
+            XYZ location = webFace.Evaluate(startUmidV);
+
+            XYZ normal = webFace.ComputeNormal(center);
+            XYZ refDir = normal.CrossProduct(XYZ.BasisZ);
 
 
-            foreach (Parameter p in instance.Parameters)
+            UV endFace = new UV(bboxUV.Max.U, 0);
+
+
+            switch (position)
             {
-                if (p.Definition.Name == "Distance from Start")
-                {
-                    p.Set(distanceFromStart / 304.8);
-                }
+                case "start":
+                    location = webFace.Evaluate(startUmidV);
+                    break;
+                case "end":
+                    location = webFace.Evaluate(startUmidV);
+                    newDistance = (webFace.Evaluate(endFace) - webFace.Evaluate(start)).GetLength() - distanceFromStart / 304.8 - (width / 304.8) * 0.5;
+                    break;
+                case "mid":
+                    location = webFace.Evaluate(center);
+                    newDistance = 0;
+                    break;
             }
 
 
-        }//close method
+            FilteredElementCollector ope = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_StructConnections).WhereElementIsElementType();
 
+
+            LocationCurve beamLine = ele.Location as LocationCurve;
+
+            XYZ beamDirection = beamLine.Curve.GetEndPoint(0) - beamLine.Curve.GetEndPoint(1);
+
+            //XYZ location = beamLine.Curve.Evaluate(0.5,true);
+
+            FamilySymbol fs = null;
+
+            foreach (FamilySymbol f in ope)
+            {
+                if (f.FamilyName == FamilyName)
+                    fs = f as FamilySymbol;
+            }
+
+            // the element does not have available solid geometries. Need to use its geometry instance first and transform the point to the project coordinates.
+            if (beamGeom.Count() == 1)
+            {
+
+                XYZ transformedPoint = instTransform.OfPoint(location);
+                //LocationCurve lc = ele.Location as LocationCurve;
+                //XYZ direction = lc.Curve.GetEndPoint(0) - lc.Curve.GetEndPoint(1);
+
+                FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, transformedPoint, beamDirection, fs);
+                SetRectVoidParamters(instance, newDistance, width, height);
+            }
+
+            else
+            {
+
+                FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, location, beamDirection, fs);
+                SetRectVoidParamters(instance, newDistance, width, height);
+            }
+
+
+            //TaskDialog.Show("Position", location.X + "-" + location.Y + "-" + location.Z);
+
+        }//close method
 
         public static FamilySymbol GetFamilySymbolByName(Document doc, string name)
         {
@@ -787,6 +823,62 @@ namespace ReviTab
                 return 0;
         }
 
+        private static void SetRectVoidParamters(FamilyInstance instance, double newDistance, int width, int height)
+        {
+
+
+            foreach (Parameter p in instance.Parameters)
+            {
+                if (p.Definition.Name == "Distance from Start")
+                {
+                    p.Set(newDistance);
+                }
+            }
+
+            try
+            {
+                foreach (Parameter p in instance.Parameters)
+                {
+                    if (p.Definition.Name == "Void Width")
+                    {
+                        p.Set(width / 304.8);
+                    }
+                }
+            }
+            catch
+            {
+                //it must be a void, just set the height
+            }
+
+
+            foreach (Parameter p in instance.Parameters)
+            {
+                if (p.Definition.Name == "Void Height")
+                {
+                    p.Set(height / 304.8);
+                }
+            }
+        }//close macro
+
         #endregion
+
+        private static void PaintFace()
+        {
+
+            /*			
+			IList<Element> materials = new FilteredElementCollector(doc).OfClass(typeof(Material)).ToElements();
+
+			Material matName = null;
+			 	
+			foreach (Material mat in materials) {
+				if (mat.Name == "Glass")
+				{
+					matName = mat;
+				}
+			}
+			
+			doc.Paint(ele.Id, webFace, matName.Id);
+			*/
+        }
     }
 }

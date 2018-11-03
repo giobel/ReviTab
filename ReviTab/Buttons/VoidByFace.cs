@@ -7,7 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using forms = System.Windows.Forms;
+using winforms = System.Windows.Forms;
 #endregion
 
 namespace ReviTab
@@ -26,53 +26,61 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-                IList<Reference> refs = uidoc.Selection.PickObjects(ObjectType.Element, "Select some beams");
-                int count = 0;
-                int errors = 0;
 
-                using (var form = new FormPlaceFamilyByFace())
+            IList<Reference> refs = uidoc.Selection.PickObjects(ObjectType.Element, "Select some beams");
+            int count = 0;
+            int errors = 0;
+
+            using (var form = new FormAddOpening())
+            {
+
+                Dictionary<string, FamilySymbol> allCategories = Helpers.SelectFamilies(doc);
+
+
+
+                foreach (string el in allCategories.Keys)
                 {
-
-                    form.ShowDialog();
-
-                    string[] distance = form.distances.Split(' ');
+                    form.familyName.Add(el);
+                }
 
 
-                    using (Transaction t = new Transaction(doc, "Place Opening"))
+                form.ShowDialog();
+
+                if (form.DialogResult == winforms.DialogResult.Cancel)
+                {
+                    return Result.Cancelled;
+                }
+
+                string[] distance = form.distances.Split(' ');
+
+
+                using (Transaction t = new Transaction(doc, "Place Opening"))
+                {
+                    t.Start();
+
+                    foreach (string s in distance)
                     {
-                        t.Start();
-
-                        foreach (string s in distance)
+                        foreach (Reference r in refs)
                         {
-                            foreach (Reference r in refs)
+                            try
                             {
-                                try
-                                {
-                                if (Helpers.HasSymbolGeometry(r, doc) == 1)
-                                {
-                                    Helpers.PlaceOpeningSymbolGeometry(doc, r, Int16.Parse(s));
-                                    count += 1;
-
-                                }
-                                else
-                                {
-                                    Helpers.PlaceOpeningSolidGeometry(doc, r, Int16.Parse(s));
-                                    count += 1;
-                                }
+                                Helpers.PlaceOpening(doc, r, Int16.Parse(s), form.choosenFamily, form.formPosition, form.formVoidWidth, form.formVoidHeight);
+                                count += 1;
                             }
-                                catch
-                                {
-                                    errors += 1;
-                                }
+                            catch
+                            {
+                                errors += 1;
+                                TaskDialog.Show("Error", "Uh-oh something went wrong");
                             }
                         }
-                        t.Commit();
-                    }//close transaction
+                    }
+                    t.Commit();
 
-                    TaskDialog.Show("result", "Void created: " + count.ToString() + "\n" + "Errors: " + errors.ToString());
+                }//close transaction
 
-                }//close form
 
+            }//close form
+               
             return Result.Succeeded;
         }
     }
