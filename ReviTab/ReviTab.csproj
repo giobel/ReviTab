@@ -61,11 +61,13 @@
     <Compile Include="Buttons\CreateViewSet.cs" />
     <Compile Include="Buttons\DisallowBeamJoins.cs" />
     <Compile Include="Buttons\OverrideDimensions.cs" />
+    <Compile Include="Buttons\PurgeFamily.cs" />
     <Compile Include="Buttons\VoidByFace.cs" />
     <Compile Include="Buttons\PrintInBackground.cs" />
     <Compile Include="Buttons\SwapGridBubble.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
+    <Compile Include="Commands\Press.cs" />
     <Compile Include="Forms\FormAddOpening.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +142,12 @@
   <ItemGroup>
     <Folder Include="Commands\Select\" />
     <Folder Include="Commands\Views and Sheets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RevitPurgeUnused-master\PurgeUnused.vbproj">
+      <Project>{1fd4afac-e419-43f1-9c5d-ab8b19d55e2e}</Project>
+      <Name>PurgeUnused</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

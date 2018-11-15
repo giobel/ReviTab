@@ -87,6 +87,11 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                if (AddZeroStatePushButton(zeroState, "btnPurgeFamilies", "Purge Families", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability") == false)
+                {
+                    MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 if (AddTextBox(commandPanel, "btnCommandLine","Type some text and hit Enter") == false)
                 {
                     MessageBox.Show("Failed to add Text Box", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
