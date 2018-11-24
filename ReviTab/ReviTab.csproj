@@ -68,6 +68,7 @@
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
     <Compile Include="Commands\Press.cs" />
+    <Compile Include="Buttons\SuppressWarnings.cs" />
     <Compile Include="Forms\FormAddOpening.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,8 +152,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\REVIT\Addins\2019"
-copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\REVIT\Addins\2019"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2019"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2019"
+copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2018"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2018"
+copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2017"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2017"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
