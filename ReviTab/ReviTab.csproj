@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
     <Compile Include="Buttons\AddMultipleViewsToSheet.cs" />
+    <Compile Include="Buttons\AddTagsApplyUndo.cs" />
     <Compile Include="Buttons\CreateSections.cs" />
     <Compile Include="Buttons\CreateViewSet.cs" />
     <Compile Include="Buttons\DisallowBeamJoins.cs" />
@@ -67,8 +68,18 @@
     <Compile Include="Buttons\SwapGridBubble.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
+    <Compile Include="Commands\PlaceTags\AcceptChanges.cs" />
+    <Compile Include="Commands\PlaceTags\HelpersPlaceTags.cs" />
+    <Compile Include="Commands\PlaceTags\PlaceTags.cs" />
+    <Compile Include="Commands\PlaceTags\UndoChanges.cs" />
     <Compile Include="Commands\Press.cs" />
     <Compile Include="Buttons\SuppressWarnings.cs" />
+    <Compile Include="Forms\FormPlaceTags.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPlaceTags.designer.cs">
+      <DependentUpon>FormPlaceTags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormAddOpening.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +132,9 @@
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\FormPlaceTags.resx">
+      <DependentUpon>FormPlaceTags.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAddOpening.resx">
       <DependentUpon>FormAddOpening.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,10 +154,7 @@
       <DependentUpon>FormCreateViewSet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\Select\" />
-    <Folder Include="Commands\Views and Sheets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\RevitPurgeUnused-master\PurgeUnused.vbproj">
       <Project>{1fd4afac-e419-43f1-9c5d-ab8b19d55e2e}</Project>

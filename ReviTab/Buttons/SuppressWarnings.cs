@@ -73,8 +73,6 @@ namespace ReviTab
 
                 openDoc.Close(false);
 
-                TaskDialog.Show("Result", filePath[0]);
-
                 return Result.Succeeded;
             }
             catch(Exception ex)

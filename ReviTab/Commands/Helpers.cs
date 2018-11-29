@@ -893,5 +893,140 @@ namespace ReviTab
 			doc.Paint(ele.Id, webFace, matName.Id);
 			*/
         }
+
+        public static string SetTemporaryMark(Document doc, ElementId elid)
+        {
+            string tag = MarkGenerator(doc, elid);
+            Parameter p = doc.GetElement(elid).LookupParameter("Mark");
+            //form.originalMarks.append(p.AsString())
+            p.Set(string.Format("{0} (new: {1})", p.AsString(), tag));
+            return tag;
+        }
+
+        public static string GetMark(Document doc, ElementId eid)
+        {
+            Parameter p = doc.GetElement(eid).LookupParameter("Mark");
+            return p.AsString();
+        }
+
+        public static string MarkGenerator(Document doc, ElementId beamId)
+        {
+            Dictionary<string, string> usage = new Dictionary<string, string>(){
+                {"Primary", "PB"},
+                {"Secondary", "SB"},
+                {"Vertical Bracing", "VB"},
+                {"Diaphragm", "DB"}
+            };
+
+            Element beam = doc.GetElement(beamId);
+            LocationCurve lc = beam.Location as LocationCurve;
+            double xDist = Math.Abs((lc.Curve.Evaluate(0.5, true).X * 304.8 + 67286.598) / 1000);
+            double yDist = Math.Abs((lc.Curve.Evaluate(0.5, true).Y * 304.8 - 559.835) / 1000);
+            ElementId lvlId = beam.LookupParameter("Reference Level").AsElementId();
+            string lvlName = doc.GetElement(lvlId).Name;
+            string[] s = lvlName.Split(' ');
+            if (s[1] == "Ground")
+            {
+                s[1] = "UG";
+            }
+
+            string usageValue = string.Empty;
+
+            try
+            {
+                usageValue = usage[beam.LookupParameter("Str Framing Use").AsString()];
+            }
+
+            catch
+            {
+                usageValue = "Usage error";
+            }
+
+            string markValue = string.Empty;
+
+            if (xDist < 9.5 && yDist < 10)
+            {
+                markValue = string.Format("{0}{1}0{2:0}0{3:0}", s[1], usageValue, xDist, yDist);
+            }
+
+            else if (xDist < 9.5)
+            {
+                markValue = string.Format("{0}{1}0{2:0}{3:0}", s[1], usageValue, xDist, yDist);
+            }
+            else if (yDist < 9.5)
+            {
+                markValue = string.Format("{0}{1}{2:0}0{3:0}", s[1], usageValue, xDist, yDist);
+            }
+            else
+            {
+                markValue = string.Format("{0}{1}{2:0}{3:0}", s[1], usageValue, xDist, yDist);
+
+            }
+            //TaskDialog.Show("result", usageValue);
+            return markValue;
+
+        }
+
+        public static void assignMark(Document doc, ElementId eid, string markValue)
+        {
+            Parameter p = doc.GetElement(eid).LookupParameter("Mark");
+            p.Set(markValue);
+        }
+
+        public static void OverrideColor(Document doc, ElementId eid, string oldMark, string newMark)
+        {
+
+            View view = doc.ActiveView;
+            OverrideGraphicSettings overrideSettings = new OverrideGraphicSettings();
+
+            FilteredElementCollector fec = new FilteredElementCollector(doc).OfClass(typeof(FillPatternElement));
+
+            ElementId solidPatternId = null;
+            //ElementId solidPatternId = new ElementId(19);
+
+            foreach (Element pattern in fec)
+            {
+                if (pattern.Name == "Solid fill")
+                {
+                    solidPatternId = pattern.Id;
+                }
+            }
+
+            overrideSettings.SetProjectionFillPatternId(solidPatternId);
+
+            if (oldMark == newMark)
+            {
+                overrideSettings.SetProjectionFillColor(new Color(0, 255, 0));
+            }
+            else if (oldMark == "")
+            {
+                overrideSettings.SetProjectionFillColor(new Color(255, 255, 0));
+            }
+            else
+            {
+                overrideSettings.SetProjectionFillColor(new Color(255, 0, 0));
+            }
+
+            try
+            {
+                view.SetElementOverrides(eid, overrideSettings);
+                //TaskDialog.Show("Result", string.Format("oldMark: {0}newMark: {1}. are they the same? {2}", oldMark, newMark, oldMark==newMark));
+            }
+
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Catch", "Undo changes failed due to:" + Environment.NewLine + ex.Message);
+            }
+
+        }
+
+        public static void ResetOverrideColor(ElementId eid, Document doc)
+        {
+            View v = doc.ActiveView;
+            OverrideGraphicSettings overrideSettings = new OverrideGraphicSettings();
+            v.SetElementOverrides(eid, overrideSettings);
+        }
+
+
     }
 }

@@ -81,6 +81,10 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                if (AddPushButton(toolsPanel, "btnPlaceTags", "Place Tags", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams") == false)
+                {
+                    MessageBox.Show("Failed to add button Place Tags", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
                 {
@@ -91,12 +95,12 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+                /*
                 if (AddZeroStatePushButton(zeroState, "btnDiasbleWarning", "Open No Warnings", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.SuppressWarnings", "Suppress warnings when opening files", "ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+                */
                 if (AddTextBox(commandPanel, "btnCommandLine","Type some text and hit Enter") == false)
                 {
                     MessageBox.Show("Failed to add Text Box", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
