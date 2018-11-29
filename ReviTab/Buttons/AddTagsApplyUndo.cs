@@ -24,14 +24,21 @@ namespace ReviTab
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            using (var myForm = new winForm.Form())
+            try
             {
+                var myForm = new FormPlaceTags();
                 myForm.Show();
-            }
 
-            return Result.Succeeded;
+                return Result.Succeeded;
+            }
+            catch
+            {
+                return Result.Failed;
+            }
 
 
         }
+
+
     }
 }
