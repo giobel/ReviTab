@@ -37,6 +37,8 @@ namespace ReviTab
 
                 RibbonPanel toolsPanel = GetSetRibbonPanel(a, "SuperTab", "Tools");
 
+                RibbonPanel beams = GetSetRibbonPanel(a, "SuperTab", "Structural Framings");
+
                 RibbonPanel commandPanel = GetSetRibbonPanel(a, "SuperTab", "Command Line");
 
                 RibbonPanel zeroState = GetSetRibbonPanel(a, "SuperTab", "Zero State");
@@ -71,7 +73,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "", "pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.VoidByFace", "Place a void on a beam face") == false)
+                if (AddPushButton(beams, "btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "", "pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.VoidByFace", "Place a void on a beam face") == false)
                 {
                     MessageBox.Show("Failed to add button Void by face", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -81,17 +83,24 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnPlaceTags", "Place Tags", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams") == false)
+                if (AddPushButton(beams, "btnPlaceTags", "Place Tags", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams") == false)
                 {
                     MessageBox.Show("Failed to add button Place Tags", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+                if (AddPushButton(beams, "btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point") == false)
+                {
+                    MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
 
                 if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddZeroStatePushButton(zeroState, "btnPurgeFamilies", "Purge Families", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability") == false)
+                if (AddZeroStatePushButton(zeroState, "btnPurgeFamilies", "Purge Families", "", "pack://application:,,,/ReviTab;component/Resources/wiping.png", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

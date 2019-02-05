@@ -61,7 +61,7 @@ namespace ReviTab
                         }
                         catch
                         {
-                            string error = "Default type already present";
+                            //Do nothing
                         }
 
 

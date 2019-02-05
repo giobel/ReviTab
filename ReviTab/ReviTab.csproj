@@ -63,6 +63,7 @@
     <Compile Include="Buttons\DisallowBeamJoins.cs" />
     <Compile Include="Buttons\OverrideDimensions.cs" />
     <Compile Include="Buttons\PurgeFamily.cs" />
+    <Compile Include="Buttons\MoveBeamEnd.cs" />
     <Compile Include="Buttons\VoidByFace.cs" />
     <Compile Include="Buttons\PrintInBackground.cs" />
     <Compile Include="Buttons\SwapGridBubble.cs" />
@@ -129,6 +130,9 @@
     <Resource Include="Resources\createViewSet.png" />
     <Resource Include="Resources\dimensionOverride.png" />
     <Resource Include="Resources\addBeamOpening.png" />
+    <Resource Include="Resources\tag.png" />
+    <Resource Include="Resources\movement-arrows.png" />
+    <Resource Include="Resources\wiping.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

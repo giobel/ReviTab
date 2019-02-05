@@ -18,7 +18,7 @@ namespace ReviTab
         /// </summary>
         public static void leannSays()
         {
-            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "I smash you", "You I know can you guys delete it after finish ready. Thanks", "book my set tomorrow. donot forget thanks", "i am coming back on thuesday. \nthis is the day i will in office",   };
+            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "I smash you", "You I know can you guys delete it after finish ready. Thanks", "book my set tomorrow. donot forget thanks", "i am coming back on thuesday. \nthis is the day i will in office","i try to found you last Friday you not in office"   };
 
             Random rand = new Random();
 
@@ -842,7 +842,7 @@ namespace ReviTab
 
             foreach (Parameter p in instance.Parameters)
             {
-                if (p.Definition.Name == "Distance from Start")
+                if (p.Definition.Name == "P_Distance from Start")
                 {
                     p.Set(newDistance);
                 }
@@ -852,7 +852,7 @@ namespace ReviTab
             {
                 foreach (Parameter p in instance.Parameters)
                 {
-                    if (p.Definition.Name == "Void Width")
+                    if (p.Definition.Name == "P_Void Width")
                     {
                         p.Set(width / 304.8);
                     }
@@ -866,12 +866,79 @@ namespace ReviTab
 
             foreach (Parameter p in instance.Parameters)
             {
-                if (p.Definition.Name == "Void Height")
+                if (p.Definition.Name == "P_Void Depth")
                 {
                     p.Set(height / 304.8);
                 }
             }
         }//close macro
+
+        public static void MoveEnd(Document doc, Reference beamToMove, Reference refSource)
+        {
+
+            Element eleToMove = doc.GetElement(beamToMove.ElementId);
+
+            //Element location curve
+            LocationCurve locCrv = eleToMove.Location as LocationCurve;
+
+            Curve crv = locCrv.Curve;
+
+            XYZ lineStart = crv.GetEndPoint(0);
+            XYZ lineEnd = crv.GetEndPoint(1);
+
+            Element eleSource = doc.GetElement(refSource.ElementId);
+
+            LocationCurve sourceCurve = eleSource.Location as LocationCurve;
+
+            Curve sourceCrv = sourceCurve.Curve;
+
+            XYZ sourceStart = sourceCrv.GetEndPoint(0);
+            XYZ sourceEnd = sourceCrv.GetEndPoint(1);
+
+            double dist1 = lineStart.DistanceTo(sourceEnd);
+            double dist2 = lineEnd.DistanceTo(sourceEnd);
+
+            double dist3 = lineStart.DistanceTo(sourceStart);
+            double dist4 = lineEnd.DistanceTo(sourceStart);
+
+            Dictionary<string, double> dict = new Dictionary<string, double>();
+
+            dict.Add("d1", dist1);
+            dict.Add("d2", dist2);
+            dict.Add("d3", dist3);
+            dict.Add("d4", dist4);
+
+            var val = dict.OrderBy(k => k.Value).FirstOrDefault();
+
+            string keyR = val.Key;
+
+            if (keyR == "d1")
+            {
+                Line newColumnLine = Line.CreateBound(sourceEnd, lineEnd);
+                locCrv.Curve = newColumnLine;
+            }
+            else if (keyR == "d2")
+            {
+                Line newColumnLine = Line.CreateBound(lineStart, sourceEnd);
+                locCrv.Curve = newColumnLine;
+            }
+            else if (keyR == "d3")
+            {
+                Line newColumnLine = Line.CreateBound(sourceStart, lineEnd);
+                locCrv.Curve = newColumnLine;
+            }
+            else if (keyR == "d4")
+            {
+                Line newColumnLine = Line.CreateBound(lineStart, sourceStart);
+                locCrv.Curve = newColumnLine;
+            }
+            else
+            {
+                TaskDialog.Show("Error", "Error");
+            }
+
+
+        }//close method
 
         #endregion
 
