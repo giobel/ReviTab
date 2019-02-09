@@ -45,16 +45,25 @@ namespace ReviTab
 
                     Grid g = doc.GetElement(r.ElementId) as Grid;
 
-                    if (g.IsBubbleVisibleInView(DatumEnds.End0, doc.ActiveView))
-                    {
-                        g.HideBubbleInView(DatumEnds.End0, doc.ActiveView);
-                        g.ShowBubbleInView(DatumEnds.End1, doc.ActiveView);
-                    }
-                    else
-                    {
-                        g.HideBubbleInView(DatumEnds.End1, doc.ActiveView);
-                        g.ShowBubbleInView(DatumEnds.End0, doc.ActiveView);
-                    }
+                        try
+                        {
+                            if (g.IsBubbleVisibleInView(DatumEnds.End0, doc.ActiveView))
+                            {
+                                g.HideBubbleInView(DatumEnds.End0, doc.ActiveView);
+                                g.ShowBubbleInView(DatumEnds.End1, doc.ActiveView);
+                            }
+                            else
+                            {
+                                g.HideBubbleInView(DatumEnds.End1, doc.ActiveView);
+                                g.ShowBubbleInView(DatumEnds.End0, doc.ActiveView);
+                            }
+
+                        }
+
+                        catch
+                        {
+                            TaskDialog.Show("Result", String.Format("Can't swap grid {0} head. The tool does not support multi-segmented grids", g.Name));
+                        }
 
                 }
 
@@ -67,7 +76,7 @@ namespace ReviTab
             }
             catch
             {
-                TaskDialog.Show("Reuslt", "Uh-oh something went wrong");
+                TaskDialog.Show("Result", "Result failed");
 
                 return Result.Failed;
             }

@@ -725,6 +725,12 @@ namespace ReviTab
             int maxArea = areas.Keys.Max();
             webFace = areas[maxArea];
 
+            // Find beam width
+            int minArea = areas.Keys.Min();
+            Face verticalFace = areas[minArea];
+            BoundingBoxUV faceBB = verticalFace.GetBoundingBox();
+            double beamWidth = faceBB.Max.V - faceBB.Min.V;
+
 
             BoundingBoxUV bboxUV = webFace.GetBoundingBox();
 
@@ -792,14 +798,14 @@ namespace ReviTab
                 //XYZ direction = lc.Curve.GetEndPoint(0) - lc.Curve.GetEndPoint(1);
 
                 FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, transformedPoint, beamDirection, fs);
-                SetRectVoidParamters(instance, newDistance, width, height);
+                SetRectVoidParamters(instance, newDistance, width, height, beamWidth);
             }
 
             else
             {
 
                 FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, location, beamDirection, fs);
-                SetRectVoidParamters(instance, newDistance, width, height);
+                SetRectVoidParamters(instance, newDistance, width, height, beamWidth);
             }
 
 
@@ -839,7 +845,7 @@ namespace ReviTab
                 return 0;
         }
 
-        private static void SetRectVoidParamters(FamilyInstance instance, double newDistance, int width, int height)
+        private static void SetRectVoidParamters(FamilyInstance instance, double newDistance, int width, int height, double symbolH)
         {
 
 
@@ -872,6 +878,14 @@ namespace ReviTab
                 if (p.Definition.Name == "P_Void Depth")
                 {
                     p.Set(height / 304.8);
+                }
+            }
+
+            foreach (Parameter p in instance.Parameters)
+            {
+                if (p.Definition.Name == "P_Symbol Height")
+                {
+                    p.Set(symbolH);
                 }
             }
         }//close macro

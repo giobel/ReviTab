@@ -52,8 +52,7 @@ namespace ReviTab
 
             int maxArea = areas.Keys.Max();
             webFace = areas[maxArea];
-
-
+            
             XYZ location = null;
             XYZ beamDirection = null;
 
