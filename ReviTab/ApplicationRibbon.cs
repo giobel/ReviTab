@@ -48,6 +48,11 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Add View to Sheet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                if (AddPushButton(toolsPanel, "btnAddMultipleViews", "Add" + Environment.NewLine + "Multiple Views", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser.") == false)
+                {
+                    MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 if (AddPushButton(toolsPanel, "btnCreateSections", "Create Multiple" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections from selected elements (must have location curve i.e. beams, walls, lines...)") == false)
                 {
                     MessageBox.Show("Failed to add button Create Multiple Sections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -68,7 +73,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnAddMultipleViews", "Add" + Environment.NewLine + "Multiple Views", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser.") == false)
+                if (AddPushButton(toolsPanel, "btnOverrideDimensions", "Override Dimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension") == false)
                 {
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -78,23 +83,24 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Void by face", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnOverrideDimensions", "Override Dimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension") == false)
+                if (AddPushButton(beams, "btnPlaceVoidByLine", "Ethan's Void \n By Line", "", "pack://application:,,,/ReviTab;component/Resources/ethan.png", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear.") == false)
                 {
-                    MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
 
                 if (AddPushButton(beams, "btnPlaceTags", "Place Tags", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams") == false)
                 {
                     MessageBox.Show("Failed to add button Place Tags", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+
                 if (AddPushButton(beams, "btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point") == false)
                 {
                     MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-
-
+                
+                
                 if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -29,8 +29,9 @@ namespace ReviTab
             try
             {
 
-            
-            IList<Reference> selectedGrids = uidoc.Selection.PickObjects(ObjectType.Element, "Select Grids");
+                ISelectionFilter beamFilter = new GridSelectionFilter();
+
+                IList<Reference> selectedGrids = uidoc.Selection.PickObjects(ObjectType.Element, beamFilter, "Select Grids");
 
 
             using (Transaction t = new Transaction(doc, "Swap grid bubble"))
@@ -73,4 +74,25 @@ namespace ReviTab
 
         }
     }
+
+    public class GridSelectionFilter : ISelectionFilter
+    {
+
+        public bool AllowElement(Element e)
+        {
+
+            if (e.Category.Name == "Grids")
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        public bool AllowReference(Reference refer, XYZ point)
+        {
+            return false;
+        }
+
+    }//close class
 }

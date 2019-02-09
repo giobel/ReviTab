@@ -452,7 +452,10 @@ namespace ReviTab
             {
                 try
                 {
-                    categoryList.Add(e.Name, e);
+                    if (e.Category.Name == "Structural Connections")
+                    {
+                        categoryList.Add(e.Name, e);
+                    }
                 }
                 catch
                 {
@@ -939,6 +942,50 @@ namespace ReviTab
 
 
         }//close method
+
+        public static void BeamStartUVPoint(Element beam, Face myFace, out XYZ choosenLocation, out XYZ beamDirection)
+        {
+
+            BoundingBoxUV bbox = myFace.GetBoundingBox();
+            double halfDepthU = (bbox.Min.U + bbox.Max.U) * 0.5;
+            double halfDepthV = (bbox.Min.V + bbox.Max.V) * 0.5;
+
+            //faceLength = Math.Abs(bbox.Max - bbox.Min);
+
+            UV start = bbox.Min;
+            UV end = bbox.Max;
+
+            //XYZ beamDirection = myFace.IsInside()
+
+            LocationCurve beamLine = beam.Location as LocationCurve;
+
+            XYZ stPt = beamLine.Curve.GetEndPoint(0);
+            XYZ endPt = beamLine.Curve.GetEndPoint(1);
+
+            List<UV> UVpoints = new List<UV>();
+
+            UVpoints.Add(new UV(bbox.Max.U, halfDepthV));
+            UVpoints.Add(new UV(bbox.Min.U, halfDepthV));
+
+            UVpoints.Add(new UV(halfDepthU, bbox.Max.V));
+            UVpoints.Add(new UV(halfDepthU, bbox.Min.V));
+
+            Dictionary<double, XYZ> ptOnSurfaces = new Dictionary<double, XYZ>();
+
+            foreach (UV pt in UVpoints)
+            {
+                XYZ point = myFace.Evaluate(pt);
+                ptOnSurfaces.Add(stPt.DistanceTo(point), point);
+            }
+
+            double closestDistanceToStart = ptOnSurfaces.Keys.Min();
+
+            choosenLocation = ptOnSurfaces[closestDistanceToStart];
+
+            beamDirection = beamLine.Curve.GetEndPoint(0) - beamLine.Curve.GetEndPoint(1); //invert if beam End Point is chosen
+
+        }//close method
+
 
         #endregion
 
