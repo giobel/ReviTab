@@ -411,7 +411,7 @@ namespace ReviTab
         public static void SelectAllTypes(UIDocument uidoc, string message)
         {
 
-
+            /*
             string eleType = message.Split('*')[1];
 
             Document doc = uidoc.Document;
@@ -438,14 +438,8 @@ namespace ReviTab
             }
 
             selElements.SetElementIds(selectedElements);
-            //TaskDialog.Show("Success", eleType);
+            //TaskDialog.Show("Success", eleType);*/
 
-
-
-            /*		public void SelectByParameter(){
-			
-			string message = "*Walls";
-			
 			string command = message.Split('*')[1];
 
 			string param = "";
@@ -455,30 +449,36 @@ namespace ReviTab
 			try{
 				
 			if (command.Contains('>')) {
-					string[] check = command.Split(' ')[1].Split('>');
+					string[] check = command.Split('+')[1].Split('>');
 				param = check[0];
 				operatorValue = "larger";
-				valueToCheck = Int16.Parse(check[1])/304.8;
+				valueToCheck = Int16.Parse(check[1]);
 			}
 			else if (command.Contains('<')){
-					string[] check = command.Split(' ')[1].Split('<');
+					string[] check = command.Split('+')[1].Split('<');
 				param = check[0];
 				operatorValue = "smaller";
-				valueToCheck = Int16.Parse(check[1])/304.8;
+				valueToCheck = Int16.Parse(check[1]);
 			}
 			else if (command.Contains('=')){
-					string[] check = command.Split(' ')[1].Split('=');
+					string[] check = command.Split('+')[1].Split('=');
 				param = check[0];
 				operatorValue = "equal";
-				valueToCheck = Int16.Parse(check[1])/304.8;
+				valueToCheck = Int16.Parse(check[1]);
 			}
-			}
+                else if (command.Contains('!'))
+                {
+                    string[] check = command.Split('+')[1].Split('!');
+                    param = check[0];
+                    operatorValue = "different";
+                    valueToCheck = Int16.Parse(check[1]);
+                }
+            }
 
 			catch{
 
 			}
 			
-			UIDocument uidoc = this.ActiveUIDocument;
             Document doc = uidoc.Document;
 
             Selection selElements = uidoc.Selection;
@@ -496,58 +496,54 @@ namespace ReviTab
                 	name = ele.Category.Name;
                 }
                     
-                
-                if (name == command.Split(' ')[0]) {
-                    	
-                	if (param != ""){
-                			                    	double paramValue = 0;
-    	                	   foreach (Parameter p in ele.Parameters) {
-    	                		if (p.Definition.Name == param) {
-    	                			paramValue = p.AsDouble();}
-								    }
-    	                	
-	                    	
-    		                if (DoubleParamCheck(paramValue,valueToCheck, operatorValue)){
-			                    	selectedElements.Add(eid);
-    		                	}
+                if (name == command.Split('+')[0]) {            
+                	if (param != "")
+                    {
+                		double paramValue = 0;
+    	                foreach (Parameter p in ele.Parameters) {
+    	                if (p.Definition.Name == param) {
+    	                	paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS); 
+                            }
+                        }
 
+    		        if (DoubleParamCheck(paramValue,valueToCheck, operatorValue)){
+			             selectedElements.Add(eid);
+    		            }
                 	}
                 	else{
-                		        	selectedElements.Add(eid);
+                	selectedElements.Add(eid);
                 	}
-                    	
-                    	
-                    }
-                        
+                }
              }
                 
             selElements.SetElementIds(selectedElements);
             //TaskDialog.Show("Success", param);
-			
-		}
-			
-			
-		public static bool DoubleParamCheck(double param1, double param2, string operatorValue){
-			
-			string operatorSwitch = operatorValue;
-			bool resultValue = false;
-			
-			switch (operatorSwitch){
-					case "larger":
-					resultValue = param1>param2;
-                    break;
-                   case "equal":
-                    resultValue = param1 == param2;
-                    break;
-                   case "smaller":
-                    resultValue = param1<param2;
-                    break;
-			}
-			return resultValue;
-		}
-*/
 
         }//close method}
+
+        public static bool DoubleParamCheck(double param1, double param2, string operatorValue)
+        {
+
+            string operatorSwitch = operatorValue;
+            bool resultValue = false;
+
+            switch (operatorSwitch)
+            {
+                case "larger":
+                    resultValue = Convert.ToInt16(param1) > Convert.ToInt16(param2);
+                    break;
+                case "equal":
+                    resultValue = Convert.ToInt16(param1) == Convert.ToInt16(param2);
+                    break;
+                case "smaller":
+                    resultValue = Convert.ToInt16(param1) < Convert.ToInt16(param2);
+                    break;
+                case "different":
+                    resultValue = Convert.ToInt16(param1) != Convert.ToInt16(param2);
+                    break;
+            }
+            return resultValue;
+        }
 
         public static Dictionary<string, FamilySymbol> SelectFamilies(Document doc)
         {
