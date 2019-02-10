@@ -440,6 +440,113 @@ namespace ReviTab
             selElements.SetElementIds(selectedElements);
             //TaskDialog.Show("Success", eleType);
 
+
+
+            /*		public void SelectByParameter(){
+			
+			string message = "*Walls";
+			
+			string command = message.Split('*')[1];
+
+			string param = "";
+			string operatorValue = "";
+			double valueToCheck = 0;
+			
+			try{
+				
+			if (command.Contains('>')) {
+					string[] check = command.Split(' ')[1].Split('>');
+				param = check[0];
+				operatorValue = "larger";
+				valueToCheck = Int16.Parse(check[1])/304.8;
+			}
+			else if (command.Contains('<')){
+					string[] check = command.Split(' ')[1].Split('<');
+				param = check[0];
+				operatorValue = "smaller";
+				valueToCheck = Int16.Parse(check[1])/304.8;
+			}
+			else if (command.Contains('=')){
+					string[] check = command.Split(' ')[1].Split('=');
+				param = check[0];
+				operatorValue = "equal";
+				valueToCheck = Int16.Parse(check[1])/304.8;
+			}
+			}
+
+			catch{
+
+			}
+			
+			UIDocument uidoc = this.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+            Selection selElements = uidoc.Selection;
+
+            ICollection<ElementId> idTxt = new FilteredElementCollector(doc, doc.ActiveView.Id).ToElementIds();
+
+            List<ElementId> selectedElements = new List<ElementId>();
+
+            foreach (ElementId eid in idTxt)
+            {
+                Element ele = doc.GetElement(eid);
+                
+                string name = "";
+                if (ele.Category != null){
+                	name = ele.Category.Name;
+                }
+                    
+                
+                if (name == command.Split(' ')[0]) {
+                    	
+                	if (param != ""){
+                			                    	double paramValue = 0;
+    	                	   foreach (Parameter p in ele.Parameters) {
+    	                		if (p.Definition.Name == param) {
+    	                			paramValue = p.AsDouble();}
+								    }
+    	                	
+	                    	
+    		                if (DoubleParamCheck(paramValue,valueToCheck, operatorValue)){
+			                    	selectedElements.Add(eid);
+    		                	}
+
+                	}
+                	else{
+                		        	selectedElements.Add(eid);
+                	}
+                    	
+                    	
+                    }
+                        
+             }
+                
+            selElements.SetElementIds(selectedElements);
+            //TaskDialog.Show("Success", param);
+			
+		}
+			
+			
+		public static bool DoubleParamCheck(double param1, double param2, string operatorValue){
+			
+			string operatorSwitch = operatorValue;
+			bool resultValue = false;
+			
+			switch (operatorSwitch){
+					case "larger":
+					resultValue = param1>param2;
+                    break;
+                   case "equal":
+                    resultValue = param1 == param2;
+                    break;
+                   case "smaller":
+                    resultValue = param1<param2;
+                    break;
+			}
+			return resultValue;
+		}
+*/
+
         }//close method}
 
         public static Dictionary<string, FamilySymbol> SelectFamilies(Document doc)
