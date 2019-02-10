@@ -444,7 +444,7 @@ namespace ReviTab
 
 			string param = "";
 			string operatorValue = "";
-			double valueToCheck = 0;
+			string valueToCheck = "";
 			
 			try{
 				
@@ -452,26 +452,26 @@ namespace ReviTab
 					string[] check = command.Split('+')[1].Split('>');
 				param = check[0];
 				operatorValue = "larger";
-				valueToCheck = Int16.Parse(check[1]);
+				valueToCheck = check[1];
 			}
 			else if (command.Contains('<')){
 					string[] check = command.Split('+')[1].Split('<');
 				param = check[0];
 				operatorValue = "smaller";
-				valueToCheck = Int16.Parse(check[1]);
+				valueToCheck = check[1];
 			}
 			else if (command.Contains('=')){
 					string[] check = command.Split('+')[1].Split('=');
 				param = check[0];
 				operatorValue = "equal";
-				valueToCheck = Int16.Parse(check[1]);
+				valueToCheck = check[1];
 			}
                 else if (command.Contains('!'))
                 {
                     string[] check = command.Split('+')[1].Split('!');
                     param = check[0];
                     operatorValue = "different";
-                    valueToCheck = Int16.Parse(check[1]);
+                    valueToCheck = check[1];
                 }
             }
 
@@ -500,15 +500,41 @@ namespace ReviTab
                 	if (param != "")
                     {
                 		double paramValue = 0;
+                        string stringValue = "";
+                        string test = "";
+
     	                foreach (Parameter p in ele.Parameters) {
     	                if (p.Definition.Name == param) {
-    	                	paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS); 
+
+                            StorageType parameterType = p.StorageType;
+                            if (StorageType.Double == parameterType)
+                                {
+                                    paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
+                                    test = "Double";
+                                }
+    	                	else if (StorageType.String == parameterType)
+                                {
+                                    stringValue = p.AsString();
+                                    test = "String";
+                                }
                             }
                         }
 
-    		        if (DoubleParamCheck(paramValue,valueToCheck, operatorValue)){
-			             selectedElements.Add(eid);
-    		            }
+                        if (test == "Double")
+                        {
+                            if (DoubleParamCheck(paramValue, Int16.Parse(valueToCheck), operatorValue))
+                            {
+                                selectedElements.Add(eid);
+                            }
+                        }
+                        else if (test == "String")
+                        {
+                            if (StringParamCheck(stringValue, valueToCheck, operatorValue))
+                            {
+                                    selectedElements.Add(eid);   
+                            }
+                        }
+    		            
                 	}
                 	else{
                 	selectedElements.Add(eid);
@@ -540,6 +566,23 @@ namespace ReviTab
                     break;
                 case "different":
                     resultValue = Convert.ToInt16(param1) != Convert.ToInt16(param2);
+                    break;
+            }
+            return resultValue;
+        }
+
+        public static bool StringParamCheck(string param1, string param2, string operatorValue)
+        {
+            string operatorSwitch = operatorValue;
+            bool resultValue = false;
+
+            switch (operatorSwitch)
+            {
+                case "equal":
+                    resultValue = param1 == param2;
+                    break;
+                case "different":
+                    resultValue = param1 != param2;
                     break;
             }
             return resultValue;
