@@ -83,7 +83,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Void by face", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(beams, "btnPlaceVoidByLine", "Ethan's Void \n By Line", "", "pack://application:,,,/ReviTab;component/Resources/ethan.png", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear.") == false)
+                if (AddPushButton(beams, "btnPlaceVoidByLine", "Void By Line", "", "pack://application:,,,/ReviTab;component/Resources/line.png", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear.") == false)
                 {
                     MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

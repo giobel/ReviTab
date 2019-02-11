@@ -136,6 +136,7 @@
     <Resource Include="Resources\movement-arrows.png" />
     <Resource Include="Resources\wiping.png" />
     <Resource Include="Resources\ethan.png" />
+    <Resource Include="Resources\line.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
