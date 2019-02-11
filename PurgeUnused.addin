@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Purge Unused</Text>
+    <Description>Purge unused families and types from the current document.</Description>
+    <Assembly>PurgeUnused.dll</Assembly>
+    <FullClassName>PurgeUnused.PurgeUnused</FullClassName>
+    <ClientId>52383ba5-3104-4bfd-a1c9-a5daba79978c</ClientId>
+    <VendorId>com.wsp.www</VendorId>
+    <VendorDescription>WSP, https://www.wsp.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
