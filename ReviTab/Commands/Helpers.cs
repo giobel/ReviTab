@@ -439,8 +439,10 @@ namespace ReviTab
 
             selElements.SetElementIds(selectedElements);
             //TaskDialog.Show("Success", eleType);*/
+            Document doc = uidoc.Document;
 
-			string command = message.Split('*')[1];
+
+            string command = message.Split('*')[1];
 
 			string param = "";
 			string operatorValue = "";
@@ -477,10 +479,11 @@ namespace ReviTab
 
 			catch{
 
+                TaskDialog.Show("Warning", "Something went wrong");
 			}
 			
-            Document doc = uidoc.Document;
-
+            
+            
             Selection selElements = uidoc.Selection;
 
             ICollection<ElementId> idTxt = new FilteredElementCollector(doc, doc.ActiveView.Id).ToElementIds();
@@ -503,26 +506,23 @@ namespace ReviTab
                         string stringValue = "";
                         string test = "";
 
-    	                foreach (Parameter p in ele.Parameters) {
-    	                if (p.Definition.Name == param) {
+                        Parameter p = ele.LookupParameter(param);
 
-                            StorageType parameterType = p.StorageType;
-                            if (StorageType.Double == parameterType)
-                                {
-                                    paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
-                                    test = "Double";
-                                }
-    	                	else if (StorageType.String == parameterType)
-                                {
-                                    stringValue = p.AsString();
-                                    test = "String";
-                                }
+                        StorageType parameterType = p.StorageType;
+                        if (StorageType.Double == parameterType)
+                            {
+                                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
+                                test = "Double";
                             }
-                        }
+    	                else if (StorageType.String == parameterType)
+                            {
+                                stringValue = p.AsString();
+                                test = "String";
+                            }
 
                         if (test == "Double")
                         {
-                            if (DoubleParamCheck(paramValue, Int16.Parse(valueToCheck), operatorValue))
+                            if (DoubleParamCheck(paramValue, Int64.Parse(valueToCheck), operatorValue))
                             {
                                 selectedElements.Add(eid);
                             }
@@ -543,7 +543,7 @@ namespace ReviTab
              }
                 
             selElements.SetElementIds(selectedElements);
-            //TaskDialog.Show("Success", param);
+                //TaskDialog.Show("Success", param);
 
         }//close method}
 
@@ -556,16 +556,16 @@ namespace ReviTab
             switch (operatorSwitch)
             {
                 case "larger":
-                    resultValue = Convert.ToInt16(param1) > Convert.ToInt16(param2);
+                    resultValue = Convert.ToInt64(param1) > Convert.ToInt64(param2);
                     break;
                 case "equal":
-                    resultValue = Convert.ToInt16(param1) == Convert.ToInt16(param2);
+                    resultValue = Convert.ToInt64(param1) == Convert.ToInt64(param2);
                     break;
                 case "smaller":
-                    resultValue = Convert.ToInt16(param1) < Convert.ToInt16(param2);
+                    resultValue = Convert.ToInt64(param1) < Convert.ToInt64(param2);
                     break;
                 case "different":
-                    resultValue = Convert.ToInt16(param1) != Convert.ToInt16(param2);
+                    resultValue = Convert.ToInt64(param1) != Convert.ToInt64(param2);
                     break;
             }
             return resultValue;
