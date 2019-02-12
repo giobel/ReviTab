@@ -42,8 +42,16 @@ keywords:
 * select
 + create
 - delete
+> larger
+< shorter
+= equal
+! not equal
+
 examples:
-\*Structural Framing -> select all structural framing in the active view
+
+\*Structural Framing -> select all structural framings in the active view.
+\*Structural Framing+Length>10000 -> select all structural framings in the active view longer than 10m. 
+\*Walls+Mark=aa -> select all walls with a Mark equal to 'aa'
 
 
 
