@@ -492,56 +492,69 @@ namespace ReviTab
 
             foreach (ElementId eid in idTxt)
             {
-                Element ele = doc.GetElement(eid);
-                
-                string name = "";
-                if (ele.Category != null){
-                	name = ele.Category.Name;
-                }
-                    
-                if (name == command.Split('+')[0]) {            
-                	if (param != "")
+                try
+                {
+                    Element ele = doc.GetElement(eid);
+
+                    string name = "";
+                    if (ele.Category != null)
                     {
-                		double paramValue = 0;
-                        string stringValue = "";
-                        string test = "";
+                        name = ele.Category.Name;
+                    }
 
-                        Parameter p = ele.LookupParameter(param);
+                    if (name == command.Split('+')[0])
+                    {
+                        if (param != "")
+                        {
+                            double paramValue = 0;
+                            string stringValue = "";
+                            string test = "";
 
-                        StorageType parameterType = p.StorageType;
-                        if (StorageType.Double == parameterType)
+                            Parameter p = ele.LookupParameter(param);
+
+                            StorageType parameterType = p.StorageType;
+                            if (StorageType.Double == parameterType)
                             {
                                 paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
                                 test = "Double";
                             }
-    	                else if (StorageType.String == parameterType)
+                            else if (StorageType.String == parameterType)
                             {
                                 stringValue = p.AsString();
                                 test = "String";
                             }
 
-                        if (test == "Double")
-                        {
-                            if (DoubleParamCheck(paramValue, Int64.Parse(valueToCheck), operatorValue))
+                            if (test == "Double")
                             {
-                                selectedElements.Add(eid);
+                                if (DoubleParamCheck(paramValue, Int64.Parse(valueToCheck), operatorValue))
+                                {
+                                    selectedElements.Add(eid);
+                                }
                             }
-                        }
-                        else if (test == "String")
-                        {
-                            if (StringParamCheck(stringValue, valueToCheck, operatorValue))
+                            else if (test == "String")
                             {
-                                    selectedElements.Add(eid);   
+                                if (StringParamCheck(stringValue, valueToCheck, operatorValue))
+                                {
+                                    selectedElements.Add(eid);
+                                }
                             }
+
                         }
-    		            
-                	}
-                	else{
-                	selectedElements.Add(eid);
-                	}
+                        else
+                        {
+                            selectedElements.Add(eid);
+                        }
+                    }
                 }
-             }
                 
+
+                catch
+                {
+
+                }
+
+            }
+
             selElements.SetElementIds(selectedElements);
                 //TaskDialog.Show("Success", param);
 

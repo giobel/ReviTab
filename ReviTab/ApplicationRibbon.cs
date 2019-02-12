@@ -99,12 +99,12 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+                /*
                 if (AddPushButton(beams, "btnSelectByParam", "Select By Parameter", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.SelectByParameter", "Select by parameter and operator") == false)
                 {
-                    MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to add button Select By Parameter", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+                */
                 if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
