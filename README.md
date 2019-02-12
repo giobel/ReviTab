@@ -50,9 +50,15 @@ keywords:
 examples:
 
 \*Structural Framing -> select all structural framings in the active view.
+
 \*Structural Framing+Length>10000 -> select all structural framings in the active view longer than 10m. 
+
 \*Walls+Mark=aa -> select all walls with a Mark equal to 'aa'
 
+## Background Print
+Open a model in background and print its drawings.
 
+## Purge Families
+Purge families and leave only a type called Default. Requires the Purge Unused that can be found in the Revit Purge Unused branch. Credits: Matt Taylor https://gitlab.com/MattTaylor/RevitPurgeUnused/blob/master/PurgeTool.vb
 
 
