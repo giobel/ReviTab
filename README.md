@@ -28,4 +28,23 @@ Set the text dimension to "" for a selected dimension. Does not work on multiple
 Add one ore more voids to a beam face providing the distance(s) from the beam start, mid or end point and its size.
 
 ## Void By Line
-Place a void by face at the intersection between a 2d line and a beam. 
+Place a void by face at the intersection between a 2d line (on plan) and a beam. The opening will acquire distance and size from the line style name.
+
+## Place Tags
+Modeless window that calculates the distance from the origin to the beam centerpoint and saves it as Mark. The user can accept or refuse the changes.
+
+## Move beam end
+Move a beam or multiple beams end point to another element location curve closest point.
+
+## Command Line
+Call methods directly:
+keywords: 
+* select
++ create
+- delete
+examples:
+\*Structural Framing -> select all structural framing in the active view
+
+
+
+
