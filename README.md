@@ -27,8 +27,12 @@ Create a viewset from a list of sheet numbers.
 ## Swap Grid Head
 Swap the grid head bubble in the active view. Note: does not work for multi-segmented grids.
 
+[![Watch the video](https://img.youtube.com/vi/bHYYYyHRt1o/maxresdefault.jpg)](https://youtu.be/bHYYYyHRt1o)
+
 ## Override Dimension
 Set the text dimension to "" for a selected dimension. Does not work on multiple elements or multi-segment dimensions.
+
+[![Watch the video](https://img.youtube.com/vi/OwpogSyYWfg/maxresdefault.jpg)](https://youtu.be/OwpogSyYWfg)
 
 ## Place Void By Face
 Add one ore more voids to a beam face providing the distance(s) from the beam start, mid or end point and its size.
