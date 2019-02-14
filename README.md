@@ -27,7 +27,11 @@ Set the text dimension to "" for a selected dimension. Does not work on multiple
 ## Place Void By Face
 Add one ore more voids to a beam face providing the distance(s) from the beam start, mid or end point and its size.
 
-<iframe width="720" height="405" src="https://www.youtube.com/embed/rh_EJ_7YhuU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/MUQfKFzIOeU" 
+frameborder="0" 
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+allowfullscreen></iframe>
 
 ## Void By Line
 Place a void by face at the intersection between a 2d line (on plan) and a beam. The opening will acquire distance and size from the line style name.
