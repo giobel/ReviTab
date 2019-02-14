@@ -69,6 +69,8 @@ examples:
 
 \*Walls+Mark=aa -> select all walls with a Mark equal to 'aa'
 
+[![Watch the video](https://img.youtube.com/vi/b0s0C-3rNfQ/maxresdefault.jpg)](https://youtu.be/b0s0C-3rNfQ)
+
 ## Background Print
 Open a model in background and print its drawings.
 
