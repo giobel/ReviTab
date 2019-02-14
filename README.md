@@ -1,9 +1,7 @@
-<meta http-equiv="Content-Security-Policy" content="default-src gap://ready file://* *; style-src 'self' http://* https://* 'unsafe-inline'; script-src 'self' http://* https://* 'unsafe-inline' 'unsafe-eval'">
-
 # ReviTab
 WIP toolbar for Revit. 
 
-<img src="https://github.com/giobel/ReviTab/blob/master/reviTab.PNG" width="1000" style="display:block; margin-left: auto; margin-right: auto;">
+![IMG](images/reviTab.PNG)
 
 ## Add View to Sheet
 Add the active view to a sheet providing its number.
