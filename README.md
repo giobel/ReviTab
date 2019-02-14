@@ -6,11 +6,17 @@ WIP toolbar for Revit.
 ## Add View to Sheet
 Add the active view to a sheet providing its number.
 
+[![Watch the video](https://img.youtube.com/vi/qPYRnkZicLo/maxresdefault.jpg)](https://youtu.be/qPYRnkZicLo)
+
 ## Add Multiple Views
 Select multiple views in the project browser and add them to a sheet providing its number.
 
+[![Watch the video](https://img.youtube.com/vi/uRq-HjIrW4g/maxresdefault.jpg)](https://youtu.be/uRq-HjIrW4g)
+
 ## Create Multiple Sections
 credits: Danny Bentley and others. Create a section from a list of elements that have a location curve.
+
+[![Watch the video](https://img.youtube.com/vi/coOg4BKto-k/maxresdefault.jpg)](https://youtu.be/coOg4BKto-k)
 
 ## Select All Text
 Select all text notes in the project and launch the spelling check.
@@ -27,12 +33,12 @@ Set the text dimension to "" for a selected dimension. Does not work on multiple
 ## Place Void By Face
 Add one ore more voids to a beam face providing the distance(s) from the beam start, mid or end point and its size.
 
-[![Watch the video](https://img.youtube.com/vi/tJQ0X6QHjVE/maxresdefault.jpg)](https://youtu.be/tJQ0X6QHjVE)
+
 
 ## Void By Line
 Place a void by face at the intersection between a 2d line (on plan) and a beam. The opening will acquire distance and size from the line style name.
 
-[![Watch the video](https://img.youtube.com/vi/ox60pBcj9Kk/maxresdefault.jpg)](https://youtu.be/ox60pBcj9Kk)
+
 
 ## Place Tags
 Modeless window that calculates the distance from the origin to the beam centerpoint and saves it as Mark. The user can accept or refuse the changes.
