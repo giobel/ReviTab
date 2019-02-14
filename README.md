@@ -6,17 +6,17 @@ WIP toolbar for Revit.
 ## Add View to Sheet
 Add the active view to a sheet providing its number.
 
-[![Watch the video](https://img.youtube.com/vi/qPYRnkZicLo/maxresdefault.jpg)](https://youtu.be/qPYRnkZicLo)
+[![Watch the video](https://img.youtube.com/vi/adpGT6SKGek/maxresdefault.jpg)](https://youtu.be/adpGT6SKGek)
 
 ## Add Multiple Views
 Select multiple views in the project browser and add them to a sheet providing its number.
 
-[![Watch the video](https://img.youtube.com/vi/uRq-HjIrW4g/maxresdefault.jpg)](https://youtu.be/uRq-HjIrW4g)
+[![Watch the video](https://img.youtube.com/vi/nmRzktJehwo/maxresdefault.jpg)](https://youtu.be/nmRzktJehwo)
 
 ## Create Multiple Sections
 credits: Danny Bentley and others. Create a section from a list of elements that have a location curve.
 
-[![Watch the video](https://img.youtube.com/vi/coOg4BKto-k/maxresdefault.jpg)](https://youtu.be/coOg4BKto-k)
+[![Watch the video](https://img.youtube.com/vi/mj504sYGDZM/maxresdefault.jpg)](https://youtu.be/mj504sYGDZM)
 
 ## Select All Text
 Select all text notes in the project and launch the spelling check.
@@ -69,7 +69,7 @@ examples:
 
 \*Walls+Mark=aa -> select all walls with a Mark equal to 'aa'
 
-[![Watch the video](https://img.youtube.com/vi/b0s0C-3rNfQ/maxresdefault.jpg)](https://youtu.be/b0s0C-3rNfQ)
+[![Watch the video](https://img.youtube.com/vi/axukGCgBRys/maxresdefault.jpg)](https://youtu.be/axukGCgBRys)
 
 ## Background Print
 Open a model in background and print its drawings.
