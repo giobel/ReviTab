@@ -6,11 +6,17 @@ WIP toolbar for Revit.
 ## Add View to Sheet
 Add the active view to a sheet providing its number.
 
+[![Watch the video](https://img.youtube.com/vi/adpGT6SKGek/maxresdefault.jpg)](https://youtu.be/adpGT6SKGek)
+
 ## Add Multiple Views
 Select multiple views in the project browser and add them to a sheet providing its number.
 
+[![Watch the video](https://img.youtube.com/vi/nmRzktJehwo/maxresdefault.jpg)](https://youtu.be/nmRzktJehwo)
+
 ## Create Multiple Sections
 credits: Danny Bentley and others. Create a section from a list of elements that have a location curve.
+
+[![Watch the video](https://img.youtube.com/vi/mj504sYGDZM/maxresdefault.jpg)](https://youtu.be/mj504sYGDZM)
 
 ## Select All Text
 Select all text notes in the project and launch the spelling check.
@@ -21,16 +27,22 @@ Create a viewset from a list of sheet numbers.
 ## Swap Grid Head
 Swap the grid head bubble in the active view. Note: does not work for multi-segmented grids.
 
+[![Watch the video](https://img.youtube.com/vi/bHYYYyHRt1o/maxresdefault.jpg)](https://youtu.be/bHYYYyHRt1o)
+
 ## Override Dimension
 Set the text dimension to "" for a selected dimension. Does not work on multiple elements or multi-segment dimensions.
+
+[![Watch the video](https://img.youtube.com/vi/OwpogSyYWfg/maxresdefault.jpg)](https://youtu.be/OwpogSyYWfg)
 
 ## Place Void By Face
 Add one ore more voids to a beam face providing the distance(s) from the beam start, mid or end point and its size.
 
-[![Watch the video](https://img.youtube.com/vi/sw1vG_4c88A/maxresdefault.jpg)](https://youtu.be/sw1vG_4c88A)
+[![Watch the video](https://img.youtube.com/vi/fi9HgS9kjw4/maxresdefault.jpg)](https://youtu.be/fi9HgS9kjw4)
 
 ## Void By Line
 Place a void by face at the intersection between a 2d line (on plan) and a beam. The opening will acquire distance and size from the line style name.
+
+[![Watch the video](https://img.youtube.com/vi/jvsqUJG3uHA/maxresdefault.jpg)](https://youtu.be/jvsqUJG3uHA)
 
 ## Place Tags
 Modeless window that calculates the distance from the origin to the beam centerpoint and saves it as Mark. The user can accept or refuse the changes.
@@ -56,6 +68,8 @@ examples:
 \*Structural Framing+Length>10000 -> select all structural framings in the active view longer than 10m. 
 
 \*Walls+Mark=aa -> select all walls with a Mark equal to 'aa'
+
+[![Watch the video](https://img.youtube.com/vi/axukGCgBRys/maxresdefault.jpg)](https://youtu.be/axukGCgBRys)
 
 ## Background Print
 Open a model in background and print its drawings.
