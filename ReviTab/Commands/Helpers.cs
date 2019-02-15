@@ -4,7 +4,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-
+using MySql.Data.MySqlClient;
 
 namespace ReviTab
 {
@@ -1314,6 +1314,62 @@ namespace ReviTab
             v.SetElementOverrides(eid, overrideSettings);
         }
 
+        public static bool InsertData(DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings)
+        {
+
+            /*
+	        string server = "127.0.0.1";
+	        string database = "sample";
+	        string uid = "root";
+	        string password = "";
+	        */
+
+            string server = "remotemysql.com";
+            string database = "r7BFoOjCty";
+            string uid = "r7BFoOjCty";
+            string password = "1vU3s1bj6T";
+            string connectionString;
+            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
+            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+
+            string table = "CQT";
+
+            try
+            {
+
+                MySqlConnection connection = new MySqlConnection(connectionString);
+
+                MySqlCommand cmdInsert = new MySqlCommand("", connection);
+                cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount) " +
+                    "VALUES (?date, ?user, ?rvtFileSize, ?elementsCount, ?typesCount, ?sheetsCount, ?viewsCount, ?viewportsCount, ?warningsCount)";
+
+                cmdInsert.Parameters.Add("?date", MySqlDbType.DateTime).Value = dt;
+                cmdInsert.Parameters.Add("?user", MySqlDbType.VarChar).Value = user;
+                cmdInsert.Parameters.Add("?rvtFileSize", MySqlDbType.Int64).Value = rvtFileSize;
+                cmdInsert.Parameters.Add("?elementsCount", MySqlDbType.Int32).Value = elementsCount;
+                cmdInsert.Parameters.Add("?typesCount", MySqlDbType.Int32).Value = typesCount;
+
+                cmdInsert.Parameters.Add("?sheetsCount", MySqlDbType.Int32).Value = sheetsCount;
+                cmdInsert.Parameters.Add("?viewsCount", MySqlDbType.Int32).Value = viewsCount;
+                cmdInsert.Parameters.Add("?viewportsCount", MySqlDbType.Int32).Value = viewportsCount;
+
+                cmdInsert.Parameters.Add("?warningsCount", MySqlDbType.Int32).Value = countWarnings;
+
+                connection.Open();
+
+                cmdInsert.ExecuteNonQuery();
+
+                connection.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Error", ex.Message);
+                return false;
+            }
+
+
+        }//close method
 
     }
 }

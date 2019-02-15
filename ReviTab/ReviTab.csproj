@@ -41,6 +41,15 @@
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Protobuf, Version=3.5.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=8.0.15.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI">
       <HintPath>$(ProgramW6432)\Autodesk\Revit 2018\RevitAPI.dll</HintPath>
@@ -51,8 +60,15 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -66,6 +82,7 @@
     <Compile Include="Buttons\OverrideDimensions.cs" />
     <Compile Include="Buttons\PurgeFamily.cs" />
     <Compile Include="Buttons\MoveBeamEnd.cs" />
+    <Compile Include="Buttons\PushToDB.cs" />
     <Compile Include="Buttons\SelectByParameter.cs" />
     <Compile Include="Buttons\VoidByFace.cs" />
     <Compile Include="Buttons\PrintInBackground.cs" />
@@ -138,8 +155,8 @@
     <Resource Include="Resources\tag.png" />
     <Resource Include="Resources\movement-arrows.png" />
     <Resource Include="Resources\wiping.png" />
-    <Resource Include="Resources\ethan.png" />
     <Resource Include="Resources\line.png" />
+    <Resource Include="Resources\arrowUp.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
@@ -165,11 +182,14 @@
       <DependentUpon>FormCreateViewSet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RevitPurgeUnused-master\PurgeUnused.vbproj">
       <Project>{1fd4afac-e419-43f1-9c5d-ab8b19d55e2e}</Project>
       <Name>PurgeUnused</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

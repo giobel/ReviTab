@@ -105,6 +105,12 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Select By Parameter", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 */
+
+                if (AddPushButton(zeroState, "btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1") == false)
+                {
+                    MessageBox.Show("Failed to add button Push to DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
