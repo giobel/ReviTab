@@ -99,6 +99,12 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+                if (AddPushButton(beams, "btnEditJoin", "Edit Beam End" + Environment.NewLine + "Join", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.EditBeamJoin", "Allow/Disallow beam end join") == false)
+                {
+                    MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 /*
                 if (AddPushButton(beams, "btnSelectByParam", "Select By Parameter", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.SelectByParameter", "Select by parameter and operator") == false)
                 {

@@ -9,9 +9,12 @@ namespace ReviTab
 
         public string TextString { get; set; }
 
-        public FormAddActiveView()
+        
+
+        public FormAddActiveView(string labeltext)
         {
             InitializeComponent();
+            label1.Text = labeltext;
         }
 
         private void button1_Click(object sender, EventArgs e)

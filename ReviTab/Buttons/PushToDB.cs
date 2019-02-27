@@ -30,37 +30,53 @@ namespace ReviTab
             try
             {
 
-            
-            string filePath = doc.PathName;
-
-            var fileInfo = new FileInfo(filePath);
-
-            long fileSize = fileInfo.Length;
-
-            FilteredElementCollector fecElements = new FilteredElementCollector(doc).WhereElementIsNotElementType();
-            FilteredElementCollector fecTypes = new FilteredElementCollector(doc).WhereElementIsElementType();
-
-            FilteredElementCollector fecSheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).WhereElementIsNotElementType();
-            FilteredElementCollector fecViews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).WhereElementIsNotElementType();
-            FilteredElementCollector fecViewPorts = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Viewports).WhereElementIsNotElementType();
-
-            int countWarnings = doc.GetWarnings().Count;
-
-            int countElements = fecElements.Count();
-            int countTypes = fecTypes.Count();
-
-            int countSheets = fecSheets.Count();
-            int countViews = fecViews.Count();
-            int countViewPorts = fecViewPorts.Count();
-
-
-                if (Helpers.InsertData(DateTime.Now, Environment.UserName, fileSize, countElements, countTypes, countSheets, countViews, countViewPorts, countWarnings))
+                using (var form = new FormAddActiveView("Enter database table name"))
                 {
-                    TaskDialog.Show("result", fileSize.ToString() + "\n" + countWarnings.ToString());
+                    form.ShowDialog();
+
+                    if (form.DialogResult == winForm.DialogResult.Cancel)
+                    {
+                        return Result.Cancelled;
+                    }
+
+                    
+
+                    string tableName = form.TextString;
+
+                    string filePath = doc.PathName;
+
+                    var fileInfo = new FileInfo(filePath);
+
+                    long fileSize = fileInfo.Length;
+
+                    FilteredElementCollector fecElements = new FilteredElementCollector(doc).WhereElementIsNotElementType();
+                    FilteredElementCollector fecTypes = new FilteredElementCollector(doc).WhereElementIsElementType();
+
+                    FilteredElementCollector fecSheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).WhereElementIsNotElementType();
+                    FilteredElementCollector fecViews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).WhereElementIsNotElementType();
+                    FilteredElementCollector fecViewPorts = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Viewports).WhereElementIsNotElementType();
+
+                    int countWarnings = doc.GetWarnings().Count;
+
+                    int countElements = fecElements.Count();
+                    int countTypes = fecTypes.Count();
+
+                    int countSheets = fecSheets.Count();
+                    int countViews = fecViews.Count();
+                    int countViewPorts = fecViewPorts.Count();
+
+
+                    if (Helpers.InsertData(tableName, DateTime.Now, Environment.UserName, fileSize, countElements, countTypes, countSheets, countViews, countViewPorts, countWarnings))
+                    {
+                        TaskDialog.Show("result", fileSize.ToString() + "\n" + countWarnings.ToString());
+                    }
+
+                    return Result.Succeeded;
                 }
-                
-            return Result.Succeeded;
+
             }
+
+            
 
             catch
             {

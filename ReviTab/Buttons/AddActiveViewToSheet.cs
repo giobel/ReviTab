@@ -26,7 +26,7 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            using (var form = new FormAddActiveView())
+            using (var form = new FormAddActiveView("Enter Sheet Number"))
             {
                 using (Transaction t = new Transaction(doc))
                 {
@@ -36,6 +36,9 @@ namespace ReviTab
                     while(interrupt == "False")
                     {
                         //use ShowDialog to show the form as a modal dialog box. 
+
+                        
+
                         form.ShowDialog();
 
                         //if the user hits cancel just drop out of macro
@@ -43,6 +46,8 @@ namespace ReviTab
                         {
                             return Result.Cancelled;
                         }
+
+                        
 
                         string sheetNumber = form.TextString.ToString();
 

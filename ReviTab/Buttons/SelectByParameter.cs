@@ -26,7 +26,7 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            using (var form = new FormAddActiveView())
+            using (var form = new FormAddActiveView("Enter parameter"))
             {
                 using (Transaction t = new Transaction(doc))
                 {

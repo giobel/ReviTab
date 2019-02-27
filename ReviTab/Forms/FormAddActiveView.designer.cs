@@ -87,7 +87,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormAddActiveView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Place View on Sheet";
+            this.Text = "Text Box Dialog";
             this.ResumeLayout(false);
             this.PerformLayout();
 

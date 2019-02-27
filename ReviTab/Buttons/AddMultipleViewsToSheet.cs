@@ -34,7 +34,7 @@ namespace ReviTab
 
             FilteredElementCollector sheets = new FilteredElementCollector(doc).OfClass(typeof(ViewSheet));
 
-            using (var form = new FormAddActiveView())
+            using (var form = new FormAddActiveView("Enter Sheet Number"))
             {
                 form.ShowDialog();
 

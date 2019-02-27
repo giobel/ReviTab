@@ -1314,7 +1314,7 @@ namespace ReviTab
             v.SetElementOverrides(eid, overrideSettings);
         }
 
-        public static bool InsertData(DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings)
+        public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings)
         {
 
             /*
@@ -1332,7 +1332,9 @@ namespace ReviTab
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
-            string table = "CQT";
+            // string table = "filesize";
+            string table = tableName;
+            
 
             try
             {
