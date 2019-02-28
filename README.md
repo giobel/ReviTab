@@ -69,7 +69,13 @@ examples:
 
 \*Walls+Mark=aa -> select all walls with a Mark equal to 'aa'
 
+Sheets: all -> select all Sheets
+
+\Sheets: A101 A103 A201 -> select Sheets by Sheet Number
+
 [![Watch the video](https://img.youtube.com/vi/axukGCgBRys/maxresdefault.jpg)](https://youtu.be/axukGCgBRys)
+
+[![Watch the video](https://img.youtube.com/vi/56_nDryHPzA/maxresdefault.jpg)](https://youtu.be/56_nDryHPzA)
 
 ## Background Print
 Open a model in background and print its drawings.
