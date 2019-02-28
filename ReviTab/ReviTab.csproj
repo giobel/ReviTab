@@ -164,6 +164,7 @@
     <Resource Include="Resources\wiping.png" />
     <Resource Include="Resources\line.png" />
     <Resource Include="Resources\arrowUp.png" />
+    <Resource Include="Resources\joinEnd.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

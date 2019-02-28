@@ -560,6 +560,48 @@ namespace ReviTab
 
         }//close method}
 
+        /// <summary>
+        /// Highlights sheet by their number. Syntax "Sheet: A101 A120"
+        /// </summary>
+        /// <param name="uidoc"></param>
+        /// <param name="message"></param>
+        public static void HighlightSelectSheets(UIDocument uidoc, string message)
+        {
+
+            Document doc = uidoc.Document;
+
+            string command = message.Split(':')[1];
+
+            List<string> selectedSheetsList = command.Split(' ').ToList();
+
+            IEnumerable<ViewSheet> allSheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElements().Cast<ViewSheet>();
+
+            ICollection<ElementId> eid = new List<ElementId>();
+
+            foreach (ViewSheet sheet in allSheets)
+            {
+
+                if (selectedSheetsList.Contains("all"))
+                {
+                    eid.Add(sheet.Id);
+                }
+                else if (selectedSheetsList.Contains(sheet.SheetNumber.ToString()))
+                {
+                    eid.Add(sheet.Id);
+                }
+                else
+                {
+                    TaskDialog.Show("Error", "Syntax not recognized." + Environment.NewLine + " Use Sheets: all or Sheets: A101 A201 A301");
+                }
+            }
+
+
+            uidoc.Selection.SetElementIds(eid);
+
+        }
+
+
+
         public static bool DoubleParamCheck(double param1, double param2, string operatorValue)
         {
 
