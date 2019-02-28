@@ -78,7 +78,8 @@ Sheets: all -> select all Sheets
 [![Watch the video](https://img.youtube.com/vi/56_nDryHPzA/maxresdefault.jpg)](https://youtu.be/56_nDryHPzA)
 
 ## Background Print
-Open a model in background and print its drawings.
+Open a model in background and print its drawings. The printer setting should be already defined in the Revit model. The default printer should be Bluebeam.
+[![Watch the video](https://img.youtube.com/vi/dBtYdCITQhw/maxresdefault.jpg)](https://youtu.be/dBtYdCITQhw)
 
 ## Purge Families
 Purge families and leave only a type called Default. Requires the Purge Unused that can be found in the Revit Purge Unused branch. Credits: Matt Taylor https://gitlab.com/MattTaylor/RevitPurgeUnused/blob/master/PurgeTool.vb
