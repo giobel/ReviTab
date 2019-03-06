@@ -52,6 +52,7 @@ Move a beam or multiple beams end point to another element location curve closes
 
 ## Edit Beam End Join
 Change the end beam join/unjoin/miter.
+
 ![alt text](https://i.imgur.com/7fruopZ.png)
 
 ## Split Wall by Levels
