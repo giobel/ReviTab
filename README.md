@@ -1,7 +1,7 @@
 # ReviTab
 WIP toolbar for Revit. 
 
-![IMG](https://imgur.com/bhix3ai)
+![IMG](https://i.imgur.com/bhix3ai.png)
 
 ## Add View to Sheet
 Add the active view to a sheet providing its number.
