@@ -50,6 +50,20 @@ Modeless window that calculates the distance from the origin to the beam centerp
 ## Move beam end
 Move a beam or multiple beams end point to another element location curve closest point.
 
+## Edit Beam End Join
+Change the end beam join/unjoin/miter.
+
+[](https://drive.google.com/file/d/1QAxVOhlfehcHpowJC-MyWyO29ryxLeaI/view?usp=sharing)
+
+
+## Split Wall by Levels
+Copy a wall in place and set its Top and Base constraints to the level it intersects. 
+Note: 
+1. The wall should not have a top/bottom offset applied; 
+2. The original wall will be deleted. 
+
+[![Watch the video](https://img.youtube.com/vi/gcMeTedRd2o/maxresdefault.jpg)](https://youtu.be/gcMeTedRd2o)
+
 ## Command Line
 Call methods directly:
 keywords: 
@@ -69,9 +83,11 @@ examples:
 
 \*Walls+Mark=aa -> select all walls with a Mark equal to 'aa'
 
-Sheets: all -> select all Sheets
+sheets: all -> select all Sheets
 
-\Sheets: A101 A103 A201 -> select Sheets by Sheet Number
+sheets: A101 A103 A201 -> select Sheets by Sheet Number
+
+tblocks: all -> select all Title Blocks
 
 [![Watch the video](https://img.youtube.com/vi/axukGCgBRys/maxresdefault.jpg)](https://youtu.be/axukGCgBRys)
 
