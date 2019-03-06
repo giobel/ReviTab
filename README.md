@@ -52,9 +52,7 @@ Move a beam or multiple beams end point to another element location curve closes
 
 ## Edit Beam End Join
 Change the end beam join/unjoin/miter.
-
-[](https://drive.google.com/file/d/1QAxVOhlfehcHpowJC-MyWyO29ryxLeaI/view?usp=sharing)
-
+![alt text](https://i.imgur.com/7fruopZ.png)
 
 ## Split Wall by Levels
 Copy a wall in place and set its Top and Base constraints to the level it intersects. 
@@ -70,9 +68,13 @@ keywords:
 * select
 + create
 - delete
-> larger
+
+\> larger
+
 < shorter
+
 = equal
+
 ! not equal
 
 examples:
