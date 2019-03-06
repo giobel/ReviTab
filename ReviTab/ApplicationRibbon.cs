@@ -39,10 +39,14 @@ namespace ReviTab
 
                 RibbonPanel beams = GetSetRibbonPanel(a, "SuperTab", "Structural Framings");
 
+                RibbonPanel walls = GetSetRibbonPanel(a, "SuperTab", "Walls");
+
                 RibbonPanel commandPanel = GetSetRibbonPanel(a, "SuperTab", "Command Line");
 
                 RibbonPanel zeroState = GetSetRibbonPanel(a, "SuperTab", "Zero State");
 
+                #region Doc Tools
+                
                 if (AddPushButton(toolsPanel, "btnSheetAddCurrentView", "Add View" + Environment.NewLine + "to Sheet", "", "pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet", "Add the active view to a sheet") == false)
                 {
                     MessageBox.Show("Failed to add button Add View to Sheet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -77,6 +81,9 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                #endregion
+
+                #region Structural Framing
 
                 if (AddPushButton(beams, "btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "", "pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.VoidByFace", "Place a void on a beam face") == false)
                 {
@@ -85,7 +92,7 @@ namespace ReviTab
 
                 if (AddPushButton(beams, "btnPlaceVoidByLine", "Void By Line", "", "pack://application:,,,/ReviTab;component/Resources/line.png", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear.") == false)
                 {
-                    MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to add button Void By Line", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
 
@@ -102,7 +109,7 @@ namespace ReviTab
 
                 if (AddPushButton(beams, "btnEditJoin", "Edit Beam" + Environment.NewLine + "End Join", "", "pack://application:,,,/ReviTab;component/Resources/joinEnd.png", "ReviTab.EditBeamJoin", "Allow/Disallow beam end join") == false)
                 {
-                    MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to add button Edit Beam", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 /*
@@ -111,6 +118,19 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Select By Parameter", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 */
+
+                #endregion
+
+                #region Walls
+
+                if (AddPushButton(walls, "btnWallSplitter", "Split Wall" + Environment.NewLine + "By Levels", "", "pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.WallSplitter", "Split a wall by levels. NOTE: The original wall will be deleted.") == false)
+                {
+                    MessageBox.Show("Failed to add button Split Wall", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                #endregion
+
+                #region Zero State
 
                 if (AddPushButton(zeroState, "btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1") == false)
                 {
@@ -132,6 +152,9 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 */
+
+                #endregion
+
                 if (AddTextBox(commandPanel, "btnCommandLine","Type some text and hit Enter") == false)
                 {
                     MessageBox.Show("Failed to add Text Box", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -407,8 +430,11 @@ namespace ReviTab
             if (message.StartsWith("*"))
                 caseSwitch = "select";
 
-            if (message.StartsWith("Sheet"))
+            if (message.StartsWith("sheets"))
                 caseSwitch = "selectSheets";
+
+            if (message.StartsWith("tblocks"))
+                caseSwitch = "selectTBlocks";
 
             if (message.StartsWith("-"))
                 caseSwitch = "delete";
@@ -440,6 +466,9 @@ namespace ReviTab
                     break;
                 case "selectSheets":
                     Helpers.HighlightSelectSheets(uiDoc, message);
+                    break;
+                case "selectTBlocks":
+                    Helpers.HighlightSelectTitleBlocks(uiDoc, message);
                     break;
             }
 

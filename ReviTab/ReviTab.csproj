@@ -80,6 +80,7 @@
     <Compile Include="Buttons\CreateViewSet.cs" />
     <Compile Include="Buttons\EditBeamJoin.cs" />
     <Compile Include="Buttons\OverrideDimensions.cs" />
+    <Compile Include="Buttons\Parameterizer.cs" />
     <Compile Include="Buttons\PurgeFamily.cs" />
     <Compile Include="Buttons\MoveBeamEnd.cs" />
     <Compile Include="Buttons\PushToDB.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Buttons\PrintInBackground.cs" />
     <Compile Include="Buttons\SwapGridBubble.cs" />
     <Compile Include="Buttons\VoidByLine.cs" />
+    <Compile Include="Buttons\WallSplitter.cs" />
     <Compile Include="Commands\ElementFilters.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />

@@ -578,29 +578,68 @@ namespace ReviTab
 
             ICollection<ElementId> eid = new List<ElementId>();
 
-            foreach (ViewSheet sheet in allSheets)
+            try
             {
+                foreach (ViewSheet sheet in allSheets)
+                {
+                    if (selectedSheetsList.Contains("all"))
+                    {
+                        eid.Add(sheet.Id);
+                    }
+                    else if (selectedSheetsList.Contains(sheet.SheetNumber.ToString()))
+                    {
+                        eid.Add(sheet.Id);
+                    }
+                }
 
-                if (selectedSheetsList.Contains("all"))
-                {
-                    eid.Add(sheet.Id);
-                }
-                else if (selectedSheetsList.Contains(sheet.SheetNumber.ToString()))
-                {
-                    eid.Add(sheet.Id);
-                }
-                else
-                {
-                    TaskDialog.Show("Error", "Syntax not recognized." + Environment.NewLine + " Use Sheets: all or Sheets: A101 A201 A301");
-                }
+            }
+            catch
+            {
+                TaskDialog.Show("Error", "Syntax not recognized." + Environment.NewLine + "Use Sheets: all or Sheets: A101 A201 A301");
             }
 
+
+
+            
 
             uidoc.Selection.SetElementIds(eid);
 
         }
 
 
+        public static void HighlightSelectTitleBlocks(UIDocument uidoc, string message)
+        {
+
+            Document doc = uidoc.Document;
+
+            string command = message.Split(':')[1];
+
+            List<string> selectedTBlocks = command.Split(' ').ToList();
+
+            IEnumerable<Element> allTBlocks = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements();
+
+            ICollection<ElementId> eid = new List<ElementId>();
+
+            try
+            {
+                foreach (Element tblock in allTBlocks)
+                {
+                    if (selectedTBlocks.Contains("all"))
+                    {
+                        eid.Add(tblock.Id);
+                    }
+                    else if (selectedTBlocks.Contains(tblock.LookupParameter("Sheet Number").Definition.Name))
+                    {
+                        eid.Add(tblock.Id);
+                    }
+                }
+            }
+            catch
+            {
+                TaskDialog.Show("Error", "Syntax not recognized." + Environment.NewLine + "Use tblocks: all or tblocks: A101 A201 A301");
+            }
+            uidoc.Selection.SetElementIds(eid);
+        }
 
         public static bool DoubleParamCheck(double param1, double param2, string operatorValue)
         {
