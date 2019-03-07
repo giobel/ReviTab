@@ -33,7 +33,7 @@ namespace ReviTab
 
             int countRectangular = 0;
             int countCircular = 0;
-            int errors = 0;
+            string errors = "";
 
 
 
@@ -71,11 +71,15 @@ namespace ReviTab
                                 }
                             }
                         }
+                        else if (penoSizes.Count == 0)
+                        {
+                            errors += beamRef.ElementId + Environment.NewLine;
+                        }
 
                     }
                     catch
                     {
-                        errors += 1;
+                        
                         TaskDialog.Show("Error", "Uh-oh something went wrong");
                     }
                 }
@@ -83,7 +87,17 @@ namespace ReviTab
                 t.Commit();
             }//close transaction
 
-            TaskDialog.Show("Summary", string.Format("{0} rectangular voids created \n{1} circular voids created \n{2} errors", countRectangular, countCircular, errors));
+            if (errors == "")
+            {
+                TaskDialog.Show("result", string.Format("{0} rectangular voids created \n {1} circular voids created", countRectangular, countCircular));
+            }
+            else
+            {
+                TaskDialog.Show("result", string.Format("{0} rectangular voids created \n {1} circular voids created \n" +
+                            "Intersection not found between the lines and the beams Id: \n {2}" +
+                            "Are they placed at the same level?", countRectangular, countCircular, errors));
+
+            }
 
 
             return Result.Succeeded;

@@ -971,7 +971,16 @@ namespace ReviTab
             BoundingBoxUV faceBB = verticalFace.GetBoundingBox();
             double beamWidth = faceBB.Max.V - faceBB.Min.V;
 
+            XYZ location = null;
+            XYZ beamDirection = null;
 
+            BeamStartUVPoint(ele, webFace, out location, out beamDirection);
+
+            BoundingBoxUV bboxUV = webFace.GetBoundingBox();
+            UV center = (bboxUV.Max + bboxUV.Min) * 0.5;
+
+
+            /*
             BoundingBoxUV bboxUV = webFace.GetBoundingBox();
 
             UV start = bboxUV.Min;
@@ -990,7 +999,7 @@ namespace ReviTab
 
 
             UV endFace = new UV(bboxUV.Max.U, 0);
-
+       
 
             switch (position)
             {
@@ -1006,14 +1015,33 @@ namespace ReviTab
                     newDistance = 0;
                     break;
             }
+                 */
+
+
+            switch (position)
+            {
+                case "start":
+                    //location = webFace.Evaluate(startUmidV);
+                    break;
+                case "end":
+                    //location = webFace.Evaluate(startUmidV);
+                    BeamEndUVPoint(ele, webFace, out location, out beamDirection);
+                    //newDistance = (webFace.Evaluate(endFace) - webFace.Evaluate(start)).GetLength() - distanceFromStart/304.8 - (width/304.8)*0.5;
+                    break;
+                case "mid":
+                    location = webFace.Evaluate(center);
+                    newDistance = 0;
+                    break;
+            }
+
 
 
             FilteredElementCollector ope = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_StructConnections).WhereElementIsElementType();
 
 
-            LocationCurve beamLine = ele.Location as LocationCurve;
+            //LocationCurve beamLine = ele.Location as LocationCurve;
 
-            XYZ beamDirection = beamLine.Curve.GetEndPoint(0) - beamLine.Curve.GetEndPoint(1);
+           // XYZ beamDirection = beamLine.Curve.GetEndPoint(0) - beamLine.Curve.GetEndPoint(1);
 
             //XYZ location = beamLine.Curve.Evaluate(0.5,true);
 
@@ -1050,6 +1078,92 @@ namespace ReviTab
 
 
             //TaskDialog.Show("Position", location.X + "-" + location.Y + "-" + location.Z);
+
+        }//close method
+
+        public static void BeamStartUVPoint(Element beam, Face myFace, out XYZ choosenLocation, out XYZ beamDirection)
+        {
+
+            BoundingBoxUV bbox = myFace.GetBoundingBox();
+            double halfDepthU = (bbox.Min.U + bbox.Max.U) * 0.5;
+            double halfDepthV = (bbox.Min.V + bbox.Max.V) * 0.5;
+
+            //faceLength = Math.Abs(bbox.Max - bbox.Min);
+
+            UV start = bbox.Min;
+            UV end = bbox.Max;
+
+            //XYZ beamDirection = myFace.IsInside()
+
+            LocationCurve beamLine = beam.Location as LocationCurve;
+
+            XYZ stPt = beamLine.Curve.GetEndPoint(0);
+            XYZ endPt = beamLine.Curve.GetEndPoint(1);
+
+            List<UV> UVpoints = new List<UV>();
+
+            UVpoints.Add(new UV(bbox.Max.U, halfDepthV));
+            UVpoints.Add(new UV(bbox.Min.U, halfDepthV));
+
+            UVpoints.Add(new UV(halfDepthU, bbox.Max.V));
+            UVpoints.Add(new UV(halfDepthU, bbox.Min.V));
+
+            Dictionary<double, XYZ> ptOnSurfaces = new Dictionary<double, XYZ>();
+
+            foreach (UV pt in UVpoints)
+            {
+                XYZ point = myFace.Evaluate(pt);
+                ptOnSurfaces.Add(stPt.DistanceTo(point), point);
+            }
+
+            double closestDistanceToStart = ptOnSurfaces.Keys.Min();
+
+            choosenLocation = ptOnSurfaces[closestDistanceToStart];
+
+            beamDirection = beamLine.Curve.GetEndPoint(0) - beamLine.Curve.GetEndPoint(1); //invert if beam End Point is chosen
+
+        }//close method
+
+        public static void BeamEndUVPoint(Element beam, Face myFace, out XYZ choosenLocation, out XYZ beamDirection)
+        {
+
+            BoundingBoxUV bbox = myFace.GetBoundingBox();
+            double halfDepthU = (bbox.Min.U + bbox.Max.U) * 0.5;
+            double halfDepthV = (bbox.Min.V + bbox.Max.V) * 0.5;
+
+            //faceLength = Math.Abs(bbox.Max - bbox.Min);
+
+            UV start = bbox.Min;
+            UV end = bbox.Max;
+
+            //XYZ beamDirection = myFace.IsInside()
+
+            LocationCurve beamLine = beam.Location as LocationCurve;
+
+            XYZ stPt = beamLine.Curve.GetEndPoint(0);
+            XYZ endPt = beamLine.Curve.GetEndPoint(1);
+
+            List<UV> UVpoints = new List<UV>();
+
+            UVpoints.Add(new UV(bbox.Max.U, halfDepthV));
+            UVpoints.Add(new UV(bbox.Min.U, halfDepthV));
+
+            UVpoints.Add(new UV(halfDepthU, bbox.Max.V));
+            UVpoints.Add(new UV(halfDepthU, bbox.Min.V));
+
+            Dictionary<double, XYZ> ptOnSurfaces = new Dictionary<double, XYZ>();
+
+            foreach (UV pt in UVpoints)
+            {
+                XYZ point = myFace.Evaluate(pt);
+                ptOnSurfaces.Add(endPt.DistanceTo(point), point);
+            }
+
+            double closestDistanceToStart = ptOnSurfaces.Keys.Min();
+
+            choosenLocation = ptOnSurfaces[closestDistanceToStart];
+
+            beamDirection = beamLine.Curve.GetEndPoint(1) - beamLine.Curve.GetEndPoint(0); //invert if beam End Point is chosen
 
         }//close method
 
@@ -1196,50 +1310,6 @@ namespace ReviTab
 
 
         }//close method
-
-        public static void BeamStartUVPoint(Element beam, Face myFace, out XYZ choosenLocation, out XYZ beamDirection)
-        {
-
-            BoundingBoxUV bbox = myFace.GetBoundingBox();
-            double halfDepthU = (bbox.Min.U + bbox.Max.U) * 0.5;
-            double halfDepthV = (bbox.Min.V + bbox.Max.V) * 0.5;
-
-            //faceLength = Math.Abs(bbox.Max - bbox.Min);
-
-            UV start = bbox.Min;
-            UV end = bbox.Max;
-
-            //XYZ beamDirection = myFace.IsInside()
-
-            LocationCurve beamLine = beam.Location as LocationCurve;
-
-            XYZ stPt = beamLine.Curve.GetEndPoint(0);
-            XYZ endPt = beamLine.Curve.GetEndPoint(1);
-
-            List<UV> UVpoints = new List<UV>();
-
-            UVpoints.Add(new UV(bbox.Max.U, halfDepthV));
-            UVpoints.Add(new UV(bbox.Min.U, halfDepthV));
-
-            UVpoints.Add(new UV(halfDepthU, bbox.Max.V));
-            UVpoints.Add(new UV(halfDepthU, bbox.Min.V));
-
-            Dictionary<double, XYZ> ptOnSurfaces = new Dictionary<double, XYZ>();
-
-            foreach (UV pt in UVpoints)
-            {
-                XYZ point = myFace.Evaluate(pt);
-                ptOnSurfaces.Add(stPt.DistanceTo(point), point);
-            }
-
-            double closestDistanceToStart = ptOnSurfaces.Keys.Min();
-
-            choosenLocation = ptOnSurfaces[closestDistanceToStart];
-
-            beamDirection = beamLine.Curve.GetEndPoint(0) - beamLine.Curve.GetEndPoint(1); //invert if beam End Point is chosen
-
-        }//close method
-
 
         #endregion
 
