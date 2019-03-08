@@ -70,8 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\AddLegendToSheets.cs" />
     <Compile Include="Buttons\AddMultipleViewsToSheet.cs" />
     <Compile Include="Buttons\AddTagsApplyUndo.cs" />
+    <Compile Include="Buttons\ClaritySetup.cs" />
     <Compile Include="Buttons\CreateSections.cs" />
     <Compile Include="Buttons\CreateViewSet.cs" />
     <Compile Include="Buttons\EditBeamJoin.cs" />
@@ -148,10 +150,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\addView.png" />
     <Resource Include="Resources\multipleSections.png" />
     <Resource Include="Resources\selectText.png" />
-    <Resource Include="Resources\addMultiViews.png" />
     <Resource Include="Resources\backgroundPrint.png" />
     <Resource Include="Resources\swapGrids.png" />
     <Resource Include="Resources\createViewSet.png" />
@@ -164,6 +164,9 @@
     <Resource Include="Resources\arrowUp.png" />
     <Resource Include="Resources\joinEnd.png" />
     <Resource Include="Resources\wallSplit.png" />
+    <Resource Include="Resources\legend.png" />
+    <Resource Include="Resources\addView.png" />
+    <Resource Include="Resources\addMultipleViews.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

@@ -93,8 +93,8 @@ namespace ReviTab
             }
             else
             {
-                TaskDialog.Show("result", string.Format("{0} rectangular voids created \n {1} circular voids created \n" +
-                            "Intersection not found between the lines and the beams Id: \n {2}" +
+                TaskDialog.Show("result", string.Format("{0} rectangular voids created \n{1} circular voids created \n" +
+                            "Intersection not found between the lines and the beams Id:\n{2}" +
                             "Are they placed at the same level?", countRectangular, countCircular, errors));
 
             }
