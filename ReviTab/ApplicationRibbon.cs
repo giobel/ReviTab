@@ -147,7 +147,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddZeroStatePushButton(zeroState, "btnClaritySetup", "Clarity Setup", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.ClaritySetup", "Open a model in background and create a 3d view for Clarity IFC export.", "ReviTab.Availability") == false)
+                if (AddZeroStatePushButton(zeroState, "btnClaritySetup", "Clarity Setup", "", "pack://application:,,,/ReviTab;component/Resources/claSetup.png", "ReviTab.ClaritySetup", "Open a model in background and create a 3d view for Clarity IFC export.", "ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Clarity", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

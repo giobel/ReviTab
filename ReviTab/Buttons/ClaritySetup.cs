@@ -63,6 +63,9 @@ namespace ReviTab
                     }
 
                     SaveAsOptions saveOpt = new SaveAsOptions();
+                    WorksharingSaveAsOptions wos = new WorksharingSaveAsOptions();
+                    wos.SaveAsCentral = true;
+                    saveOpt.SetWorksharingOptions(wos);
                     saveOpt.OverwriteExistingFile = true;
 
                     openDoc.SaveAs(modelP, saveOpt);

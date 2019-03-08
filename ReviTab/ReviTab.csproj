@@ -167,6 +167,7 @@
     <Resource Include="Resources\legend.png" />
     <Resource Include="Resources\addView.png" />
     <Resource Include="Resources\addMultipleViews.png" />
+    <Resource Include="Resources\claSetup.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
