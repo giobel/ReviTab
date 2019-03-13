@@ -33,11 +33,11 @@ namespace ReviTab
 
                     string interrupt = "False";
 
-                    while(interrupt == "False")
+                    while (interrupt == "False")
                     {
                         //use ShowDialog to show the form as a modal dialog box. 
 
-                        
+
 
                         form.ShowDialog();
 
@@ -47,7 +47,7 @@ namespace ReviTab
                             return Result.Cancelled;
                         }
 
-                        
+
 
                         string sheetNumber = form.TextString.ToString();
 
@@ -75,21 +75,21 @@ namespace ReviTab
                             {
                                 TaskDialog.Show("Warning", "Please enter a sheet number");
                                 t.RollBack();
-//                                form.ShowDialog();
+                                //                                form.ShowDialog();
                             }
 
                             else if (viewSh == null)
                             {
                                 TaskDialog.Show("Warning", "The sheet number does not exist");
                                 t.RollBack();
-      //                          form.ShowDialog();
+                                //                          form.ShowDialog();
                             }
 
                             else
                             {
                                 TaskDialog.Show("Warning", "The view is already placed on another sheet");
                                 t.RollBack();
-          //                      form.ShowDialog();
+                                //                      form.ShowDialog();
                             }
                         }//close catch
 

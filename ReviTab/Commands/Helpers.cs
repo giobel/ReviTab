@@ -408,37 +408,9 @@ namespace ReviTab
         /// </summary>
         /// <param name="uidoc"></param>
         /// <param name="message"></param>
-        public static void SelectAllTypes(UIDocument uidoc, string message)
+        public static void SelectAllTypesInView(UIDocument uidoc, string message)
         {
 
-            /*
-            string eleType = message.Split('*')[1];
-
-            Document doc = uidoc.Document;
-
-            Selection selElements = uidoc.Selection;
-
-            ICollection<ElementId> idTxt = new FilteredElementCollector(doc, doc.ActiveView.Id).ToElementIds();
-
-            List<ElementId> selectedElements = new List<ElementId>();
-
-            foreach (ElementId eid in idTxt)
-            {
-                Element ele = doc.GetElement(eid);
-                try
-                {
-                    string name = ele.Category.Name;
-                    if (name == eleType)
-                        selectedElements.Add(eid);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-
-            selElements.SetElementIds(selectedElements);
-            //TaskDialog.Show("Success", eleType);*/
             Document doc = uidoc.Document;
 
 
@@ -558,7 +530,142 @@ namespace ReviTab
             selElements.SetElementIds(selectedElements);
                 //TaskDialog.Show("Success", param);
 
-        }//close method}
+        }//close method
+
+
+        /// <summary>
+        /// Select all the elements in the active view by their category name
+        /// </summary>
+        /// <param name="uidoc"></param>
+        /// <param name="message"></param>
+        public static void SelectAllTypes(UIDocument uidoc, string message)
+        {
+
+            Document doc = uidoc.Document;
+
+
+            string command = message.Split('*')[1];
+
+            string param = "";
+            string operatorValue = "";
+            string valueToCheck = "";
+
+            try
+            {
+
+                if (command.Contains('>'))
+                {
+                    string[] check = command.Split('+')[1].Split('>');
+                    param = check[0];
+                    operatorValue = "larger";
+                    valueToCheck = check[1];
+                }
+                else if (command.Contains('<'))
+                {
+                    string[] check = command.Split('+')[1].Split('<');
+                    param = check[0];
+                    operatorValue = "smaller";
+                    valueToCheck = check[1];
+                }
+                else if (command.Contains('='))
+                {
+                    string[] check = command.Split('+')[1].Split('=');
+                    param = check[0];
+                    operatorValue = "equal";
+                    valueToCheck = check[1];
+                }
+                else if (command.Contains('!'))
+                {
+                    string[] check = command.Split('+')[1].Split('!');
+                    param = check[0];
+                    operatorValue = "different";
+                    valueToCheck = check[1];
+                }
+            }
+
+            catch
+            {
+
+                TaskDialog.Show("Warning", "Something went wrong");
+            }
+
+
+
+            Selection selElements = uidoc.Selection;
+
+            ICollection<ElementId> idTxt = new FilteredElementCollector(doc).ToElementIds();
+
+            List<ElementId> selectedElements = new List<ElementId>();
+
+            foreach (ElementId eid in idTxt)
+            {
+                try
+                {
+                    Element ele = doc.GetElement(eid);
+
+                    string name = "";
+                    if (ele.Category != null)
+                    {
+                        name = ele.Category.Name;
+                    }
+
+                    if (name == command.Split('+')[0])
+                    {
+                        if (param != "")
+                        {
+                            double paramValue = 0;
+                            string stringValue = "";
+                            string test = "";
+
+                            Parameter p = ele.LookupParameter(param);
+
+                            StorageType parameterType = p.StorageType;
+                            if (StorageType.Double == parameterType)
+                            {
+                                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
+                                test = "Double";
+                            }
+                            else if (StorageType.String == parameterType)
+                            {
+                                stringValue = p.AsString();
+                                test = "String";
+                            }
+
+                            if (test == "Double")
+                            {
+                                if (DoubleParamCheck(paramValue, Int64.Parse(valueToCheck), operatorValue))
+                                {
+                                    selectedElements.Add(eid);
+                                }
+                            }
+                            else if (test == "String")
+                            {
+                                if (StringParamCheck(stringValue, valueToCheck, operatorValue))
+                                {
+                                    selectedElements.Add(eid);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            selectedElements.Add(eid);
+                        }
+                    }
+                }
+
+
+                catch
+                {
+
+                }
+
+            }
+
+            selElements.SetElementIds(selectedElements);
+            //TaskDialog.Show("Success", param);
+
+        }//close method
 
         /// <summary>
         /// Highlights sheet by their number. Syntax "Sheet: A101 A120"

@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\VersionInfo.cs" />
     <Compile Include="Buttons\AddLegendToSheets.cs" />
     <Compile Include="Buttons\AddMultipleViewsToSheet.cs" />
     <Compile Include="Buttons\AddTagsApplyUndo.cs" />
@@ -168,6 +169,7 @@
     <Resource Include="Resources\addView.png" />
     <Resource Include="Resources\addMultipleViews.png" />
     <Resource Include="Resources\claSetup.png" />
+    <Resource Include="Resources\info.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

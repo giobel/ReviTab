@@ -163,6 +163,12 @@ namespace ReviTab
                 }
                 */
 
+                if (AddZeroStatePushButton(zeroState, "btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability") == false)
+                {
+                    MessageBox.Show("Failed to add button Version Info", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
                 #endregion
 
                 if (AddTextBox(commandPanel, "btnCommandLine","Type some text and hit Enter") == false)
@@ -440,6 +446,9 @@ namespace ReviTab
             if (message.StartsWith("*"))
                 caseSwitch = "select";
 
+            if (message.StartsWith("all"))
+                caseSwitch = "selectAll";
+
             if (message.StartsWith("sheets"))
                 caseSwitch = "selectSheets";
 
@@ -467,7 +476,10 @@ namespace ReviTab
                     Helpers.AddTwoIntegers(message);
                     break;
                 case "select":
-                    Helpers.SelectAllTypes(uiDoc, message);
+                    Helpers.SelectAllTypesInView(uiDoc, message);
+                    break;
+                case "selectAll":
+                    Helpers.SelectAllTypesInView(uiDoc, message);
                     break;
                 case "createViewSet":
                     Helpers.CreateViewset(doc, message);
