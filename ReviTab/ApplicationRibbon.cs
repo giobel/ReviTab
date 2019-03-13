@@ -446,7 +446,7 @@ namespace ReviTab
             if (message.StartsWith("*"))
                 caseSwitch = "select";
 
-            if (message.StartsWith("all"))
+            if (message.StartsWith("/"))
                 caseSwitch = "selectAll";
 
             if (message.StartsWith("sheets"))
@@ -476,10 +476,10 @@ namespace ReviTab
                     Helpers.AddTwoIntegers(message);
                     break;
                 case "select":
-                    Helpers.SelectAllTypesInView(uiDoc, message);
+                    Helpers.SelectAllElementsInView(uiDoc, message);
                     break;
                 case "selectAll":
-                    Helpers.SelectAllTypesInView(uiDoc, message);
+                    Helpers.SelectAllElements(uiDoc, message);
                     break;
                 case "createViewSet":
                     Helpers.CreateViewset(doc, message);

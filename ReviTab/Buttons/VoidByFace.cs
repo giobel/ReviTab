@@ -26,15 +26,19 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
+            ISelectionFilter beamFilter = new BeamSelectionFilter("Structural Framing");
 
-            IList<Reference> refs = uidoc.Selection.PickObjects(ObjectType.Element, "Select some beams");
+            IList<Reference> refs = uidoc.Selection.PickObjects(ObjectType.Element, beamFilter, "Select some beams");
             int count = 0;
             int errors = 0;
 
-            using (var form = new FormAddOpening())
+            using (var form = new FormAddOpening(doc))
             {
 
-                Dictionary<string, FamilySymbol> allCategories = Helpers.SelectFamilies(doc);
+                /*
+                string catName = form.inputCategoryName;
+
+                Dictionary<string, FamilySymbol> allCategories = Helpers.SelectFamilies(doc, catName);
 
 
 
@@ -42,7 +46,7 @@ namespace ReviTab
                 {
                     form.familyName.Add(el);
                 }
-
+                */
 
                 form.ShowDialog();
 
@@ -67,10 +71,10 @@ namespace ReviTab
                                 Helpers.PlaceOpening(doc, r, Int16.Parse(s), form.choosenFamily, form.formPosition, form.formVoidWidth, form.formVoidHeight);
                                 count += 1;
                             }
-                            catch
+                            catch(Exception ex)
                             {
                                 errors += 1;
-                                TaskDialog.Show("Error", "Uh-oh something went wrong");
+                                TaskDialog.Show("Error", "Uh-oh something went wrong\n" + ex.Message);
                             }
                         }
                     }

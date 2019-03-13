@@ -408,7 +408,7 @@ namespace ReviTab
         /// </summary>
         /// <param name="uidoc"></param>
         /// <param name="message"></param>
-        public static void SelectAllTypesInView(UIDocument uidoc, string message)
+        public static void SelectAllElementsInView(UIDocument uidoc, string message)
         {
 
             Document doc = uidoc.Document;
@@ -534,17 +534,17 @@ namespace ReviTab
 
 
         /// <summary>
-        /// Select all the elements in the active view by their category name
+        /// Select all the elements by their category name
         /// </summary>
         /// <param name="uidoc"></param>
         /// <param name="message"></param>
-        public static void SelectAllTypes(UIDocument uidoc, string message)
+        public static void SelectAllElements(UIDocument uidoc, string message)
         {
 
             Document doc = uidoc.Document;
 
 
-            string command = message.Split('*')[1];
+            string command = message.Split('/')[1];
 
             string param = "";
             string operatorValue = "";
@@ -789,7 +789,7 @@ namespace ReviTab
             return resultValue;
         }
 
-        public static Dictionary<string, FamilySymbol> SelectFamilies(Document doc)
+        public static Dictionary<string, FamilySymbol> SelectFamilies(Document doc, string catName)
         {
             ICollection<Element> eleFamily = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).ToElements();
 
@@ -799,7 +799,7 @@ namespace ReviTab
             {
                 try
                 {
-                    if (e.Category.Name == "Structural Connections")
+                    if (e.Category.Name == catName)
                     {
                         categoryList.Add(e.Name, e);
                     }
@@ -1143,12 +1143,13 @@ namespace ReviTab
 
 
 
-            FilteredElementCollector ope = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_StructConnections).WhereElementIsElementType();
+            //FilteredElementCollector ope = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_StructConnections).WhereElementIsElementType();
 
+            FilteredElementCollector ope = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).WhereElementIsElementType();
 
             //LocationCurve beamLine = ele.Location as LocationCurve;
 
-           // XYZ beamDirection = beamLine.Curve.GetEndPoint(0) - beamLine.Curve.GetEndPoint(1);
+            // XYZ beamDirection = beamLine.Curve.GetEndPoint(0) - beamLine.Curve.GetEndPoint(1);
 
             //XYZ location = beamLine.Curve.Evaluate(0.5,true);
 

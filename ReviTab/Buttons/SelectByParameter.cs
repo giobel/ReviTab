@@ -48,7 +48,7 @@ namespace ReviTab
 
                         string userMessage = form.TextString.ToString();
 
-                        Helpers.SelectAllTypesInView(uidoc, userMessage);
+                        Helpers.SelectAllElementsInView(uidoc, userMessage);
 
 
                         t.Commit();

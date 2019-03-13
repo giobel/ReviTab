@@ -8,19 +8,20 @@
  */
 using System;
 using System.Drawing;
-using System.Windows.Forms;
+using winForms = System.Windows.Forms;
 using System.Collections.Generic;
+using Autodesk.Revit.DB;
 
 namespace ReviTab
 {
 	/// <summary>
 	/// Description of Form1.
 	/// </summary>
-	public partial class FormAddOpening : Form
-	{
+	public partial class FormAddOpening : winForms.Form
+    {
 		
 		public string distances {get; set;}
-		
+
 		public List<string> familyName = new List<string>();
 		
 		public string choosenFamily = null;
@@ -30,35 +31,30 @@ namespace ReviTab
 		public int formVoidHeight;
 		
 		public string formPosition;
-		
-		public FormAddOpening()
+
+        Document rvtDoc = null;
+
+		public FormAddOpening(Document doc)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
+
+            rvtDoc = doc;
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
 		
 		
-				void Form1Load(object sender, EventArgs e)
+	    void Form1Load(object sender, EventArgs e)
 		{
-					foreach (string s in familyName) {
-						try{
-							comboBoxCategory.Items.Add(s);	
-						}
-						catch{
-							continue;
-						}
-						
-						textBox1.Text = "0";
-						textBoxWidth.Text = "400";
-						textBoxHeight.Text = "350";
 
-					}
+            textBox1.Text = "0";
+            textBoxWidth.Text = "400";
+            textBoxHeight.Text = "350";
+
 					
 		}
 		
@@ -84,7 +80,7 @@ namespace ReviTab
 			
 		}
 		
-				void CheckBoxStart_Click(object sender, System.EventArgs e)
+		void CheckBoxStart_Click(object sender, System.EventArgs e)
 		{
 					checkBoxEnd.Checked = false;
 					checkBoxMidPoint.Checked = false;
@@ -97,6 +93,29 @@ namespace ReviTab
 			checkBoxStart.Checked = false;
 			checkBoxMidPoint.Checked = false;
 		}
-		
-	}
+        
+        private void btnLoadCategory_Click(object sender, EventArgs e)
+        {
+            
+            Dictionary<string, FamilySymbol> allCategories = Helpers.SelectFamilies(rvtDoc, textBoxCategory.Text);
+
+            foreach (string s in allCategories.Keys)
+            {
+                try
+                {
+                    this.comboBoxCategory.Items.Add(s);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+        }
+
+        private void btnClearCat_Click(object sender, EventArgs e)
+        {
+            this.comboBoxCategory.Items.Clear();
+            
+        }
+    }
 }

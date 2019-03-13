@@ -25,8 +25,8 @@ namespace ReviTab
             DateTime dt = DateTime.Now;
 
 
-
-            TaskDialog.Show("Version Info", "Version 1.0.0 \nCompiled on " + dt.ToLongDateString());
+            
+            TaskDialog.Show("Version Info", "Version 1.0.0 \nCompiled on " + dt.ToLongDateString() + "\n" + dt.ToLongTimeString());
 
 
 
