@@ -97,13 +97,16 @@ tblocks: all -> select all Title Blocks
 [![Watch the video](https://img.youtube.com/vi/56_nDryHPzA/maxresdefault.jpg)](https://youtu.be/56_nDryHPzA)
 
 ## Push to DB
-Export selected parameters to a [db](https://remotemysql.com). 
+Export selected parameters to a [db](https://remotemysql.com)
+
 ![IMG](https://i.imgur.com/DLuhkuM.png)
 
 Data can be then visualized with online dashboards like [grafana](https://giobel.grafana.net/d/TS8vWBriz/project-2?orgId=1) 
+
 ![IMG](https://i.imgur.com/QzCrmAW.png)
 
 or [desktop](https://github.com/giobel/rvtDashboard) apps
+
 ![IMG](https://i.imgur.com/NFat1uW.png)
 
 ## Background Print
