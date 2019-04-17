@@ -593,7 +593,10 @@ namespace ReviTab
 
             Selection selElements = uidoc.Selection;
 
-            ICollection<ElementId> idTxt = new FilteredElementCollector(doc).ToElementIds();
+
+            ICollection<ElementId> idTxt = new FilteredElementCollector(doc).WhereElementIsNotElementType().ToElementIds();
+
+
 
             List<ElementId> selectedElements = new List<ElementId>();
 
@@ -655,9 +658,9 @@ namespace ReviTab
                 }
 
 
-                catch
+                catch(Exception ex)
                 {
-
+                    TaskDialog.Show("Error", ex.Message);
                 }
 
             }

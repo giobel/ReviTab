@@ -76,7 +76,8 @@ namespace ReviTab
 
 
                     ICollection<ElementId> toDelete = new FilteredElementCollector(openDoc).WherePasses(filter1).ToElementIds();
-             
+
+                    FilteredWorksetCollector worksetCollector = new FilteredWorksetCollector(openDoc).OfKind(WorksetKind.UserWorkset);
 
                     View3D view3d = null;
 
@@ -91,6 +92,13 @@ namespace ReviTab
                             view3d.Name = "Clarity_IFC _3D";
 
                             //uiapp.ActiveUIDocument.ActiveView = view3d;
+
+                            foreach (Workset e in worksetCollector)
+                            {
+
+                                view3d.SetWorksetVisibility(e.Id, WorksetVisibility.Visible);
+
+                            }
                         }
                         catch(Exception ex)
                         {
