@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,16 +32,25 @@ namespace ReviTab
             SheetNumber = this.textBoxSheetNumber.Text;
             Spacing = int.Parse(this.textBoxSpacing.Text);
 
+
+            
+
             string[] centerpointText = this.textBoxCenterpoint.Text.Split(',');
-            centerpoint = new Autodesk.Revit.DB.XYZ(int.Parse(centerpointText[0]), int.Parse(centerpointText[1]), int.Parse(centerpointText[2]));
+            centerpoint = new Autodesk.Revit.DB.XYZ(ParseStringToFloat(centerpointText[0]), ParseStringToFloat(centerpointText[1]), ParseStringToFloat(centerpointText[2]));
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             //this.Close();
             isCenterpoint = true;
-            
-            
+            SheetNumber = this.textBoxSheetNumber.Text;
+            Spacing = int.Parse(this.textBoxSpacing.Text);
+
+        }
+
+        private float ParseStringToFloat(string value)
+        {
+            return float.Parse(value, CultureInfo.InvariantCulture);
         }
     }
 }

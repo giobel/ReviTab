@@ -51,32 +51,45 @@ namespace ReviTab
 
                 string output = "";
 
-                int count = 1;
+                int count = 0;
 
                 XYZ selectedCenter = form.centerpoint;
 
                 int space = form.Spacing;
 
+
                 try
                 {
 
-                
-                using (Transaction t = new Transaction(doc, "Add views"))
+                    uidoc.ActiveView = viewSh;
+
+                    using (Transaction t = new Transaction(doc, "Add views"))
                 {
-                    if (form.isCenterpoint == true)
+                    t.Start();
+                        
+                        //TaskDialog.Show("result", doc.ActiveView.Name);
+
+                        //Line line1 = Line.CreateBound(XYZ.Zero, XYZ.BasisX);
+                        //DetailCurve dc1 = doc.Create.NewDetailCurve(doc.ActiveView, line1) as DetailLine;
+                        //ElementId id = dc1.Id;
+                        //doc.Delete(id);
+
+                        /*
+                        XYZ rigth = doc.ActiveView.RightDirection;
+                        XYZ up = doc.ActiveView.UpDirection;
+                        XYZ origin = doc.ActiveView.Origin;
+
+                        //Plane plane =  Plane.CreateByNormalAndOrigin(doc.ActiveView.ViewDirection,doc.ActiveView.Origin);
+                        Plane plane = Plane.CreateByThreePoints(origin, rigth, up);
+
+                        SketchPlane sp = SketchPlane.Create(doc, plane);
+                        
+                        doc.ActiveView.SketchPlane = sp;
+                        */
+                        if (form.isCenterpoint == true)
                         {
                             selectedCenter = uidoc.Selection.PickPoint(ObjectSnapTypes.Endpoints, "Pick the first view center point");
                         }
-                        
-                    t.Start();
-
-
-                        Line line1 = Line.CreateBound(XYZ.Zero, XYZ.BasisX);
-                        DetailCurve dc1 = doc.Create.NewDetailCurve(doc.ActiveView, line1);
-                        ElementId id = dc1.Id;
-                        doc.Delete(id);
-
-
 
                         foreach (ElementId e in refe)
                     {
@@ -87,7 +100,7 @@ namespace ReviTab
                         Outline vpOutline = vp.GetBoxOutline();
                         double vpWidth = (vpOutline.MaximumPoint.X - vpOutline.MinimumPoint.X);
                         //XYZ newCenter = new XYZ((vp.GetBoxCenter().X + vpWidth / 2)+count*(vpWidth*2), .974, 0);
-                        XYZ newCenter = new XYZ((selectedCenter.X + vpWidth / 2) + count * (space / 304.8), selectedCenter.Y, 0);
+                        XYZ newCenter = new XYZ(selectedCenter.X + count * (space / 304.8), selectedCenter.Y, 0);
 
                         vp.SetBoxCenter(newCenter);
                         count += 1;
