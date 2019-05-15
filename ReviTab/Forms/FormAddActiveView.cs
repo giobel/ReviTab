@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Windows.Forms;
 
 namespace ReviTab
@@ -9,7 +10,7 @@ namespace ReviTab
 
         public string TextString { get; set; }
 
-        
+
 
         public FormAddActiveView(string labeltext)
         {

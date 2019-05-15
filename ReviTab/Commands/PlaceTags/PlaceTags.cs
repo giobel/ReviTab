@@ -4,6 +4,7 @@ using Autodesk.Revit.DB;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace ReviTab
 {
@@ -34,7 +35,15 @@ namespace ReviTab
                         s += markValue;
                         string newMark = Helpers.SetTemporaryMark(doc, e);
 
-                        Helpers.OverrideColor(doc, e, markValue, newMark);
+                        try
+                        {
+                            Helpers.OverrideColor(doc, e, markValue, newMark);
+                        }
+                        catch
+                        {
+
+                        }
+                        
 
                         HelpersPlaceTags.selectedBeamsOriginalMarks.Add(e, markValue);
                         HelpersPlaceTags.selectedBeamsNewMarks.Add(e, newMark);
@@ -67,5 +76,9 @@ namespace ReviTab
         {
             return "External Event Example";
         }
+
+
+
+
     }
 }

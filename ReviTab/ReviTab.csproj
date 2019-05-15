@@ -41,6 +41,10 @@
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdWindows">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=8.0.15.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll</HintPath>
@@ -90,7 +94,9 @@
     <Compile Include="Buttons\SwapGridBubble.cs" />
     <Compile Include="Buttons\VoidByLine.cs" />
     <Compile Include="Buttons\WallSplitter.cs" />
+    <Compile Include="Commands\ButtonPickPoint.cs" />
     <Compile Include="Commands\ElementFilters.cs" />
+    <Compile Include="Commands\GlobalObjects.cs" />
     <Compile Include="Commands\Helpers.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
     <Compile Include="Commands\PlaceTags\AcceptChanges.cs" />
@@ -100,6 +106,12 @@
     <Compile Include="Commands\Press.cs" />
     <Compile Include="Buttons\SuppressWarnings.cs" />
     <Compile Include="Commands\VoidByLineHelpers.cs" />
+    <Compile Include="Forms\FormAddMultipleViews.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddMultipleViews.Designer.cs">
+      <DependentUpon>FormAddMultipleViews.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormPlaceTags.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +186,9 @@
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\FormAddMultipleViews.resx">
+      <DependentUpon>FormAddMultipleViews.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPlaceTags.resx">
       <DependentUpon>FormPlaceTags.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,8 +230,7 @@
 copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2019"
 copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2018"
 copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2018"
-copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2017"
-copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2017"</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

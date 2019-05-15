@@ -1541,6 +1541,7 @@ namespace ReviTab
                 }
             }
 
+            
             overrideSettings.SetProjectionFillPatternId(solidPatternId);
 
             if (oldMark == newMark)

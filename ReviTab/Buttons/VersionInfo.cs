@@ -22,11 +22,11 @@ namespace ReviTab
           ElementSet elements)
         {
 
-            DateTime dt = DateTime.Now;
+            string date = "09/05/2019";
 
 
             
-            TaskDialog.Show("Version Info", "Version 1.0.0 \nCompiled on " + dt.ToLongDateString() + "\n" + dt.ToLongTimeString());
+            TaskDialog.Show("Version Info", "Version 1.0.1 \nCompiled on " + date);
 
 
 

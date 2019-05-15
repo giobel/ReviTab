@@ -34,7 +34,7 @@ namespace ReviTab
 
             FilteredElementCollector sheets = new FilteredElementCollector(doc).OfClass(typeof(ViewSheet));
 
-            using (var form = new FormAddActiveView("Enter Sheet Number"))
+            using (var form = new FormAddMultipleViews(uidoc))
             {
                 form.ShowDialog();
 
@@ -43,48 +43,68 @@ namespace ReviTab
                     return Result.Cancelled;
                 }
 
+                foreach (ViewSheet sht in sheets)
+                {
+                    if (sht.SheetNumber == form.SheetNumber)
+                        viewSh = sht;
+                }
+
+                string output = "";
+
+                int count = 1;
+
+                XYZ selectedCenter = form.centerpoint;
+
+                int space = form.Spacing;
+
                 try
                 {
 
                 
-            foreach (ViewSheet sht in sheets)
-            {
-                if (sht.SheetNumber == form.TextString)
-                    viewSh = sht;
-            }
-
-            string output = "";
-
-                    int count = 1;
-
-                    using (Transaction t = new Transaction(doc, "Add views"))
-            {
-
-                t.Start();
-
-                foreach (ElementId e in refe)
+                using (Transaction t = new Transaction(doc, "Add views"))
                 {
-                    output += e.ToString() + "\n";
-                            double offset = 2.29 / refe.Count;
-                            Viewport vp = Viewport.Create(doc, viewSh.Id, e, new XYZ(1.38, .974, 0));
-                            Outline vpOutline = vp.GetBoxOutline();
-                            double vpWidth = vpOutline.MaximumPoint.X - vpOutline.MinimumPoint.X;
-                            XYZ newCenter = new XYZ((vp.GetBoxCenter().X + vpWidth / 2)*count, .974, 0);
-                            vp.SetBoxCenter(newCenter);
-                            count += 1;
+                    if (form.isCenterpoint == true)
+                        {
+                            selectedCenter = uidoc.Selection.PickPoint(ObjectSnapTypes.Endpoints, "Pick the first view center point");
                         }
+                        
+                    t.Start();
 
 
-                t.Commit();
-            }
+                        Line line1 = Line.CreateBound(XYZ.Zero, XYZ.BasisX);
+                        DetailCurve dc1 = doc.Create.NewDetailCurve(doc.ActiveView, line1);
+                        ElementId id = dc1.Id;
+                        doc.Delete(id);
 
-            }
-                catch
+
+
+                        foreach (ElementId e in refe)
+                    {
+                        output += e.ToString() + "\n";
+                        //Viewport vp = Viewport.Create(doc, viewSh.Id, e, new XYZ(1.38, .974, 0)); //this is the center of the sheet
+                        Viewport vp = Viewport.Create(doc, viewSh.Id, e, selectedCenter);
+
+                        Outline vpOutline = vp.GetBoxOutline();
+                        double vpWidth = (vpOutline.MaximumPoint.X - vpOutline.MinimumPoint.X);
+                        //XYZ newCenter = new XYZ((vp.GetBoxCenter().X + vpWidth / 2)+count*(vpWidth*2), .974, 0);
+                        XYZ newCenter = new XYZ((selectedCenter.X + vpWidth / 2) + count * (space / 304.8), selectedCenter.Y, 0);
+
+                        vp.SetBoxCenter(newCenter);
+                        count += 1;
+                    }
+
+
+                    t.Commit();
+                }
+
+                }
+
+                catch (Exception ex)
                 {
-                    TaskDialog.Show("Result", "Uh-oh something went wrong");
+                    TaskDialog.Show("Error", ex.Message);
                 }
-                }
-            
+            }
+
             return Result.Succeeded;
 
         }

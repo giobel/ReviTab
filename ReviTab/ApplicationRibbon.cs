@@ -171,7 +171,7 @@ namespace ReviTab
 
                 #endregion
 
-                if (AddTextBox(commandPanel, "btnCommandLine","Type some text and hit Enter") == false)
+                if (AddTextBox(commandPanel, "btnCommandLine", "*Structural Framing+Length>10000 \n *Walls+Mark!aa \n sheets: all \n sheets: A101 A103 A201\n tblocks: all") == false)
                 {
                     MessageBox.Show("Failed to add Text Box", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -406,6 +406,7 @@ namespace ReviTab
 
                 textBox.PromptText = "Write something and hit Enter";
                 textBox.ShowImageAsButton = true;
+
                 textBox.ToolTip = tooltip;
 
                 textBox.EnterPressed += new EventHandler<TextBoxEnterPressedEventArgs>(MyTextBoxEnter);

@@ -12,6 +12,8 @@ using System.Windows.Forms;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Autodesk.Windows;
 
 namespace ReviTab
 {
@@ -21,7 +23,15 @@ namespace ReviTab
 	public partial class FormPlaceTags : System.Windows.Forms.Form
 	{
 
-			public Document doc { get; set; }
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+
+
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(
+          IntPtr hWnd);
+
+        public Document doc { get; set; }
 			
 			ButtonPlaceTags placeTagsParameter;
 			ExternalEvent placeTagsEvent;
@@ -55,17 +65,35 @@ namespace ReviTab
 		void ButtonAcceptChangesClick(object sender, EventArgs e)
 		{
 			acceptChangesEvent.Raise();
-		}
+
+            IntPtr hBefore = GetForegroundWindow();
+
+            SetForegroundWindow(ComponentManager.ApplicationWindow);
+
+            SetForegroundWindow(hBefore);
+        }
 		
 		void ButtonUndoChangesClick(object sender, EventArgs e)
 		{
-			    undoChangesEvent.Raise();
-		}
+			undoChangesEvent.Raise();
+
+            IntPtr hBefore = GetForegroundWindow();
+
+            SetForegroundWindow(ComponentManager.ApplicationWindow);
+
+            SetForegroundWindow(hBefore);
+        }
 		
 		void ButtonPlaceTagsClick(object sender, EventArgs e)
 		{
 			placeTagsEvent.Raise();
-		}
+
+            IntPtr hBefore = GetForegroundWindow();
+
+            SetForegroundWindow(ComponentManager.ApplicationWindow);
+
+            SetForegroundWindow(hBefore);
+        }
 
 	}//close class
 
