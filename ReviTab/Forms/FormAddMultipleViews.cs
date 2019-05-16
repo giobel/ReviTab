@@ -52,5 +52,10 @@ namespace ReviTab
         {
             return float.Parse(value, CultureInfo.InvariantCulture);
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

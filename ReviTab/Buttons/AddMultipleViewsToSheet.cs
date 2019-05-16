@@ -34,6 +34,11 @@ namespace ReviTab
 
             FilteredElementCollector sheets = new FilteredElementCollector(doc).OfClass(typeof(ViewSheet));
 
+            if (refe.Count == 0)
+            {
+                TaskDialog.Show("Warning", "Please select some sheets in the Project Browser before launching the command");
+            }
+
             using (var form = new FormAddMultipleViews(uidoc))
             {
                 form.ShowDialog();

@@ -1424,6 +1424,37 @@ namespace ReviTab
 
         #endregion
 
+        #region GEOMETRY
+
+        public void SetBeamLocationCurves(UIDocument uidoc)
+        {
+
+            
+            Document doc = uidoc.Document;
+
+            ICollection<Reference> selectedLines = uidoc.Selection.PickObjects(ObjectType.Element, "Select Lines");
+
+            ICollection<Reference> selectedBeams = uidoc.Selection.PickObjects(ObjectType.Element, "Select Beams");
+
+            using (Transaction t = new Transaction(doc, "Change beams"))
+            {
+
+                t.Start();
+
+                for (int i = 0; i < selectedBeams.Count; i++)
+                {
+
+                    Element ele = doc.GetElement(selectedBeams.ElementAt(i).ElementId);
+                    Element newLine = doc.GetElement(selectedLines.ElementAt(i).ElementId);
+                    (ele.Location as LocationCurve).Curve = (newLine.Location as LocationCurve).Curve;
+                }
+                t.Commit();
+            }//close using
+        }//close method
+
+
+        #endregion
+
         private static void PaintFace()
         {
 
