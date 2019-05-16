@@ -1453,6 +1453,86 @@ namespace ReviTab
         }//close method
 
 
+
+        public void ProjectLines(UIDocument uidoc)
+        {
+
+            
+            Document doc = uidoc.Document;
+
+            //ICollection<Reference> selectedLines = uidoc.Selection.PickObjects(ObjectType.Element, "Select Lines");
+
+            Reference refFace = uidoc.Selection.PickObject(ObjectType.Face, "Select Surface");
+            Element selectedElement = doc.GetElement(refFace);
+            GeometryObject selectedGeoObject = selectedElement.GetGeometryObjectFromReference(refFace);
+
+            Face selectedFace = selectedGeoObject as Face;
+
+            Reference refLine = uidoc.Selection.PickObject(ObjectType.Element, "Select Line");
+
+            LocationCurve locCurve = doc.GetElement(refLine.ElementId).Location as LocationCurve;
+            Line line = locCurve.Curve as Line;
+
+            using (Transaction t = new Transaction(doc, "test"))
+            {
+
+                t.Start();
+
+
+                //SketchPlane splane = SketchPlane.Create(doc, refFace);
+
+                XYZ q = line.GetEndPoint(1);
+                XYZ p = line.GetEndPoint(0);
+
+                XYZ v = q - p;
+
+                double dxy = Math.Abs(v.X) + Math.Abs(v.Y);
+
+                XYZ w = XYZ.BasisZ;
+                XYZ norm = v.CrossProduct(w).Normalize();
+
+
+                XYZ rayDirection = new XYZ(0, 0, 1);
+
+                XYZ normal = line.Direction.CrossProduct(rayDirection);
+
+                Plane verticalPlane = Plane.CreateByNormalAndOrigin(normal, p);
+
+                SketchPlane splane = SketchPlane.Create(doc, verticalPlane);
+
+                doc.ActiveView.SketchPlane = splane;
+
+                //        		XYZ newStPt = ProjectOnto(splane.GetPlane(), line.GetEndPoint(0));
+                //        		XYZ newEndPt = ProjectOnto(splane.GetPlane(), line.GetEndPoint(1));
+
+                //Line projectedLine = Autodesk.Revit.DB.Line.CreateBound(newStPt, newEndPt);
+
+                //        		Line verticalLine = Autodesk.Revit.DB.Line.CreateBound(line.GetEndPoint(1), new XYZ (pt.X, pt.Y, pt.Z+1000));
+
+                View3D active3D = doc.ActiveView as View3D;
+
+                ReferenceIntersector refIntersector = new ReferenceIntersector(refFace.ElementId, FindReferenceTarget.Face, active3D);
+
+                ReferenceWithContext referenceWithContext = refIntersector.FindNearest(q, rayDirection);
+
+                Reference reference = referenceWithContext.GetReference();
+                XYZ intersection = reference.GlobalPoint;
+
+                Line verticalLine = Autodesk.Revit.DB.Line.CreateBound(p, intersection);
+
+                //ModelLine mline = doc.Create.NewModelCurve(projectedLine , splane) as ModelLine;
+
+                ModelLine verticalmLine = doc.Create.NewModelCurve(verticalLine, splane) as ModelLine;
+
+                //selectedFace.Intersect(selectedNewFace, out CurveResult);
+                //selectedNewFace.Intersect(selectedFace, out CurveResult);
+
+                t.Commit();
+            }
+
+
+
+        }//close method
         #endregion
 
         private static void PaintFace()
