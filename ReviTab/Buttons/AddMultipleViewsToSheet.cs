@@ -8,6 +8,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using forms = System.Windows.Forms;
+using System.Linq;
+
 #endregion
 
 namespace ReviTab
@@ -29,6 +31,18 @@ namespace ReviTab
 
 
             ICollection<ElementId> refe = uidoc.Selection.GetElementIds();
+
+            List<Element> sectionViews = new List<Element>();
+
+            
+
+            foreach (ElementId eid in refe)
+            {
+                sectionViews.Add(doc.GetElement(eid));
+                
+            }
+
+            sectionViews = sectionViews.OrderBy(s => s.Name).ToList();
 
             ViewSheet viewSh = null;
 
@@ -54,7 +68,6 @@ namespace ReviTab
                         viewSh = sht;
                 }
 
-                string output = "";
 
                 int count = 0;
 
@@ -96,11 +109,11 @@ namespace ReviTab
                             selectedCenter = uidoc.Selection.PickPoint(ObjectSnapTypes.Endpoints, "Pick the first view center point");
                         }
 
-                        foreach (ElementId e in refe)
+                        foreach (Element e in sectionViews)
                     {
-                        output += e.ToString() + "\n";
+                        
                         //Viewport vp = Viewport.Create(doc, viewSh.Id, e, new XYZ(1.38, .974, 0)); //this is the center of the sheet
-                        Viewport vp = Viewport.Create(doc, viewSh.Id, e, selectedCenter);
+                        Viewport vp = Viewport.Create(doc, viewSh.Id, e.Id, selectedCenter);
 
                         Outline vpOutline = vp.GetBoxOutline();
                         double vpWidth = (vpOutline.MaximumPoint.X - vpOutline.MinimumPoint.X);
@@ -122,6 +135,8 @@ namespace ReviTab
                     TaskDialog.Show("Error", ex.Message);
                 }
             }
+
+            
 
             return Result.Succeeded;
 
