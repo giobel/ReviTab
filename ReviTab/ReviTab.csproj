@@ -75,6 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\ChangeBeamLocation.cs" />
+    <Compile Include="Buttons\DrawObjectAxis.cs" />
+    <Compile Include="Buttons\ProjectLines.cs" />
+    <Compile Include="Buttons\AddActiveViewToSheet.cs" />
     <Compile Include="Buttons\VersionInfo.cs" />
     <Compile Include="Buttons\AddLegendToSheets.cs" />
     <Compile Include="Buttons\AddMultipleViewsToSheet.cs" />
@@ -98,7 +102,7 @@
     <Compile Include="Commands\ElementFilters.cs" />
     <Compile Include="Commands\GlobalObjects.cs" />
     <Compile Include="Commands\Helpers.cs" />
-    <Compile Include="Buttons\AddActiveViewToSheet.cs" />
+    <Compile Include="Buttons\SATtoDirectShape.cs" />
     <Compile Include="Commands\PlaceTags\AcceptChanges.cs" />
     <Compile Include="Commands\PlaceTags\HelpersPlaceTags.cs" />
     <Compile Include="Commands\PlaceTags\PlaceTags.cs" />

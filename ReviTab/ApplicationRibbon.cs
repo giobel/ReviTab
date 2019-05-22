@@ -41,6 +41,8 @@ namespace ReviTab
 
                 RibbonPanel walls = GetSetRibbonPanel(a, "SuperTab", "Walls");
 
+                RibbonPanel geometry = GetSetRibbonPanel(a, "SuperTab", "Geometry");
+
                 RibbonPanel commandPanel = GetSetRibbonPanel(a, "SuperTab", "Command Line");
 
                 RibbonPanel zeroState = GetSetRibbonPanel(a, "SuperTab", "Zero State");
@@ -133,6 +135,30 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Split Wall", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                #endregion
+
+                #region Geometry
+
+                if (AddPushButton(geometry, "btnSATtoDS", "Element to" + Environment.NewLine +"DirectShape", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element.") == false)
+                {
+                    MessageBox.Show("Failed to add button SAT to DS", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if (AddPushButton(geometry, "btnProjectLines", "Project Lines"+ Environment.NewLine + "to Surface", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.ProjectLines", "Project some lines onto a surface.") == false)
+                {
+                    MessageBox.Show("Failed to add button project lines", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if (AddPushButton(geometry, "btnChangeBeamLocation", "Change Beam"+Environment.NewLine+"Location", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.ChangeBeamLocation", "Move a beam to new location.") == false)
+                {
+                    MessageBox.Show("Failed to add button change beam location", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if (AddPushButton(geometry, "btnDrawAxis", "Draw Axis", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface.") == false)
+                {
+                    MessageBox.Show("Failed to add button draw axis", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
                 #endregion
 
                 #region Zero State

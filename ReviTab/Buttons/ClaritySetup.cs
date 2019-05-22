@@ -47,6 +47,8 @@ namespace ReviTab
 
                     optionDetach.DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets;
 
+                    optionDetach.Audit = true;
+
                     openDoc = app.OpenDocumentFile(modelP, optionDetach);
 
                     IEnumerable<ViewFamilyType> viewFamilyTypes = from elem in new FilteredElementCollector(openDoc).OfClass(typeof(ViewFamilyType))
