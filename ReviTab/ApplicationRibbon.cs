@@ -114,6 +114,11 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                if (AddPushButton(beams, "btnChangeBeamLocation", "Change Beam" + Environment.NewLine + "Location", "", "pack://application:,,,/ReviTab;component/Resources/moveBeam.png", "ReviTab.ChangeBeamLocation", "Move a beam to new location.") == false)
+                {
+                    MessageBox.Show("Failed to add button change beam location", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 if (AddPushButton(beams, "btnEditJoin", "Edit Beam" + Environment.NewLine + "End Join", "", "pack://application:,,,/ReviTab;component/Resources/joinEnd.png", "ReviTab.EditBeamJoin", "Allow/Disallow beam end join") == false)
                 {
                     MessageBox.Show("Failed to add button Edit Beam", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -139,22 +144,17 @@ namespace ReviTab
 
                 #region Geometry
 
-                if (AddPushButton(geometry, "btnSATtoDS", "Element to" + Environment.NewLine +"DirectShape", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element.") == false)
+                if (AddPushButton(geometry, "btnSATtoDS", "Element to" + Environment.NewLine +"DirectShape", "", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element.") == false)
                 {
                     MessageBox.Show("Failed to add button SAT to DS", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(geometry, "btnProjectLines", "Project Lines"+ Environment.NewLine + "to Surface", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.ProjectLines", "Project some lines onto a surface.") == false)
+                if (AddPushButton(geometry, "btnProjectLines", "Project Lines"+ Environment.NewLine + "to Surface", "", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "ReviTab.ProjectLines", "Project some lines onto a surface.") == false)
                 {
                     MessageBox.Show("Failed to add button project lines", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(geometry, "btnChangeBeamLocation", "Change Beam"+Environment.NewLine+"Location", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.ChangeBeamLocation", "Move a beam to new location.") == false)
-                {
-                    MessageBox.Show("Failed to add button change beam location", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddPushButton(geometry, "btnDrawAxis", "Draw Axis", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface.") == false)
+                if (AddPushButton(geometry, "btnDrawAxis", "Draw Axis", "", "pack://application:,,,/ReviTab;component/Resources/axis.png", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface.") == false)
                 {
                     MessageBox.Show("Failed to add button draw axis", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

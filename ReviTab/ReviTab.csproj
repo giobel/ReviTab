@@ -187,6 +187,10 @@
     <Resource Include="Resources\addMultipleViews.png" />
     <Resource Include="Resources\claSetup.png" />
     <Resource Include="Resources\info.png" />
+    <Resource Include="Resources\flatten.png" />
+    <Resource Include="Resources\projectLine.png" />
+    <Resource Include="Resources\moveBeam.png" />
+    <Resource Include="Resources\axis.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
