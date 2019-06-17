@@ -189,7 +189,7 @@ namespace ReviTab
                 }
                 */
 
-                if (AddZeroStatePushButton(zeroState, "btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability") == false)
+                if (AddZeroStatePushButton(zeroState, "btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.CmdWindowHandle", "Display Version Info Task Dialog.", "ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Version Info", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

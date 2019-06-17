@@ -467,56 +467,45 @@ namespace ReviTab
                 try
                 {
                     Element ele = doc.GetElement(eid);
+                    bool appendElementId = false;
 
-                    string name = "";
                     if (ele.Category != null)
                     {
-                        name = ele.Category.Name;
+                        string name = ele.Category.Name;
+                        if (command.Split('+')[0] == "All")
+                        {
+                            if (param != "")
+                            {
+                                if (FilterElementIds(ele, param, valueToCheck, operatorValue) != null)
+                                    appendElementId = true;
+                                
+                            }
+                            else
+                            {
+                                appendElementId = true;
+                            }
+
+                        }
+                        else if (name == command.Split('+')[0])
+                        {
+                            if (param != "")
+                            {
+                                if (FilterElementIds(ele, param, valueToCheck, operatorValue) != null)
+                                    appendElementId = true;
+
+                            }
+                            else
+                            {
+                                appendElementId = true;
+                            }
+                        }
                     }
 
-                    if (name == command.Split('+')[0])
+                    if (appendElementId == true)
                     {
-                        if (param != "")
-                        {
-                            double paramValue = 0;
-                            string stringValue = "";
-                            string test = "";
-
-                            Parameter p = ele.LookupParameter(param);
-
-                            StorageType parameterType = p.StorageType;
-                            if (StorageType.Double == parameterType)
-                            {
-                                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
-                                test = "Double";
-                            }
-                            else if (StorageType.String == parameterType)
-                            {
-                                stringValue = p.AsString();
-                                test = "String";
-                            }
-
-                            if (test == "Double")
-                            {
-                                if (DoubleParamCheck(paramValue, Int64.Parse(valueToCheck), operatorValue))
-                                {
-                                    selectedElements.Add(eid);
-                                }
-                            }
-                            else if (test == "String")
-                            {
-                                if (StringParamCheck(stringValue, valueToCheck, operatorValue))
-                                {
-                                    selectedElements.Add(eid);
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            selectedElements.Add(eid);
-                        }
+                        selectedElements.Add(eid);
                     }
+
                 }
                 
 
@@ -531,6 +520,48 @@ namespace ReviTab
                 //TaskDialog.Show("Success", param);
 
         }//close method
+
+
+        public static ElementId FilterElementIds(Element _ele, string _param, string _valueToCheck, string _operatorValue)
+        {
+            ElementId selectedElement = null;
+
+            double paramValue = 0;
+            string stringValue = "";
+            string test = "";
+
+            Parameter p = _ele.LookupParameter(_param);
+
+            StorageType parameterType = p.StorageType;
+            if (StorageType.Double == parameterType)
+            {
+                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
+                test = "Double";
+            }
+            else if (StorageType.String == parameterType)
+            {
+                stringValue = p.AsString();
+                test = "String";
+            }
+
+            if (test == "Double")
+            {
+                if (DoubleParamCheck(paramValue, Int64.Parse(_valueToCheck), _operatorValue))
+                {
+                    selectedElement = _ele.Id;
+                }
+            }
+            else if (test == "String")
+            {
+                if (StringParamCheck(stringValue, _valueToCheck, _operatorValue))
+                {
+                    selectedElement = _ele.Id;
+                }
+            }
+
+
+            return selectedElement;
+        }
 
 
         /// <summary>

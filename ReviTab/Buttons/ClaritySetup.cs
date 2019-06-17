@@ -189,6 +189,7 @@ namespace ReviTab
                     SaveAsOptions saveOpt = new SaveAsOptions();
                     WorksharingSaveAsOptions wos = new WorksharingSaveAsOptions();
                     wos.SaveAsCentral = true;
+                    saveOpt.Compact = true;
                     saveOpt.SetWorksharingOptions(wos);
                     saveOpt.OverwriteExistingFile = true;
                     

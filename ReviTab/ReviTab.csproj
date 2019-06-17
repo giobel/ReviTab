@@ -110,6 +110,13 @@
     <Compile Include="Commands\Press.cs" />
     <Compile Include="Buttons\SuppressWarnings.cs" />
     <Compile Include="Commands\VoidByLineHelpers.cs" />
+    <Compile Include="Buttons\CmdWindowHandle.cs" />
+    <Compile Include="Forms\CmdWindowHandleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CmdWindowHandleForm.Designer.cs">
+      <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormAddMultipleViews.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +173,7 @@
     <Compile Include="Forms\FormCreateViewSet.Designer.cs">
       <DependentUpon>FormCreateViewSet.cs</DependentUpon>
     </Compile>
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\multipleSections.png" />
@@ -194,6 +202,9 @@
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\CmdWindowHandleForm.resx">
+      <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAddMultipleViews.resx">
       <DependentUpon>FormAddMultipleViews.cs</DependentUpon>
     </EmbeddedResource>
