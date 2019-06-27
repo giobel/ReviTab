@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\CopyLinkedElements.cs" />
     <Compile Include="Buttons\Howl.cs" />
     <Compile Include="Buttons\ChangeBeamLocation.cs" />
     <Compile Include="Buttons\DrawObjectAxis.cs" />
@@ -211,6 +212,7 @@
     <Resource Include="Resources\axis.png" />
     <Resource Include="Resources\ghowlicon.png" />
     <Resource Include="Resources\splitWalls.png" />
+    <Resource Include="Resources\copyLinked.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
