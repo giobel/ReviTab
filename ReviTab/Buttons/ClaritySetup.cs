@@ -15,6 +15,11 @@ namespace ReviTab
     [Transaction(TransactionMode.Manual)]
     public class ClaritySetup : IExternalCommand
     {
+        public static Document openDoc = null;
+        public static int modifiedByDeleteMaterial = 0;
+        public static bool checkForPurgeMaterials = false;
+        public static string materialName = "";
+
         public Result Execute(
           ExternalCommandData commandData,
           ref string message,
@@ -29,7 +34,7 @@ namespace ReviTab
             int schedulesNumber = 0;
             int furnitureElements = 0;
 
-            Document openDoc = null;
+            
 
             using (var formOpen = new FormOpenFile())
             {
@@ -68,24 +73,37 @@ namespace ReviTab
                     builtInCats.Add(BuiltInCategory.OST_Furniture);
                     builtInCats.Add(BuiltInCategory.OST_Casework);
                     builtInCats.Add(BuiltInCategory.OST_Planting);
-                    builtInCats.Add(BuiltInCategory.OST_SpecialityEquipment);
                     builtInCats.Add(BuiltInCategory.OST_Entourage);
                     builtInCats.Add(BuiltInCategory.OST_Railings);
                     builtInCats.Add(BuiltInCategory.OST_StairsRailing);
-                    builtInCats.Add(BuiltInCategory.OST_MechanicalEquipment);
 
                     ElementMulticategoryFilter filter1 = new ElementMulticategoryFilter(builtInCats);
 
 
-                    ICollection<ElementId> toDelete = new FilteredElementCollector(openDoc).WherePasses(filter1).ToElementIds();
 
-                    FilteredWorksetCollector worksetCollector = new FilteredWorksetCollector(openDoc).OfKind(WorksetKind.UserWorkset);
 
                     View3D view3d = null;
 
                     using (Transaction tran = new Transaction(openDoc))
                     {
                         tran.Start("NewView3D");
+
+                        ICollection<ElementId> purgeableElements = null;
+
+                        try
+                        {
+                            if (PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements) & purgeableElements.Count > 0)
+                            {
+                                openDoc.Delete(purgeableElements);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex.Message);
+                        }
+
+                        FilteredWorksetCollector worksetCollector = new FilteredWorksetCollector(openDoc).OfKind(WorksetKind.UserWorkset);
 
                         try
                         {
@@ -110,6 +128,7 @@ namespace ReviTab
 
                         tran.Commit();
 
+                        
                         tran.Start("Delete elements");
                         try
                         {
@@ -155,10 +174,15 @@ namespace ReviTab
                             TaskDialog.Show("Schedule Error", ex.Message);
                         }
 
+                        /*
                         int furnitureError = 0;
+
+                        ICollection<ElementId> toDelete = new FilteredElementCollector(openDoc).WherePasses(filter1).ToElementIds();
+
 
                         if (toDelete.Count() > 0)
                         {
+                            Exception lastEx = null;
                             foreach (ElementId id in toDelete)
                             {
                                 try
@@ -166,22 +190,19 @@ namespace ReviTab
                                     openDoc.Delete(id);
                                     furnitureElements += 1;
                                 }
-                                catch
+                                catch(Exception ex)
                                 {
-                                    furnitureError += 1;
+
+                                    lastEx = ex;
                                 }
                             }
+                            //Debug.WriteLine(lastEx.Message);
                             TaskDialog.Show("Error", String.Format("Cannot delete {0} furnitures", furnitureError));
-                        }
+                        }*/
                         
 
-                        /*
-                        ICollection<ElementId> purgeableElements = null;
+                        
 
-                        if (PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements) & purgeableElements.Count > 0)
-                        {
-                            openDoc.Delete(purgeableElements);
-                        }*/
 
                         tran.Commit();
                     }
@@ -219,10 +240,82 @@ namespace ReviTab
                         
                         sheetsNumber, viewsNumber, furnitureElements, viewsNames));
                 }
+                
+                //PurgeMaterials(openDoc); too slooooooow
+
             }//close using
 
             return Result.Succeeded;
 
+        }
+
+        public void PurgeMaterials(Document doc)
+        {
+            Application app = doc.Application;
+            app.DocumentChanged += documentChanged_PurgeMaterials;
+            List<Element> materials = new FilteredElementCollector(doc).OfClass(typeof(Material)).ToList();
+            string deletedMaterials = "";
+            int unusedMaterialCount = 0;
+            foreach (Element material in materials)
+            {
+                modifiedByDeleteMaterial = 0;
+                materialName = material.Name + " (id " + material.Id + ")";
+                using (TransactionGroup tg = new TransactionGroup(doc, "Delete Material: " + materialName))
+                {
+                    tg.Start();
+                    using (Transaction t = new Transaction(doc, "delete material"))
+                    {
+                        t.Start();
+                        checkForPurgeMaterials = true;
+                        doc.Delete(material.Id);
+
+                        // commit the transaction to trigger the DocumentChanged event
+                        t.Commit();
+                    }
+                    checkForPurgeMaterials = false;
+
+                    if (modifiedByDeleteMaterial == 1)
+                    {
+                        unusedMaterialCount++;
+                        deletedMaterials += materialName + Environment.NewLine;
+                        tg.Assimilate();
+                    }
+                    else // rollback the transaction group to undo the deletion
+                        tg.RollBack();
+                }
+            }
+
+            TaskDialog td = new TaskDialog("Info");
+            td.MainInstruction = "Deleted " + unusedMaterialCount + " materials";
+            td.MainContent = deletedMaterials;
+            td.Show();
+
+            app.DocumentChanged -= documentChanged_PurgeMaterials;
+        }
+
+        private static void documentChanged_PurgeMaterials(object sender, Autodesk.Revit.DB.Events.DocumentChangedEventArgs e)
+        {
+            // do not check when rolling back the transaction group
+            if (!checkForPurgeMaterials)
+            {
+                return;
+            }
+
+            List<ElementId> deleted = e.GetDeletedElementIds().ToList();
+            List<ElementId> modified = e.GetModifiedElementIds().ToList();
+
+            // for debugging
+            string s = "";
+            foreach (ElementId id in modified)
+            {
+                Element modifiedElement = openDoc.GetElement(id);
+                s += modifiedElement.Category.Name + " " + modifiedElement.Name + " (" + id.IntegerValue + ")" + Environment.NewLine;
+            }
+            //TaskDialog.Show("d", materialName + Environment.NewLine + "Deleted = " + deleted.Count + ", Modified = " + modified.Count + Environment.NewLine + s);
+
+            // how many elements were modified and deleted when this material was deleted?
+            // if 1, then the material is unused and should be deleted
+            modifiedByDeleteMaterial = deleted.Count + modified.Count;
         }
     }//close class
 }//close namespace

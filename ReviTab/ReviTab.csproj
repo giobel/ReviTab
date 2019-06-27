@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\Howl.cs" />
     <Compile Include="Buttons\ChangeBeamLocation.cs" />
     <Compile Include="Buttons\DrawObjectAxis.cs" />
     <Compile Include="Buttons\ProjectLines.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Buttons\PrintInBackground.cs" />
     <Compile Include="Buttons\SwapGridBubble.cs" />
     <Compile Include="Buttons\VoidByLine.cs" />
+    <Compile Include="Buttons\ColumnSplitter.cs" />
     <Compile Include="Buttons\WallSplitter.cs" />
     <Compile Include="Commands\ButtonPickPoint.cs" />
     <Compile Include="Commands\ElementFilters.cs" />
@@ -110,12 +112,17 @@
     <Compile Include="Commands\Press.cs" />
     <Compile Include="Buttons\SuppressWarnings.cs" />
     <Compile Include="Commands\VoidByLineHelpers.cs" />
-    <Compile Include="Buttons\CmdWindowHandle.cs" />
     <Compile Include="Forms\CmdWindowHandleForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\CmdWindowHandleForm.Designer.cs">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormHowl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormHowl.designer.cs">
+      <DependentUpon>FormHowl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormAddMultipleViews.cs">
       <SubType>Form</SubType>
@@ -165,6 +172,9 @@
     <Compile Include="Forms\FormJoin.designer.cs">
       <DependentUpon>FormJoin.cs</DependentUpon>
     </Compile>
+    <Compile Include="gHowl\Formatter.cs" />
+    <Compile Include="gHowl\SendPattern.cs" />
+    <Compile Include="gHowl\UdpSenderComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Buttons\SelectAllText.cs" />
     <Compile Include="Forms\FormCreateViewSet.cs">
@@ -199,11 +209,16 @@
     <Resource Include="Resources\projectLine.png" />
     <Resource Include="Resources\moveBeam.png" />
     <Resource Include="Resources\axis.png" />
+    <Resource Include="Resources\ghowlicon.png" />
+    <Resource Include="Resources\splitWalls.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\CmdWindowHandleForm.resx">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormHowl.resx">
+      <DependentUpon>FormHowl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAddMultipleViews.resx">
       <DependentUpon>FormAddMultipleViews.cs</DependentUpon>
@@ -249,6 +264,8 @@
 copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2019"
 copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2018"
 copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2018"
+copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2017"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2017"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

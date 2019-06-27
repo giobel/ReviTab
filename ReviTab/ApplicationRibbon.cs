@@ -84,7 +84,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnOverrideDimensions", "Override Dimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension") == false)
+                if (AddPushButton(toolsPanel, "btnOverrideDimensions", "Override \nDimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension") == false)
                 {
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -133,11 +133,16 @@ namespace ReviTab
 
                 #endregion
 
-                #region Walls
+                #region Splitter
 
-                if (AddPushButton(walls, "btnWallSplitter", "Split Wall" + Environment.NewLine + "By Levels", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.WallSplitter", "Split a wall by levels. NOTE: The original wall will be deleted.") == false)
+                if (AddPushButton(walls, "btnWallSplitter", "Split Wall" + Environment.NewLine + "By Levels", "", "pack://application:,,,/ReviTab;component/Resources/splitWalls.png", "ReviTab.WallSplitter", "Split a wall by levels. NOTE: The original wall will be deleted.") == false)
                 {
                     MessageBox.Show("Failed to add button Split Wall", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if (AddPushButton(walls, "btnColumnSplitter", "Split Column" + Environment.NewLine + "By Levels", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.ColumnSplitter", "Split a wall by levels. NOTE: The original wall will be deleted.") == false)
+                {
+                    MessageBox.Show("Failed to add button Split Column", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 #endregion
@@ -188,8 +193,12 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 */
+                if (AddZeroStatePushButton(zeroState, "btnHowl", "Howl", "", "pack://application:,,,/ReviTab;component/Resources/ghowlicon.png", "ReviTab.Howl", "Howl", "ReviTab.Availability") == false)
+                {
+                    MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
-                if (AddZeroStatePushButton(zeroState, "btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.CmdWindowHandle", "Display Version Info Task Dialog.", "ReviTab.Availability") == false)
+                if (AddZeroStatePushButton(zeroState, "btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Version Info", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
