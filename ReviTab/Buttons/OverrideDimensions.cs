@@ -41,7 +41,7 @@ namespace ReviTab
                 t.Start();
                 try
                 {
-                    dimension.ValueOverride = " ";
+                    dimension.ValueOverride = "\u200E";
                 }
                 catch (Exception ex)
                 {
