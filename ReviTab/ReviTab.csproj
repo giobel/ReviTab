@@ -86,8 +86,12 @@
     <Compile Include="Buttons\Howl.cs" />
     <Compile Include="Buttons\ChangeBeamLocation.cs" />
     <Compile Include="Buttons\DrawObjectAxis.cs" />
+    <Compile Include="Buttons\JoinMultiple.cs" />
     <Compile Include="Buttons\ProjectLines.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
+    <Compile Include="Buttons\SwitchJoin.cs" />
+    <Compile Include="Buttons\UnjoinAll.cs" />
+    <Compile Include="Buttons\UnjoinElements.cs" />
     <Compile Include="Buttons\VersionInfo.cs" />
     <Compile Include="Buttons\AddLegendToSheets.cs" />
     <Compile Include="Buttons\AddMultipleViewsToSheet.cs" />
@@ -230,6 +234,10 @@
     <Resource Include="Resources\info16x16.png" />
     <Resource Include="Resources\AddMetadataIcon.png" />
     <Resource Include="Resources\ghowlicon16x16.png" />
+    <Resource Include="Resources\multipleJoin.png" />
+    <Resource Include="Resources\switchJoin.png" />
+    <Resource Include="Resources\unjoinAll.png" />
+    <Resource Include="Resources\unjoinMultiple.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

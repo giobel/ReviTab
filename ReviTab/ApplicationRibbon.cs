@@ -9,6 +9,7 @@ using Autodesk.Revit.UI.Events;
 using System.Reflection;
 using System.Windows.Media.Imaging;
 using System.Windows.Forms;
+using System.Linq;
 #endregion
 
 namespace ReviTab
@@ -112,7 +113,19 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button Copy Linked Elements", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+                IList<PushButtonData> multipleJoin = new List<PushButtonData>();
+
+                multipleJoin.Add(CreatePushButton("multipleJoin","Join Multiple","", "pack://application:,,,/ReviTab;component/Resources/multipleJoin.png", "ReviTab.JoinMultiple","Join multiple elements"));
                 
+                multipleJoin.Add(CreatePushButton("switchJoin", "Switch Join", "pack://application:,,,/ReviTab;component/Resources/switchJoin.png", "pack://application:,,,/ReviTab;component/Resources/switchJoin.png", "ReviTab.SwitchJoin", "Switch multiple elements join"));
+                
+                multipleJoin.Add(CreatePushButton("multipleUnjoin", "Unjoin Multiple", "pack://application:,,,/ReviTab;component/Resources/unjoinMultiple.png", "pack://application:,,,/ReviTab;component/Resources/unjoinMultiple.png", "ReviTab.UnjoinElements", "Unjoin multiple elements"));
+                
+                multipleJoin.Add(CreatePushButton("UnjoinAll", "Unjoin All", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.UnjoinAll", "Unjoin all elements"));
+
+                AddSplitButton(toolsPanel, multipleJoin, "multipleJoin", "Join");
+
                 #endregion
 
                 #region Structural Framing
@@ -387,7 +400,7 @@ namespace ReviTab
         /// <summary>
         /// Add min 2 or max 3 buttons to a stacked button.
         /// </summary>
-        private bool AddStackedButton(RibbonPanel panel, IList<PushButtonData> stackedButtonsGroup, string splitButtonName, string splitButtonText)
+        private bool AddStackedButton(RibbonPanel panel, IList<PushButtonData> stackedButtonsGroup, string stackedButtonName, string stackedButtonText)
         {
             try
             {
@@ -401,6 +414,30 @@ namespace ReviTab
                 return false;
             }            
         }
+
+        /// <summary>
+        /// Add min 2 or max 3 buttons to a stacked button.
+        /// </summary>
+        private bool AddSplitButton(RibbonPanel panel, IList<PushButtonData> splitButtonsGroup, string splitButtonName, string splitButtonText)
+        {
+            try
+            {
+                SplitButtonData sb1 = new SplitButtonData(splitButtonName, splitButtonText);
+                SplitButton sb = panel.AddItem(sb1) as SplitButton;
+
+                foreach (PushButtonData item in splitButtonsGroup)
+                {
+                    sb.AddPushButton(item);
+                }
+                
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         ///<summary>
         ///Add a PushButton to the Ribbon Panel
@@ -497,6 +534,7 @@ namespace ReviTab
                 return false;
             }
         }
+
 
         /// <summary>
         /// Add a push button visible in Revit Zero State mode

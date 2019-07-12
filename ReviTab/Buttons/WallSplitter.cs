@@ -27,6 +27,7 @@ namespace ReviTab
 
             try
             {
+                
                 Reference refWall = uidoc.Selection.PickObject(ObjectType.Element, "Select a wall");
 
                 Element selectedWall = doc.GetElement(refWall);
@@ -63,6 +64,12 @@ namespace ReviTab
                 {
 
                     t.Start();
+
+                    FailureHandlingOptions failOpt = t.GetFailureHandlingOptions();
+
+                    failOpt.SetFailuresPreprocessor(new DuplicateMarksSwallower());
+
+                    t.SetFailureHandlingOptions(failOpt);
 
                     for (int i = 0; i < topConstraintList.Count(); i++)
                     {
@@ -110,6 +117,59 @@ namespace ReviTab
 
         }
 
-    }
 
-}
+        public class DuplicateMarksSwallower : IFailuresPreprocessor
+        {
+            public FailureProcessingResult PreprocessFailures(FailuresAccessor a)
+            {
+                // inside event handler, get all warnings
+
+                IList<FailureMessageAccessor> failures
+                  = a.GetFailureMessages();
+
+                foreach (FailureMessageAccessor f in failures)
+                {
+                    // check failure definition ids
+                    // against ones to dismiss:
+
+                    FailureDefinitionId id
+                      = f.GetFailureDefinitionId();
+
+                    a.DeleteAllWarnings();
+
+                    //if (BuiltInFailures.CreationFailures.CannotCreateCornice
+                    //  == id)
+                    //{
+                    //    a.DeleteWarning(f);
+                    //}
+                }
+                return FailureProcessingResult.Continue;
+            }
+        }
+
+        #region General Warning Swallower
+        FailureProcessingResult PreprocessFailures(FailuresAccessor a)
+        {
+            IList<FailureMessageAccessor> failures = a.GetFailureMessages();
+
+            foreach (FailureMessageAccessor f in failures)
+            {
+                FailureSeverity fseverity = a.GetSeverity();
+
+                if (fseverity == FailureSeverity.Warning)
+                {
+                    a.DeleteWarning(f);
+                }
+                else
+                {
+                    a.ResolveFailure(f);
+                    return FailureProcessingResult.ProceedWithCommit;
+                }
+            }
+            return FailureProcessingResult.Continue;
+        }
+        #endregion // General Warning Swallower
+
+    }//close external command
+
+}//close namespace

@@ -1,14 +1,12 @@
 #region Namespaces
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using forms = System.Windows.Forms;
 #endregion
 
