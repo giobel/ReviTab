@@ -33,7 +33,9 @@ namespace ReviTab
             try
             {
                                
-                AddRibbonPanel(a,"SuperTab","Tools");
+                AddRibbonPanel(a,"SuperTab");
+
+                RibbonPanel docsPanel = GetSetRibbonPanel(a, "SuperTab", "Documentation");
 
                 RibbonPanel toolsPanel = GetSetRibbonPanel(a, "SuperTab", "Tools");
 
@@ -47,8 +49,8 @@ namespace ReviTab
 
                 RibbonPanel zeroState = GetSetRibbonPanel(a, "SuperTab", "Zero State");
 
-                #region Doc Tools
-                
+                #region Documentation
+                /*
                 if (AddPushButton(toolsPanel, "btnSheetAddCurrentView", "Add View" + Environment.NewLine + "to Sheet", "", "pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet", "Add the active view to a sheet") == false)
                 {
                     MessageBox.Show("Failed to add button Add View to Sheet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -62,7 +64,24 @@ namespace ReviTab
                 if (AddPushButton(toolsPanel, "btnAddLegends", "Add Legend" + Environment.NewLine + "to Sheets", "", "pack://application:,,,/ReviTab;component/Resources/legend.png", "ReviTab.AddLegendToSheets", "Place a legend onto multiple sheets in the same place.") == false)
                 {
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                }*/
+
+                IList<PushButtonData> stackedButtonsDocumentation = new List<PushButtonData>();
+
+                stackedButtonsDocumentation.Add(CreatePushButton("btnSheetAddCurrentView", "Add View to Sheet","pack://application:,,,/ReviTab;component/Resources/addView.png", "", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
+
+                stackedButtonsDocumentation.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple Views", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
+
+                stackedButtonsDocumentation.Add(CreatePushButton("btnAddLegends", "Add Legend to Sheets", "pack://application:,,,/ReviTab;component/Resources/legend.png", "", "ReviTab.AddLegendToSheets",  "Place a legend onto multiple sheets in the same place."));
+
+                AddStackedButton(docsPanel, stackedButtonsDocumentation, "DocumentationButton", "Documentation");
+
+                #endregion
+
+
+                #region Tools
+
+                
 
                 if (AddPushButton(toolsPanel, "btnCreateSections", "Create Multiple" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections from selected elements (must have location curve i.e. beams, walls, lines...)") == false)
                 {
@@ -97,7 +116,7 @@ namespace ReviTab
                 #endregion
 
                 #region Structural Framing
-
+                /*
                 if (AddPushButton(beams, "btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "", "pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.VoidByFace", "Place a void on a beam face") == false)
                 {
                     MessageBox.Show("Failed to add button Void by face", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -112,7 +131,20 @@ namespace ReviTab
                 if (AddPushButton(beams, "btnPlaceTags", "Place Tags", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams") == false)
                 {
                     MessageBox.Show("Failed to add button Place Tags", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                }*/
+
+
+                IList<PushButtonData> stackedButtonsCQT = new List<PushButtonData>();
+
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "", "ReviTab.VoidByFace", "Place a void on a beam face"));
+
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByLine", "Void By Line", "pack://application:,,,/ReviTab;component/Resources/line.png", "", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear."));
+
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceTags", "Place Tags", "pack://application:,,,/ReviTab;component/Resources/tag.png", "", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams"));
+
+                AddStackedButton(beams, stackedButtonsCQT, "CQTButton", "CQT");
+
+
 
 
                 if (AddPushButton(beams, "btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point") == false)
@@ -120,7 +152,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(beams, "btnChangeBeamLocation", "Change Beam" + Environment.NewLine + "Location", "", "pack://application:,,,/ReviTab;component/Resources/moveBeam.png", "ReviTab.ChangeBeamLocation", "Move a beam to new location.") == false)
+                if (AddPushButton(beams, "btnChangeBeamLocation", "Change Beam" + Environment.NewLine + "Location", "", "pack://application:,,,/ReviTab;component/Resources/changebeamlocation.png", "ReviTab.ChangeBeamLocation", "Move a beam to new location.") == false)
                 {
                     MessageBox.Show("Failed to add button change beam location", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -146,7 +178,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Split Wall", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(walls, "btnColumnSplitter", "Split Column" + Environment.NewLine + "By Levels", "", "pack://application:,,,/ReviTab;component/Resources/wallSplit.png", "ReviTab.ColumnSplitter", "Split a wall by levels. NOTE: The original wall will be deleted.") == false)
+                if (AddPushButton(walls, "btnColumnSplitter", "Split Column" + Environment.NewLine + "By Levels", "", "pack://application:,,,/ReviTab;component/Resources/columnSplit.png", "ReviTab.ColumnSplitter", "Split a wall by levels. NOTE: The original wall will be deleted.") == false)
                 {
                     MessageBox.Show("Failed to add button Split Column", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -154,7 +186,7 @@ namespace ReviTab
                 #endregion
 
                 #region Geometry
-
+                /*
                 if (AddPushButton(geometry, "btnSATtoDS", "Element to" + Environment.NewLine +"DirectShape", "", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element.") == false)
                 {
                     MessageBox.Show("Failed to add button SAT to DS", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -169,10 +201,24 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button draw axis", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+                */
+
+
+                IList<PushButtonData> stackedButtonsGroupGeometry = new List<PushButtonData>();
+
+                stackedButtonsGroupGeometry.Add(CreatePushButton("btnSATtoDS", "Element to DirectShape", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element."));
+
+                stackedButtonsGroupGeometry.Add(CreatePushButton("btnProjectLines", "Project Lines to Surface", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "", "ReviTab.ProjectLines", "Project some lines onto a surface."));
+
+                stackedButtonsGroupGeometry.Add(CreatePushButton("btnDrawAxis", "Draw Axis", "pack://application:,,,/ReviTab;component/Resources/axis.png", "", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface."));
+
+                AddStackedButton(geometry, stackedButtonsGroupGeometry, "GeometryButton", "Geometry");
+
                 #endregion
 
                 #region Zero State
+
+                
 
                 if (AddPushButton(zeroState, "btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1") == false)
                 {
@@ -199,6 +245,18 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 */
+
+                IList<PushButtonData> stackedButtonsGroupMetadata = new List<PushButtonData>();
+
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnHowl", "Howl", "pack://application:,,,/ReviTab;component/Resources/ghowlicon16x16.png", "", "ReviTab.Howl", "Howl"));
+
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnAddMetadata", "Add Metadata", "pack://application:,,,/ReviTab;component/Resources/AddMetadataIcon.png", "", "ReviTab.AddPDFcustomProperties", "Add custom properties to a list of pdfs"));
+                
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnInfo", "Info", "pack://application:,,,/ReviTab;component/Resources/info16x16.png", "", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability"));
+
+                AddStackedButton(zeroState, stackedButtonsGroupMetadata, "MetadataCommands", "Metadata");
+
+                /*
                 if (AddZeroStatePushButton(zeroState, "btnHowl", "Howl", "", "pack://application:,,,/ReviTab;component/Resources/ghowlicon.png", "ReviTab.Howl", "Howl", "ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -208,7 +266,7 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button Version Info", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+                */
 
                 #endregion
 
@@ -250,7 +308,7 @@ namespace ReviTab
         /// <param name="application"></param>
         /// <param name="tabName"></param>
         /// <param name="ribbonName"></param>
-        static void AddRibbonPanel(UIControlledApplication application, string tabName, string ribbonName)
+        static void AddRibbonPanel(UIControlledApplication application, string tabName)
 
         {
 
@@ -262,7 +320,7 @@ namespace ReviTab
 
             // Add a new ribbon panel
 
-            RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, ribbonName);
+            //RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, ribbonName);
 
             /*
 
@@ -324,7 +382,74 @@ namespace ReviTab
 
             return tab;
         }
-        
+
+
+        /// <summary>
+        /// Add min 2 or max 3 buttons to a stacked button.
+        /// </summary>
+        private bool AddStackedButton(RibbonPanel panel, IList<PushButtonData> stackedButtonsGroup, string splitButtonName, string splitButtonText)
+        {
+            try
+            {
+                List<RibbonItem> projectButtons = new List<RibbonItem>();
+                projectButtons.AddRange(panel.AddStackedItems(stackedButtonsGroup[0], stackedButtonsGroup[1], stackedButtonsGroup[2]));
+            
+                return true;
+            }
+            catch
+            {
+                return false;
+            }            
+        }
+
+        ///<summary>
+        ///Add a PushButton to the Ribbon Panel
+        ///</summary>
+        private PushButtonData CreatePushButton(string ButtonName, string ButtonText, string ImagePath16, string ImagePath32, string dllClass, string Tooltip, string availability="")
+        {
+
+            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+
+            try
+            {
+                PushButtonData m_pbData = new PushButtonData(ButtonName, ButtonText, thisAssemblyPath, dllClass);
+
+                m_pbData.AvailabilityClassName = availability;
+
+                if (ImagePath16 != "")
+                {
+                    try
+                    {
+                        m_pbData.Image = new BitmapImage(new Uri(ImagePath16));
+                    }
+                    catch
+                    {
+                        //Could not find the image
+                    }
+                }
+                if (ImagePath32 != "")
+                {
+                    try
+                    {
+                        m_pbData.LargeImage = new BitmapImage(new Uri(ImagePath32));
+                    }
+                    catch
+                    {
+                        //Could not find the image
+                    }
+                }
+
+                m_pbData.ToolTip = Tooltip;
+                
+                return m_pbData;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
         ///<summary>
         ///Add a PushButton to the Ribbon Panel
         ///</summary>

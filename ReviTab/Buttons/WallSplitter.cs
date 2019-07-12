@@ -39,6 +39,8 @@ namespace ReviTab
                 ElementId wallBottomLevel = selectedWall.LookupParameter("Base Constraint").AsElementId();
 
                 double wallBottomElevation = doc.GetElement(wallBottomLevel).LookupParameter("Elevation").AsDouble();
+
+                string wallMark = selectedWall.LookupParameter("Mark").AsString();
                 //
 
                 List<ElementId> allLevelsList = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Levels).WhereElementIsNotElementType().ToElementIds().ToList();
@@ -75,6 +77,8 @@ namespace ReviTab
                         newWall.LookupParameter("Top Constraint").Set(topLevelId);
 
                         newWall.LookupParameter("Base Constraint").Set(bottomLevelId);
+
+                        newWall.LookupParameter("Mark").Set(wallMark);
                     }
 
 

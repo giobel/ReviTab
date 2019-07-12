@@ -2,7 +2,7 @@
 <RevitAddIns>
   <AddIn Type="Application">
     <Name>Application ReviTab</Name>
-    <Assembly>ReviTab.dll</Assembly>
+    <Assembly>ReviTab\ReviTab.dll</Assembly>
     <FullClassName>ReviTab.ApplicationRibbon</FullClassName>
     <ClientId>3dccea64-f8a9-4761-9849-d9a29c94be46</ClientId>
     <VendorId>com.typepad.thebuildingcoder</VendorId>

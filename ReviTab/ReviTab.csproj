@@ -50,6 +50,12 @@
       <HintPath>..\packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI">
       <HintPath>$(ProgramW6432)\Autodesk\Revit 2018\RevitAPI.dll</HintPath>
@@ -75,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\AddPDFcustomProperties.cs" />
     <Compile Include="Buttons\CopyLinkedElements.cs" />
     <Compile Include="Buttons\Howl.cs" />
     <Compile Include="Buttons\ChangeBeamLocation.cs" />
@@ -101,6 +108,7 @@
     <Compile Include="Buttons\VoidByLine.cs" />
     <Compile Include="Buttons\ColumnSplitter.cs" />
     <Compile Include="Buttons\WallSplitter.cs" />
+    <Compile Include="Commands\AddMetadataHelpers.cs" />
     <Compile Include="Commands\ButtonPickPoint.cs" />
     <Compile Include="Commands\ElementFilters.cs" />
     <Compile Include="Commands\GlobalObjects.cs" />
@@ -118,6 +126,12 @@
     </Compile>
     <Compile Include="Forms\CmdWindowHandleForm.Designer.cs">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAddMetadata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddMetadata.designer.cs">
+      <DependentUpon>FormAddMetadata.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormHowl.cs">
       <SubType>Form</SubType>
@@ -200,7 +214,7 @@
     <Resource Include="Resources\line.png" />
     <Resource Include="Resources\arrowUp.png" />
     <Resource Include="Resources\joinEnd.png" />
-    <Resource Include="Resources\wallSplit.png" />
+    <Resource Include="Resources\columnSplit.png" />
     <Resource Include="Resources\legend.png" />
     <Resource Include="Resources\addView.png" />
     <Resource Include="Resources\addMultipleViews.png" />
@@ -208,16 +222,22 @@
     <Resource Include="Resources\info.png" />
     <Resource Include="Resources\flatten.png" />
     <Resource Include="Resources\projectLine.png" />
-    <Resource Include="Resources\moveBeam.png" />
+    <Resource Include="Resources\splitWalls.png" />
     <Resource Include="Resources\axis.png" />
     <Resource Include="Resources\ghowlicon.png" />
-    <Resource Include="Resources\splitWalls.png" />
     <Resource Include="Resources\copyLinked.png" />
+    <Resource Include="Resources\changebeamlocation.png" />
+    <Resource Include="Resources\info16x16.png" />
+    <Resource Include="Resources\AddMetadataIcon.png" />
+    <Resource Include="Resources\ghowlicon16x16.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\CmdWindowHandleForm.resx">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddMetadata.resx">
+      <DependentUpon>FormAddMetadata.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormHowl.resx">
       <DependentUpon>FormHowl.cs</DependentUpon>
@@ -263,11 +283,11 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2019"
-copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2019"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2019\ReviTab"
 copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2018"
-copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2018"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2018\ReviTab"
 copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2017"
-copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2017"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2017\ReviTab"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
