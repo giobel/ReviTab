@@ -41,7 +41,7 @@ namespace ReviTab
             this.ok_btn = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBoxCategory = new System.Windows.Forms.ComboBox();
+            this.comboBoxFamily = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_cancel = new System.Windows.Forms.Button();
             this.textBoxWidth = new System.Windows.Forms.TextBox();
@@ -51,10 +51,10 @@ namespace ReviTab
             this.checkBoxStart = new System.Windows.Forms.CheckBox();
             this.checkBoxEnd = new System.Windows.Forms.CheckBox();
             this.checkBoxMidPoint = new System.Windows.Forms.CheckBox();
-            this.textBoxCategory = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnLoadCategory = new System.Windows.Forms.Button();
             this.btnClearCat = new System.Windows.Forms.Button();
+            this.comboBoxCategory = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // ok_btn
@@ -85,15 +85,15 @@ namespace ReviTab
             this.label1.Text = "Offset";
             this.label1.UseCompatibleTextRendering = true;
             // 
-            // comboBoxCategory
+            // comboBoxFamily
             // 
-            this.comboBoxCategory.FormattingEnabled = true;
-            this.comboBoxCategory.Location = new System.Drawing.Point(13, 75);
-            this.comboBoxCategory.Name = "comboBoxCategory";
-            this.comboBoxCategory.Size = new System.Drawing.Size(261, 21);
-            this.comboBoxCategory.Sorted = true;
-            this.comboBoxCategory.TabIndex = 4;
-            this.comboBoxCategory.SelectedIndexChanged += new System.EventHandler(this.ComboBoxCategorySelectedIndexChanged);
+            this.comboBoxFamily.FormattingEnabled = true;
+            this.comboBoxFamily.Location = new System.Drawing.Point(13, 75);
+            this.comboBoxFamily.Name = "comboBoxFamily";
+            this.comboBoxFamily.Size = new System.Drawing.Size(261, 21);
+            this.comboBoxFamily.Sorted = true;
+            this.comboBoxFamily.TabIndex = 4;
+            this.comboBoxFamily.SelectedIndexChanged += new System.EventHandler(this.ComboBoxCategorySelectedIndexChanged);
             // 
             // label2
             // 
@@ -181,22 +181,14 @@ namespace ReviTab
             this.checkBoxMidPoint.UseCompatibleTextRendering = true;
             this.checkBoxMidPoint.UseVisualStyleBackColor = true;
             // 
-            // textBoxCategory
-            // 
-            this.textBoxCategory.Location = new System.Drawing.Point(12, 27);
-            this.textBoxCategory.Name = "textBoxCategory";
-            this.textBoxCategory.Size = new System.Drawing.Size(156, 20);
-            this.textBoxCategory.TabIndex = 1;
-            this.textBoxCategory.Text = "Structural Framing";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(9, 6);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(216, 13);
+            this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 15;
-            this.label5.Text = "Category (Structural Framing/Connections...)";
+            this.label5.Text = "Category";
             // 
             // btnLoadCategory
             // 
@@ -218,15 +210,23 @@ namespace ReviTab
             this.btnClearCat.UseVisualStyleBackColor = true;
             this.btnClearCat.Click += new System.EventHandler(this.btnClearCat_Click);
             // 
+            // comboBoxCategory
+            // 
+            this.comboBoxCategory.FormattingEnabled = true;
+            this.comboBoxCategory.Location = new System.Drawing.Point(12, 26);
+            this.comboBoxCategory.Name = "comboBoxCategory";
+            this.comboBoxCategory.Size = new System.Drawing.Size(156, 21);
+            this.comboBoxCategory.TabIndex = 16;
+            // 
             // FormAddOpening
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(289, 300);
+            this.Controls.Add(this.comboBoxCategory);
             this.Controls.Add(this.btnClearCat);
             this.Controls.Add(this.btnLoadCategory);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBoxCategory);
             this.Controls.Add(this.checkBoxMidPoint);
             this.Controls.Add(this.checkBoxEnd);
             this.Controls.Add(this.checkBoxStart);
@@ -236,7 +236,7 @@ namespace ReviTab
             this.Controls.Add(this.textBoxWidth);
             this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBoxCategory);
+            this.Controls.Add(this.comboBoxFamily);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.ok_btn);
@@ -257,13 +257,13 @@ namespace ReviTab
         private System.Windows.Forms.TextBox textBoxWidth;
         private System.Windows.Forms.Button btn_cancel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBoxCategory;
+        private System.Windows.Forms.ComboBox comboBoxFamily;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button ok_btn;
-        private System.Windows.Forms.TextBox textBoxCategory;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnLoadCategory;
         private System.Windows.Forms.Button btnClearCat;
+        private System.Windows.Forms.ComboBox comboBoxCategory;
     }
 }

@@ -25,8 +25,10 @@ namespace ReviTab
 		public List<string> familyName = new List<string>();
 		
 		public string choosenFamily = null;
-		
-		public int formVoidWidth;
+
+        public string choosenCategory = null;
+
+        public int formVoidWidth;
 		
 		public int formVoidHeight;
 		
@@ -55,8 +57,10 @@ namespace ReviTab
             textBoxWidth.Text = "400";
             textBoxHeight.Text = "350";
 
-					
-		}
+            comboBoxCategory.Items.Add("Structural Framing");
+            comboBoxCategory.Items.Add("Structural Connections");
+            
+        }
 		
 		void Ok_btnClick(object sender, EventArgs e)
 		{
@@ -70,13 +74,15 @@ namespace ReviTab
 				formPosition = "end";
 			if (checkBoxMidPoint.Checked)
 				formPosition = "mid";
+
+            
 		}
 		
 
 		void ComboBoxCategorySelectedIndexChanged(object sender, EventArgs e)
 		{
 			//choosenFamily = familyName[comboBoxCategory.SelectedIndex];
-			choosenFamily = comboBoxCategory.SelectedItem.ToString();
+			choosenFamily = comboBoxFamily.SelectedItem.ToString();
 			
 		}
 		
@@ -96,14 +102,15 @@ namespace ReviTab
         
         private void btnLoadCategory_Click(object sender, EventArgs e)
         {
-            
-            Dictionary<string, FamilySymbol> allCategories = Helpers.SelectFamilies(rvtDoc, textBoxCategory.Text);
+            choosenCategory = comboBoxCategory.SelectedItem.ToString();
+
+            Dictionary<string, FamilySymbol> allCategories = Helpers.SelectFamilies(rvtDoc, choosenCategory);
 
             foreach (string s in allCategories.Keys)
             {
                 try
                 {
-                    this.comboBoxCategory.Items.Add(s);
+                    this.comboBoxFamily.Items.Add(s);
                 }
                 catch
                 {
@@ -114,7 +121,7 @@ namespace ReviTab
 
         private void btnClearCat_Click(object sender, EventArgs e)
         {
-            this.comboBoxCategory.Items.Clear();
+            this.comboBoxFamily.Items.Clear();
             
         }
     }
