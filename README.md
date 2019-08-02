@@ -15,8 +15,6 @@ Select multiple views in the project browser and add them to a sheet providing i
 
 [![Watch the video](https://img.youtube.com/vi/nmRzktJehwo/maxresdefault.jpg)](https://youtu.be/nmRzktJehwo)
 
-***
-
 # TOOLS
 
 ## Create Multiple Sections
@@ -43,8 +41,6 @@ Set the text dimension to "" for a selected dimension. Does not work on multiple
 ## Copy Linked Elements
 ![alt text](images/copyLinkedElements.gif)
 
-***
-
 # STRUCTURAL FRAMINGS
 
 ## Place Void By Face
@@ -67,8 +63,6 @@ Move a beam or multiple beams end point to another element location curve closes
 Change the end beam join/unjoin/miter.
 ![](https://i.imgur.com/7fruopZ.png)
 
-***
-
 # WALLS
 
 ## Split Wall by Levels
@@ -79,11 +73,7 @@ Note:
 
 [![Watch the video](https://img.youtube.com/vi/gcMeTedRd2o/maxresdefault.jpg)](https://youtu.be/gcMeTedRd2o)
 
-***
-
 # GEOMETRY
-
-***
 
 # COMMAND LINE
 
@@ -118,8 +108,6 @@ tblocks: all -> select all Title Blocks
 [![Watch the video](https://img.youtube.com/vi/axukGCgBRys/maxresdefault.jpg)](https://youtu.be/axukGCgBRys)
 
 [![Watch the video](https://img.youtube.com/vi/56_nDryHPzA/maxresdefault.jpg)](https://youtu.be/56_nDryHPzA)
-
-***
 
 # ZERO STATE
 
