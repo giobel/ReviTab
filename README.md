@@ -63,11 +63,10 @@ Modeless window that calculates the distance from the origin to the beam centerp
 Move a beam or multiple beams end point to another element location curve closest point.
 
 ## Change Beam Location
-![alt text](images/ChnageBeamLocation.gif)
+![alt text](images/ChangeBeamLocation.gif)
 
 ## Edit Beam End Join
-Change the end beam join/unjoin/miter.
-![](https://i.imgur.com/7fruopZ.png)
+![alt text](images/EditBeamJoins.gif)
 
 # WALLS
 
