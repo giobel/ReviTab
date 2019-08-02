@@ -3,7 +3,7 @@ WIP toolbar for Revit.
 
 ![IMG](https://i.imgur.com/IHdWlXS.png)
 
-***DOCUMENTATION***
+# DOCUMENTATION
 
 ## Add View to Sheet
 Add the active view to a sheet providing its number.
@@ -15,7 +15,7 @@ Select multiple views in the project browser and add them to a sheet providing i
 
 [![Watch the video](https://img.youtube.com/vi/nmRzktJehwo/maxresdefault.jpg)](https://youtu.be/nmRzktJehwo)
 
-***TOOLS***
+# TOOLS
 
 ## Create Multiple Sections
 credits: Danny Bentley and others. Create a section from a list of elements that have a location curve.
@@ -39,9 +39,9 @@ Set the text dimension to "" for a selected dimension. Does not work on multiple
 [![Watch the video](https://img.youtube.com/vi/OwpogSyYWfg/maxresdefault.jpg)](https://youtu.be/OwpogSyYWfg)
 
 ## Copy Linked Elements
-![](https://i.imgur.com/7fruopZ.png)
+![alt text](images/copyLinkedElements.gif)
 
-***STRUCTURAL FRAMINGS***
+# STRUCTURAL FRAMINGS
 
 ## Place Void By Face
 Add one ore more voids to a beam face providing the distance(s) from the beam start, mid or end point and its size.
@@ -61,10 +61,9 @@ Move a beam or multiple beams end point to another element location curve closes
 
 ## Edit Beam End Join
 Change the end beam join/unjoin/miter.
+![](https://i.imgur.com/7fruopZ.png)
 
-![alt text](images/copyLinkedElements.gif)
-
-***WALLS***
+# WALLS
 
 ## Split Wall by Levels
 Copy a wall in place and set its Top and Base constraints to the level it intersects. 
@@ -74,9 +73,9 @@ Note:
 
 [![Watch the video](https://img.youtube.com/vi/gcMeTedRd2o/maxresdefault.jpg)](https://youtu.be/gcMeTedRd2o)
 
-***GEOMETRY***
+# GEOMETRY
 
-***COMMAND LINE***
+# COMMAND LINE
 
 Call methods directly:
 keywords: 
@@ -110,7 +109,7 @@ tblocks: all -> select all Title Blocks
 
 [![Watch the video](https://img.youtube.com/vi/56_nDryHPzA/maxresdefault.jpg)](https://youtu.be/56_nDryHPzA)
 
-***ZERO STATE***
+# ZERO STATE
 
 ## Push to DB
 Export selected parameters to a [db](https://remotemysql.com)
