@@ -248,6 +248,7 @@
     <Resource Include="Resources\switchJoin.png" />
     <Resource Include="Resources\unjoinAll.png" />
     <Resource Include="Resources\unjoinMultiple.png" />
+    <Resource Include="Resources\selectFilter.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

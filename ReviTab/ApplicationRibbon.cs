@@ -129,21 +129,21 @@ namespace ReviTab
 
                 IList<PushButtonData> filterSelection = new List<PushButtonData>();
                 
-                filterSelection.Add(CreatePushButton("selBeams", "Select Beams", "", "pack://application:,,,/ReviTab;component/Resources/multipleJoin.png", "ReviTab.FilterSelectionBeams", "Join multiple elements"));
+                filterSelection.Add(CreatePushButton("selBeams", "Select Beams", "", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionBeams", "Select Beams Only"));
 
-                filterSelection.Add(CreatePushButton("selColumns", "Select Columns", "pack://application:,,,/ReviTab;component/Resources/switchJoin.png", "pack://application:,,,/ReviTab;component/Resources/switchJoin.png", "ReviTab.FilterSelectionColumns", "Switch multiple elements join"));
+                filterSelection.Add(CreatePushButton("selColumns", "Select Columns", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionColumns", "Select Columns Only"));
 
-                filterSelection.Add(CreatePushButton("selDim", "Select Dimensions", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionDimensions", "Unjoin all elements"));
+                filterSelection.Add(CreatePushButton("selDim", "Select Dimensions", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionDimensions", "Select Dimensions Only"));
 
-                filterSelection.Add(CreatePushButton("selGrids", "Select Grids", "pack://application:,,,/ReviTab;component/Resources/unjoinMultiple.png", "pack://application:,,,/ReviTab;component/Resources/unjoinMultiple.png", "ReviTab.FilterSelectionGrids", "Unjoin multiple elements"));
+                filterSelection.Add(CreatePushButton("selGrids", "Select Grids", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionGrids", "Select Grids Only"));
 
-                filterSelection.Add(CreatePushButton("selLines", "Select Lines", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionLines", "Unjoin all elements"));
+                filterSelection.Add(CreatePushButton("selLines", "Select Lines", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionLines", "Select Lines Only"));
 
-                filterSelection.Add(CreatePushButton("selTags", "Select Tags", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionTags", "Unjoin all elements"));
+                filterSelection.Add(CreatePushButton("selTags", "Select Tags", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionTags", "Select Tags Only"));
 
-                filterSelection.Add(CreatePushButton("selText", "Select Text", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionText", "Unjoin all elements"));
+                filterSelection.Add(CreatePushButton("selText", "Select Text", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionText", "Select Text Only"));
 
-                filterSelection.Add(CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionWalls", "Unjoin all elements"));
+                filterSelection.Add(CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionWalls", "Select Walls Only"));
 
                 AddSplitButton(toolsPanel, filterSelection, "filterSelection", "Filter Selection");
 
