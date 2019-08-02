@@ -41,6 +41,9 @@ Set the text dimension to "" for a selected dimension. Does not work on multiple
 ## Copy Linked Elements
 ![alt text](images/copyLinkedElements.gif)
 
+## Filter Element Selection
+![alt text](images/FilterSelection.gif)
+
 # STRUCTURAL FRAMINGS
 
 ## Place Void By Face
@@ -58,6 +61,9 @@ Modeless window that calculates the distance from the origin to the beam centerp
 
 ## Move beam end
 Move a beam or multiple beams end point to another element location curve closest point.
+
+## Change Beam Location
+![alt text](images/ChnageBeamLocation.gif)
 
 ## Edit Beam End Join
 Change the end beam join/unjoin/miter.
