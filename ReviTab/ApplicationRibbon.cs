@@ -114,6 +114,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Copy Linked Elements", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                /* Redundant
                 IList<PushButtonData> multipleJoin = new List<PushButtonData>();
 
                 multipleJoin.Add(CreatePushButton("multipleJoin","Join Multiple","", "pack://application:,,,/ReviTab;component/Resources/multipleJoin.png", "ReviTab.JoinMultiple","Join multiple elements"));
@@ -125,7 +126,7 @@ namespace ReviTab
                 multipleJoin.Add(CreatePushButton("UnjoinAll", "Unjoin All", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.UnjoinAll", "Unjoin all elements"));
 
                 AddSplitButton(toolsPanel, multipleJoin, "multipleJoin", "Join");
-
+                */
 
                 IList<PushButtonData> filterSelection = new List<PushButtonData>();
                 
