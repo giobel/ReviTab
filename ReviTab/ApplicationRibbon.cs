@@ -126,6 +126,27 @@ namespace ReviTab
 
                 AddSplitButton(toolsPanel, multipleJoin, "multipleJoin", "Join");
 
+
+                IList<PushButtonData> filterSelection = new List<PushButtonData>();
+                
+                filterSelection.Add(CreatePushButton("selBeams", "Select Beams", "", "pack://application:,,,/ReviTab;component/Resources/multipleJoin.png", "ReviTab.FilterSelectionBeams", "Join multiple elements"));
+
+                filterSelection.Add(CreatePushButton("selColumns", "Select Columns", "pack://application:,,,/ReviTab;component/Resources/switchJoin.png", "pack://application:,,,/ReviTab;component/Resources/switchJoin.png", "ReviTab.FilterSelectionColumns", "Switch multiple elements join"));
+
+                filterSelection.Add(CreatePushButton("selDim", "Select Dimensions", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionDimensions", "Unjoin all elements"));
+
+                filterSelection.Add(CreatePushButton("selGrids", "Select Grids", "pack://application:,,,/ReviTab;component/Resources/unjoinMultiple.png", "pack://application:,,,/ReviTab;component/Resources/unjoinMultiple.png", "ReviTab.FilterSelectionGrids", "Unjoin multiple elements"));
+
+                filterSelection.Add(CreatePushButton("selLines", "Select Lines", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionLines", "Unjoin all elements"));
+
+                filterSelection.Add(CreatePushButton("selTags", "Select Tags", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionTags", "Unjoin all elements"));
+
+                filterSelection.Add(CreatePushButton("selText", "Select Text", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionText", "Unjoin all elements"));
+
+                filterSelection.Add(CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.FilterSelectionWalls", "Unjoin all elements"));
+
+                AddSplitButton(toolsPanel, filterSelection, "filterSelection", "Filter Selection");
+
                 #endregion
 
                 #region Structural Framing
@@ -229,29 +250,47 @@ namespace ReviTab
 
                 #endregion
 
+
+                if (AddPushButton(toolsPanel, "btnPrintSelected", "Print Selected", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintSelected", "Print the selected Sheets in the Project Browsser") == false) 
+                {
+                    MessageBox.Show("Failed to add button Print Selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 #region Zero State
-
-                
-
-                if (AddPushButton(zeroState, "btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1") == false)
-                {
-                    MessageBox.Show("Failed to add button Push to DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
-                {
-                    MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
 
                 if (AddZeroStatePushButton(zeroState, "btnClaritySetup", "Clarity Setup", "", "pack://application:,,,/ReviTab;component/Resources/claSetup.png", "ReviTab.ClaritySetup", "Open a model in background and create a 3d view for Clarity IFC export.", "ReviTab.Availability") == false)
                 {
                     MessageBox.Show("Failed to add button Clarity", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddZeroStatePushButton(zeroState, "btnPurgeFamilies", "Purge Families", "", "pack://application:,,,/ReviTab;component/Resources/wiping.png", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability") == false)
-                {
-                    MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
+                //if (AddPushButton(zeroState, "btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1") == false)
+                //{
+                //    MessageBox.Show("Failed to add button Push to DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
+
+                //if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
+                //{
+                //    MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
+
+
+                //if (AddZeroStatePushButton(zeroState, "btnPurgeFamilies", "Purge Families", "", "pack://application:,,,/ReviTab;component/Resources/wiping.png", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability") == false)
+                //{
+                //    MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
+
+                IList<PushButtonData> stackedButtonsDBPurgeBackPrint = new List<PushButtonData>();
+
+                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPush", "Push to DB", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "","ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
+
+                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPurgeFamilies", "Purge Families", "pack://application:,,,/ReviTab;component/Resources/wiping.png","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
+
+                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPrintBackground", "Background" + Environment.NewLine + "Print", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "","ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings", "ReviTab.Availability"));
+
+                AddStackedButton(zeroState, stackedButtonsDBPurgeBackPrint, "PurgeCommands", "Purge");
+
+
                 /*
                 if (AddZeroStatePushButton(zeroState, "btnDiasbleWarning", "Open No Warnings", "", "pack://application:,,,/ReviTab;component/Resources/addMultiViews.png", "ReviTab.SuppressWarnings", "Suppress warnings when opening files", "ReviTab.Availability") == false)
                 {
@@ -269,17 +308,6 @@ namespace ReviTab
 
                 AddStackedButton(zeroState, stackedButtonsGroupMetadata, "MetadataCommands", "Metadata");
 
-                /*
-                if (AddZeroStatePushButton(zeroState, "btnHowl", "Howl", "", "pack://application:,,,/ReviTab;component/Resources/ghowlicon.png", "ReviTab.Howl", "Howl", "ReviTab.Availability") == false)
-                {
-                    MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddZeroStatePushButton(zeroState, "btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability") == false)
-                {
-                    MessageBox.Show("Failed to add button Version Info", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                */
 
                 #endregion
 

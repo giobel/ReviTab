@@ -24,7 +24,7 @@ namespace ReviTab
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
 
-            ISelectionFilter beamFilter = new BeamSelectionFilter("Structural Framing");
+            ISelectionFilter beamFilter = new CategorySelectionFilter("Structural Framing");
             ISelectionFilter lineFilter = new LineSelectionFilter();
 
             IList<Reference> refsBeams = uidoc.Selection.PickObjects(ObjectType.Element, beamFilter, "Select Beams");

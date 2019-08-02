@@ -81,7 +81,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\FilterSelectionDimensions.cs" />
+    <Compile Include="Buttons\FilterSelectionTags.cs" />
+    <Compile Include="Buttons\FilterSelectionText.cs" />
+    <Compile Include="Buttons\FilterSelectionColumns.cs" />
+    <Compile Include="Buttons\FilterSelectionGrids.cs" />
+    <Compile Include="Buttons\FilterSelectionLines.cs" />
+    <Compile Include="Buttons\FilterSelectionBeams.cs" />
+    <Compile Include="Buttons\FilterSelectionWalls.cs" />
     <Compile Include="Buttons\AddPDFcustomProperties.cs" />
+    <Compile Include="Buttons\PrintSelected.cs" />
     <Compile Include="Buttons\CopyLinkedElements.cs" />
     <Compile Include="Buttons\Howl.cs" />
     <Compile Include="Buttons\ChangeBeamLocation.cs" />
@@ -89,6 +98,7 @@
     <Compile Include="Buttons\JoinMultiple.cs" />
     <Compile Include="Buttons\ProjectLines.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
+    <Compile Include="Buttons\SetBeamZOffset.cs" />
     <Compile Include="Buttons\SwitchJoin.cs" />
     <Compile Include="Buttons\UnjoinAll.cs" />
     <Compile Include="Buttons\UnjoinElements.cs" />

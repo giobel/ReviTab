@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace ReviTab
 {
-    public class BeamSelectionFilter : ISelectionFilter
+    public class CategorySelectionFilter : ISelectionFilter
     {
 
         public string catNameChosen { get; set; }
 
-        public BeamSelectionFilter(string catName)
+        public CategorySelectionFilter(string catName)
         {
             this.catNameChosen = catName;
         }
@@ -45,6 +45,27 @@ namespace ReviTab
         {
 
             if (e.Category.Name == "Lines")
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        public bool AllowReference(Reference refer, XYZ point)
+        {
+            return false;
+        }
+
+    }//close class
+
+    public class TagsSelectionFilter : ISelectionFilter
+    {
+
+        public bool AllowElement(Element e)
+        {
+
+            if (e.Category.Name.Contains("Tags"))
             {
                 return true;
             }

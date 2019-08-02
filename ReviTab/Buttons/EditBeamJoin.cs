@@ -26,7 +26,7 @@ namespace ReviTab
 
 
 
-            ISelectionFilter beamFilter = new BeamSelectionFilter("Structural Framing");
+            ISelectionFilter beamFilter = new CategorySelectionFilter("Structural Framing");
             IList<Reference> refsBeams = uidoc.Selection.PickObjects(ObjectType.Element, beamFilter, "Select Beams");
 
             using (var form = new FormJoin())

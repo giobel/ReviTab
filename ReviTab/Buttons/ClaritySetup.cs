@@ -79,30 +79,13 @@ namespace ReviTab
 
                     ElementMulticategoryFilter filter1 = new ElementMulticategoryFilter(builtInCats);
 
-
-
-
+                    
                     View3D view3d = null;
 
                     using (Transaction tran = new Transaction(openDoc))
                     {
-                        tran.Start("NewView3D");
-
-                        ICollection<ElementId> purgeableElements = null;
-
-                        try
-                        {
-                            if (PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements) & purgeableElements.Count > 0)
-                            {
-                                openDoc.Delete(purgeableElements);
-                            }
-
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine(ex.Message);
-                        }
-
+                        tran.Start("Clarity Setup");
+                        
                         FilteredWorksetCollector worksetCollector = new FilteredWorksetCollector(openDoc).OfKind(WorksetKind.UserWorkset);
 
                         try
@@ -126,10 +109,7 @@ namespace ReviTab
                             TaskDialog.Show("Error", "Name already taken" + "\n" + ex.Message);
                         }
 
-                        tran.Commit();
 
-                        
-                        tran.Start("Delete elements");
                         try
                         {
                             sheetsNumber += sheetIds.Count();
@@ -174,35 +154,56 @@ namespace ReviTab
                             TaskDialog.Show("Schedule Error", ex.Message);
                         }
 
-                        /*
-                        int furnitureError = 0;
-
-                        ICollection<ElementId> toDelete = new FilteredElementCollector(openDoc).WherePasses(filter1).ToElementIds();
 
 
-                        if (toDelete.Count() > 0)
+                        if (formOpen.cleanArchModel)
                         {
-                            Exception lastEx = null;
-                            foreach (ElementId id in toDelete)
+                            int furnitureError = 0;
+
+                            ICollection<ElementId> toDelete = new FilteredElementCollector(openDoc).WherePasses(filter1).ToElementIds();
+
+
+                            if (toDelete.Count() > 0)
                             {
-                                try
+                                string lastEx = "";
+                                foreach (ElementId id in toDelete)
                                 {
-                                    openDoc.Delete(id);
-                                    furnitureElements += 1;
-                                }
-                                catch(Exception ex)
-                                {
+                                    try
+                                    {
+                                        openDoc.Delete(id);
+                                        furnitureElements += 1;
+                                    }
+                                    catch (Exception ex)
+                                    {
 
-                                    lastEx = ex;
+                                        lastEx = $"{ex.Message}\n";
+                                    }
                                 }
+                                //Debug.WriteLine(lastEx.Message);
+                                TaskDialog.Show("Error", $"{furnitureElements} elements deleted. {furnitureError} cannot be deleted. Errors:\n{lastEx}");
                             }
-                            //Debug.WriteLine(lastEx.Message);
-                            TaskDialog.Show("Error", String.Format("Cannot delete {0} furnitures", furnitureError));
-                        }*/
-                        
+                        }
 
-                        
+                        if (formOpen.purgeModel)
+                        {
+                            ICollection<ElementId> purgeableElements = null;
 
+                            PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements);
+                            try
+                            {
+                                while (purgeableElements.Count > 0)
+                                {
+                                    //TaskDialog.Show("Purge Count", purgeableElements.Count().ToString());
+                                    PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements);
+                                    openDoc.Delete(purgeableElements);
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                TaskDialog.Show("Purge Error", ex.Message);
+                            }
+                        }
 
                         tran.Commit();
                     }

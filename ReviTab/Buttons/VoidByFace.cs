@@ -26,7 +26,7 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            ISelectionFilter beamFilter = new BeamSelectionFilter("Structural Framing");
+            ISelectionFilter beamFilter = new CategorySelectionFilter("Structural Framing");
 
             IList<Reference> refs = uidoc.Selection.PickObjects(ObjectType.Element, beamFilter, "Select some beams");
             int count = 0;

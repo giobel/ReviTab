@@ -43,12 +43,14 @@ namespace ReviTab
             this.label1 = new System.Windows.Forms.Label();
             this.btn_browse = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.checkBoxCleanArchModel = new System.Windows.Forms.CheckBox();
+            this.checkBoxPurge = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // openBtn
             // 
             this.openBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.openBtn.Location = new System.Drawing.Point(305, 53);
+            this.openBtn.Location = new System.Drawing.Point(463, 53);
             this.openBtn.Name = "openBtn";
             this.openBtn.Size = new System.Drawing.Size(75, 23);
             this.openBtn.TabIndex = 1;
@@ -77,7 +79,7 @@ namespace ReviTab
             // 
             // btn_browse
             // 
-            this.btn_browse.Location = new System.Drawing.Point(176, 53);
+            this.btn_browse.Location = new System.Drawing.Point(354, 53);
             this.btn_browse.Name = "btn_browse";
             this.btn_browse.Size = new System.Drawing.Size(75, 23);
             this.btn_browse.TabIndex = 4;
@@ -91,25 +93,52 @@ namespace ReviTab
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog1FileOk);
             // 
-            // Form2
+            // checkBoxCleanArchModel
+            // 
+            this.checkBoxCleanArchModel.AutoSize = true;
+            this.checkBoxCleanArchModel.Location = new System.Drawing.Point(12, 57);
+            this.checkBoxCleanArchModel.Name = "checkBoxCleanArchModel";
+            this.checkBoxCleanArchModel.Size = new System.Drawing.Size(252, 17);
+            this.checkBoxCleanArchModel.TabIndex = 5;
+            this.checkBoxCleanArchModel.Text = "Clean Architect Model (delete furnitures, trees...)";
+            this.checkBoxCleanArchModel.UseVisualStyleBackColor = true;
+            this.checkBoxCleanArchModel.CheckedChanged += new System.EventHandler(this.checkBoxCleanArchModel_CheckedChanged);
+            // 
+            // checkBoxPurge
+            // 
+            this.checkBoxPurge.AutoSize = true;
+            this.checkBoxPurge.Location = new System.Drawing.Point(12, 82);
+            this.checkBoxPurge.Name = "checkBoxPurge";
+            this.checkBoxPurge.Size = new System.Drawing.Size(91, 17);
+            this.checkBoxPurge.TabIndex = 6;
+            this.checkBoxPurge.Text = "Purge Models";
+            this.checkBoxPurge.UseVisualStyleBackColor = true;
+            this.checkBoxPurge.CheckedChanged += new System.EventHandler(this.checkBoxPurge_CheckedChanged);
+            // 
+            // FormOpenFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 88);
+            this.ClientSize = new System.Drawing.Size(574, 111);
+            this.Controls.Add(this.checkBoxPurge);
+            this.Controls.Add(this.checkBoxCleanArchModel);
             this.Controls.Add(this.btn_browse);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tBoxRvtFilePath);
             this.Controls.Add(this.openBtn);
-            this.Name = "Form2";
+            this.Name = "FormOpenFile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Open model in background";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button btn_browse;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tBoxRvtFilePath;
         private System.Windows.Forms.Button openBtn;
+        private System.Windows.Forms.CheckBox checkBoxCleanArchModel;
+        private System.Windows.Forms.CheckBox checkBoxPurge;
     }
 }

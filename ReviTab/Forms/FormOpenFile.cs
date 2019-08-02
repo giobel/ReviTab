@@ -10,8 +10,12 @@ namespace ReviTab
 	public partial class FormOpenFile : Form
 	{
 		public string filePath;
-		
-		public FormOpenFile()
+
+        public bool cleanArchModel { get; internal set; }
+
+        public bool purgeModel { get; internal set; }
+
+        public FormOpenFile()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
@@ -45,5 +49,21 @@ namespace ReviTab
 		{
 			
 		}
-	}
+
+        private void checkBoxCleanArchModel_CheckedChanged(object sender, EventArgs e)
+        {
+           if (checkBoxCleanArchModel.Checked)
+            {
+                cleanArchModel = true;
+            }
+        }
+
+        private void checkBoxPurge_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxPurge.Checked)
+            {
+                purgeModel = true;
+            }
+        }
+    }
 }
