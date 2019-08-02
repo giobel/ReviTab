@@ -80,6 +80,13 @@ Note:
 
 # GEOMETRY
 
+## Element to DirectShape
+![alt text](images/Flatten.gif)
+
+## Project Lines to Surface
+
+## Draw Axis
+
 # COMMAND LINE
 
 Call methods directly:
