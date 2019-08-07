@@ -50,7 +50,8 @@ namespace ReviTab
 
             if (refe.Count == 0)
             {
-                TaskDialog.Show("Warning", "Please select some sheets in the Project Browser before launching the command");
+                TaskDialog.Show("Warning", "Please select some sheets in the Project Browser before launching the command. \nFor Revit <2019 make sure the Project" +
+                    "Browser is docked.");
             }
 
             using (var form = new FormAddMultipleViews(uidoc))

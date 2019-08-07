@@ -527,6 +527,7 @@ namespace ReviTab
             ElementId selectedElement = null;
 
             double paramValue = 0;
+            int boolIntValue = 0;
             string stringValue = "";
             string test = "";
 
@@ -543,6 +544,12 @@ namespace ReviTab
                 stringValue = p.AsString();
                 test = "String";
             }
+            else if (StorageType.Integer == parameterType)
+            {
+                boolIntValue = p.AsInteger();
+                test = "Bool";
+            }
+
 
             if (test == "Double")
             {
@@ -554,6 +561,13 @@ namespace ReviTab
             else if (test == "String")
             {
                 if (StringParamCheck(stringValue, _valueToCheck, _operatorValue))
+                {
+                    selectedElement = _ele.Id;
+                }
+            }
+            else if (test == "Bool")
+            {
+                if (BoolParamCheck(boolIntValue, Int64.Parse(_valueToCheck), _operatorValue))
                 {
                     selectedElement = _ele.Id;
                 }
@@ -664,6 +678,8 @@ namespace ReviTab
                                 stringValue = p.AsString();
                                 test = "String";
                             }
+
+
 
                             if (test == "Double")
                             {
@@ -816,6 +832,26 @@ namespace ReviTab
                 case "equal":
                     resultValue = param1 == param2;
                     break;
+                case "different":
+                    resultValue = param1 != param2;
+                    break;
+            }
+            return resultValue;
+        }
+
+        public static bool BoolParamCheck(int param1, double param2, string operatorValue)
+        {
+
+            string operatorSwitch = operatorValue;
+            bool resultValue = false;
+
+            switch (operatorSwitch)
+            {
+                
+                case "equal":
+                    resultValue = param1 == param2;
+                    break;
+                
                 case "different":
                     resultValue = param1 != param2;
                     break;
