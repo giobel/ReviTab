@@ -41,6 +41,9 @@ Set the text dimension to "" for a selected dimension. Does not work on multiple
 ## Copy Linked Elements
 ![alt text](images/copyLinkedElements.gif)
 
+## Filter Element Selection
+![alt text](images/FilterSelection.gif)
+
 # STRUCTURAL FRAMINGS
 
 ## Place Void By Face
@@ -59,9 +62,11 @@ Modeless window that calculates the distance from the origin to the beam centerp
 ## Move beam end
 Move a beam or multiple beams end point to another element location curve closest point.
 
+## Change Beam Location
+![alt text](images/ChangeBeamLocation.gif)
+
 ## Edit Beam End Join
-Change the end beam join/unjoin/miter.
-![](https://i.imgur.com/7fruopZ.png)
+![alt text](images/EditBeamJoins.gif)
 
 # WALLS
 
@@ -74,6 +79,13 @@ Note:
 [![Watch the video](https://img.youtube.com/vi/gcMeTedRd2o/maxresdefault.jpg)](https://youtu.be/gcMeTedRd2o)
 
 # GEOMETRY
+
+## Element to DirectShape
+![alt text](images/Flatten.gif)
+
+## Project Lines to Surface
+
+## Draw Axis
 
 # COMMAND LINE
 
