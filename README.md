@@ -8,7 +8,7 @@ WIP toolbar for Revit.
 ## Add View to Sheet
 Add the active view to a sheet providing its number.
 
-[![Watch the video](https://img.youtube.com/vi/adpGT6SKGek/maxresdefault.jpg)](https://youtu.be/adpGT6SKGek)
+![](https://i.imgur.com/m7aWiWu.gif)
 
 ## Add Multiple Views
 Select multiple views in the project browser and add them to a sheet providing its number.
