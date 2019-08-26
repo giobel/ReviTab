@@ -51,38 +51,34 @@ namespace ReviTab
                 RibbonPanel zeroState = GetSetRibbonPanel(a, "SuperTab", "Zero State");
 
                 #region Documentation
-                /*
-                if (AddPushButton(toolsPanel, "btnSheetAddCurrentView", "Add View" + Environment.NewLine + "to Sheet", "", "pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet", "Add the active view to a sheet") == false)
-                {
-                    MessageBox.Show("Failed to add button Add View to Sheet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddPushButton(toolsPanel, "btnAddMultipleViews", "Add" + Environment.NewLine + "Multiple Views", "", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser.") == false)
-                {
-                    MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddPushButton(toolsPanel, "btnAddLegends", "Add Legend" + Environment.NewLine + "to Sheets", "", "pack://application:,,,/ReviTab;component/Resources/legend.png", "ReviTab.AddLegendToSheets", "Place a legend onto multiple sheets in the same place.") == false)
-                {
-                    MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }*/
-
+                
                 IList<PushButtonData> stackedButtonsDocumentation = new List<PushButtonData>();
 
-                stackedButtonsDocumentation.Add(CreatePushButton("btnSheetAddCurrentView", "Add View to Sheet","pack://application:,,,/ReviTab;component/Resources/addView.png", "", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
+                stackedButtonsDocumentation.Add(CreatePushButton("btnSheetAddCurrentView", "Add View\nto Sheet","","pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
 
-                stackedButtonsDocumentation.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple Views", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
+                stackedButtonsDocumentation.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple\nViews","", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
 
-                stackedButtonsDocumentation.Add(CreatePushButton("btnAddLegends", "Add Legend to Sheets", "pack://application:,,,/ReviTab;component/Resources/legend.png", "", "ReviTab.AddLegendToSheets",  "Place a legend onto multiple sheets in the same place."));
+                stackedButtonsDocumentation.Add(CreatePushButton("btnAddLegends", "Add Legend\nto Sheets", "","pack://application:,,,/ReviTab;component/Resources/legend.png", "ReviTab.AddLegendToSheets",  "Place a legend onto multiple sheets in the same place."));
 
-                AddStackedButton(docsPanel, stackedButtonsDocumentation, "DocumentationButton", "Documentation");
+                AddSplitButton(docsPanel, stackedButtonsDocumentation, "DocumentationButton", "Documentation");
+
+                IList<PushButtonData> stackedButtonsSheets = new List<PushButtonData>();
+
+                stackedButtonsSheets.Add(CreatePushButton("btnSetTitleblock", "Set Titleblock\nScale", "pack://application:,,,/ReviTab;component/Resources/ruler.png", "", "ReviTab.SetTitleblockScale", "Set the current sheet titleblock scale to the most used."));
+
+                stackedButtonsSheets.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary"));
+
+                stackedButtonsSheets.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
+
+                AddStackedButton(docsPanel, stackedButtonsSheets, "SheetsButton", "Sheets");
+
 
                 #endregion
 
 
                 #region Tools
 
-                
+
 
                 if (AddPushButton(toolsPanel, "btnCreateSections", "Create Multiple" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections from selected elements (must have location curve i.e. beams, walls, lines...)") == false)
                 {
@@ -94,10 +90,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (AddPushButton(toolsPanel, "btnCreateViewset", "Create" + Environment.NewLine + "Viewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers ") == false)
-                {
-                    MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                //Override settings
 
                 if (AddPushButton(toolsPanel, "btnSwapGrid", "Swap Grid" + Environment.NewLine + "Head", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.SwapGridBubbles", "Swap the head of the selected grids") == false)
                 {
@@ -147,6 +140,11 @@ namespace ReviTab
                 filterSelection.Add(CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionWalls", "Select Walls Only"));
 
                 AddSplitButton(toolsPanel, filterSelection, "filterSelection", "Filter Selection");
+
+                if (AddPushButton(toolsPanel, "btnPrintSelected", "Print Selected", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintSelected", "Print the selected Sheets in the Project Browsser") == false)
+                {
+                    MessageBox.Show("Failed to add button Print Selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 #endregion
 
@@ -221,23 +219,6 @@ namespace ReviTab
                 #endregion
 
                 #region Geometry
-                /*
-                if (AddPushButton(geometry, "btnSATtoDS", "Element to" + Environment.NewLine +"DirectShape", "", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element.") == false)
-                {
-                    MessageBox.Show("Failed to add button SAT to DS", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddPushButton(geometry, "btnProjectLines", "Project Lines"+ Environment.NewLine + "to Surface", "", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "ReviTab.ProjectLines", "Project some lines onto a surface.") == false)
-                {
-                    MessageBox.Show("Failed to add button project lines", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddPushButton(geometry, "btnDrawAxis", "Draw Axis", "", "pack://application:,,,/ReviTab;component/Resources/axis.png", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface.") == false)
-                {
-                    MessageBox.Show("Failed to add button draw axis", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                */
-
 
                 IList<PushButtonData> stackedButtonsGroupGeometry = new List<PushButtonData>();
 
@@ -250,13 +231,7 @@ namespace ReviTab
                 AddStackedButton(geometry, stackedButtonsGroupGeometry, "GeometryButton", "Geometry");
 
                 #endregion
-
-
-                if (AddPushButton(toolsPanel, "btnPrintSelected", "Print Selected", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintSelected", "Print the selected Sheets in the Project Browsser") == false) 
-                {
-                    MessageBox.Show("Failed to add button Print Selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
+                
                 #region Zero State
 
                 if (AddZeroStatePushButton(zeroState, "btnClaritySetup", "Clarity Setup", "", "pack://application:,,,/ReviTab;component/Resources/claSetup.png", "ReviTab.ClaritySetup", "Open a model in background and create a 3d view for Clarity IFC export.", "ReviTab.Availability") == false)

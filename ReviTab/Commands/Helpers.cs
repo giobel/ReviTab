@@ -214,6 +214,28 @@ namespace ReviTab
             return names;
         }
 
+        public static Dictionary<string, PrintSetting> GetPrintersSettings(Document doc)
+        {
+
+            Dictionary<string, PrintSetting> printSettingNames = new Dictionary<string, PrintSetting>();
+
+            FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
+            filteredElementCollector.OfClass(typeof(PrintSetting));
+            IEnumerator<Element> enumerator = filteredElementCollector.ToElements().GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                PrintSetting printSetting = (PrintSetting)enumerator.Current;
+                bool flag = true;
+                if (flag)
+                {
+                    printSettingNames.Add(printSetting.Name, printSetting);
+
+                }
+            }
+            return printSettingNames;
+        }
+
         public static string GetCurrentPrintSetup(Document doc)
         {
             PrintManager printManager = doc.PrintManager;
@@ -993,30 +1015,84 @@ namespace ReviTab
                 return "";
             }
         }
-        #endregion
 
-        public static Dictionary<string, PrintSetting> GetPrintersSettings(Document doc)
+        /// <summary>
+        /// Create a string with SheetId, Number, Revision Cloud Description, Border Issue, Titleblock Latest Revision
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="cloudId"></param>
+        /// <returns></returns>
+        public static string RevCloudSheet(Document doc, ElementId cloudId)
         {
 
-            Dictionary<string, PrintSetting> printSettingNames = new Dictionary<string, PrintSetting>();
-
-            FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
-            filteredElementCollector.OfClass(typeof(PrintSetting));
-            IEnumerator<Element> enumerator = filteredElementCollector.ToElements().GetEnumerator();
-
-            while (enumerator.MoveNext())
+            try
             {
-                PrintSetting printSetting = (PrintSetting)enumerator.Current;
-                bool flag = true;
-                if (flag)
+                RevisionCloud cloud = doc.GetElement(cloudId) as RevisionCloud;
+                View view = doc.GetElement(cloud.OwnerViewId) as View;
+
+                if (view is ViewSheet)
                 {
-                    printSettingNames.Add(printSetting.Name, printSetting);
+                    ViewSheet vs = view as ViewSheet;
+                    return String.Format("{0},{1},{2},{3},{4}",
+                                         vs.Id,
+                                         vs.SheetNumber,
+                                         cloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString(),
+                                         vs.LookupParameter("ARUP_BDR_ISSUE").AsString(),
+                                         FindLatestRevision(vs)
+                                        );
+                }
+                else
+                {
+                    return view.Name;
+                }
+            }
+            catch (Exception ex)
+            {
+                return String.Format("{0},{1}", cloudId.ToString(), ex.Message);
+
+            }
+        }
+
+        /// <summary>
+        /// Finds the latest revision and its date on a titleblock. Note: does not work when different revisions letters are used (P01,T01...)
+        /// </summary>
+        /// <param name="vs"></param>
+        /// <returns></returns>
+        public static string FindLatestRevision(ViewSheet vs)
+        {
+            IList<Parameter> ps = vs.GetOrderedParameters();
+
+            List<int> lastRevisions = new List<int>();
+
+            foreach (Parameter p in ps)
+            {
+                if (p.Definition.Name.Contains("Rev."))
+                {
+                    try
+                    {
+                        string revision = new String(p.AsString().Where(Char.IsDigit).ToArray());
+                        lastRevisions.Add(Convert.ToInt16(revision));
+                    }
+                    catch
+                    {
+                        lastRevisions.Add(0);
+                    }
 
                 }
             }
-            return printSettingNames;
+
+            int lastRevision = lastRevisions.Max();
+
+            string date = vs.LookupParameter(String.Format("{0} - Date", lastRevision.ToString())).AsString();
+
+            string result = lastRevision.ToString() + "," + date;
+
+            return result;
+
         }
 
+        #endregion
+        
         #region STRUCTURAL FRAMINGS
         
         private static Options pickOptions(Document doc)
