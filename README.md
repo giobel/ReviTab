@@ -8,19 +8,19 @@ WIP toolbar for Revit.
 ## Add View to Sheet
 Add the active view to a sheet providing its number.
 
-[![Watch the video](https://img.youtube.com/vi/adpGT6SKGek/maxresdefault.jpg)](https://youtu.be/adpGT6SKGek)
+![](https://i.imgur.com/m7aWiWu.gif)
 
 ## Add Multiple Views
 Select multiple views in the project browser and add them to a sheet providing its number.
 
-[![Watch the video](https://img.youtube.com/vi/nmRzktJehwo/maxresdefault.jpg)](https://youtu.be/nmRzktJehwo)
+![](https://i.imgur.com/2UZ4ODp.gif)
 
 # TOOLS
 
 ## Create Multiple Sections
 credits: Danny Bentley and others. Create a section from a list of elements that have a location curve.
 
-[![Watch the video](https://img.youtube.com/vi/mj504sYGDZM/maxresdefault.jpg)](https://youtu.be/mj504sYGDZM)
+![](https://i.imgur.com/YXTKVMw.gif)
 
 ## Select All Text
 Select all text notes in the project and launch the spelling check.
