@@ -37,11 +37,29 @@ namespace ReviTab
                 foreach (ElementId idVp in sheet.GetAllViewports())
                 {
                     Viewport vp = doc.GetElement(idVp) as Viewport;
-                    Parameter scale = vp.get_Parameter(BuiltInParameter.VIEW_SCALE);
-                    scaleValues.Add(scale.AsInteger());
+
+                    try
+                    {
+                        View view = doc.GetElement(vp.ViewId) as View;
+                        if (view.ViewType != ViewType.Legend && view.ViewType != ViewType.ThreeD)
+                        {
+                            Parameter scale = vp.get_Parameter(BuiltInParameter.VIEW_SCALE);
+                            scaleValues.Add(scale.AsInteger());
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+
                 }
 
-                int scaleBarValue = scaleValues.GroupBy(x => x).First().First();
+                //int scaleBarValue = scaleValues.GroupBy(x => x).First().First();
+                var scaleBarValue = scaleValues.GroupBy(x => x)
+                                      .Select(y => new { Element = y.Key, Counter = y.Count() })
+                                      .ToList();
+
+                int longestArray = scaleBarValue.OrderBy(x => x.Counter).Last().Element;
 
                 using (Transaction t = new Transaction(doc, "Set scalebar"))
                 {
@@ -49,7 +67,7 @@ namespace ReviTab
 
                     //TaskDialog.Show("result", scaleBarValue.ToString());
                     Parameter tbScalebar = sheetTitleblock.LookupParameter("Scalebar scale");
-                    tbScalebar.Set(scaleBarValue);
+                    tbScalebar.Set(longestArray);
 
                     t.Commit();
                 }
