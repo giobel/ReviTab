@@ -18,7 +18,7 @@ namespace ReviTab
         /// </summary>
         public static void leannSays()
         {
-            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "i am angel", "I smash you", "You I know can you guys delete it after finish ready. Thanks", "book my set tomorrow. donot forget thanks", "i am coming back on thuesday. \nthis is the day i will in office","i try to found you last Friday you not in office"   };
+            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "i am angel", "I smash you", "You I know can you guys delete it after finish ready. Thanks", "book my set tomorrow. donot forget thanks", "i am coming back on thuesday. \nthis is the day i will in office", "i try to found you last Friday you not in office" };
 
             Random rand = new Random();
 
@@ -113,7 +113,7 @@ namespace ReviTab
 
             return allViewSets;
         }
-        
+
         /// <summary>
         /// Create a new ViewSet (if exists, delete it and create a new one) and add some sheet views to it.
         /// </summary>
@@ -438,30 +438,34 @@ namespace ReviTab
 
             string command = message.Split('*')[1];
 
-			string param = "";
-			string operatorValue = "";
-			string valueToCheck = "";
-			
-			try{
-				
-			if (command.Contains('>')) {
-					string[] check = command.Split('+')[1].Split('>');
-				param = check[0];
-				operatorValue = "larger";
-				valueToCheck = check[1];
-			}
-			else if (command.Contains('<')){
-					string[] check = command.Split('+')[1].Split('<');
-				param = check[0];
-				operatorValue = "smaller";
-				valueToCheck = check[1];
-			}
-			else if (command.Contains('=')){
-					string[] check = command.Split('+')[1].Split('=');
-				param = check[0];
-				operatorValue = "equal";
-				valueToCheck = check[1];
-			}
+            string param = "";
+            string operatorValue = "";
+            string valueToCheck = "";
+
+            try
+            {
+
+                if (command.Contains('>'))
+                {
+                    string[] check = command.Split('+')[1].Split('>');
+                    param = check[0];
+                    operatorValue = "larger";
+                    valueToCheck = check[1];
+                }
+                else if (command.Contains('<'))
+                {
+                    string[] check = command.Split('+')[1].Split('<');
+                    param = check[0];
+                    operatorValue = "smaller";
+                    valueToCheck = check[1];
+                }
+                else if (command.Contains('='))
+                {
+                    string[] check = command.Split('+')[1].Split('=');
+                    param = check[0];
+                    operatorValue = "equal";
+                    valueToCheck = check[1];
+                }
                 else if (command.Contains('!'))
                 {
                     string[] check = command.Split('+')[1].Split('!');
@@ -471,13 +475,14 @@ namespace ReviTab
                 }
             }
 
-			catch{
+            catch
+            {
 
                 TaskDialog.Show("Warning", "Something went wrong");
-			}
-			
-            
-            
+            }
+
+
+
             Selection selElements = uidoc.Selection;
 
             ICollection<ElementId> idTxt = new FilteredElementCollector(doc, doc.ActiveView.Id).ToElementIds();
@@ -500,7 +505,7 @@ namespace ReviTab
                             {
                                 if (FilterElementIds(ele, param, valueToCheck, operatorValue) != null)
                                     appendElementId = true;
-                                
+
                             }
                             else
                             {
@@ -529,7 +534,7 @@ namespace ReviTab
                     }
 
                 }
-                
+
 
                 catch
                 {
@@ -539,7 +544,7 @@ namespace ReviTab
             }
 
             selElements.SetElementIds(selectedElements);
-                //TaskDialog.Show("Success", param);
+            //TaskDialog.Show("Success", param);
 
         }//close method
 
@@ -727,7 +732,7 @@ namespace ReviTab
                 }
 
 
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     TaskDialog.Show("Error", ex.Message);
                 }
@@ -779,7 +784,7 @@ namespace ReviTab
 
 
 
-            
+
 
             uidoc.Selection.SetElementIds(eid);
 
@@ -869,11 +874,11 @@ namespace ReviTab
 
             switch (operatorSwitch)
             {
-                
+
                 case "equal":
                     resultValue = param1 == param2;
                     break;
-                
+
                 case "different":
                     resultValue = param1 != param2;
                     break;
@@ -997,7 +1002,7 @@ namespace ReviTab
             }
             return sheetsInViewSheetSetNumbers;
         }
-        
+
         /// <summary>
         /// Get the sheet revision (must be the arup standard one)
         /// </summary>
@@ -1008,7 +1013,7 @@ namespace ReviTab
             try
             {
                 Parameter rev = vs.GetParameters("ARUP_BDR_ISSUE")[0];
-                return '['+rev.AsString()+']';
+                return '[' + rev.AsString() + ']';
             }
             catch
             {
@@ -1033,12 +1038,13 @@ namespace ReviTab
                 if (view is ViewSheet)
                 {
                     ViewSheet vs = view as ViewSheet;
+                    RevisionObj ro = FindLatestRevision(vs);
                     return String.Format("{0},{1},{2},{3},{4}",
                                          vs.Id,
                                          vs.SheetNumber,
                                          cloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString(),
                                          vs.LookupParameter("ARUP_BDR_ISSUE").AsString(),
-                                         FindLatestRevision(vs)
+                                         ro.Letter + ro.Revision 
                                         );
                 }
                 else
@@ -1053,48 +1059,155 @@ namespace ReviTab
             }
         }
 
+        public struct RevisionObj
+        {
+
+            public int TempRevision { get; private set; }
+            public int RevisionIndex { get; private set; }
+            public string Letter { get; private set; }
+            public string Revision { get; private set; }
+            public string Date { get; private set; }
+            public string NewRevision { get; private set; }
+            public string DrawnBy { get; set; }
+            public string Checker { get; set; }
+            public string Approver { get; set; }
+            public string Description { get; set; }
+
+            public RevisionObj(int TempRevision, int RevisionIndex, string Letter, string Revision, string Date, string NewRevision, string DrawnBy = "GB", string Checker = "CM" , string Approver = "FXG", string Description = "Issue for Coordination")
+            {
+                this.TempRevision = TempRevision;
+                this.RevisionIndex = RevisionIndex;
+                this.Letter = Letter;
+                this.Revision = Revision;
+                this.Date = Date;
+                this.NewRevision = NewRevision;
+                this.DrawnBy = DrawnBy;
+                this.Checker = Checker;
+                this.Approver = Approver;
+                this.Description = Description;
+
+            }
+
+        }
+
+
+        public static bool UpRevSheet(Document doc, ViewSheet vs, RevisionObj revisionObj)
+        {
+            try
+            {
+                using (Transaction t = new Transaction(doc, "Uprev sheet"))
+                {
+                    t.Start();
+
+                    Parameter revision = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Rev.");
+                    revision.Set(revisionObj.NewRevision);
+
+                    Parameter sheetRevision = vs.LookupParameter("ARUP_BDR_ISSUE");
+                    sheetRevision.Set(revisionObj.NewRevision);
+
+                    Parameter description = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Description");
+                    description.Set(revisionObj.Description);
+
+                    Parameter modeledBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Modeled By");
+                    modeledBy.Set(revisionObj.DrawnBy);
+
+                    Parameter checkedBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Checked");
+                    checkedBy.Set(revisionObj.Checker);
+
+                    Parameter approved = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Approv.");
+                    approved.Set(revisionObj.Approver);
+
+
+                    t.Commit();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
+        }
+
+        
         /// <summary>
         /// Finds the latest revision and its date on a titleblock. Note: does not work when different revisions letters are used (P01,T01...)
         /// </summary>
         /// <param name="vs"></param>
         /// <returns></returns>
-        public static string FindLatestRevision(ViewSheet vs)
+        public static RevisionObj FindLatestRevision(ViewSheet vs)
         {
-            IList<Parameter> ps = vs.GetOrderedParameters();
+            //tempRevision to find max, revision index (1-10), letter, revision number, date
+            //List<Tuple<int, int, string, string, string>> lastRevisions = new List<Tuple<int, int, string, string, string>>();
 
-            List<int> lastRevisions = new List<int>();
+            List<RevisionObj> lastRevisions = new List<RevisionObj>();
 
-            foreach (Parameter p in ps)
+            for (int i = 0; i < 10; i++)
             {
-                if (p.Definition.Name.Contains("Rev."))
+
+                try
                 {
-                    try
+                    //revision can be P01, T03, 11
+                    Parameter p = vs.LookupParameter(String.Format("{0} - Rev.", i));
+                    //numeric digit 
+                    string revision = new String(p.AsString().Where(Char.IsDigit).ToArray());
+
+                    int tempRev = Convert.ToInt16(revision);
+                    //letter
+                    string letter = new string(p.AsString().Where(Char.IsLetter).ToArray());
+
+                    string newRevision = letter + (Convert.ToInt16(revision) + 1).ToString().PadLeft(2, '0');
+
+                    if (letter == "P")
+                        tempRev += 100;
+
+                    if (letter == "T")
+                        tempRev += 200;
+
+                    if (letter == "C")
+                        tempRev += 300;
+
+                    if (letter == "")
                     {
-                        string revision = new String(p.AsString().Where(Char.IsDigit).ToArray());
-                        lastRevisions.Add(Convert.ToInt16(revision));
-                    }
-                    catch
-                    {
-                        lastRevisions.Add(0);
+                        tempRev += 400;
+                        newRevision = (Convert.ToInt16(revision) + 1).ToString();
                     }
 
+                    Parameter dateParam = vs.LookupParameter(String.Format("{0} - Date", i));
+
+                    string date = dateParam.AsString();
+
+                    if (date != "")
+                    {
+                        //lastRevisions.Add(Tuple.Create(tempRev, i, letter, revision, date));
+                        lastRevisions.Add(new RevisionObj(tempRev, i, letter, revision, date, newRevision));
+                    }
                 }
+                catch
+                {
+                    //lastRevisions.Add(p.AsString(), 0);
+                }
+
+
             }
+            lastRevisions.Sort((x, y) => y.TempRevision.CompareTo(x.TempRevision));
 
-            int lastRevision = lastRevisions.Max();
+            RevisionObj lastRev = lastRevisions.First();
 
-            string date = vs.LookupParameter(String.Format("{0} - Date", lastRevision.ToString())).AsString();
+            lastRev.DrawnBy = vs.LookupParameter($"{lastRev.RevisionIndex} - Modeled By").AsString();
+            lastRev.Checker = vs.LookupParameter($"{lastRev.RevisionIndex} - Checked").AsString();
+            lastRev.Approver = vs.LookupParameter($"{lastRev.RevisionIndex} - Approv.").AsString();
+            lastRev.Description = vs.LookupParameter($"{lastRev.RevisionIndex} - Description").AsString();
 
-            string result = lastRevision.ToString() + "," + date;
-
-            return result;
+            return lastRev;
 
         }
 
         #endregion
-        
+
         #region STRUCTURAL FRAMINGS
-        
+
         private static Options pickOptions(Document doc)
         {
             Options geomOptions = new Options();
@@ -1572,7 +1685,7 @@ namespace ReviTab
         public void SetBeamLocationCurves(UIDocument uidoc)
         {
 
-            
+
             Document doc = uidoc.Document;
 
             ICollection<Reference> selectedLines = uidoc.Selection.PickObjects(ObjectType.Element, "Select Lines");
@@ -1600,7 +1713,7 @@ namespace ReviTab
         public void ProjectLines(UIDocument uidoc)
         {
 
-            
+
             Document doc = uidoc.Document;
 
             //ICollection<Reference> selectedLines = uidoc.Selection.PickObjects(ObjectType.Element, "Select Lines");
@@ -1795,7 +1908,7 @@ namespace ReviTab
                 }
             }
 
-            
+
             overrideSettings.SetProjectionFillPatternId(solidPatternId);
 
             if (oldMark == newMark)
@@ -1851,7 +1964,7 @@ namespace ReviTab
 
             // string table = "filesize";
             string table = tableName;
-            
+
 
             try
             {
