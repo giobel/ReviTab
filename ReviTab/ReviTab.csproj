@@ -254,6 +254,14 @@
     <Resource Include="Resources\addMultipleViews.png" />
     <Resource Include="Resources\ruler.png" />
     <Resource Include="Resources\revCloud.png" />
+    <Resource Include="Resources\revCloudsmall.png" />
+    <Resource Include="Resources\rulerSmall.png" />
+    <Resource Include="Resources\UprevSmall.png" />
+    <Resource Include="Resources\lineSmall.png" />
+    <Resource Include="Resources\tagSmall.png" />
+    <Resource Include="Resources\wipingSmall.png" />
+    <Resource Include="Resources\addBeamOpeningSmall.png" />
+    <Resource Include="Resources\arrowUpSmall.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

@@ -60,15 +60,17 @@ namespace ReviTab
 
                 stackedButtonsDocumentation.Add(CreatePushButton("btnAddLegends", "Add Legend\nto Sheets", "","pack://application:,,,/ReviTab;component/Resources/legend.png", "ReviTab.AddLegendToSheets",  "Place a legend onto multiple sheets in the same place."));
 
+                stackedButtonsDocumentation.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
+
                 AddSplitButton(docsPanel, stackedButtonsDocumentation, "DocumentationButton", "Documentation");
 
                 IList<PushButtonData> stackedButtonsSheets = new List<PushButtonData>();
 
-                stackedButtonsSheets.Add(CreatePushButton("btnSetTitleblock", "Set Titleblock\nScale", "pack://application:,,,/ReviTab;component/Resources/ruler.png", "", "ReviTab.SetTitleblockScale", "Set the current sheet titleblock scale to the most used."));
+                stackedButtonsSheets.Add(CreatePushButton("btnSetTitleblock", "Set Titleblock\nScale", "pack://application:,,,/ReviTab;component/Resources/rulerSmall.png", "", "ReviTab.SetTitleblockScale", "Set the current sheet titleblock scale to the most used."));
 
-                stackedButtonsSheets.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary"));
-
-                stackedButtonsSheets.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
+                stackedButtonsSheets.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "pack://application:,,,/ReviTab;component/Resources/revCloudsmall.png", "", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary"));
+                
+                stackedButtonsSheets.Add(CreatePushButton("btnUpRevSheet", "Uprev Sheet", "pack://application:,,,/ReviTab;component/Resources/UprevSmall.png", "", "ReviTab.UpRevSheet", "Up rev the current sheet. It copies the content from the previous revision excluding the date"));
 
                 AddStackedButton(docsPanel, stackedButtonsSheets, "SheetsButton", "Sheets");
 
@@ -107,20 +109,6 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Copy Linked Elements", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                /* Redundant
-                IList<PushButtonData> multipleJoin = new List<PushButtonData>();
-
-                multipleJoin.Add(CreatePushButton("multipleJoin","Join Multiple","", "pack://application:,,,/ReviTab;component/Resources/multipleJoin.png", "ReviTab.JoinMultiple","Join multiple elements"));
-                
-                multipleJoin.Add(CreatePushButton("switchJoin", "Switch Join", "pack://application:,,,/ReviTab;component/Resources/switchJoin.png", "pack://application:,,,/ReviTab;component/Resources/switchJoin.png", "ReviTab.SwitchJoin", "Switch multiple elements join"));
-                
-                multipleJoin.Add(CreatePushButton("multipleUnjoin", "Unjoin Multiple", "pack://application:,,,/ReviTab;component/Resources/unjoinMultiple.png", "pack://application:,,,/ReviTab;component/Resources/unjoinMultiple.png", "ReviTab.UnjoinElements", "Unjoin multiple elements"));
-                
-                multipleJoin.Add(CreatePushButton("UnjoinAll", "Unjoin All", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "pack://application:,,,/ReviTab;component/Resources/unjoinAll.png", "ReviTab.UnjoinAll", "Unjoin all elements"));
-
-                AddSplitButton(toolsPanel, multipleJoin, "multipleJoin", "Join");
-                */
-
                 IList<PushButtonData> filterSelection = new List<PushButtonData>();
                 
                 filterSelection.Add(CreatePushButton("selBeams", "Select Beams", "", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionBeams", "Select Beams Only"));
@@ -149,31 +137,14 @@ namespace ReviTab
                 #endregion
 
                 #region Structural Framing
-                /*
-                if (AddPushButton(beams, "btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "", "pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.VoidByFace", "Place a void on a beam face") == false)
-                {
-                    MessageBox.Show("Failed to add button Void by face", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddPushButton(beams, "btnPlaceVoidByLine", "Void By Line", "", "pack://application:,,,/ReviTab;component/Resources/line.png", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear.") == false)
-                {
-                    MessageBox.Show("Failed to add button Void By Line", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-
-                if (AddPushButton(beams, "btnPlaceTags", "Place Tags", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams") == false)
-                {
-                    MessageBox.Show("Failed to add button Place Tags", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }*/
-
 
                 IList<PushButtonData> stackedButtonsCQT = new List<PushButtonData>();
 
-                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "", "ReviTab.VoidByFace", "Place a void on a beam face"));
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "pack://application:,,,/ReviTab;component/Resources/addBeamOpeningSmall.png", "", "ReviTab.VoidByFace", "Place a void on a beam face"));
 
-                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByLine", "Void By Line", "pack://application:,,,/ReviTab;component/Resources/line.png", "", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear."));
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByLine", "Void By Line", "pack://application:,,,/ReviTab;component/Resources/lineSmall.png", "", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear."));
 
-                stackedButtonsCQT.Add(CreatePushButton("btnPlaceTags", "Place Tags", "pack://application:,,,/ReviTab;component/Resources/tag.png", "", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams"));
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceTags", "Place Tags", "pack://application:,,,/ReviTab;component/Resources/tagSmall.png", "", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams"));
 
                 AddStackedButton(beams, stackedButtonsCQT, "CQTButton", "CQT");
 
@@ -195,12 +166,6 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Edit Beam", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                /*
-                if (AddPushButton(beams, "btnSelectByParam", "Select By Parameter", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.SelectByParameter", "Select by parameter and operator") == false)
-                {
-                    MessageBox.Show("Failed to add button Select By Parameter", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                */
 
                 #endregion
 
@@ -239,28 +204,11 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Clarity", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-
-                //if (AddPushButton(zeroState, "btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1") == false)
-                //{
-                //    MessageBox.Show("Failed to add button Push to DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //}
-
-                //if (AddZeroStatePushButton(zeroState, "btnPrintBackground","Background" + Environment.NewLine + "Print", "", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings","ReviTab.Availability") == false)
-                //{
-                //    MessageBox.Show("Failed to add button Print in Background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //}
-
-
-                //if (AddZeroStatePushButton(zeroState, "btnPurgeFamilies", "Purge Families", "", "pack://application:,,,/ReviTab;component/Resources/wiping.png", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability") == false)
-                //{
-                //    MessageBox.Show("Failed to add button Purge Families", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //}
-
                 IList<PushButtonData> stackedButtonsDBPurgeBackPrint = new List<PushButtonData>();
 
-                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPush", "Push to DB", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "","ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
+                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPush", "Push to DB", "pack://application:,,,/ReviTab;component/Resources/arrowUpSmall.png", "","ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
 
-                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPurgeFamilies", "Purge Families", "pack://application:,,,/ReviTab;component/Resources/wiping.png","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
+                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPurgeFamilies", "Purge Families", "pack://application:,,,/ReviTab;component/Resources/wipingSmall.png","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
 
                 stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPrintBackground", "Background" + Environment.NewLine + "Print", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "","ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings", "ReviTab.Availability"));
 

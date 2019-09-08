@@ -1073,7 +1073,7 @@ namespace ReviTab
             public string Approver { get; set; }
             public string Description { get; set; }
 
-            public RevisionObj(int TempRevision, int RevisionIndex, string Letter, string Revision, string Date, string NewRevision, string DrawnBy = "GB", string Checker = "CM" , string Approver = "FXG", string Description = "Issue for Coordination")
+            public RevisionObj(int TempRevision, int RevisionIndex, string Letter, string Revision, string Date, string NewRevision, string DrawnBy = "GB", string Checker = "CM" , string Approver = "FXG", string Description = "Coordination updates")
             {
                 this.TempRevision = TempRevision;
                 this.RevisionIndex = RevisionIndex;
@@ -1178,6 +1178,7 @@ namespace ReviTab
 
                     string date = dateParam.AsString();
 
+                    // ignore revisions without date (either empties or drawing has been already uprev)
                     if (date != "")
                     {
                         //lastRevisions.Add(Tuple.Create(tempRev, i, letter, revision, date));
