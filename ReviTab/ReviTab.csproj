@@ -98,6 +98,7 @@
     <Compile Include="Buttons\JoinMultiple.cs" />
     <Compile Include="Buttons\ProjectLines.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
+    <Compile Include="Buttons\RemoveFirstRevision.cs" />
     <Compile Include="Buttons\UpRevSheet.cs" />
     <Compile Include="Buttons\RevisionCloudsSummary.cs" />
     <Compile Include="Buttons\SetBeamZOffset.cs" />

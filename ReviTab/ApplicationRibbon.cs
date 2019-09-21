@@ -208,7 +208,7 @@ namespace ReviTab
 
                 stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPush", "Push to DB", "pack://application:,,,/ReviTab;component/Resources/arrowUpSmall.png", "","ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
 
-                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPurgeFamilies", "Purge Families", "pack://application:,,,/ReviTab;component/Resources/wipingSmall.png","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
+                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPurgeFamilies", "Purge Families", "pack://application:,,,/ReviTab;component/Resources/wipingSmal, inste.png","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
 
                 stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPrintBackground", "Background" + Environment.NewLine + "Print", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "","ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings", "ReviTab.Availability"));
 
