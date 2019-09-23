@@ -98,8 +98,8 @@
     <Compile Include="Buttons\JoinMultiple.cs" />
     <Compile Include="Buttons\ProjectLines.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
-    <Compile Include="Buttons\RemoveFirstRevision.cs" />
     <Compile Include="Buttons\UpRevSheet.cs" />
+    <Compile Include="Buttons\RemoveFirstRevision.cs" />
     <Compile Include="Buttons\RevisionCloudsSummary.cs" />
     <Compile Include="Buttons\SetBeamZOffset.cs" />
     <Compile Include="Buttons\SetTitleblockScale.cs" />
@@ -257,12 +257,13 @@
     <Resource Include="Resources\revCloud.png" />
     <Resource Include="Resources\revCloudsmall.png" />
     <Resource Include="Resources\rulerSmall.png" />
-    <Resource Include="Resources\UprevSmall.png" />
     <Resource Include="Resources\lineSmall.png" />
     <Resource Include="Resources\tagSmall.png" />
     <Resource Include="Resources\wipingSmall.png" />
     <Resource Include="Resources\addBeamOpeningSmall.png" />
     <Resource Include="Resources\arrowUpSmall.png" />
+    <Resource Include="Resources\deleteRev.png" />
+    <Resource Include="Resources\addRev.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

@@ -3,13 +3,15 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 #endregion
 
 namespace ReviTab
 {
     [Transaction(TransactionMode.Manual)]
-    public class UpRevSheet : IExternalCommand
+    public class RemoveFirstRevision : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -24,12 +26,42 @@ namespace ReviTab
 
             ViewSheet vs = doc.ActiveView as ViewSheet;
 
-            Helpers.RevisionObj revObj = Helpers.FindLatestRevision(vs);
+            try
+            {
+                using (Transaction t = new Transaction(doc, "Remove first revision"))
+                {
 
-            Helpers.UpRevSheet(doc, vs, revObj);
+                    t.Start();
 
 
-            return Result.Succeeded;
+                    List<string> parameters = new List<string>() { "Rev.", "Date", "Modeled By", "Approv.", "Checked", "Description" };
+
+                    for (int i = 2; i < 11; i++)
+                    {
+
+                        foreach (string paramName in parameters)
+                        {
+
+                            Parameter pNew = vs.LookupParameter($"{i} - {paramName}");
+
+                            Parameter pOld = vs.LookupParameter($"{i - 1} - {paramName}");
+
+                            pOld.Set(pNew.AsString());
+                        }
+
+                    }
+                    t.Commit();
+                }
+
+
+                return Result.Succeeded;
+            }
+            catch(Exception ex)
+            {
+                TaskDialog.Show("Error", ex.Message);
+                return Result.Failed;
+            }
+
         }
 
     }

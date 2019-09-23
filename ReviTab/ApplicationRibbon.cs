@@ -52,28 +52,36 @@ namespace ReviTab
 
                 #region Documentation
                 
-                IList<PushButtonData> stackedButtonsDocumentation = new List<PushButtonData>();
+                IList<PushButtonData> plitButtonsViews = new List<PushButtonData>();
 
-                stackedButtonsDocumentation.Add(CreatePushButton("btnSheetAddCurrentView", "Add View\nto Sheet","","pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
+                plitButtonsViews.Add(CreatePushButton("btnSheetAddCurrentView", "Add View\nto Sheet","","pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
 
-                stackedButtonsDocumentation.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple\nViews","", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
+                plitButtonsViews.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple\nViews","", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
 
-                stackedButtonsDocumentation.Add(CreatePushButton("btnAddLegends", "Add Legend\nto Sheets", "","pack://application:,,,/ReviTab;component/Resources/legend.png", "ReviTab.AddLegendToSheets",  "Place a legend onto multiple sheets in the same place."));
+                plitButtonsViews.Add(CreatePushButton("btnAddLegends", "Add Legend\nto Sheets", "","pack://application:,,,/ReviTab;component/Resources/legend.png", "ReviTab.AddLegendToSheets",  "Place a legend onto multiple sheets in the same place."));
 
-                stackedButtonsDocumentation.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
+                plitButtonsViews.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
 
-                AddSplitButton(docsPanel, stackedButtonsDocumentation, "DocumentationButton", "Documentation");
+                AddSplitButton(docsPanel, plitButtonsViews, "DocumentationButton", "Documentation");
 
-                IList<PushButtonData> stackedButtonsSheets = new List<PushButtonData>();
+                //Titleblock revisions
 
-                stackedButtonsSheets.Add(CreatePushButton("btnSetTitleblock", "Set Titleblock\nScale", "pack://application:,,,/ReviTab;component/Resources/rulerSmall.png", "", "ReviTab.SetTitleblockScale", "Set the current sheet titleblock scale to the most used."));
+                IList<PushButtonData> stackedButtonsSheets = new List<PushButtonData>
+                {
+                    CreatePushButton("btnSetTitleblock", "Set Titleblock\nScale", "pack://application:,,,/ReviTab;component/Resources/rulerSmall.png", "", "ReviTab.SetTitleblockScale", "Set the current sheet titleblock scale to the most used."),
 
-                stackedButtonsSheets.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "pack://application:,,,/ReviTab;component/Resources/revCloudsmall.png", "", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary"));
-                
-                stackedButtonsSheets.Add(CreatePushButton("btnUpRevSheet", "Uprev Sheet", "pack://application:,,,/ReviTab;component/Resources/UprevSmall.png", "", "ReviTab.UpRevSheet", "Up rev the current sheet. It copies the content from the previous revision excluding the date"));
+                    CreatePushButton("btnUpRevSheet", "Uprev Sheet", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.UpRevSheet", "Up rev the current sheet. It copies the content from the previous revision excluding the date"),
+
+                    CreatePushButton("btnRemoveRev", "Remove first\nRevision", "pack://application:,,,/ReviTab;component/Resources/deleteRev.png", "", "ReviTab.RemoveFirstRevision", "Remove the first revision of a titleblock (i.e. shift revisions down).")
+                };
 
                 AddStackedButton(docsPanel, stackedButtonsSheets, "SheetsButton", "Sheets");
 
+                //Revision Clouds
+                if (AddPushButton(toolsPanel, "btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary.") == false)
+                {
+                    MessageBox.Show("Failed to add button Create Multiple Sections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 #endregion
 

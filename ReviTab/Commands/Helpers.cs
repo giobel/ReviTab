@@ -1130,22 +1130,68 @@ namespace ReviTab
             
         }
 
-        
+
         /// <summary>
-        /// Finds the latest revision and its date on a titleblock. Note: does not work when different revisions letters are used (P01,T01...)
+        /// Increment a revision when it is not formed by 1 letter only (i.e. P01 -> P02, T02->T03, 4->5). Does not work with letters (i.e. A->B).
+        /// </summary>
+        /// <param name="vs"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        private static RevisionObj IncrementNonLetterRevision(ViewSheet vs, int i)
+        {
+
+            Parameter p = vs.LookupParameter(String.Format("{0} - Rev.", i));
+            //numeric digit 
+            string revision = new String(p.AsString().Where(Char.IsDigit).ToArray());
+
+            int tempRev = Convert.ToInt16(revision);
+            //letter
+            string letter = new string(p.AsString().Where(Char.IsLetter).ToArray());
+
+            string newRevision = letter + (Convert.ToInt16(revision) + 1).ToString().PadLeft(2, '0');
+
+            if (letter == "P")
+                tempRev += 100;
+
+            if (letter == "T")
+                tempRev += 200;
+
+            if (letter == "C")
+                tempRev += 300;
+
+            if (letter == "")
+            {
+                tempRev += 400;
+                newRevision = (Convert.ToInt16(revision) + 1).ToString();
+            }
+
+            Parameter dateParam = vs.LookupParameter(String.Format("{0} - Date", i));
+
+            string date = dateParam.AsString();
+
+            // ignore revisions without date (either empties or drawing has been already uprev)
+            if (date != "")
+            {
+                return new RevisionObj(tempRev, i, letter, revision, date, newRevision);
+            }
+
+            return new RevisionObj();
+        }
+
+
+        /// <summary>
+        /// Finds the latest revision and its date on a titleblock. 
         /// </summary>
         /// <param name="vs"></param>
         /// <returns></returns>
         public static RevisionObj FindLatestRevision(ViewSheet vs)
         {
-            //tempRevision to find max, revision index (1-10), letter, revision number, date
-            //List<Tuple<int, int, string, string, string>> lastRevisions = new List<Tuple<int, int, string, string, string>>();
 
             List<RevisionObj> lastRevisions = new List<RevisionObj>();
 
-            for (int i = 0; i < 10; i++)
+            //Old method. Does not work with letters.
+            /*for (int i = 0; i < 10; i++)
             {
-
                 try
                 {
                     //revision can be P01, T03, 11
@@ -1181,9 +1227,43 @@ namespace ReviTab
                     // ignore revisions without date (either empties or drawing has been already uprev)
                     if (date != "")
                     {
-                        //lastRevisions.Add(Tuple.Create(tempRev, i, letter, revision, date));
                         lastRevisions.Add(new RevisionObj(tempRev, i, letter, revision, date, newRevision));
                     }
+                }
+                catch
+                {
+                    //lastRevisions.Add(p.AsString(), 0);
+                }
+
+
+            }*/
+
+            //new method. Works with letters
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    //revision can be P01, T03, 11, A
+                    Parameter p = vs.LookupParameter(String.Format("{0} - Rev.", i));
+                    Parameter dateParam = vs.LookupParameter(String.Format("{0} - Date", i));
+                    string date = dateParam.AsString();
+
+                    if (p.AsString().Length == 1 && Char.IsLetter(p.AsString().ToCharArray().First()))
+                    {
+                        Char letter = p.AsString().ToCharArray().First();
+
+                        Char newRevision = (Char)(Convert.ToUInt16(letter) + 1);
+
+                        lastRevisions.Add(new RevisionObj(500, i, letter.ToString(), letter.ToString(), date, newRevision.ToString()));
+
+                    }
+                    else
+                    {
+
+                        lastRevisions.Add(IncrementNonLetterRevision(vs, i));
+
+                    }
+
                 }
                 catch
                 {
