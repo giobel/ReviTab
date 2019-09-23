@@ -52,17 +52,17 @@ namespace ReviTab
 
                 #region Documentation
                 
-                IList<PushButtonData> plitButtonsViews = new List<PushButtonData>();
+                IList<PushButtonData> splitButtonsViews = new List<PushButtonData>();
 
-                plitButtonsViews.Add(CreatePushButton("btnSheetAddCurrentView", "Add View\nto Sheet","","pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
+                splitButtonsViews.Add(CreatePushButton("btnSheetAddCurrentView", "Add View\nto Sheet","","pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
 
-                plitButtonsViews.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple\nViews","", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
+                splitButtonsViews.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple\nViews","", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
 
-                plitButtonsViews.Add(CreatePushButton("btnAddLegends", "Add Legend\nto Sheets", "","pack://application:,,,/ReviTab;component/Resources/legend.png", "ReviTab.AddLegendToSheets",  "Place a legend onto multiple sheets in the same place."));
+                splitButtonsViews.Add(CreatePushButton("btnAddLegends", "Add Legend\nto Sheets", "","pack://application:,,,/ReviTab;component/Resources/legend.png", "ReviTab.AddLegendToSheets",  "Place a legend onto multiple sheets in the same place."));
 
-                plitButtonsViews.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
+                splitButtonsViews.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
 
-                AddSplitButton(docsPanel, plitButtonsViews, "DocumentationButton", "Documentation");
+                AddSplitButton(docsPanel, splitButtonsViews, "DocumentationButton", "Documentation");
 
                 //Titleblock revisions
 
@@ -145,23 +145,19 @@ namespace ReviTab
                 #endregion
 
                 #region Structural Framing
-
+                
                 IList<PushButtonData> stackedButtonsCQT = new List<PushButtonData>();
 
-                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "pack://application:,,,/ReviTab;component/Resources/addBeamOpeningSmall.png", "", "ReviTab.VoidByFace", "Place a void on a beam face"));
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "","pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.VoidByFace", "Place a void on a beam face"));
 
-                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByLine", "Void By Line", "pack://application:,,,/ReviTab;component/Resources/lineSmall.png", "", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear."));
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByLine", "Void By Line", "", "pack://application:,,,/ReviTab;component/Resources/line.png", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear."));
 
-                stackedButtonsCQT.Add(CreatePushButton("btnPlaceTags", "Place Tags", "pack://application:,,,/ReviTab;component/Resources/tagSmall.png", "", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams"));
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceTags", "Place Tags","", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams"));
 
-                AddStackedButton(beams, stackedButtonsCQT, "CQTButton", "CQT");
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceDimensions", "Lock Openings", "", "pack://application:,,,/ReviTab;component/Resources/lock.png", "ReviTab.LockOpenings", "Place a dimension between an opening and a reference plane and lock it."));
 
+                AddSplitButton(beams, stackedButtonsCQT, "CQTButton", "CQT");
                 
-                if (AddPushButton(beams, "btnPlaceDimensions", "Lock Openings", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.LockOpenings", "Place a dimension between an opening and a reference plane and lock it.") == false)
-                {
-                    MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
 
                 if (AddPushButton(beams, "btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point") == false)
                 {

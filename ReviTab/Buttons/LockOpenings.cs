@@ -39,9 +39,10 @@ namespace ReviTab
 
             var grouped = fa.GroupBy(x => x.Host.Id);
 
-            double offset = 500 / 304.8;
+            double offset = 315 / 304.8;
 
-            Reference refPlaneLine = uidoc.Selection.PickObjects(ObjectType.Element,refPlanesFilter, "Select a ref plane").First();
+            //Reference refPlaneLine = uidoc.Selection.PickObjects(ObjectType.Element,refPlanesFilter, "Select a ref plane").First();
+            IList<Reference> refPlaneLine = uidoc.Selection.PickObjects(ObjectType.Element, refPlanesFilter, "Select a ref plane");
 
             var enu = grouped.GetEnumerator();
 
@@ -53,9 +54,17 @@ namespace ReviTab
                 {
                     foreach (FamilyInstance item in enu.Current)
                     {
-                        offset += 500 / 304.8;
+                        offset += 315 / 304.8;
 
-                        VoidByLineHelpers.DrawDimension(doc, refPlaneLine, item, offset);
+                        foreach (Reference refPlaneReference in refPlaneLine)
+                        {
+                            ReferencePlane refP = doc.GetElement(refPlaneReference) as ReferencePlane;
+
+                            if (VoidByLineHelpers.IsParallel(item, refP))
+                            {
+                                VoidByLineHelpers.DrawDimension(doc, refPlaneReference, item, offset);
+                            }
+                        }
                     }
                     offset = 0;
                 }

@@ -169,7 +169,7 @@ namespace ReviTab
 
             return iResult.XYZPoint;
         }
-    
+
         private static Options pickOptions(Document doc)
         {
             Options geomOptions = new Options();
@@ -204,7 +204,7 @@ namespace ReviTab
             return plane.Normal.DotProduct(v);
         }
 
-        private static XYZ ProjectOnto(Plane plane,XYZ p)
+        private static XYZ ProjectOnto(Plane plane, XYZ p)
         {
             double d = SignedDistanceTo(plane, p);
 
@@ -253,5 +253,28 @@ namespace ReviTab
             d.IsLocked = true;
         }
 
+        private static XYZ Simplify(XYZ point)
+        {
+
+            return new XYZ(Math.Round(point.X, 3), Math.Round(point.Y, 3), 0);
+        }
+
+        public static bool IsParallel(FamilyInstance fi, ReferencePlane refP)
+        {
+
+            XYZ fiHand = Simplify(fi.HandOrientation);
+            XYZ refPnormal = Simplify(refP.Normal);
+            XYZ cp = fiHand.CrossProduct(refPnormal);
+
+            if (cp.IsAlmostEqualTo(XYZ.Zero))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
     }
 }

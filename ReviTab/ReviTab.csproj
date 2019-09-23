@@ -265,6 +265,7 @@
     <Resource Include="Resources\arrowUpSmall.png" />
     <Resource Include="Resources\deleteRev.png" />
     <Resource Include="Resources\addRev.png" />
+    <Resource Include="Resources\lock.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
