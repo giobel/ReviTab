@@ -78,7 +78,7 @@ namespace ReviTab
                 AddStackedButton(docsPanel, stackedButtonsSheets, "SheetsButton", "Sheets");
 
                 //Revision Clouds
-                if (AddPushButton(toolsPanel, "btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary.") == false)
+                if (AddPushButton(docsPanel, "btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary.") == false)
                 {
                     MessageBox.Show("Failed to add button Create Multiple Sections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -156,7 +156,11 @@ namespace ReviTab
 
                 AddStackedButton(beams, stackedButtonsCQT, "CQTButton", "CQT");
 
-
+                
+                if (AddPushButton(beams, "btnPlaceDimensions", "Lock Openings", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.LockOpenings", "Place a dimension between an opening and a reference plane and lock it.") == false)
+                {
+                    MessageBox.Show("Failed to add button Move Beam End", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
 
                 if (AddPushButton(beams, "btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point") == false)

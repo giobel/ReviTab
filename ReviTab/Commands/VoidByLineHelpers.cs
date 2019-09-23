@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 
 namespace ReviTab
 {
@@ -52,7 +50,7 @@ namespace ReviTab
 
             int maxArea = areas.Keys.Max();
             webFace = areas[maxArea];
-            
+
             XYZ location = null;
             XYZ beamDirection = null;
 
@@ -151,8 +149,6 @@ namespace ReviTab
             return p5;
         }
 
-
-
         public static XYZ GetIntersection(Line line1, Line line2)
         {
             IntersectionResultArray results;
@@ -173,8 +169,7 @@ namespace ReviTab
 
             return iResult.XYZPoint;
         }
-
-
+    
         private static Options pickOptions(Document doc)
         {
             Options geomOptions = new Options();
@@ -183,8 +178,6 @@ namespace ReviTab
 
             return geomOptions;
         }
-
-
 
         public static string[] GetLinestyle(Document doc, Reference refLine)
         {
@@ -203,9 +196,62 @@ namespace ReviTab
             return penoWidthDepth;
         }
 
+        private static double SignedDistanceTo(Plane plane, XYZ p)
+        {
+
+            XYZ v = p - plane.Origin;
+
+            return plane.Normal.DotProduct(v);
+        }
+
+        private static XYZ ProjectOnto(Plane plane,XYZ p)
+        {
+            double d = SignedDistanceTo(plane, p);
+
+            //XYZ q = p + d * plane.Normal; // wrong according to Ruslan Hanza and Alexander Pekshev in their comments below
+
+            XYZ q = p - d * plane.Normal;
 
 
+            return q;
+        }
 
+        public static void DrawDimension(Document doc, Reference refPlaneLine, FamilyInstance fi1, double offset)
+        {
+
+            ReferencePlane refP = doc.GetElement(refPlaneLine) as ReferencePlane;
+
+            //FamilyInstance fi1 = doc.GetElement(opening1) as FamilyInstance;
+            IList<Reference> fir1 = fi1.GetReferences(FamilyInstanceReferenceType.WeakReference);
+
+            XYZ refPlanePoint = refP.FreeEnd;//end point of reference plane
+
+            LocationPoint lp = fi1.Location as LocationPoint;
+
+            XYZ direction = refP.Normal;//perpendicular direction to reference plane
+
+
+            Plane p = Plane.CreateByNormalAndOrigin(direction, refP.FreeEnd);
+
+            XYZ startPoint = ProjectOnto(p, lp.Point) + offset * refP.Direction;
+
+            double distance = 1000;
+
+            //direction = direction / direction.GetLength();
+
+            XYZ endPoint = startPoint + distance * direction;
+
+            Line dimensionLine = Line.CreateBound(startPoint, endPoint);
+
+            ReferenceArray references = new ReferenceArray();
+
+            references.Append(fir1.First());
+            references.Append(refPlaneLine);
+
+            //			lockedAlign = doc.Create.NewAlignment(view, r1, r2)
+            Dimension d = doc.Create.NewDimension(doc.ActiveView, dimensionLine, references);
+            d.IsLocked = true;
+        }
 
     }
 }
