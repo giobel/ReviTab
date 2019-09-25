@@ -1162,7 +1162,16 @@ namespace ReviTab
             if (letter == "")
             {
                 tempRev += 400;
-                newRevision = (Convert.ToInt16(revision) + 1).ToString();
+                //if revision is in format 01, 02...
+                if (p.AsString().Length == 2)
+                {
+                    newRevision = (Convert.ToInt16(revision) + 1).ToString().PadLeft(2, '0');
+                }
+                else
+                {
+                    newRevision = (Convert.ToInt16(revision) + 1).ToString();
+                }
+
             }
 
             Parameter dateParam = vs.LookupParameter(String.Format("{0} - Date", i));

@@ -22,9 +22,9 @@ namespace ReviTab
           ElementSet elements)
         {
 
-            string date = "23/09/2019";
+            //string date = "23/09/2019";
 
-
+            string date = DateTime.Today.ToShortDateString();
             
             TaskDialog.Show("Version Info", "Version 1.0.6 \nCompiled on " + date);
 
