@@ -1044,7 +1044,7 @@ namespace ReviTab
                                          vs.SheetNumber,
                                          cloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString(),
                                          vs.LookupParameter("ARUP_BDR_ISSUE").AsString(),
-                                         ro.Letter + ro.Revision 
+                                         ro.Letter + ro.Revision
                                         );
                 }
                 else
@@ -1073,7 +1073,7 @@ namespace ReviTab
             public string Approver { get; set; }
             public string Description { get; set; }
 
-            public RevisionObj(int TempRevision, int RevisionIndex, string Letter, string Revision, string Date, string NewRevision, string DrawnBy = "GB", string Checker = "CM" , string Approver = "FXG", string Description = "Coordination updates")
+            public RevisionObj(int TempRevision, int RevisionIndex, string Letter, string Revision, string Date, string NewRevision, string DrawnBy = "GB", string Checker = "CM", string Approver = "FXG", string Description = "Coordination updates")
             {
                 this.TempRevision = TempRevision;
                 this.RevisionIndex = RevisionIndex;
@@ -1127,7 +1127,7 @@ namespace ReviTab
             {
                 return false;
             }
-            
+
         }
 
 
@@ -1881,6 +1881,51 @@ namespace ReviTab
         }//close method
         #endregion
 
+        #region PERFORMANCE ADVISER
+
+        public static PerformanceAdviserRuleId GetPerformanceRuleByName(IList<PerformanceAdviserRuleId> listAllRuleIds, string purgeGuid)
+        {
+            PerformanceAdviserRuleId selectedRule = null;
+
+            foreach (PerformanceAdviserRuleId ruleId in listAllRuleIds)
+            {
+                if (ruleId.Guid.ToString().Equals(purgeGuid))
+                {
+                    return ruleId;
+                }
+            }
+
+            return selectedRule;
+        }
+
+        public static int CountPurgeableElements(Document doc)
+        {
+            //The guid of the 'Project contains unused families and types' PerformanceAdviserRuleId.
+            string PurgeGuid = "e8c63650-70b7-435a-9010-ec97660c1bda";
+
+            PerformanceAdviser adviser = PerformanceAdviser.GetPerformanceAdviser();
+
+            IList<PerformanceAdviserRuleId> selectedRuleIds = new List<PerformanceAdviserRuleId>();
+
+            ICollection<ElementId> purgeableElem = new List<ElementId>();
+
+            IList<PerformanceAdviserRuleId> allRuleIds = adviser.GetAllRuleIds();
+
+            selectedRuleIds.Add(GetPerformanceRuleByName(allRuleIds, PurgeGuid));
+
+            IList<FailureMessage> failureMessages = PerformanceAdviser.GetPerformanceAdviser().ExecuteRules(doc, selectedRuleIds);
+
+            if (failureMessages.Count > 0)
+            {
+                purgeableElem = failureMessages.ElementAt(0).GetFailingElements();
+            }
+
+            return purgeableElem.Count;
+        }
+
+
+        #endregion
+
         private static void PaintFace()
         {
 
@@ -2034,23 +2079,26 @@ namespace ReviTab
             v.SetElementOverrides(eid, overrideSettings);
         }
 
-        public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings)
+        public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings, int purgeableElements)
         {
 
-            /*
-	        string server = "127.0.0.1";
-	        string database = "sample";
-	        string uid = "root";
-	        string password = "";
-	        */
 
+            string server = "127.0.0.1";
+            string database = "new_schema";
+            string uid = "root";
+            string password = "password";
+
+
+            /*
             string server = "remotemysql.com";
             string database = "r7BFoOjCty";
             string uid = "r7BFoOjCty";
             string password = "1vU3s1bj6T";
+    */
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+
 
             // string table = "filesize";
             string table = tableName;
@@ -2062,8 +2110,9 @@ namespace ReviTab
                 MySqlConnection connection = new MySqlConnection(connectionString);
 
                 MySqlCommand cmdInsert = new MySqlCommand("", connection);
-                cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount) " +
-                    "VALUES (?date, ?user, ?rvtFileSize, ?elementsCount, ?typesCount, ?sheetsCount, ?viewsCount, ?viewportsCount, ?warningsCount)";
+                cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount, purgeableElements) " +
+                    "VALUES (?date, ?user, ?rvtFileSize, ?elementsCount, ?typesCount, ?sheetsCount, ?viewsCount, " +
+                    "?viewportsCount, ?warningsCount, ?purgeableElements)";
 
                 cmdInsert.Parameters.Add("?date", MySqlDbType.DateTime).Value = dt;
                 cmdInsert.Parameters.Add("?user", MySqlDbType.VarChar).Value = user;
@@ -2076,6 +2125,8 @@ namespace ReviTab
                 cmdInsert.Parameters.Add("?viewportsCount", MySqlDbType.Int32).Value = viewportsCount;
 
                 cmdInsert.Parameters.Add("?warningsCount", MySqlDbType.Int32).Value = countWarnings;
+
+                cmdInsert.Parameters.Add("?purgeableElements", MySqlDbType.Int32).Value = purgeableElements;
 
                 connection.Open();
 

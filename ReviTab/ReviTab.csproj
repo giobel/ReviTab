@@ -81,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\DeleteLineStyles.cs" />
+    <Compile Include="Buttons\LineStyles.cs" />
+    <Compile Include="Buttons\TextFonts.cs" />
     <Compile Include="Buttons\FilterSelectionDimensions.cs" />
     <Compile Include="Buttons\FilterSelectionTags.cs" />
     <Compile Include="Buttons\FilterSelectionText.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Buttons\ProjectLines.cs" />
     <Compile Include="Buttons\AddActiveViewToSheet.cs" />
     <Compile Include="Buttons\LockOpenings.cs" />
+    <Compile Include="Buttons\DeleteTextFont.cs" />
     <Compile Include="Buttons\UpRevSheet.cs" />
     <Compile Include="Buttons\RemoveFirstRevision.cs" />
     <Compile Include="Buttons\RevisionCloudsSummary.cs" />

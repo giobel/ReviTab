@@ -10,6 +10,7 @@ using winForm = System.Windows.Forms;
 using PurgeUnused;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace ReviTab
 {
@@ -65,10 +66,29 @@ namespace ReviTab
                     int countViews = fecViews.Count();
                     int countViewPorts = fecViewPorts.Count();
 
+                    DateTime dateo = DateTime.Now;
+                    string time = $"{dateo.Hour}h{dateo.Minute}m{dateo.Second}s";
 
-                    if (Helpers.InsertData(tableName, DateTime.Now, Environment.UserName, fileSize, countElements, countTypes, countSheets, countViews, countViewPorts, countWarnings))
+                    string formatDate = $"{dateo.Year}{dateo.Month}{dateo.Day.ToString().PadLeft(2, '0')}_{time}";
+
+
+                    string outputFile = $"{doc.ProjectInformation.BuildingName}\\{Environment.UserName}_{formatDate}.csv";
+                    StringBuilder sb = new StringBuilder();
+                    
+                    if (Helpers.InsertData(tableName, DateTime.Now, Environment.UserName, fileSize, countElements, countTypes, countSheets, countViews, countViewPorts, countWarnings,Helpers.CountPurgeableElements(doc)))
                     {
-                        TaskDialog.Show("result", fileSize.ToString() + "\n" + countWarnings.ToString());
+                        //File.WriteAllText(outputFile, "Date," +
+                        //        "Username," +
+                        //        "Total Warnings, " +
+                        //        "File Size, " +
+                        //        "Purgeable Elements, " +
+                        //        "Total Elements\n");
+
+                        //sb.AppendLine($"{DateTime.Now},{Environment.UserName},{countWarnings},{fileSize},{Helpers.CountPurgeableElements(doc)},{countElements}");
+
+                        //File.AppendAllText(outputFile, sb.ToString());
+
+                        TaskDialog.Show("result", $"File size: {(fileSize/1000000).ToString("#.##")}Mb\nWarnings: {countWarnings}");
                     }
 
                     return Result.Succeeded;
@@ -78,8 +98,9 @@ namespace ReviTab
 
             
 
-            catch
+            catch(Exception ex)
             {
+                TaskDialog.Show("Error", ex.Message);
                 return Result.Failed;
             }
         }

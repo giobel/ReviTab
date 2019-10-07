@@ -77,6 +77,19 @@ namespace ReviTab
 
                 AddStackedButton(docsPanel, stackedButtonsSheets, "SheetsButton", "Sheets");
 
+                //TextFonts and LineStyles
+                IList<PushButtonData> stackedButtonsTextAndLines = new List<PushButtonData>
+                {
+                    CreatePushButton("btnTextFonts", "List TextNotes", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.TextFonts", "List all the TextNotes in the project to the active view. Set View Scale to 1:1 to display the list correctly."),
+
+                    CreatePushButton("btnDeleteTextNotes", "Delete TextNotes Types", "pack://application:,,,/ReviTab;component/Resources/deleteRev.png", "", "ReviTab.DeleteTextFont", "Delete the selcted TextNotes types."),
+
+                    CreatePushButton("btnLineStyles", "List Line Styles", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.LineStyles", "List all the Line Styles in the project to the active view. Set View Scale to 1:1 to display the list correctly.")
+                };
+
+                AddStackedButton(docsPanel, stackedButtonsTextAndLines, "TextAndLines", "TextLines");
+
+
                 //Revision Clouds
                 if (AddPushButton(docsPanel, "btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary.") == false)
                 {
