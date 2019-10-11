@@ -88,7 +88,12 @@ namespace ReviTab
                 };
 
                 AddStackedButton(docsPanel, stackedButtonsTextAndLines, "TextAndLines", "TextLines");
-
+                
+                //Align Views
+                if (AddPushButton(docsPanel, "btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select views on sheets in the project browser first then click on this button.") == false)
+                {
+                    MessageBox.Show("Failed to add button Align Viewports", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 //Revision Clouds
                 if (AddPushButton(docsPanel, "btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary.") == false)
@@ -96,6 +101,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Create Multiple Sections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                
                 #endregion
 
 

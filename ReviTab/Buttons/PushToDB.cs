@@ -39,9 +39,7 @@ namespace ReviTab
                     {
                         return Result.Cancelled;
                     }
-
                     
-
                     string tableName = form.TextString;
 
                     string filePath = doc.PathName;
@@ -66,6 +64,8 @@ namespace ReviTab
                     int countViews = fecViews.Count();
                     int countViewPorts = fecViewPorts.Count();
 
+                    int viewsNotOnSheet = Helpers.CountViewsNotOnSheet(fecViews);
+
                     DateTime dateo = DateTime.Now;
                     string time = $"{dateo.Hour}h{dateo.Minute}m{dateo.Second}s";
 
@@ -75,7 +75,9 @@ namespace ReviTab
                     string outputFile = $"{doc.ProjectInformation.BuildingName}\\{Environment.UserName}_{formatDate}.csv";
                     StringBuilder sb = new StringBuilder();
                     
-                    if (Helpers.InsertData(tableName, DateTime.Now, Environment.UserName, fileSize, countElements, countTypes, countSheets, countViews, countViewPorts, countWarnings,Helpers.CountPurgeableElements(doc)))
+                    if (Helpers.InsertData(tableName, DateTime.Now, Environment.UserName, 
+                                           fileSize, countElements, countTypes, countSheets, 
+                                           countViews, countViewPorts, countWarnings,Helpers.CountPurgeableElements(doc),viewsNotOnSheet))
                     {
                         //File.WriteAllText(outputFile, "Date," +
                         //        "Username," +

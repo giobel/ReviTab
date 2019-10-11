@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\AlignViews.cs" />
     <Compile Include="Buttons\DeleteLineStyles.cs" />
     <Compile Include="Buttons\LineStyles.cs" />
     <Compile Include="Buttons\TextFonts.cs" />

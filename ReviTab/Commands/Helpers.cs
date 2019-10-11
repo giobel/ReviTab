@@ -1090,7 +1090,6 @@ namespace ReviTab
 
         }
 
-
         public static bool UpRevSheet(Document doc, ViewSheet vs, RevisionObj revisionObj)
         {
             try
@@ -1129,7 +1128,6 @@ namespace ReviTab
             }
 
         }
-
 
         /// <summary>
         /// Increment a revision when it is not formed by 1 letter only (i.e. P01 -> P02, T02->T03, 4->5). Does not work with letters (i.e. A->B).
@@ -1186,7 +1184,6 @@ namespace ReviTab
 
             return new RevisionObj();
         }
-
 
         /// <summary>
         /// Finds the latest revision and its date on a titleblock. 
@@ -1292,6 +1289,25 @@ namespace ReviTab
 
             return lastRev;
 
+        }
+
+        public static int CountViewsNotOnSheet(FilteredElementCollector allViews)
+        {
+            int countNotOnSheet = 0;
+
+            foreach (View view in allViews)
+            {
+                try
+                {
+                    if (view.LookupParameter("Sheet Number").AsString() == "---")
+                    {
+                        countNotOnSheet += 1;
+                    }
+
+                }
+                catch { }
+            }
+            return countNotOnSheet;
         }
 
         #endregion
@@ -2079,7 +2095,7 @@ namespace ReviTab
             v.SetElementOverrides(eid, overrideSettings);
         }
 
-        public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings, int purgeableElements)
+        public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings, int purgeableElements, int viewsNotOnSheet)
         {
 
 
@@ -2110,9 +2126,9 @@ namespace ReviTab
                 MySqlConnection connection = new MySqlConnection(connectionString);
 
                 MySqlCommand cmdInsert = new MySqlCommand("", connection);
-                cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount, purgeableElements) " +
+                cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount, purgeableElements, viewsNotOnSheet) " +
                     "VALUES (?date, ?user, ?rvtFileSize, ?elementsCount, ?typesCount, ?sheetsCount, ?viewsCount, " +
-                    "?viewportsCount, ?warningsCount, ?purgeableElements)";
+                    "?viewportsCount, ?warningsCount, ?purgeableElements, ?viewsNotOnSheet)";
 
                 cmdInsert.Parameters.Add("?date", MySqlDbType.DateTime).Value = dt;
                 cmdInsert.Parameters.Add("?user", MySqlDbType.VarChar).Value = user;
@@ -2127,6 +2143,9 @@ namespace ReviTab
                 cmdInsert.Parameters.Add("?warningsCount", MySqlDbType.Int32).Value = countWarnings;
 
                 cmdInsert.Parameters.Add("?purgeableElements", MySqlDbType.Int32).Value = purgeableElements;
+
+                cmdInsert.Parameters.Add("?viewsNotOnSheet", MySqlDbType.Int32).Value = viewsNotOnSheet;
+
 
                 connection.Open();
 
