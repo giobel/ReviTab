@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -548,6 +549,36 @@ namespace ReviTab
 
         }//close method
 
+
+        public static Dictionary<string, List<string>> GetSettings(string inputFile)
+        {
+
+            Dictionary<string, List<string>> settings = new Dictionary<string, List<string>>();
+
+            using (var reader = new StreamReader(inputFile))
+            {
+
+                string header = reader.ReadLine();
+
+                while (!reader.EndOfStream)
+                {
+
+                    var line = reader.ReadLine();
+
+                    var values = line.Split(',').ToList();
+
+                    string category = values.First();
+
+                    values.RemoveAt(0);
+
+                    settings.Add(category, values);
+
+                }
+            }
+
+            return settings;
+
+        }
 
         public static ElementId FilterElementIds(Element _ele, string _param, string _valueToCheck, string _operatorValue)
         {

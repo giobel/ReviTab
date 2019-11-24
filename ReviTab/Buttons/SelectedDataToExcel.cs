@@ -26,72 +26,174 @@ namespace ReviTab
                 Application app = uiapp.Application;
                 Document doc = uidoc.Document;
 
-                try
+            try {
+
+                StringBuilder sb = new StringBuilder();
+
+
+                string inputFile = @"C:\Temp\RevitSettings.csv";
+
+                Dictionary<string, List<string>> settings = Helpers.GetSettings(inputFile);
+
+
+                ICollection<ElementId> selectedElementsId = uidoc.Selection.GetElementIds();
+
+                TaskDialog.Show("r", selectedElementsId.Count.ToString() + " selected");
+
+                uidoc.ActiveView = uidoc.ActiveGraphicalView;
+
+                string headers = "ElementId,";
+
+                foreach (ElementId eid in selectedElementsId)
                 {
-                    ICollection<ElementId> selectedSheetsId = uidoc.Selection.GetElementIds();
 
-                    TaskDialog.Show("r", selectedSheetsId.Count.ToString() + " selected");
+                    Element e = doc.GetElement(eid);
 
-                    ICollection<ViewSheet> selectedSheets = new List<ViewSheet>();
+                    string csvLine = "";
 
-                    foreach (var eid in selectedSheetsId)
-                    {
-                        selectedSheets.Add(doc.GetElement(eid) as ViewSheet);
-                    }
+                    List<string> parameters = new List<string>();
 
-                    uidoc.ActiveView = uidoc.ActiveGraphicalView;
-
-
-                    string outputFile = @"C:\Temp\ExportedData.csv";
-
-                    var sortedList = selectedSheets.OrderBy(pd => pd.SheetNumber);
-
-                    string headers = "ElementId, Sheet Number, Sheet Name, ARUP_BDR_TITLE1,ARUP_BDR_TITLE2,ARUP_BDR_TITLE3, View Type, View Name, View PosX, View PosY, View PosZ\n";
-
-                    StringBuilder sb = new StringBuilder();
-
-                    File.WriteAllText(outputFile, headers);
-
-
-                    foreach (ViewSheet vs in sortedList)
+                    if (settings.TryGetValue(e.Category.Name, out parameters))
                     {
 
-                        ICollection<ElementId> viewports = vs.GetAllViewports();
-                        foreach (var vpid in viewports)
+                        foreach (string s in parameters)
                         {
-                            Viewport vport = doc.GetElement(vpid) as Viewport;
-                            View view = doc.GetElement(vport.ViewId) as View;
+                            if (!headers.Contains(s))
+                                headers += s + ",";
 
-                            string viewId = vpid.ToString();
-                            string sheetNumber = vs.LookupParameter("Sheet Number").AsString();
-                            string sheetName = vs.LookupParameter("Sheet Name").AsString();
-                            string sheetTitle1 = vs.LookupParameter("ARUP_BDR_TITLE1").AsString();
-                            string sheetTitle2 = vs.LookupParameter("ARUP_BDR_TITLE2").AsString();
-                            string sheetTitle3 = vs.LookupParameter("ARUP_BDR_TITLE3").AsString();
-                            string viewType = view.ViewType.ToString();
-                            string viewName = view.Name;
-                            string viewPosition = vport.GetBoxCenter().ToString().Remove(0, 1).TrimEnd(')');
-                            sb.AppendLine(System.String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
-                                                        viewId, sheetNumber, sheetName, sheetTitle1, sheetTitle2, sheetTitle3,
-                                                        viewType, viewName, viewPosition));
+                            string paramValue = "";
+
+                            try
+                            {
+
+                                Parameter p = e.LookupParameter(s.Trim());
+
+                                StorageType parameterType = p.StorageType;
+
+                                if (StorageType.Double == parameterType)
+                                {
+                                    paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS).ToString();
+                                }
+                                else if (StorageType.String == parameterType)
+                                {
+                                    paramValue = p.AsString();
+                                }
+                                else if (StorageType.Integer == parameterType)
+                                {
+                                    paramValue = p.AsInteger().ToString();
+                                }
+                                else if (StorageType.ElementId == parameterType)
+                                {
+                                    paramValue = p.AsValueString();
+                                }
+
+                            }
+                            catch
+                            {
+                                paramValue = s;
+                            }
+
+                            csvLine += paramValue + ",";
 
                         }
+
+                        sb.AppendLine(String.Format("{0},{1}", e.Id, csvLine));
                     }
-                    File.AppendAllText(outputFile, sb.ToString());
-
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    process.StartInfo.FileName = outputFile;
-                    process.Start();
-
-
-                    return Result.Succeeded;
-
                 }
-                catch (Exception ex)
-                {
-                    TaskDialog.Show("Error", ex.Message);
-                    return Result.Failed;
-                }
+
+                string outputFile = @"C:\Temp\ExportedData.csv";
+
+
+                //			var sortedList = selectedSheets.OrderBy(pd => pd.SheetNumber);
+
+
+
+                File.WriteAllText(outputFile, headers + "\n");
+
+
+                File.AppendAllText(outputFile, sb.ToString());
+
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = outputFile;
+                process.Start();
+
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Error", ex.Message);
+                return Result.Failed;
+            }
+
+                #region Old Method
+                //try
+                //{
+                //        ICollection<ElementId> selectedSheetsId = uidoc.Selection.GetElementIds();
+
+                //        TaskDialog.Show("r", selectedSheetsId.Count.ToString() + " selected");
+
+                //        ICollection<ViewSheet> selectedSheets = new List<ViewSheet>();
+
+                //        foreach (var eid in selectedSheetsId)
+                //        {
+                //            selectedSheets.Add(doc.GetElement(eid) as ViewSheet);
+                //        }
+
+                //        uidoc.ActiveView = uidoc.ActiveGraphicalView;
+
+
+                //        string outputFile = @"C:\Temp\ExportedData.csv";
+
+                //        var sortedList = selectedSheets.OrderBy(pd => pd.SheetNumber);
+
+                //        string headers = "ElementId, Sheet Number, Sheet Name, ARUP_BDR_TITLE1,ARUP_BDR_TITLE2,ARUP_BDR_TITLE3, View Type, View Name, View PosX, View PosY, View PosZ\n";
+
+                //        StringBuilder sb = new StringBuilder();
+
+                //        File.WriteAllText(outputFile, headers);
+
+
+                //        foreach (ViewSheet vs in sortedList)
+                //        {
+
+                //            ICollection<ElementId> viewports = vs.GetAllViewports();
+                //            foreach (var vpid in viewports)
+                //            {
+                //                Viewport vport = doc.GetElement(vpid) as Viewport;
+                //                View view = doc.GetElement(vport.ViewId) as View;
+
+                //                string viewId = vpid.ToString();
+                //                string sheetNumber = vs.LookupParameter("Sheet Number").AsString();
+                //                string sheetName = vs.LookupParameter("Sheet Name").AsString();
+                //                string sheetTitle1 = vs.LookupParameter("ARUP_BDR_TITLE1").AsString();
+                //                string sheetTitle2 = vs.LookupParameter("ARUP_BDR_TITLE2").AsString();
+                //                string sheetTitle3 = vs.LookupParameter("ARUP_BDR_TITLE3").AsString();
+                //                string viewType = view.ViewType.ToString();
+                //                string viewName = view.Name;
+                //                string viewPosition = vport.GetBoxCenter().ToString().Remove(0, 1).TrimEnd(')');
+                //                sb.AppendLine(System.String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
+                //                                            viewId, sheetNumber, sheetName, sheetTitle1, sheetTitle2, sheetTitle3,
+                //                                            viewType, viewName, viewPosition));
+
+                //            }
+                //        }
+                //        File.AppendAllText(outputFile, sb.ToString());
+
+                //        System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //        process.StartInfo.FileName = outputFile;
+                //        process.Start();
+
+
+                //        return Result.Succeeded;
+
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        TaskDialog.Show("Error", ex.Message);
+                //        return Result.Failed;
+                //    //}
+
+                #endregion
             }
         }
 
