@@ -95,11 +95,18 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Align Viewports", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                IList<PushButtonData> splitButtonsDataToExcel = new List<PushButtonData>();
+                
+                splitButtonsDataToExcel.Add(CreatePushButton("btnDataToExcel", "Data to\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.SelectedDataToExcel", "Export parameters content to Excel for easy manipulation."));
+                
+                splitButtonsDataToExcel.Add(CreatePushButton("btnDataFromExcel", "Data from\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.UpdateDataFromExcel", "Update parameter values with data from Excel."));
+
                 //Revision Clouds
-                if (AddPushButton(docsPanel, "btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary.") == false)
-                {
-                    MessageBox.Show("Failed to add button Create Multiple Sections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                splitButtonsDataToExcel.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary."));
+
+                AddSplitButton(docsPanel, splitButtonsDataToExcel, "DocumentationButton", "ExcelLink");
+
+
 
                 
                 #endregion

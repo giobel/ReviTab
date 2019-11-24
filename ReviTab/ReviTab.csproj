@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ReviTab</RootNamespace>
     <AssemblyName>ReviTab</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,6 +40,24 @@
     <StartAction>Program</StartAction>
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AdWindows">
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\AdWindows.dll</HintPath>
@@ -58,11 +76,11 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI">
-      <HintPath>$(ProgramW6432)\Autodesk\Revit 2018\RevitAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>$(ProgramW6432)\Autodesk\Revit 2018\RevitAPIUI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -81,9 +99,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons\ExtendGrids.cs" />
     <Compile Include="Buttons\AlignViews.cs" />
     <Compile Include="Buttons\DeleteLineStyles.cs" />
     <Compile Include="Buttons\LineStyles.cs" />
+    <Compile Include="Buttons\UpdateFromExcel.cs" />
+    <Compile Include="Buttons\SelectedDataToExcel.cs" />
     <Compile Include="Buttons\TextFonts.cs" />
     <Compile Include="Buttons\FilterSelectionDimensions.cs" />
     <Compile Include="Buttons\FilterSelectionTags.cs" />
