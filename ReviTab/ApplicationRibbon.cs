@@ -97,14 +97,14 @@ namespace ReviTab
 
                 IList<PushButtonData> splitButtonsDataToExcel = new List<PushButtonData>();
                 
-                splitButtonsDataToExcel.Add(CreatePushButton("btnDataToExcel", "Data to\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.SelectedDataToExcel", "Export parameters content to Excel for easy manipulation."));
+                splitButtonsDataToExcel.Add(CreatePushButton("btnDataToExcel", "Data to\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.SelectedDataToExcel", "Export parameters content to Excel for easy manipulation."));
                 
-                splitButtonsDataToExcel.Add(CreatePushButton("btnDataFromExcel", "Data from\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.UpdateDataFromExcel", "Update parameter values with data from Excel."));
+                splitButtonsDataToExcel.Add(CreatePushButton("btnDataFromExcel", "Data from\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.UpdateDataFromExcel", "Update parameter values with data from Excel."));
 
                 //Revision Clouds
                 splitButtonsDataToExcel.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary."));
 
-                AddSplitButton(docsPanel, splitButtonsDataToExcel, "DocumentationButton", "ExcelLink");
+                AddSplitButton(docsPanel, splitButtonsDataToExcel, "ExcelButton", "ExcelLink");
 
 
 

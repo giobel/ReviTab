@@ -12,11 +12,9 @@ using System.Text;
 
 namespace ReviTab
 {
-    class SelectedDataToExcel
-    {
 
         [Transaction(TransactionMode.Manual)]
-        public class AlignViews : IExternalCommand
+        public class SelectedDataToExcel : IExternalCommand
         {
             public Result Execute(
               ExternalCommandData commandData,
@@ -97,5 +95,5 @@ namespace ReviTab
             }
         }
 
-    }
+    
 }

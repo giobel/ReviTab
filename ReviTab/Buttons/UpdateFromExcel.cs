@@ -12,11 +12,8 @@ using System.Text;
 
 namespace ReviTab
 {
-    class UpdateDataFromExcel
-    {
-
         [Transaction(TransactionMode.Manual)]
-        public class AlignViews : IExternalCommand
+        public class UpdateDataFromExcel : IExternalCommand
         {
             public Result Execute(
               ExternalCommandData commandData,
@@ -85,7 +82,7 @@ namespace ReviTab
                     return Result.Failed;
                 }
             }
-        }
+        
 
     }
 }

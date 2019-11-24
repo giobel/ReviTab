@@ -292,6 +292,7 @@
     <Resource Include="Resources\deleteRev.png" />
     <Resource Include="Resources\addRev.png" />
     <Resource Include="Resources\lock.png" />
+    <Resource Include="Resources\excel.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
