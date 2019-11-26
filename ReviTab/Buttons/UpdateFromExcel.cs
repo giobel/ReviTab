@@ -69,7 +69,15 @@ namespace ReviTab
 
                                     Parameter p = e.LookupParameter(parameters[i].Trim());
 
-                                    p.Set(values[i]);
+
+                                    if (p.StorageType == StorageType.Integer)
+                                    {
+                                        p.Set(Convert.ToInt32(values[i]));
+                                    }
+                                    else
+                                    {
+                                        p.Set(values[i]);
+                                    }
                                 }
                                 catch (Exception ex) { TaskDialog.Show("Error", ex.Message); }
 
