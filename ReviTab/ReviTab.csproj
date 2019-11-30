@@ -103,6 +103,7 @@
     <Compile Include="Buttons\AlignViews.cs" />
     <Compile Include="Buttons\DeleteLineStyles.cs" />
     <Compile Include="Buttons\LineStyles.cs" />
+    <Compile Include="Buttons\PropagateGridExtents.cs" />
     <Compile Include="Buttons\UpdateViewportsFromExcel.cs" />
     <Compile Include="Buttons\ViewportsToExcel.cs" />
     <Compile Include="Buttons\UpdateFromExcel.cs" />
