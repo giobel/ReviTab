@@ -2195,4 +2195,31 @@ namespace ReviTab
         }//close method
 
     }
+
+    public class GenericSelectionFilter : ISelectionFilter
+    {
+
+        public string catNameChosen { get; set; }
+
+        public GenericSelectionFilter(string catName)
+        {
+            this.catNameChosen = catName;
+        }
+
+        public bool AllowElement(Element e)
+        {
+            if (e.Category.Name == catNameChosen)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        public bool AllowReference(Reference refer, XYZ point)
+        {
+            return false;
+        }
+
+    }//close class
 }
