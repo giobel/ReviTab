@@ -95,6 +95,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Align Viewports", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                // Excel interop
                 IList<PushButtonData> splitButtonsDataToExcel = new List<PushButtonData>();
                 
                 splitButtonsDataToExcel.Add(CreatePushButton("btnDataToExcel", "Data to\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.SelectedDataToExcel", "Export parameters content to Excel for easy manipulation."));
