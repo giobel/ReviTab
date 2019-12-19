@@ -397,6 +397,85 @@ namespace ReviTab
 
         }
 
+        public static void CreateColumnSection(Document doc, Element columnElement, double offsetFromAlignment, double farClip, double bottomZ, double topZ, bool flipDirection)
+        {
+            
+            FamilyInstance fi = columnElement as FamilyInstance;
+
+            LocationPoint lp = columnElement.Location as LocationPoint;
+            //PlotPoint(lp.Point);
+            //x-Vector
+            XYZ xDir = fi.HandOrientation.Normalize();
+            //PlotPoint(xDir);
+            //y-Vector
+            XYZ yDir = xDir.CrossProduct(XYZ.BasisZ).Normalize();
+            //PlotPoint(yDir);
+
+
+            //Start Point
+            XYZ p = lp.Point + xDir * 2;
+            //End Point
+            XYZ q = lp.Point - xDir * 2;
+
+            XYZ v = q - p;
+
+            XYZ perp = null;
+
+            //Rightward
+            XYZ gX = new XYZ(1, 0, 0);
+            //Downward
+            XYZ gY = new XYZ(0, -1, 0);
+
+            if (yDir.IsAlmostEqualTo(gX) || yDir.IsAlmostEqualTo(gY))
+            {
+                perp = lp.Point - yDir * 2;
+                xDir = -xDir;
+            }
+            else
+            {
+                perp = lp.Point + yDir * 2;
+            }
+
+            //section alignment
+            //Line crv = Line.CreateBound(p, q);
+
+            //section direction
+            //Line dir = Line.CreateBound(lp.Point, perp);
+
+            //section alignment, section height, section depth on plan (far clip offset)
+            XYZ min = new XYZ(-v.GetLength() / 2 - 1, bottomZ, offsetFromAlignment);
+            XYZ max = new XYZ(v.GetLength() / 2 + 1, topZ, farClip);
+
+            XYZ midpoint = lp.Point;
+            XYZ sectionAlignment = xDir;
+
+            if (flipDirection)
+            {
+                sectionAlignment = -xDir;
+            }
+
+            XYZ up = XYZ.BasisZ;
+            XYZ viewdir = sectionAlignment.CrossProduct(up);
+
+            Transform t = Transform.Identity;
+            t.Origin = midpoint;
+            t.BasisX = sectionAlignment;
+            t.BasisY = up;
+            t.BasisZ = viewdir;
+
+            BoundingBoxXYZ sectionBox = new BoundingBoxXYZ();
+            sectionBox.Transform = t;
+            sectionBox.Min = min;
+            sectionBox.Max = max;
+
+            //doc.Create.NewDetailCurve(doc.ActiveView, crv);
+            //doc.Create.NewDetailCurve(doc.ActiveView, dir);
+            ViewFamilyType vft = viewFamilyType(doc);
+
+            ViewSection.CreateSection(doc, vft.Id, sectionBox);
+        }
+
+
         #endregion
 
         #region SELECTION

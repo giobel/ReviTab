@@ -62,6 +62,8 @@ namespace ReviTab
 
                 splitButtonsViews.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
 
+                splitButtonsViews.Add(CreatePushButton("btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select views on sheets in the project browser first then click on this button."));
+
                 AddSplitButton(docsPanel, splitButtonsViews, "DocumentationButton", "Documentation");
 
                 //Titleblock revisions
@@ -87,13 +89,7 @@ namespace ReviTab
                     CreatePushButton("btnLineStyles", "List Line Styles", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.LineStyles", "List all the Line Styles in the project to the active view. Set View Scale to 1:1 to display the list correctly.")
                 };
 
-                AddStackedButton(docsPanel, stackedButtonsTextAndLines, "TextAndLines", "TextLines");
-                
-                //Align Views
-                if (AddPushButton(docsPanel, "btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select views on sheets in the project browser first then click on this button.") == false)
-                {
-                    MessageBox.Show("Failed to add button Align Viewports", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                AddStackedButton(docsPanel, stackedButtonsTextAndLines, "TextAndLines", "TextLines");            
 
                 // Excel interop
                 IList<PushButtonData> splitButtonsDataToExcel = new List<PushButtonData>();
@@ -111,20 +107,27 @@ namespace ReviTab
 
                 AddSplitButton(docsPanel, splitButtonsDataToExcel, "ExcelButton", "ExcelLink");
 
-
-
+                //DB interop
+                IList<PushButtonData> splitButtonsInterop = new List<PushButtonData>();
                 
+                splitButtonsInterop.Add(CreatePushButton("btnManage", "Update Status", "", "pack://application:,,,/ReviTab;component/Resources/manage.png", "ReviTab.UpdateModelStatus", "Update model status dashboard."));
+
+                splitButtonsInterop.Add(CreatePushButton("btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
+
+                AddSplitButton(docsPanel, splitButtonsInterop, "InteropDBButton", "InteropDB");
+
                 #endregion
 
 
                 #region Tools
 
+                IList<PushButtonData> splitButtonsSections = new List<PushButtonData>();
+                
+                splitButtonsSections.Add(CreatePushButton("btnCreateSectionsColumns", "Column Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSectionColumns", "Create multiple sections for selected columns."));
 
+                splitButtonsSections.Add(CreatePushButton("btnCreateSections", "Wall/Beam" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections for selected columns."));
 
-                if (AddPushButton(toolsPanel, "btnCreateSections", "Create Multiple" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections from selected elements (must have location curve i.e. beams, walls, lines...)") == false)
-                {
-                    MessageBox.Show("Failed to add button Create Multiple Sections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                AddSplitButton(toolsPanel, splitButtonsSections, "SectionsButton", "MultipleSections");
 
                 if (AddPushButton(toolsPanel, "btnSelectText", "Select All" + Environment.NewLine + "Text", "", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "ReviTab.SelectAllText", "Select all text notes in the project. Useful if you want to run the check the spelling.") == false)
                 {
@@ -252,20 +255,18 @@ namespace ReviTab
                 
                 #region Zero State
 
-                if (AddZeroStatePushButton(zeroState, "btnClaritySetup", "Clarity Setup", "", "pack://application:,,,/ReviTab;component/Resources/claSetup.png", "ReviTab.ClaritySetup", "Open a model in background and create a 3d view for Clarity IFC export.", "ReviTab.Availability") == false)
-                {
-                    MessageBox.Show("Failed to add button Clarity", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                IList<PushButtonData> stackedButtonsZeroState = new List<PushButtonData>();
 
-                IList<PushButtonData> stackedButtonsDBPurgeBackPrint = new List<PushButtonData>();
+                stackedButtonsZeroState.Add(CreatePushButton("btnClaritySetup", "Clarity Setup", "pack://application:,,,/ReviTab;component/Resources/claSetup.png", "", "ReviTab.ClaritySetup", "Open a model in background and create a 3d view for Clarity IFC export."));
 
-                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPush", "Push to DB", "pack://application:,,,/ReviTab;component/Resources/arrowUpSmall.png", "","ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
 
-                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPurgeFamilies", "Purge Families", "pack://application:,,,/ReviTab;component/Resources/wipingSmal, inste.png","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
+                stackedButtonsZeroState.Add(CreatePushButton("btnPush", "Push to DB", "pack://application:,,,/ReviTab;component/Resources/arrowUpSmall.png", "","ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
 
-                stackedButtonsDBPurgeBackPrint.Add(CreatePushButton("btnPrintBackground", "Background" + Environment.NewLine + "Print", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "","ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings", "ReviTab.Availability"));
+                stackedButtonsZeroState.Add(CreatePushButton("btnPurgeFamilies", "Purge Families", "pack://application:,,,/ReviTab;component/Resources/wipingSmall","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
 
-                AddStackedButton(zeroState, stackedButtonsDBPurgeBackPrint, "PurgeCommands", "Purge");
+                stackedButtonsZeroState.Add(CreatePushButton("btnPrintBackground", "Back Print", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "","ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings", "ReviTab.Availability"));
+
+                AddStackedButton(zeroState, stackedButtonsZeroState, "PurgeCommands", "Purge");
 
 
                 /*
@@ -279,7 +280,7 @@ namespace ReviTab
 
                 stackedButtonsGroupMetadata.Add(CreatePushButton("btnHowl", "Howl", "pack://application:,,,/ReviTab;component/Resources/ghowlicon16x16.png", "", "ReviTab.Howl", "Howl"));
 
-                stackedButtonsGroupMetadata.Add(CreatePushButton("btnAddMetadata", "Add Metadata", "pack://application:,,,/ReviTab;component/Resources/AddMetadataIcon.png", "", "ReviTab.AddPDFcustomProperties", "Add custom properties to a list of pdfs"));
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnAddMetadata", "Metadata", "pack://application:,,,/ReviTab;component/Resources/AddMetadataIcon.png", "", "ReviTab.AddPDFcustomProperties", "Add custom properties to a list of pdfs"));
                 
                 stackedButtonsGroupMetadata.Add(CreatePushButton("btnInfo", "Info", "pack://application:,,,/ReviTab;component/Resources/info16x16.png", "", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability"));
 

@@ -47,6 +47,7 @@ namespace ReviTab
             this.label4 = new System.Windows.Forms.Label();
             this.topLevelTxt = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.checkBoxFlip = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,9 +55,9 @@ namespace ReviTab
             // 
             this.checkBoxLong.Checked = true;
             this.checkBoxLong.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxLong.Location = new System.Drawing.Point(64, 10);
+            this.checkBoxLong.Location = new System.Drawing.Point(18, 10);
             this.checkBoxLong.Name = "checkBoxLong";
-            this.checkBoxLong.Size = new System.Drawing.Size(90, 26);
+            this.checkBoxLong.Size = new System.Drawing.Size(91, 26);
             this.checkBoxLong.TabIndex = 0;
             this.checkBoxLong.Text = "Long Section";
             this.checkBoxLong.UseCompatibleTextRendering = true;
@@ -65,9 +66,9 @@ namespace ReviTab
             // 
             // checkBoxCross
             // 
-            this.checkBoxCross.Location = new System.Drawing.Point(173, 12);
+            this.checkBoxCross.Location = new System.Drawing.Point(127, 12);
             this.checkBoxCross.Name = "checkBoxCross";
-            this.checkBoxCross.Size = new System.Drawing.Size(104, 24);
+            this.checkBoxCross.Size = new System.Drawing.Size(105, 24);
             this.checkBoxCross.TabIndex = 1;
             this.checkBoxCross.Text = "Cross Section";
             this.checkBoxCross.UseCompatibleTextRendering = true;
@@ -179,11 +180,22 @@ namespace ReviTab
             this.pictureBox1.TabIndex = 12;
             this.pictureBox1.TabStop = false;
             // 
-            // Form1
+            // checkBoxFlip
+            // 
+            this.checkBoxFlip.AutoSize = true;
+            this.checkBoxFlip.Location = new System.Drawing.Point(229, 16);
+            this.checkBoxFlip.Name = "checkBoxFlip";
+            this.checkBoxFlip.Size = new System.Drawing.Size(87, 17);
+            this.checkBoxFlip.TabIndex = 13;
+            this.checkBoxFlip.Text = "Flip Direction";
+            this.checkBoxFlip.UseVisualStyleBackColor = true;
+            // 
+            // FormCreateSections
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(339, 302);
+            this.Controls.Add(this.checkBoxFlip);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.topLevelTxt);
             this.Controls.Add(this.label4);
@@ -197,12 +209,13 @@ namespace ReviTab
             this.Controls.Add(this.ok_button);
             this.Controls.Add(this.checkBoxCross);
             this.Controls.Add(this.checkBoxLong);
-            this.Name = "Form1";
+            this.Name = "FormCreateSections";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox topLevelTxt;
@@ -223,8 +236,6 @@ namespace ReviTab
 
         }
 
-
-
-
+        private System.Windows.Forms.CheckBox checkBoxFlip;
     }
 }

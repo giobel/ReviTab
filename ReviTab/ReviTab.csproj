@@ -103,6 +103,8 @@
     <Compile Include="Buttons Documentation\AlignViews.cs" />
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
     <Compile Include="Buttons Documentation\LineStyles.cs" />
+    <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
     <Compile Include="Buttons Tools\PropagateGridExtents.cs" />
     <Compile Include="Buttons Excel\UpdateViewportsFromExcel.cs" />
     <Compile Include="Buttons Excel\ViewportsToExcel.cs" />
@@ -141,14 +143,14 @@
     <Compile Include="Buttons Documentation\AddMultipleViewsToSheet.cs" />
     <Compile Include="Buttons Framings and Walls\AddTagsApplyUndo.cs" />
     <Compile Include="Buttons Zero State\ClaritySetup.cs" />
-    <Compile Include="Buttons Tools\CreateSections.cs" />
+    <Compile Include="Buttons Tools\CreateSectionsByLocationCurve.cs" />
     <Compile Include="Buttons Documentation\CreateViewSet.cs" />
     <Compile Include="Buttons Framings and Walls\EditBeamJoin.cs" />
     <Compile Include="Buttons Tools\OverrideDimensions.cs" />
     <Compile Include="Buttons Documentation\Parameterizer.cs" />
     <Compile Include="Buttons Zero State\PurgeFamily.cs" />
     <Compile Include="Buttons Framings and Walls\MoveBeamEnd.cs" />
-    <Compile Include="Buttons Zero State\PushToDB.cs" />
+    <Compile Include="Buttons Management\PushToDB.cs" />
     <Compile Include="Buttons Documentation\SelectByParameter.cs" />
     <Compile Include="Buttons Framings and Walls\VoidByFace.cs" />
     <Compile Include="Buttons Zero State\PrintInBackground.cs" />
@@ -296,6 +298,7 @@
     <Resource Include="Resources\addRev.png" />
     <Resource Include="Resources\lock.png" />
     <Resource Include="Resources\excel.png" />
+    <Resource Include="Resources\manage.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +349,7 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2019"

@@ -70,7 +70,7 @@ namespace ReviTab
                             }
                         }
 
-                        TaskDialog.Show("Result", s.ToString());
+                        TaskDialog.Show("Result", $"{s.ToString()} sections created");
 
                         tx.Commit();
                     }
