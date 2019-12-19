@@ -64,6 +64,8 @@ namespace ReviTab
 
                 splitButtonsViews.Add(CreatePushButton("btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select views on sheets in the project browser first then click on this button."));
 
+                splitButtonsViews.Add(CreatePushButton("btnTagInView", "Tag Elements", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.TagElementsInViewport", "Tag all the columns within the selected Viewports."));
+                
                 AddSplitButton(docsPanel, splitButtonsViews, "DocumentationButton", "Documentation");
 
                 //Titleblock revisions
@@ -262,7 +264,7 @@ namespace ReviTab
 
                 stackedButtonsZeroState.Add(CreatePushButton("btnPush", "Push to DB", "pack://application:,,,/ReviTab;component/Resources/arrowUpSmall.png", "","ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
 
-                stackedButtonsZeroState.Add(CreatePushButton("btnPurgeFamilies", "Purge Families", "pack://application:,,,/ReviTab;component/Resources/wipingSmall","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
+                stackedButtonsZeroState.Add(CreatePushButton("btnPurgeFamilies", "Families", "pack://application:,,,/ReviTab;component/Resources/wipingSmall","", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
 
                 stackedButtonsZeroState.Add(CreatePushButton("btnPrintBackground", "Back Print", "pack://application:,,,/ReviTab;component/Resources/backgroundPrint.png", "","ReviTab.PrintInBackground", "Open a model in background and print the selcted drawings", "ReviTab.Availability"));
 

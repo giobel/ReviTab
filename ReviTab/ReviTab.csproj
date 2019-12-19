@@ -119,6 +119,7 @@
     <Compile Include="Buttons Tools\FilterSelectionLines.cs" />
     <Compile Include="Buttons Tools\FilterSelectionBeams.cs" />
     <Compile Include="Buttons Tools\FilterSelectionWalls.cs" />
+    <Compile Include="Buttons Tools\TagElementsInViewport.cs" />
     <Compile Include="Buttons Zero State\AddPDFcustomProperties.cs" />
     <Compile Include="Buttons Tools\PrintSelected.cs" />
     <Compile Include="Buttons Tools\CopyLinkedElements.cs" />
