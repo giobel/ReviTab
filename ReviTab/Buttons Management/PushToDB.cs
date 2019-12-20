@@ -64,7 +64,7 @@ namespace ReviTab
                     int countViews = fecViews.Count();
                     int countViewPorts = fecViewPorts.Count();
 
-                    int viewsNotOnSheet = Helpers.CountViewsNotOnSheet(fecViews);
+                    int viewsNotOnSheet = Helpers.CountViewsNotOnSheet(fecViews).Count;
 
                     DateTime dateo = DateTime.Now;
                     string time = $"{dateo.Hour}h{dateo.Minute}m{dateo.Second}s";

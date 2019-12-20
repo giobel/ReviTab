@@ -63,10 +63,16 @@
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AirtableApiClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Airtable.1.1.0\lib\netstandard2.0\AirtableApiClient.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=8.0.15.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
@@ -103,6 +109,7 @@
     <Compile Include="Buttons Documentation\AlignViews.cs" />
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
     <Compile Include="Buttons Documentation\LineStyles.cs" />
+    <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
     <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
     <Compile Include="Buttons Tools\PropagateGridExtents.cs" />
@@ -300,6 +307,7 @@
     <Resource Include="Resources\lock.png" />
     <Resource Include="Resources\excel.png" />
     <Resource Include="Resources\manage.png" />
+    <Resource Include="Resources\airtable.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

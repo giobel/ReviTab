@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AirtableApiClient;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -1401,23 +1404,24 @@ namespace ReviTab
 
         }
 
-        public static int CountViewsNotOnSheet(FilteredElementCollector allViews)
+        public static List<CardContent> CountViewsNotOnSheet(FilteredElementCollector allViews)
         {
-            int countNotOnSheet = 0;
+            List<CardContent> viewsNotOnSheet = new List<CardContent>();
 
-            foreach (View view in allViews)
+            foreach (Autodesk.Revit.DB.View view in allViews)
             {
                 try
                 {
-                    if (view.LookupParameter("Sheet Number").AsString() == "---")
+                    if (view.LookupParameter("Sheet Number").AsString() == "---" && !view.LookupParameter("View Purpose").AsString().Contains("Library"))
                     {
-                        countNotOnSheet += 1;
+
+                        viewsNotOnSheet.Add(new CardContent() { Value = 1, Content = view.Name + " - " + view.LookupParameter("View Purpose").AsString() });
                     }
 
                 }
                 catch { }
             }
-            return countNotOnSheet;
+            return viewsNotOnSheet;
         }
 
         #endregion
@@ -2052,6 +2056,403 @@ namespace ReviTab
 
         #endregion
 
+        #region MANAGE MODEL
+
+        public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings, int purgeableElements, int viewsNotOnSheet)
+        {
+
+
+            string server = "127.0.0.1";
+            string database = "new_schema";
+            string uid = "root";
+            string password = "password";
+
+
+            /*
+            string server = "remotemysql.com";
+            string database = "r7BFoOjCty";
+            string uid = "r7BFoOjCty";
+            string password = "1vU3s1bj6T";
+    */
+            string connectionString;
+            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
+            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+
+
+            // string table = "filesize";
+            string table = tableName;
+
+
+            try
+            {
+
+                MySqlConnection connection = new MySqlConnection(connectionString);
+
+                MySqlCommand cmdInsert = new MySqlCommand("", connection);
+                cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount, purgeableElements, viewsNotOnSheet) " +
+                    "VALUES (?date, ?user, ?rvtFileSize, ?elementsCount, ?typesCount, ?sheetsCount, ?viewsCount, " +
+                    "?viewportsCount, ?warningsCount, ?purgeableElements, ?viewsNotOnSheet)";
+
+                cmdInsert.Parameters.Add("?date", MySqlDbType.DateTime).Value = dt;
+                cmdInsert.Parameters.Add("?user", MySqlDbType.VarChar).Value = user;
+                cmdInsert.Parameters.Add("?rvtFileSize", MySqlDbType.Int64).Value = rvtFileSize;
+                cmdInsert.Parameters.Add("?elementsCount", MySqlDbType.Int32).Value = elementsCount;
+                cmdInsert.Parameters.Add("?typesCount", MySqlDbType.Int32).Value = typesCount;
+
+                cmdInsert.Parameters.Add("?sheetsCount", MySqlDbType.Int32).Value = sheetsCount;
+                cmdInsert.Parameters.Add("?viewsCount", MySqlDbType.Int32).Value = viewsCount;
+                cmdInsert.Parameters.Add("?viewportsCount", MySqlDbType.Int32).Value = viewportsCount;
+
+                cmdInsert.Parameters.Add("?warningsCount", MySqlDbType.Int32).Value = countWarnings;
+
+                cmdInsert.Parameters.Add("?purgeableElements", MySqlDbType.Int32).Value = purgeableElements;
+
+                cmdInsert.Parameters.Add("?viewsNotOnSheet", MySqlDbType.Int32).Value = viewsNotOnSheet;
+
+
+                connection.Open();
+
+                cmdInsert.ExecuteNonQuery();
+
+                connection.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Error", ex.Message);
+                return false;
+            }
+
+
+        }//close method
+
+        public struct CardContent
+        {
+            public int Value;
+            public string Content;
+
+        }
+
+        public static Dictionary<string, CardContent> ModelStatus(Document doc)
+        {
+
+            FilteredElementCollector fecElements = new FilteredElementCollector(doc).WhereElementIsNotElementType();
+            FilteredElementCollector fecTypes = new FilteredElementCollector(doc).WhereElementIsElementType();
+
+            FilteredElementCollector fecSheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).WhereElementIsNotElementType();
+            FilteredElementCollector fecViews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).WhereElementIsNotElementType();
+            FilteredElementCollector fecViewPorts = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Viewports).WhereElementIsNotElementType();
+
+            ModelPath modelPath = ModelPathUtils.ConvertUserVisiblePathToModelPath(doc.PathName);
+
+            Dictionary<string, int> linksElements = ListLinks(modelPath);
+
+            Dictionary<string, int> importElements = ListImports(doc);
+
+            int countImports = 0;
+
+            importElements.ToList().ForEach(i => countImports += i.Value);
+
+            FilteredWorksetCollector coll = new FilteredWorksetCollector(doc);
+
+            coll.OfKind(WorksetKind.UserWorkset);
+
+            int worksetCount = 0;
+
+            StringBuilder sbWorkset = new StringBuilder();
+
+            foreach (Workset workset in coll)
+            {
+                sbWorkset.AppendLine(workset.Name);
+                worksetCount += 1;
+            }
+
+            int countWarnings = doc.GetWarnings().Count;
+
+            int countElements = fecElements.Count();
+            int countTypes = fecTypes.Count();
+
+            int countSheets = fecSheets.Count();
+            int countViews = fecViews.Count();
+            int countViewPorts = fecViewPorts.Count();
+            List<CardContent> viewNotOnSheet = CountViewsNotOnSheet(fecViews);
+
+            List<string> viewNotOnSheetsNames = new List<string>();
+
+
+            foreach (var card in viewNotOnSheet)
+            {
+                viewNotOnSheetsNames.Add(card.Content);
+            }
+
+            viewNotOnSheetsNames.Sort();
+
+            StringBuilder sb = new StringBuilder();
+
+            viewNotOnSheetsNames.ToList().ForEach(i => sb.AppendLine(i));
+
+            //TaskDialog.Show("re", sb.ToString());
+
+            Dictionary<string, CardContent> dashboardDictionary = new Dictionary<string, CardContent>();
+
+            dashboardDictionary.Add("WARNINGS", new CardContent() { Value = countWarnings, Content = "N/A" });
+            dashboardDictionary.Add("ELEMENTS", new CardContent() { Value = countElements, Content = "N/A" });
+            dashboardDictionary.Add("ELEMENT TYPES", new CardContent() { Value = countTypes, Content = "N/A" });
+            dashboardDictionary.Add("SHEETS", new CardContent() { Value = countSheets, Content = "N/A" });
+            dashboardDictionary.Add("VIEWS", new CardContent() { Value = countViews, Content = "N/A" });
+            dashboardDictionary.Add("VIEWPORTS", new CardContent() { Value = countViewPorts, Content = "N/A" });
+            dashboardDictionary.Add("VIEWS NOT ON SHEETS", new CardContent() { Value = viewNotOnSheet.Count, Content = sb.ToString() });
+            dashboardDictionary.Add("CAD IMPORTS", new CardContent() { Value = countImports, Content = "N/A" });
+            dashboardDictionary.Add("REVIT LINKS", new CardContent() { Value = linksElements["Revit Link"], Content = "N/A" });
+            dashboardDictionary.Add("CAD LINKS", new CardContent() { Value = linksElements["CAD Link"], Content = "N/A" });
+            dashboardDictionary.Add("WORKSETS", new CardContent() { Value = worksetCount, Content = sbWorkset.ToString() });
+
+            return dashboardDictionary;
+        }
+
+        private static string ImportCategoryNameToFileName(string catName)
+        {
+            string fileName = catName;
+            fileName = fileName.Trim();
+
+            if (fileName.EndsWith(")"))
+            {
+                int lastLeftBracket = fileName.LastIndexOf("(");
+
+                if (-1 != lastLeftBracket)
+                    fileName = fileName.Remove(lastLeftBracket); // remove left bracket
+            }
+
+            return fileName.Trim();
+        }
+
+        private static Dictionary<string, int> ListImports(Document doc)
+        {
+            List<KeyValuePair<string, string>> listOfViewSpecificImports = new List<KeyValuePair<string, string>>();
+
+            List<KeyValuePair<string, string>> listOfModelImports = new List<KeyValuePair<string, string>>();
+
+            List<KeyValuePair<string, string>> listOfUnidentifiedImports = new List<KeyValuePair<string, string>>();
+
+            Dictionary<string, int> results = new Dictionary<string, int>();
+
+            FilteredElementCollector col = new FilteredElementCollector(doc).OfClass(typeof(ImportInstance));
+
+            foreach (Element e in col)
+            {
+                if (e.Category != null)
+                {
+                    if (e.ViewSpecific)
+                    {
+                        string viewName = null;
+
+                        try
+                        {
+                            Element viewElement = doc.GetElement(e.OwnerViewId);
+                            viewName = viewElement.Name;
+                        }
+                        catch (Autodesk.Revit.Exceptions
+                          .ArgumentNullException) // just in case
+                        {
+                            viewName = String.Concat(
+                              "Invalid View ID: ",
+                              e.OwnerViewId.ToString());
+                        }
+
+
+                        if (null != e.Category)
+                        {
+                            try
+                            {
+                                listOfViewSpecificImports.Add(new KeyValuePair<string, string>(viewName, ImportCategoryNameToFileName(e.Category.Name)));
+                            }
+                            catch { }
+                        }
+
+
+                        else
+                        {
+                            try
+                            {
+                                listOfUnidentifiedImports.Add(new KeyValuePair<string, string>(viewName, e.Id.ToString()));
+                            }
+                            catch { }
+
+                        }
+
+                    }
+
+                    else
+                    {
+                        try
+                        {
+                            listOfModelImports.Add(new KeyValuePair<string, string>(e.Name, ImportCategoryNameToFileName(e.Category.Name)));
+                        }
+                        catch { }
+
+                    }
+
+                }
+                else
+                {
+                    //TaskDialog.Show("result",e.Id.ToString());
+                }
+
+            }
+
+            results.Add("View Specific", listOfViewSpecificImports.Count());
+            results.Add("Unidentified Imports", listOfUnidentifiedImports.Count());
+            results.Add("Model Imports", listOfModelImports.Count());
+
+            return results;
+
+        }
+
+        private static Dictionary<string, int> ListLinks(ModelPath location)
+        {
+            Dictionary<string, int> results = new Dictionary<string, int>();
+
+            int countRevLinks = 0;
+            int countCadLink = 0;
+
+            string path = ModelPathUtils.ConvertModelPathToUserVisiblePath(location);
+
+            // access transmission data in the given Revit file
+
+            TransmissionData transData = TransmissionData.ReadTransmissionData(location);
+
+            if (transData == null)
+            {
+
+            }
+            else
+            {
+                // collect all (immediate) external references in the model
+
+                ICollection<ElementId> externalReferences = transData.GetAllExternalFileReferenceIds();
+
+                // find every reference that is a link
+
+                foreach (ElementId refId in externalReferences)
+                {
+                    ExternalFileReference extRef = transData.GetLastSavedReferenceData(refId);
+
+                    if (extRef.ExternalFileReferenceType == ExternalFileReferenceType.RevitLink)
+                    {
+                        countRevLinks += 1;
+                    }
+                    else if (extRef.ExternalFileReferenceType == ExternalFileReferenceType.CADLink)
+                    {
+                        countCadLink += 1;
+                    }
+                }
+            }
+
+            results.Add("Revit Link", countRevLinks);
+            results.Add("CAD Link", countCadLink);
+
+            return results;
+
+        }
+
+        public static async Task CreateRecord(AirtableBase airtableBase, string tableName, Fields fields)
+        {
+            //var attachmentList = new List<AirtableAttachment>();
+            //attachmentList.Add(new AirtableAttachment { Url = "https://upload.wikimedia.org/wikipedia/en/d/d1/Picasso_three_musicians_moma_2006.jpg" });
+
+            Task<AirtableCreateUpdateReplaceRecordResponse> task = airtableBase.CreateRecord(tableName, fields, true);
+
+            //This never get a response back
+            var response = await task;
+
+            //if (!response.Success)
+            //{
+            //    TaskDialog.Show("Error", response.AirtableApiError.ErrorMessage);
+            //    //Console.WriteLine(response.AirtableApiError.ErrorMessage);
+            //}
+            //else
+            //{
+            //    //Console.WriteLine("Record created");
+            //}
+        }
+
+        public static async Task GetRecords(AirtableBase airtableBase, string tableName, List<AirtableRecord> records, string errorMessage)
+        {
+            //
+            // Use 'offset' and 'pageSize' to specify the records that you want
+            // to retrieve.
+            // Only use a 'do while' loop if you want to get multiple pages
+            // of records.
+            //
+            IEnumerable<string> fields = null;
+            string filterByFormula = null;
+            int? maxRecords = null;
+            int? pageSize = null;
+            IEnumerable<Sort> sort = null;
+            string view = null;
+            string offset = null;
+
+            do
+            {
+                Task<AirtableListRecordsResponse> task = airtableBase.ListRecords(
+                       tableName,
+                       offset,
+                       fields,
+                       filterByFormula,
+                       maxRecords,
+                       pageSize,
+                       sort,
+                       view);
+
+                AirtableListRecordsResponse response = await task;
+
+                if (response.Success)
+                {
+                    records.AddRange(response.Records.ToList());
+                    offset = response.Offset;
+                    foreach (var item in response.Records)
+                    {
+                        Console.WriteLine(item.Fields["Id"]);
+                    }
+
+                }
+                else if (response.AirtableApiError is AirtableApiException)
+                {
+                    errorMessage = response.AirtableApiError.ErrorMessage;
+                    Console.WriteLine(errorMessage);
+                    break;
+                }
+                else
+                {
+                    errorMessage = "Unknown error";
+                    Console.WriteLine(errorMessage);
+                    break;
+                }
+            } while (offset != null);
+        }
+        
+        public static List<string> GetAirtableKeys(string configPath)
+        {
+            List<string> listA = new List<string>();
+
+            using (var reader = new StreamReader(configPath))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+                    listA.Add(values[1].Trim());
+                }
+            }
+
+            string baseId = listA[0];
+            string appKey = listA[1];
+
+            return listA;
+        }
+        
+        #endregion
+
         private static void PaintFace()
         {
 
@@ -2205,73 +2606,6 @@ namespace ReviTab
             v.SetElementOverrides(eid, overrideSettings);
         }
 
-        public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings, int purgeableElements, int viewsNotOnSheet)
-        {
-
-
-            string server = "127.0.0.1";
-            string database = "new_schema";
-            string uid = "root";
-            string password = "password";
-
-
-            /*
-            string server = "remotemysql.com";
-            string database = "r7BFoOjCty";
-            string uid = "r7BFoOjCty";
-            string password = "1vU3s1bj6T";
-    */
-            string connectionString;
-            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
-
-
-            // string table = "filesize";
-            string table = tableName;
-
-
-            try
-            {
-
-                MySqlConnection connection = new MySqlConnection(connectionString);
-
-                MySqlCommand cmdInsert = new MySqlCommand("", connection);
-                cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount, purgeableElements, viewsNotOnSheet) " +
-                    "VALUES (?date, ?user, ?rvtFileSize, ?elementsCount, ?typesCount, ?sheetsCount, ?viewsCount, " +
-                    "?viewportsCount, ?warningsCount, ?purgeableElements, ?viewsNotOnSheet)";
-
-                cmdInsert.Parameters.Add("?date", MySqlDbType.DateTime).Value = dt;
-                cmdInsert.Parameters.Add("?user", MySqlDbType.VarChar).Value = user;
-                cmdInsert.Parameters.Add("?rvtFileSize", MySqlDbType.Int64).Value = rvtFileSize;
-                cmdInsert.Parameters.Add("?elementsCount", MySqlDbType.Int32).Value = elementsCount;
-                cmdInsert.Parameters.Add("?typesCount", MySqlDbType.Int32).Value = typesCount;
-
-                cmdInsert.Parameters.Add("?sheetsCount", MySqlDbType.Int32).Value = sheetsCount;
-                cmdInsert.Parameters.Add("?viewsCount", MySqlDbType.Int32).Value = viewsCount;
-                cmdInsert.Parameters.Add("?viewportsCount", MySqlDbType.Int32).Value = viewportsCount;
-
-                cmdInsert.Parameters.Add("?warningsCount", MySqlDbType.Int32).Value = countWarnings;
-
-                cmdInsert.Parameters.Add("?purgeableElements", MySqlDbType.Int32).Value = purgeableElements;
-
-                cmdInsert.Parameters.Add("?viewsNotOnSheet", MySqlDbType.Int32).Value = viewsNotOnSheet;
-
-
-                connection.Open();
-
-                cmdInsert.ExecuteNonQuery();
-
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                TaskDialog.Show("Error", ex.Message);
-                return false;
-            }
-
-
-        }//close method
 
     }
 

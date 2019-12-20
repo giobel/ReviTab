@@ -113,8 +113,12 @@ namespace ReviTab
                 IList<PushButtonData> splitButtonsInterop = new List<PushButtonData>();
                 
                 splitButtonsInterop.Add(CreatePushButton("btnManage", "Update Status", "", "pack://application:,,,/ReviTab;component/Resources/manage.png", "ReviTab.UpdateModelStatus", "Update model status dashboard."));
+                
+                splitButtonsInterop.Add(CreatePushButton("btnAirtable", "Push to Airtable", "", "pack://application:,,,/ReviTab;component/Resources/airtable.png", "ReviTab.PushToAirtable", "Push the Model Status content to Airtable table"));
+
 
                 splitButtonsInterop.Add(CreatePushButton("btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
+
 
                 AddSplitButton(docsPanel, splitButtonsInterop, "InteropDBButton", "InteropDB");
 
