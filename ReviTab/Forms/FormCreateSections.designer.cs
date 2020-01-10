@@ -48,6 +48,8 @@ namespace ReviTab
             this.topLevelTxt = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.checkBoxFlip = new System.Windows.Forms.CheckBox();
+            this.textBoxParameter = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,7 +80,7 @@ namespace ReviTab
             // ok_button
             // 
             this.ok_button.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.ok_button.Location = new System.Drawing.Point(75, 251);
+            this.ok_button.Location = new System.Drawing.Point(72, 292);
             this.ok_button.Name = "ok_button";
             this.ok_button.Size = new System.Drawing.Size(63, 33);
             this.ok_button.TabIndex = 2;
@@ -90,7 +92,7 @@ namespace ReviTab
             // cancel_button
             // 
             this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancel_button.Location = new System.Drawing.Point(196, 251);
+            this.cancel_button.Location = new System.Drawing.Point(193, 292);
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.Size = new System.Drawing.Size(63, 33);
             this.cancel_button.TabIndex = 3;
@@ -100,7 +102,7 @@ namespace ReviTab
             // 
             // sectionPositionTxt
             // 
-            this.sectionPositionTxt.Location = new System.Drawing.Point(15, 68);
+            this.sectionPositionTxt.Location = new System.Drawing.Point(15, 103);
             this.sectionPositionTxt.Name = "sectionPositionTxt";
             this.sectionPositionTxt.Size = new System.Drawing.Size(54, 20);
             this.sectionPositionTxt.TabIndex = 4;
@@ -109,7 +111,7 @@ namespace ReviTab
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(15, 49);
+            this.label1.Location = new System.Drawing.Point(15, 84);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(213, 14);
             this.label1.TabIndex = 5;
@@ -118,7 +120,7 @@ namespace ReviTab
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(15, 93);
+            this.label2.Location = new System.Drawing.Point(15, 128);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(224, 13);
             this.label2.TabIndex = 6;
@@ -127,7 +129,7 @@ namespace ReviTab
             // 
             // farClipOffsetTxt
             // 
-            this.farClipOffsetTxt.Location = new System.Drawing.Point(15, 111);
+            this.farClipOffsetTxt.Location = new System.Drawing.Point(15, 146);
             this.farClipOffsetTxt.Name = "farClipOffsetTxt";
             this.farClipOffsetTxt.Size = new System.Drawing.Size(54, 20);
             this.farClipOffsetTxt.TabIndex = 7;
@@ -136,7 +138,7 @@ namespace ReviTab
             // 
             // bottomLevelTxt
             // 
-            this.bottomLevelTxt.Location = new System.Drawing.Point(273, 68);
+            this.bottomLevelTxt.Location = new System.Drawing.Point(273, 103);
             this.bottomLevelTxt.Name = "bottomLevelTxt";
             this.bottomLevelTxt.Size = new System.Drawing.Size(54, 20);
             this.bottomLevelTxt.TabIndex = 8;
@@ -145,7 +147,7 @@ namespace ReviTab
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(246, 48);
+            this.label3.Location = new System.Drawing.Point(246, 83);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(101, 18);
             this.label3.TabIndex = 9;
@@ -154,7 +156,7 @@ namespace ReviTab
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(246, 95);
+            this.label4.Location = new System.Drawing.Point(246, 130);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 23);
             this.label4.TabIndex = 10;
@@ -163,7 +165,7 @@ namespace ReviTab
             // 
             // topLevelTxt
             // 
-            this.topLevelTxt.Location = new System.Drawing.Point(273, 111);
+            this.topLevelTxt.Location = new System.Drawing.Point(273, 146);
             this.topLevelTxt.Name = "topLevelTxt";
             this.topLevelTxt.Size = new System.Drawing.Size(54, 20);
             this.topLevelTxt.TabIndex = 11;
@@ -173,7 +175,7 @@ namespace ReviTab
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(15, 137);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 172);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(312, 108);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -183,18 +185,37 @@ namespace ReviTab
             // checkBoxFlip
             // 
             this.checkBoxFlip.AutoSize = true;
-            this.checkBoxFlip.Location = new System.Drawing.Point(229, 16);
+            this.checkBoxFlip.Location = new System.Drawing.Point(238, 16);
             this.checkBoxFlip.Name = "checkBoxFlip";
             this.checkBoxFlip.Size = new System.Drawing.Size(87, 17);
             this.checkBoxFlip.TabIndex = 13;
             this.checkBoxFlip.Text = "Flip Direction";
             this.checkBoxFlip.UseVisualStyleBackColor = true;
             // 
+            // textBoxParameter
+            // 
+            this.textBoxParameter.Location = new System.Drawing.Point(15, 58);
+            this.textBoxParameter.Name = "textBoxParameter";
+            this.textBoxParameter.Size = new System.Drawing.Size(312, 20);
+            this.textBoxParameter.TabIndex = 14;
+            this.textBoxParameter.Text = "Mark";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(15, 40);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(173, 13);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Column parameter for section name";
+            // 
             // FormCreateSections
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(339, 302);
+            this.ClientSize = new System.Drawing.Size(339, 336);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBoxParameter);
             this.Controls.Add(this.checkBoxFlip);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.topLevelTxt);
@@ -237,5 +258,7 @@ namespace ReviTab
         }
 
         private System.Windows.Forms.CheckBox checkBoxFlip;
+        private System.Windows.Forms.TextBox textBoxParameter;
+        private System.Windows.Forms.Label label5;
     }
 }

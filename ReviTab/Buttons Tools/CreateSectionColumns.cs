@@ -57,7 +57,7 @@ namespace ReviTab
 
 							foreach (Element e in myElements)
 							{
-								Helpers.CreateColumnSection(doc, e, form.sectionPositionOffset, form.farClipOffset, form.bottomLevel, form.topLevel, form.flipDirection);
+								Helpers.CreateColumnSection(doc, e, form.sectionPositionOffset, form.farClipOffset, form.bottomLevel, form.topLevel, form.flipDirection, form.columnParameter);
 								s += 1;
 							}
 

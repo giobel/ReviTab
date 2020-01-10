@@ -400,7 +400,7 @@ namespace ReviTab
 
         }
 
-        public static void CreateColumnSection(Document doc, Element columnElement, double offsetFromAlignment, double farClip, double bottomZ, double topZ, bool flipDirection)
+        public static void CreateColumnSection(Document doc, Element columnElement, double offsetFromAlignment, double farClip, double bottomZ, double topZ, bool flipDirection, string columnParameter)
         {
             
             FamilyInstance fi = columnElement as FamilyInstance;
@@ -475,7 +475,19 @@ namespace ReviTab
             //doc.Create.NewDetailCurve(doc.ActiveView, dir);
             ViewFamilyType vft = viewFamilyType(doc);
 
-            ViewSection.CreateSection(doc, vft.Id, sectionBox);
+            ViewSection vs = ViewSection.CreateSection(doc, vft.Id, sectionBox);
+
+            try
+            {
+                vs.Name = $"Section {columnElement.LookupParameter(columnParameter).AsString()}";
+            }
+            catch
+            {
+
+            }
+
+
+            
         }
 
 

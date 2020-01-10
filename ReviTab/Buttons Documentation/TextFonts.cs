@@ -33,7 +33,8 @@ namespace ReviTab
                 options.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
 
                 ICollection<Element> textNoteTypes = new FilteredElementCollector(doc).OfClass(typeof(TextNoteType)).OrderBy(x => x.Name).ToList();
-
+                
+                ElementClassFilter filter = new ElementClassFilter(typeof(TextNote));
 
                 using (Transaction t = new Transaction(doc, "Place text"))
                 {
@@ -41,9 +42,13 @@ namespace ReviTab
 
                     foreach (Element e in textNoteTypes)
                     {
-
-
                         TextNoteType textNoteElement = doc.GetElement(e.Id) as TextNoteType;
+
+                        FilteredElementCollector collector = new FilteredElementCollector(doc).WherePasses(filter).WhereElementIsNotElementType();
+
+                        var query = from element in collector
+                                    where element.GetTypeId() == e.Id
+                                    select element;
 
                         double fontSize = Convert.ToDouble(textNoteElement.LookupParameter("Text Size").AsValueString().Replace("mm", "")) / 304.8;
 
@@ -51,7 +56,7 @@ namespace ReviTab
 
                         XYZ offsetPoint = new XYZ(origin.X, Yoffset, 0);
 
-                        TextNote note = TextNote.Create(doc, doc.ActiveView.Id, offsetPoint, width, textNoteElement.Name, options);
+                        TextNote note = TextNote.Create(doc, doc.ActiveView.Id, offsetPoint, width, textNoteElement.Name + " count: " + query.Count().ToString(), options);
 
                         note.ChangeTypeId(e.Id);
 

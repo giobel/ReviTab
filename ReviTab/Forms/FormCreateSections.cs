@@ -15,6 +15,7 @@ namespace ReviTab
 		public double bottomLevel {get;set;}
 		public double topLevel {get;set;}
 		public bool flipDirection {get;set;}
+		public string columnParameter { get; set; }
 	
 		public FormCreateSections()
 		{
@@ -42,6 +43,7 @@ namespace ReviTab
 			farClipOffset = Int16.Parse(farClipOffsetTxt.Text)/304.8;
 			bottomLevel = Int16.Parse(bottomLevelTxt.Text)/304.8*1000;
 			topLevel = Int16.Parse(topLevelTxt.Text)/304.8*1000;
+			columnParameter = textBoxParameter.Text;
 		}
 		
 		void CheckBoxLong_Click(object sender, EventArgs e)
