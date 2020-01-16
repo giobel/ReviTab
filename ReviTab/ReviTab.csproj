@@ -140,7 +140,7 @@
     <Compile Include="Buttons Documentation\DeleteTextFont.cs" />
     <Compile Include="Buttons Documentation\UpRevSheet.cs" />
     <Compile Include="Buttons Documentation\RemoveFirstRevision.cs" />
-    <Compile Include="Buttons Documentation\RevisionCloudsSummary.cs" />
+    <Compile Include="Buttons Excel\RevisionCloudsSummary.cs" />
     <Compile Include="Buttons Framings and Walls\SetBeamZOffset.cs" />
     <Compile Include="Buttons Documentation\SetTitleblockScale.cs" />
     <Compile Include="Buttons Framings and Walls\SwitchJoin.cs" />

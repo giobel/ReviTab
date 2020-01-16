@@ -38,7 +38,7 @@ namespace ReviTab
                 sb.AppendLine(Helpers.RevCloudSheet(doc, eid));
             }
 
-            File.WriteAllText(outputFile, "SheetId, Sheet Number, Revision, Sheet Revision, TBlock Last Revision, Date\n");
+            File.WriteAllText(outputFile, "SheetId, Sheet Number, Revision, Sheet Revision, TBlock Last Revision, Revision without date\n");
 
             File.AppendAllText(outputFile, sb.ToString());
 

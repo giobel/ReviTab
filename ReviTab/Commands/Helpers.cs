@@ -1163,14 +1163,38 @@ namespace ReviTab
                 if (view is ViewSheet)
                 {
                     ViewSheet vs = view as ViewSheet;
-                    RevisionObj ro = FindLatestRevision(vs);
-                    return String.Format("{0},{1},{2},{3},{4}",
-                                         vs.Id,
-                                         vs.SheetNumber,
-                                         cloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString(),
-                                         vs.LookupParameter("ARUP_BDR_ISSUE").AsString(),
-                                         ro.Letter + ro.Revision
-                                        );
+
+                    string lastRevisionWithoutDate = "";
+                    
+                    int i = 0;
+
+                    while (i < 10)
+                    {
+                        try
+                        {
+                            //revision can be P01, T03, 11, A
+                            Parameter p = vs.LookupParameter(String.Format("{0} - Rev.", i));
+                            Parameter dateParam = vs.LookupParameter(String.Format("{0} - Date", i));
+                            string date = dateParam.AsString();
+
+                            if ( date == null || date.Length < 3 )
+                            {
+                                lastRevisionWithoutDate = date + " " + p.AsString();
+                                break;
+                            }
+
+                        }
+                        catch { }
+
+                        finally { i++; }
+                    }
+                        RevisionObj ro = FindLatestRevision(vs);
+                    return String.Format($"{vs.Id}," +
+                        $"{vs.SheetNumber}," +
+                        $"{cloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString()}," +
+                        $"{vs.LookupParameter("ARUP_BDR_ISSUE").AsString()}," +
+                        $"{ro.Letter + ro.Revision}," +
+                        $"{lastRevisionWithoutDate}");
                 }
                 else
                 {
@@ -1320,7 +1344,7 @@ namespace ReviTab
 
             List<RevisionObj> lastRevisions = new List<RevisionObj>();
 
-            //Old method. Does not work with letters.
+            # region Old method. Does not work with letters.
             /*for (int i = 0; i < 10; i++)
             {
                 try
@@ -1368,6 +1392,7 @@ namespace ReviTab
 
 
             }*/
+            #endregion
 
             //new method. Works with letters
             for (int i = 0; i < 10; i++)
