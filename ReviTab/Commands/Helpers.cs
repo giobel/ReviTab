@@ -1165,7 +1165,9 @@ namespace ReviTab
                     ViewSheet vs = view as ViewSheet;
 
                     string lastRevisionWithoutDate = "";
-                    
+                    string lastRevisionWithDate = "";
+                    string lastRevisionWithDateDate = "";
+
                     int i = 0;
 
                     while (i < 10)
@@ -1180,6 +1182,8 @@ namespace ReviTab
                             if ( date == null || date.Length < 3 )
                             {
                                 lastRevisionWithoutDate = date + " " + p.AsString();
+                                lastRevisionWithDate = vs.LookupParameter(String.Format("{0} - Rev.", i-1)).AsString();
+                                lastRevisionWithDate = vs.LookupParameter(String.Format("{0} - Date", i - 1)).AsString();
                                 break;
                             }
 
@@ -1193,8 +1197,9 @@ namespace ReviTab
                         $"{vs.SheetNumber}," +
                         $"{cloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString()}," +
                         $"{vs.LookupParameter("ARUP_BDR_ISSUE").AsString()}," +
-                        $"{ro.Letter + ro.Revision}," +
-                        $"{lastRevisionWithoutDate}");
+                        $"{lastRevisionWithoutDate}," +
+                        $"{lastRevisionWithDateDate}," +
+                        $"{lastRevisionWithDate}");
                 }
                 else
                 {
@@ -1395,7 +1400,9 @@ namespace ReviTab
             #endregion
 
             //new method. Works with letters
-            for (int i = 0; i < 10; i++)
+            //for (int i = 0; i < 10; i++)
+            int i = 1;
+            while (i < 10) 
             {
                 try
                 {
@@ -1424,6 +1431,10 @@ namespace ReviTab
                 catch
                 {
                     //lastRevisions.Add(p.AsString(), 0);
+                }
+                finally
+                {
+                    i++;
                 }
 
 
