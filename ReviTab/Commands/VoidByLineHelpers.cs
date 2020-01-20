@@ -216,12 +216,12 @@ namespace ReviTab
             return q;
         }
 
+#if REVIT2019
         public static void DrawDimension(Document doc, Reference refPlaneLine, FamilyInstance fi1, double offset)
         {
 
             ReferencePlane refP = doc.GetElement(refPlaneLine) as ReferencePlane;
 
-            //FamilyInstance fi1 = doc.GetElement(opening1) as FamilyInstance;
             IList<Reference> fir1 = fi1.GetReferences(FamilyInstanceReferenceType.WeakReference);
 
             XYZ refPlanePoint = refP.FreeEnd;//end point of reference plane
@@ -252,7 +252,9 @@ namespace ReviTab
             Dimension d = doc.Create.NewDimension(doc.ActiveView, dimensionLine, references);
             d.IsLocked = true;
         }
+#elif REVIT2017
 
+#endif
         private static XYZ Simplify(XYZ point)
         {
 

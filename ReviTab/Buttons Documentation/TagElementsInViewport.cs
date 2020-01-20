@@ -36,6 +36,34 @@ namespace ReviTab
 
             List<Element> toBeTagged = new List<Element>();
 
+            string errorMessage = "";
+
+            int counterTagged = 0;
+            StringBuilder errorlog = new StringBuilder();
+
+            double xOffset = 0;
+
+            using (var form = new FormAddActiveView("Tag X-offset [mm] from column centre"))
+            {
+                form.ShowDialog();
+
+                //if the user hits cancel just drop out of macro
+                if (form.DialogResult == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    return Result.Cancelled;
+                }
+
+                try
+                {
+                    xOffset = Int16.Parse(form.TextString) / 304.8;
+                }
+                catch
+                {
+                    xOffset = 0;
+                }
+
+            }
+
             using (Transaction t = new Transaction(doc, "Tag Elements in View"))
             {
                 t.Start();
@@ -48,34 +76,40 @@ namespace ReviTab
                         try
                         {
                             if (ele.Category.Name == "Structural Columns")
-                            {       
+                            {
                                 FamilyInstance fa = ele as FamilyInstance;
-                                CreateIndependentTagColumn(doc, fa, viewId);
+
+#if REVIT2017
+                                CreateIndependentTagColumn(doc, fa, viewId, xOffset);
+#elif REVIT2019
+                                CreateIndependentTagColumn(doc, fa, viewId, xOffset);
+#endif
+                                counterTagged++;
+
                             }
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            if (ele.Category != null && ele.Category.Name == "Structural Columns")
+                            {
+                                errorMessage = ex.Message;
+                                //TaskDialog.Show("Error", ex.Message);
+                                errorlog.AppendLine($"{ele.Id}");
+                            }
                         }
                     }
                 }
                 t.Commit();
             }
 
-            string s = "";
-
-            foreach (Element e in toBeTagged)
-            {
-
-                s += e.Category.Name;
-            }
-
-            TaskDialog.Show("result", s);
+            
+            TaskDialog.Show("result", $"{counterTagged} elements tagged. \nElement Id errors: \n{errorlog.ToString()}");
 
             return Result.Succeeded;
         }
 
 
-
+#if REVIT2019 || REVIT2018
         /// <summary>
         /// https://forums.autodesk.com/t5/revit-api-forum/independenttag-how-do-i-call-this-in-revit/td-p/7733731
         /// </summary>
@@ -83,7 +117,7 @@ namespace ReviTab
         /// <param name="column"></param>
         /// <param name="viewId"></param>
         /// <returns></returns>
-        private IndependentTag CreateIndependentTagColumn(Document document, FamilyInstance column, ElementId viewId)
+        private IndependentTag CreateIndependentTagColumn(Document document, FamilyInstance column, ElementId viewId, double Xoffset)
         {
             View view = document.GetElement(viewId) as View;
 
@@ -98,7 +132,7 @@ namespace ReviTab
 
             XYZ centroid = new XYZ((bbox.Max.X + bbox.Min.X) / 2, (bbox.Max.Y + bbox.Min.Y) / 2, (bbox.Max.Z + bbox.Min.Z) / 2);
 
-            XYZ position = centroid + new XYZ(4, 0, 0);
+            XYZ position = centroid + new XYZ(Xoffset, 0, 0);
 
             IndependentTag newTag = IndependentTag.Create(document, viewId, columnRef, false, tagMode, tagorn, position);
 
@@ -109,8 +143,44 @@ namespace ReviTab
 
             return newTag;
         }
+#elif REVIT2017
 
+        /// <summary>
+        /// https://thebuildingcoder.typepad.com/blog/2010/06/set-tag-type.html
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="column"></param>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
+        private IndependentTag CreateIndependentTagColumn(Document document, FamilyInstance column, ElementId viewId, double Xoffset)
+        {
+            View view = document.GetElement(viewId) as View;
+
+            // define tag mode and tag orientation for new tag
+            TagMode tagMode = TagMode.TM_ADDBY_CATEGORY;
+            TagOrientation tagorientation = TagOrientation.Horizontal;
+
+            // Add the tag to the middle of the colunm
+            Reference columnRef = new Reference(column);
+
+            BoundingBoxXYZ bbox = column.get_BoundingBox(view);
+
+            XYZ centroid = new XYZ((bbox.Max.X + bbox.Min.X) / 2, (bbox.Max.Y + bbox.Min.Y) / 2, (bbox.Max.Z + bbox.Min.Z) / 2);
+
+            XYZ position = centroid + new XYZ(Xoffset, 0, 0);
+
+            IndependentTag newTag = document.Create.NewTag(view, column, false, tagMode, tagorientation, position);
+
+            if (null == newTag)
+            {
+                throw new Exception("Create IndependentTag Failed.");
+            }
+
+            return newTag;
+        }
+#endif
     }
+
 }
 
 

@@ -65,8 +65,11 @@ namespace ReviTab
 
                     IEnumerable<ElementId> viewsIds = from elem in new FilteredElementCollector(openDoc).OfCategory(BuiltInCategory.OST_Views) where elem.Name != "Clarity_IFC _3D" select elem.Id;
 
+#if REVIT2019
                     IEnumerable<ElementId> schedulesIds = from elem in new FilteredElementCollector(openDoc).OfCategory(BuiltInCategory.OST_Schedules) select elem.Id;
-                    
+#elif REVIT2017
+
+#endif
 
                     List<BuiltInCategory> builtInCats = new List<BuiltInCategory>();
 
@@ -140,7 +143,7 @@ namespace ReviTab
                         {
                             TaskDialog.Show("Views Error", ex.Message);
                         }
-
+#if REVIT2019
                         try
                         {
                             if (schedulesIds.Count() > 0)
@@ -153,10 +156,12 @@ namespace ReviTab
                         {
                             TaskDialog.Show("Schedule Error", ex.Message);
                         }
+        
+#elif REVIT2017
 
+#endif
 
-
-                        if (formOpen.cleanArchModel)
+                      if (formOpen.cleanArchModel)
                         {
                             int furnitureError = 0;
 

@@ -58,6 +58,66 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2017|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2017\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2017</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2017|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug2017\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2019|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2019\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2019</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2019|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug2019\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2018|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2018\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2018</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2018|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug2018\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AdWindows">
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\AdWindows.dll</HintPath>
@@ -82,14 +142,36 @@
       <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+    <!-- MULTIVERSION REVIT API REFERENCES START -->
+    <!-- DEBUG -->
+    <!-- 2017 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2017'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2017\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2017'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2017\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <!-- 2018 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2018'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2018\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2018'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2018\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2019 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2019'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2019'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- MULTIVERSION REVIT API REFERENCES END -->
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -110,6 +192,7 @@
     <Compile Include="Buttons Documentation\AlignViews.cs" />
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
     <Compile Include="Buttons Documentation\LineStyles.cs" />
+    <Compile Include="Buttons Documentation\SelectAllTagsInViewport.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
     <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
@@ -127,7 +210,7 @@
     <Compile Include="Buttons Tools\FilterSelectionLines.cs" />
     <Compile Include="Buttons Tools\FilterSelectionBeams.cs" />
     <Compile Include="Buttons Tools\FilterSelectionWalls.cs" />
-    <Compile Include="Buttons Tools\TagElementsInViewport.cs" />
+    <Compile Include="Buttons Documentation\TagElementsInViewport.cs" />
     <Compile Include="Buttons Zero State\AddPDFcustomProperties.cs" />
     <Compile Include="Buttons Tools\PrintSelected.cs" />
     <Compile Include="Buttons Tools\CopyLinkedElements.cs" />
@@ -362,13 +445,24 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2019"
-copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2019\ReviTab"
-copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2018"
-copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2018\ReviTab"
+    <PostBuildEvent>echo Configuration: $(Configuration)
+
+if $(Configuration) == Debug2017 goto 2017
+if $(Configuration) == Debug2019 goto 2019
+
+:2017
 copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2017"
 copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2017\ReviTab"
-</PostBuildEvent>
+goto exit
+
+:2019
+copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2018"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2018\ReviTab"
+copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\Revit\Addins\2019"
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\Revit\Addins\2019\ReviTab"
+goto exit
+
+:exit</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -55,8 +55,12 @@ namespace ReviTab
                     FilteredElementCollector fecViews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).WhereElementIsNotElementType();
                     FilteredElementCollector fecViewPorts = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Viewports).WhereElementIsNotElementType();
 
-                    int countWarnings = doc.GetWarnings().Count;
 
+#if REVIT2019 || REVIT2018
+                    int countWarnings = doc.GetWarnings().Count;
+#elif REVIT2017
+                    int countWarnings = 0;
+#endif
                     int countElements = fecElements.Count();
                     int countTypes = fecTypes.Count();
 

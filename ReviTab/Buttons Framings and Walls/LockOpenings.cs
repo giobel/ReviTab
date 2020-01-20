@@ -60,10 +60,17 @@ namespace ReviTab
                         {
                             ReferencePlane refP = doc.GetElement(refPlaneReference) as ReferencePlane;
 
+#if REVIT2019
                             if (VoidByLineHelpers.IsParallel(item, refP))
                             {
                                 VoidByLineHelpers.DrawDimension(doc, refPlaneReference, item, offset);
                             }
+
+
+#elif REVIT2017
+
+#endif
+
                         }
                     }
                     offset = 0;

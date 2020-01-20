@@ -2215,8 +2215,11 @@ namespace ReviTab
                 worksetCount += 1;
             }
 
+#if REVIT2019 || REVIT2018
             int countWarnings = doc.GetWarnings().Count;
-
+#elif REVIT2017
+            int countWarnings = 0;
+#endif
             int countElements = fecElements.Count();
             int countTypes = fecTypes.Count();
 
@@ -2499,7 +2502,7 @@ namespace ReviTab
             return listA;
         }
         
-        #endregion
+#endregion
 
         private static void PaintFace()
         {
@@ -2598,6 +2601,7 @@ namespace ReviTab
             Parameter p = doc.GetElement(eid).LookupParameter("Mark");
             p.Set(markValue);
         }
+
 
         public static void OverrideColor(Document doc, ElementId eid, string oldMark, string newMark)
         {
