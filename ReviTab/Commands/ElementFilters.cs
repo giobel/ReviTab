@@ -80,7 +80,26 @@ namespace ReviTab
 
     }//close class
 
+    public class RefPlaneFilter : ISelectionFilter
+    {
 
+        public bool AllowElement(Element e)
+        {
+
+            if (e.Category.Name == "Reference Planes")
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        public bool AllowReference(Reference refer, XYZ point)
+        {
+            return false;
+        }
+
+    }//close class
 
 
 }

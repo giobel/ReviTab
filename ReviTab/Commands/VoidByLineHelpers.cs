@@ -124,6 +124,127 @@ namespace ReviTab
 
         }//close method
 
+        public static Dictionary<double, int[]> IntersectionLinePlane(Document doc, Reference refBeam, IList<Reference> refRefPlane)
+        {
+
+            Element ele = doc.GetElement(refBeam.ElementId);
+
+            Face webFace = null;
+
+            Options geomOptions = pickOptions(doc);
+
+            GeometryElement beamGeom = ele.get_Geometry(geomOptions);
+
+            Transform instTransform = null;
+
+            Dictionary<int, Face> areas = new Dictionary<int, Face>();
+
+            foreach (GeometryObject obj in beamGeom)
+            {
+                Solid geomSolid = obj as Solid;
+                if (null != geomSolid)
+                {
+                    foreach (Face geomFace in geomSolid.Faces)
+                    {
+                        try
+                        {
+                            areas.Add((int)geomFace.Area, geomFace);
+
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+                else
+                {
+                    Helpers.GetSymbolGeometry(obj, areas, out instTransform);
+                }
+            }
+
+            int total = areas.Keys.Count;
+
+            int maxArea = areas.Keys.Max();
+            webFace = areas[maxArea];
+
+            XYZ location = null;
+            XYZ beamDirection = null;
+
+            Helpers.BeamStartUVPoint(ele, webFace, out location, out beamDirection);
+
+            XYZ faceOrigin = null;
+
+
+            // the element does not have available solid geometries. Need to use its geometry instance first and transform the point to the project coordinates.
+            if (beamGeom.Count() == 1)
+            {
+
+                XYZ transformedPoint = instTransform.OfPoint(location);
+                //LocationCurve lc = ele.Location as LocationCurve;
+                //XYZ direction = lc.Curve.GetEndPoint(0) - lc.Curve.GetEndPoint(1);
+
+                faceOrigin = new XYZ(transformedPoint.X, transformedPoint.Y, 0);
+
+
+            }
+
+            else
+            {
+                faceOrigin = new XYZ(location.X, location.Y, 0);
+
+            }
+
+
+            LocationCurve beamLine = ele.Location as LocationCurve;
+            Line bl = beamLine.Curve as Line;
+
+            Line projectedBl = Line.CreateBound(new XYZ(bl.GetEndPoint(0).X, bl.GetEndPoint(0).Y,0), 
+                                                new XYZ(bl.GetEndPoint(1).X, bl.GetEndPoint(1).Y, 0));
+
+            XYZ origin = bl.GetEndPoint(0);
+            /*
+         	XYZ originProjected = new XYZ (origin.X, origin.Y, 0);
+         	*/
+
+            List<double> distances = new List<double>();
+
+            Dictionary<double, int[]> penoDistAndSize = new Dictionary<double, int[]>();
+
+
+            foreach (Reference r in refRefPlane)
+            {
+                ReferencePlane refPlane = doc.GetElement(r.ElementId) as ReferencePlane;
+
+                //projected to z=0
+                Line refPlaneProjectedLine = Line.CreateBound(new XYZ(refPlane.BubbleEnd.X, refPlane.BubbleEnd.Y, 0), new XYZ(refPlane.FreeEnd.X, refPlane.FreeEnd.Y, 0));
+
+                try
+                {
+                    //XYZ intersectionPoint = Intersection(bl, l);
+                    XYZ intersectionPoint = GetIntersection(projectedBl, refPlaneProjectedLine);
+
+                    double d = intersectionPoint.DistanceTo(faceOrigin);
+                    distances.Add(d * 304.8);
+
+                    int penoWidth = Int16.Parse(GetReferencePlaneSubCategory(doc, refPlane)[0]);
+
+                    int penoDepth = Int16.Parse(GetReferencePlaneSubCategory(doc, refPlane)[1]);
+
+                    penoDistAndSize.Add(d * 304.8, new int[] { penoWidth, penoDepth });
+
+                }
+                catch
+                {
+                    //do nothing	
+                }
+            }
+
+
+            return penoDistAndSize;
+
+        }//close method
+
+
         public static XYZ Intersection(Curve c1, Curve c2)
         {
             XYZ p1 = c1.GetEndPoint(0);
@@ -188,6 +309,23 @@ namespace ReviTab
             DetailLine line = doc.GetElement(refLine.ElementId) as DetailLine;
 
             string[] penoWidthDepth = line.LineStyle.Name.Split(' ')[3].Split('x');
+            //string[] sa = line.LineStyle.Name.Split(' ');
+
+            //			width = Int16.Parse(sa[0]);
+            //			depth = Int16.Parse(sa[1]);
+
+            return penoWidthDepth;
+        }
+
+        public static string[] GetReferencePlaneSubCategory(Document doc, ReferencePlane refPlane)
+        {
+
+            //			width = 0;
+            //			depth = 0;
+
+            string name = refPlane.LookupParameter("Subcategory").AsValueString();
+
+            string[] penoWidthDepth = name.Split(' ')[3].Split('x');
             //string[] sa = line.LineStyle.Name.Split(' ');
 
             //			width = Int16.Parse(sa[0]);
