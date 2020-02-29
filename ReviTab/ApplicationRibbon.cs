@@ -195,6 +195,8 @@ namespace ReviTab
                 stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "","pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.VoidByFace", "Place a void on a beam face"));
 
                 stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByLine", "Void By Line", "", "pack://application:,,,/ReviTab;component/Resources/line.png", "ReviTab.VoidByLine", "Place a void at line beam intersection. Contact: Ethan Gear."));
+                
+                stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByRefPlane", "Void By Reference Plane", "", "pack://application:,,,/ReviTab;component/Resources/line.png", "ReviTab.VoidByRefPlane", "Place a void at line beam intersection. Contact: Ethan Gear."));
 
                 stackedButtonsCQT.Add(CreatePushButton("btnPlaceTags", "Place Tags","", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.AddTagsApplyUndo", "Place a tag on multiple beams"));
 

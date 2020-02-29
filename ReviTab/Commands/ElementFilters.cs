@@ -22,7 +22,7 @@ namespace ReviTab
         {
 
             //if (e.Category.Name == "Structural Framing")
-            if (e.Category.Name == catNameChosen)
+            if (e.Category != null & e.Category.Name == catNameChosen)
             {
                 return true;
             }

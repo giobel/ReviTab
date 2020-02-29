@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 
 namespace ReviTab
 {
@@ -124,7 +126,8 @@ namespace ReviTab
 
         }//close method
 
-        public static Dictionary<double, int[]> IntersectionLinePlane(Document doc, Reference refBeam, IList<Reference> refRefPlane)
+        //public static Dictionary<double, int[]> IntersectionLinePlane(Document doc, Reference refBeam, IList<Reference> refRefPlane)
+        public static List<Tuple<double, int[], ReferencePlane>> IntersectionLinePlane(Document doc, Reference refBeam, IList<Reference> refRefPlane)
         {
 
             Element ele = doc.GetElement(refBeam.ElementId);
@@ -144,21 +147,20 @@ namespace ReviTab
                 Solid geomSolid = obj as Solid;
                 if (null != geomSolid)
                 {
+                    Debug.WriteLine("Geom Solid not null");
+
                     foreach (Face geomFace in geomSolid.Faces)
                     {
-                        try
+                        if (!areas.ContainsKey((int)geomFace.Area)) 
                         {
                             areas.Add((int)geomFace.Area, geomFace);
-
-                        }
-                        catch
-                        {
                         }
                     }
                 }
                 else
                 {
                     Helpers.GetSymbolGeometry(obj, areas, out instTransform);
+                    Debug.WriteLine("Geom Solid null. Get symbol geometry");
                 }
             }
 
@@ -178,6 +180,7 @@ namespace ReviTab
             // the element does not have available solid geometries. Need to use its geometry instance first and transform the point to the project coordinates.
             if (beamGeom.Count() == 1)
             {
+                Debug.WriteLine("the element does not have available solid geometries");
 
                 XYZ transformedPoint = instTransform.OfPoint(location);
                 //LocationCurve lc = ele.Location as LocationCurve;
@@ -191,7 +194,7 @@ namespace ReviTab
             else
             {
                 faceOrigin = new XYZ(location.X, location.Y, 0);
-
+                Debug.WriteLine($"Face origin: {faceOrigin.X},{faceOrigin.Y},0");
             }
 
 
@@ -208,8 +211,8 @@ namespace ReviTab
 
             List<double> distances = new List<double>();
 
-            Dictionary<double, int[]> penoDistAndSize = new Dictionary<double, int[]>();
-
+            //            Dictionary<double, int[]> penoDistAndSize = new Dictionary<double, int[]>();
+            List<Tuple<double, int[], ReferencePlane>> penoDistAndSize = new List<Tuple<double, int[], ReferencePlane>>();
 
             foreach (Reference r in refRefPlane)
             {
@@ -218,24 +221,35 @@ namespace ReviTab
                 //projected to z=0
                 Line refPlaneProjectedLine = Line.CreateBound(new XYZ(refPlane.BubbleEnd.X, refPlane.BubbleEnd.Y, 0), new XYZ(refPlane.FreeEnd.X, refPlane.FreeEnd.Y, 0));
 
+                XYZ intersectionPoint = null;
+
                 try
                 {
                     //XYZ intersectionPoint = Intersection(bl, l);
-                    XYZ intersectionPoint = GetIntersection(projectedBl, refPlaneProjectedLine);
+                    intersectionPoint = GetIntersection(projectedBl, refPlaneProjectedLine);
 
                     double d = intersectionPoint.DistanceTo(faceOrigin);
+
                     distances.Add(d * 304.8);
 
                     int penoWidth = Int16.Parse(GetReferencePlaneSubCategory(doc, refPlane)[0]);
 
                     int penoDepth = Int16.Parse(GetReferencePlaneSubCategory(doc, refPlane)[1]);
 
-                    penoDistAndSize.Add(d * 304.8, new int[] { penoWidth, penoDepth });
+                    //penoDistAndSize.Add(d * 304.8, new int[] { penoWidth, penoDepth }); DICTIONARY!
+                    penoDistAndSize.Add(new Tuple<double, int[], ReferencePlane> (d * 304.8, new int[] { penoWidth, penoDepth }, refPlane ));
 
                 }
                 catch
                 {
-                    //do nothing	
+                    if (intersectionPoint == null)
+                    {
+                        TaskDialog.Show("Error", "Intersection point not found");
+                    }
+                    else
+                    {
+                        TaskDialog.Show("Error", "Reference Plane subcategory error");
+                    }
                 }
             }
 
@@ -385,6 +399,39 @@ namespace ReviTab
 
             references.Append(fir1.First());
             references.Append(refPlaneLine);
+
+            //			lockedAlign = doc.Create.NewAlignment(view, r1, r2)
+            Dimension d = doc.Create.NewDimension(doc.ActiveView, dimensionLine, references);
+            d.IsLocked = true;
+        }
+
+        public static void DrawDimension(Document doc, ReferencePlane refP, FamilyInstance fi1, double offset)
+        {
+            IList<Reference> fir1 = fi1.GetReferences(FamilyInstanceReferenceType.WeakReference);
+
+            XYZ refPlanePoint = refP.FreeEnd;//end point of reference plane
+
+            LocationPoint lp = fi1.Location as LocationPoint;
+
+            XYZ direction = refP.Normal;//perpendicular direction to reference plane
+
+
+            Plane p = Plane.CreateByNormalAndOrigin(direction, refP.FreeEnd);
+
+            XYZ startPoint = ProjectOnto(p, lp.Point) + offset * refP.Direction;
+
+            double distance = 1;
+
+            //direction = direction / direction.GetLength();
+
+            XYZ endPoint = startPoint + distance * direction;
+
+            Line dimensionLine = Line.CreateBound(startPoint, endPoint);
+
+            ReferenceArray references = new ReferenceArray();
+
+            references.Append(fir1.First());
+            references.Append(refP.GetReference());
 
             //			lockedAlign = doc.Create.NewAlignment(view, r1, r2)
             Dimension d = doc.Create.NewDimension(doc.ActiveView, dimensionLine, references);

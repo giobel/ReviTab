@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -31,61 +32,130 @@ namespace ReviTab
 
             IList<Reference> refsLines = uidoc.Selection.PickObjects(ObjectType.Element, refPlaneFilter, "Select Reference Planes");
 
+            Debug.WriteLine($"{refsBeams.Count} beams selected");
+
+            Debug.WriteLine("Reference plances selected");
+            
             int countRectangular = 0;
             int countCircular = 0;
             string errors = "";
 
-
+            List<Dimension> lockDimensions = new List<Dimension>();
 
 
             using (Transaction t = new Transaction(doc, "Place Opening"))
             {
                 t.Start();
 
-
                 foreach (Reference beamRef in refsBeams)
                 {
-                    try
-                    {
-                        //								List<double> distances = PlaceOpeningIntersect.IntersectionPoint(doc, beamRef, refsLines);
+                    FamilyInstance tempPeno = Helpers.PlaceOpening(doc, beamRef, 0, "Web_Peno_R", "mid", 100, 100);
+                    doc.Delete(tempPeno.Id);
 
-                        // dictionary of distances from start, penos [width, depth]
-                        Dictionary<double, int[]> penoSizes = VoidByLineHelpers.IntersectionLinePlane(doc, beamRef, refsLines);
+                    //List<double> distances = PlaceOpeningIntersect.IntersectionPoint(doc, beamRef, refsLines);
 
-                        // remove beams without openings
-                        if (penoSizes.Keys.Count > 0)
+                    // dictionary of distances from start, penos [width, depth]
+
+                    Debug.WriteLine($"***Beam reference {beamRef.ElementId}***" );
+
+                    List<Tuple<double, int[], ReferencePlane>> penoSizes = VoidByLineHelpers.IntersectionLinePlane(doc, beamRef, refsLines);
+
+                        foreach (var item in penoSizes)
                         {
-
-                            foreach (double d in penoSizes.Keys)
+                            try
                             {
+                                // remove beams without openings
+                                if (item.Item1 > 0)
+                                {
+                                double d = item.Item1;
 
-                                if (penoSizes[d][0] > 0)
-                                {
-                                    Helpers.PlaceOpening(doc, beamRef, Convert.ToInt16(d), "Web_Peno_R", "start", penoSizes[d][0], penoSizes[d][1]);
+                                Debug.WriteLine($"Distance from start: {d.ToString()}");
+
+                                Debug.WriteLine($"Peno sizes: {item.Item2[0]}x{item.Item2[1]}");
+
+                                Debug.WriteLine($"Reference plane Id: {item.Item3.Id}");
+
+                                FamilyInstance openingInstance = null;
+
+                                        if (item.Item2[0] > 0)
+                                        {
+                                            openingInstance = Helpers.PlaceOpening(doc, beamRef, Convert.ToInt16(d), "Web_Peno_R", "start", item.Item2[0], item.Item2[1]);
+                                    
+                                    Debug.WriteLine($"Opening Instance id: {openingInstance.Id}");
+                                    
                                     countRectangular += 1;
-                                }
-                                else
+                                        }
+                                        else
+                                        {
+                                            openingInstance = Helpers.PlaceOpening(doc, beamRef, Convert.ToInt16(d), "Web_Peno_C", "start", item.Item2[0], item.Item2[1]);
+                                            countCircular += 1;
+                                        }
+
+                                //if (VoidByLineHelpers.IsParallel(openingInstance, item.Item3))
+                                //{
+                                //  VoidByLineHelpers.DrawDimension(doc, item.Item3, openingInstance, 0);
+                                //}
+                                FamilyInstance fi = openingInstance;
+
+                                ReferencePlane rp = item.Item3;
+
+                                Element ln = doc.GetElement(beamRef);
+
+                                LocationCurve lc = ln.Location as LocationCurve;
+
+
+                                IList<Reference> fir1 = fi.GetReferences(FamilyInstanceReferenceType.WeakReference);
+
+                                ReferenceArray rea = new ReferenceArray();
+
+                                rea.Append(fir1.First());
+                                rea.Append(rp.GetReference());
+
+                                Line lnie = lc.Curve as Line;
+
+                                //Dimension align = doc.Create.NewAlignment(doc.ActiveView, rp.GetReference(), fir1.First());
+                                lockDimensions.Add( doc.Create.NewDimension(doc.ActiveView, lnie, rea) );
+                                //dim.IsLocked = true;
+
+
+                            }
+                            else if (penoSizes.Count == 0)
                                 {
-                                    Helpers.PlaceOpening(doc, beamRef, Convert.ToInt16(d), "Web_Peno_C", "start", penoSizes[d][0], penoSizes[d][1]);
-                                    countCircular += 1;
+                                    errors += beamRef.ElementId + Environment.NewLine;
                                 }
                             }
-                        }
-                        else if (penoSizes.Count == 0)
+                        catch
                         {
-                            errors += beamRef.ElementId + Environment.NewLine;
+
+                            TaskDialog.Show("Error", "Uh-oh something went wrong");
                         }
 
                     }
-                    catch
-                    {
-                        
-                        TaskDialog.Show("Error", "Uh-oh something went wrong");
-                    }
+
+
+                    
+
                 }
 
                 t.Commit();
             }//close transaction
+
+            using (Transaction t = new Transaction(doc, "Lock dimensions"))
+            {
+                t.Start();
+
+                if (lockDimensions.Count > 0)
+                {
+                    foreach (Dimension d in lockDimensions)
+                    {
+                        d.IsLocked = true;
+                    }
+
+                }
+
+                t.Commit();
+            }
+
 
             if (errors == "")
             {
@@ -95,7 +165,7 @@ namespace ReviTab
             {
                 TaskDialog.Show("result", string.Format("{0} rectangular voids created \n{1} circular voids created \n" +
                             "Intersection not found between the lines and the beams Id:\n{2}" +
-                            "Are they placed at the same level?", countRectangular, countCircular, errors));
+                            "Is the Subcategory parameter empty? Are they placed at the same level?", countRectangular, countCircular, errors));
 
             }
 

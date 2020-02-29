@@ -1504,14 +1504,10 @@ namespace ReviTab
                     {
                         foreach (Face geomFace in instanceGeomSolid.Faces)
                         {
-                            try
+                            if (!areas.ContainsKey((int)geomFace.Area))
                             {
                                 areas.Add((int)geomFace.Area, geomFace);
-                            }
-                            catch
-                            {
-                                //							TaskDialog.Show("Result", "Solid geometry not found");
-                            }
+                            }    
                         }
                     }
 
@@ -1552,7 +1548,7 @@ namespace ReviTab
 
         }//close method
 
-        public static void PlaceOpening(Document doc, Reference selectedElement, int distanceFromStart, string FamilyName, string position, int width, int height)
+        public static FamilyInstance PlaceOpening(Document doc, Reference selectedElement, int distanceFromStart, string FamilyName, string position, int width, int height)
         {
 
             double newDistance = distanceFromStart / 304.8;
@@ -1578,13 +1574,9 @@ namespace ReviTab
                 {
                     foreach (Face geomFace in geomSolid.Faces)
                     {
-                        try
+                        if (!areas.ContainsKey((int)geomFace.Area))
                         {
                             areas.Add((int)geomFace.Area, geomFace);
-
-                        }
-                        catch
-                        {
                         }
                     }
                 }
@@ -1692,6 +1684,8 @@ namespace ReviTab
             if (!fs.IsActive)
             { fs.Activate(); doc.Regenerate(); }
 
+            FamilyInstance instance = null;
+
             // the element does not have available solid geometries. Need to use its geometry instance first and transform the point to the project coordinates.
             if (beamGeom.Count() == 1)
             {
@@ -1700,18 +1694,18 @@ namespace ReviTab
                 //LocationCurve lc = ele.Location as LocationCurve;
                 //XYZ direction = lc.Curve.GetEndPoint(0) - lc.Curve.GetEndPoint(1);
 
-                FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, transformedPoint, beamDirection, fs);
+                instance = doc.Create.NewFamilyInstance(webFace, transformedPoint, beamDirection, fs);
                 SetRectVoidParamters(instance, newDistance, width, height, beamWidth);
             }
 
             else
             {
 
-                FamilyInstance instance = doc.Create.NewFamilyInstance(webFace, location, beamDirection, fs);
+                instance = doc.Create.NewFamilyInstance(webFace, location, beamDirection, fs);
                 SetRectVoidParamters(instance, newDistance, width, height, beamWidth);
             }
 
-
+            return instance;
             //TaskDialog.Show("Position", location.X + "-" + location.Y + "-" + location.Z);
 
         }//close method
