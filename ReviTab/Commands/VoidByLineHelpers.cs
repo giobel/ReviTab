@@ -244,7 +244,7 @@ namespace ReviTab
                 {
                     if (intersectionPoint == null)
                     {
-                        TaskDialog.Show("Error", "Intersection point not found");
+                        //TaskDialog.Show("Error", "Intersection point not found");
                     }
                     else
                     {

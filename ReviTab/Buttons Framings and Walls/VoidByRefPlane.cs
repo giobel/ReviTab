@@ -35,23 +35,32 @@ namespace ReviTab
             Debug.WriteLine($"{refsBeams.Count} beams selected");
 
             Debug.WriteLine("Reference plances selected");
-            
+
             int countRectangular = 0;
             int countCircular = 0;
             string errors = "";
 
             List<Dimension> lockDimensions = new List<Dimension>();
 
+            using (Transaction t = new Transaction(doc, "Place Dummy Opening"))
+            {
+                t.Start();
+            
+                foreach (Reference beamRef in refsBeams)
+                {
+                    FamilyInstance tempPeno = Helpers.PlaceOpening(doc, beamRef, 0, "Web_Peno_R", "mid", 100, 100);
+                    doc.Delete(tempPeno.Id);
+                }
 
-            using (Transaction t = new Transaction(doc, "Place Opening"))
+                t.Commit();
+            }
+
+                using (Transaction t = new Transaction(doc, "Place Opening"))
             {
                 t.Start();
 
                 foreach (Reference beamRef in refsBeams)
                 {
-                    FamilyInstance tempPeno = Helpers.PlaceOpening(doc, beamRef, 0, "Web_Peno_R", "mid", 100, 100);
-                    doc.Delete(tempPeno.Id);
-
                     //List<double> distances = PlaceOpeningIntersect.IntersectionPoint(doc, beamRef, refsLines);
 
                     // dictionary of distances from start, penos [width, depth]
