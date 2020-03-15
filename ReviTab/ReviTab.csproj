@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons Documentation\CreateSheetByNumber.cs" />
     <Compile Include="Buttons Documentation\ExtendGrids.cs" />
     <Compile Include="Buttons Documentation\AlignViews.cs" />
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
@@ -275,6 +276,12 @@
     </Compile>
     <Compile Include="Forms\FormAddMetadata.designer.cs">
       <DependentUpon>FormAddMetadata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCreateSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCreateSheet.Designer.cs">
+      <DependentUpon>FormCreateSheet.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormHowl.cs">
       <SubType>Form</SubType>
@@ -401,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAddMetadata.resx">
       <DependentUpon>FormAddMetadata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCreateSheet.resx">
+      <DependentUpon>FormCreateSheet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormHowl.resx">
       <DependentUpon>FormHowl.cs</DependentUpon>
