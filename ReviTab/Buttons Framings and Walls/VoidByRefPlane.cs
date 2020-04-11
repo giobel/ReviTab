@@ -40,6 +40,10 @@ namespace ReviTab
             int countCircular = 0;
             string errors = "";
 
+            //revit family name
+            string webPenoRectangular = "Web_Peno_Rectangular";
+            string webPenoCircular = "Web_Peno_Circular";
+
             List<Dimension> lockDimensions = new List<Dimension>();
 
             using (Transaction t = new Transaction(doc, "Place Dummy Opening"))
@@ -48,7 +52,7 @@ namespace ReviTab
             
                 foreach (Reference beamRef in refsBeams)
                 {
-                    FamilyInstance tempPeno = Helpers.PlaceOpening(doc, beamRef, 0, "Web_Peno_R", "mid", 100, 100);
+                    FamilyInstance tempPeno = Helpers.PlaceOpening(doc, beamRef, 0, webPenoRectangular, "mid", 100, 100);
                     doc.Delete(tempPeno.Id);
                 }
 
@@ -88,7 +92,7 @@ namespace ReviTab
 
                                         if (item.Item2[0] > 0)
                                         {
-                                            openingInstance = Helpers.PlaceOpening(doc, beamRef, Convert.ToInt16(d), "Web_Peno_R", "start", item.Item2[0], item.Item2[1]);
+                                            openingInstance = Helpers.PlaceOpening(doc, beamRef, Convert.ToInt16(d), webPenoRectangular, "start", item.Item2[0], item.Item2[1]);
                                     
                                     Debug.WriteLine($"Opening Instance id: {openingInstance.Id}");
                                     
@@ -96,7 +100,7 @@ namespace ReviTab
                                         }
                                         else
                                         {
-                                            openingInstance = Helpers.PlaceOpening(doc, beamRef, Convert.ToInt16(d), "Web_Peno_C", "start", item.Item2[0], item.Item2[1]);
+                                            openingInstance = Helpers.PlaceOpening(doc, beamRef, Convert.ToInt16(d), webPenoCircular, "start", item.Item2[0], item.Item2[1]);
                                             countCircular += 1;
                                         }
 
@@ -112,7 +116,10 @@ namespace ReviTab
 
                                 LocationCurve lc = ln.Location as LocationCurve;
 
+#if REVIT2017
 
+#endif
+#if REVIT2019
                                 IList<Reference> fir1 = fi.GetReferences(FamilyInstanceReferenceType.WeakReference);
 
                                 ReferenceArray rea = new ReferenceArray();
@@ -125,7 +132,7 @@ namespace ReviTab
                                 //Dimension align = doc.Create.NewAlignment(doc.ActiveView, rp.GetReference(), fir1.First());
                                 lockDimensions.Add( doc.Create.NewDimension(doc.ActiveView, lnie, rea) );
                                 //dim.IsLocked = true;
-
+#endif
 
                             }
                             else if (penoSizes.Count == 0)

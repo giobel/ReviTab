@@ -188,7 +188,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons Documentation\BeamByTypeMark.cs" />
     <Compile Include="Buttons Documentation\CreateSheetByNumber.cs" />
+    <Compile Include="Buttons Documentation\ExportToSVG.cs" />
     <Compile Include="Buttons Documentation\ExtendGrids.cs" />
     <Compile Include="Buttons Documentation\AlignViews.cs" />
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
@@ -400,6 +402,7 @@
     <Resource Include="Resources\excel.png" />
     <Resource Include="Resources\manage.png" />
     <Resource Include="Resources\airtable.png" />
+    <Resource Include="Resources\elementType.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

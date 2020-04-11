@@ -75,9 +75,9 @@ namespace ReviTab
                                 throw new Exception("Failed to create new ViewSheet.");
                             }
                         }
-                        catch
+                        catch(Exception ex)
                         {
-                                TaskDialog.Show("Error")
+                                TaskDialog.Show("Error", ex.Message);
                         }
                         }
                         t.Commit();

@@ -55,6 +55,8 @@ namespace ReviTab
                 IList<PushButtonData> splitButtonsViews = new List<PushButtonData>();
 
                 splitButtonsViews.Add(CreatePushButton("btnSheetAddCurrentView", "Add View\nto Sheet","","pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
+                
+                splitButtonsViews.Add(CreatePushButton("btnAddSheetByNumber", "Add Sheet\nby Number", "", "pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.CreateSheetByNumber", "Create a Sheet by providing its number and package."));
 
                 splitButtonsViews.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple\nViews","", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
 
@@ -205,6 +207,8 @@ namespace ReviTab
                 AddSplitButton(beams, stackedButtonsCQT, "CQTButton", "CQT");
 
                 IList<PushButtonData> beamsEdit = new List<PushButtonData>();
+                
+                beamsEdit.Add(CreatePushButton("btnBeamByTypeMark", "Beam by\nIdentity Type Mark", "", "pack://application:,,,/ReviTab;component/Resources/elementType.png", "ReviTab.BeamByTypeMark", "Provide an Identity Type Mark to change the selected beam type."));
 
                 beamsEdit.Add(CreatePushButton("btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point"));
 

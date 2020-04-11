@@ -62,7 +62,12 @@ namespace ReviTab
 			}
 
 			TaskDialog myDialog = new TaskDialog("Summary");
+
+
+#if REVIT2019
 			myDialog.MainIcon = TaskDialogIcon.TaskDialogIconInformation;
+#endif
+
 			myDialog.MainContent = "Project folders:";
 
 			myDialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, String.Format("Open Markups to be done"));
@@ -73,7 +78,7 @@ namespace ReviTab
 
 			myDialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink4, String.Format("Incoming folder"));
 
-			myDialog.FooterText = "Version 1.0.6 \nCompiled on " + date;
+			myDialog.FooterText = "Version 1.0.7 \nCompiled on April 2020";
 
 			TaskDialogResult res = myDialog.Show();
 
