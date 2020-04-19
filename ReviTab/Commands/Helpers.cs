@@ -12,7 +12,7 @@ using MySql.Data.MySqlClient;
 
 namespace ReviTab
 {
-    class Helpers
+    public class Helpers
     {
 
         #region RANDOM
@@ -2209,10 +2209,11 @@ namespace ReviTab
                 worksetCount += 1;
             }
 
-#if REVIT2019 || REVIT2018
-            int countWarnings = doc.GetWarnings().Count;
-#elif REVIT2017
+
+#if REVIT2017
             int countWarnings = 0;
+#else
+            int countWarnings = doc.GetWarnings().Count;
 #endif
             int countElements = fecElements.Count();
             int countTypes = fecTypes.Count();

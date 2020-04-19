@@ -31,27 +31,37 @@ namespace ReviTab
         public Result OnStartup(UIControlledApplication a)
         {
 
+            
+
+#if SAM
+            string tabName = "SAM";
+
+#else
+            string tabName = "SuperTab";
+#endif
+
             try
             {
                                
-                AddRibbonPanel(a,"SuperTab");
+                AddRibbonPanel(a,tabName);
 
-                RibbonPanel docsPanel = GetSetRibbonPanel(a, "SuperTab", "Documentation");
+                RibbonPanel docsPanel = GetSetRibbonPanel(a, tabName, "Documentation");
 
-                RibbonPanel toolsPanel = GetSetRibbonPanel(a, "SuperTab", "Tools");
+                RibbonPanel toolsPanel = GetSetRibbonPanel(a, tabName, "Tools");
 
-                RibbonPanel beams = GetSetRibbonPanel(a, "SuperTab", "Structural Framings");
+                RibbonPanel beams = GetSetRibbonPanel(a, tabName, "Structural Framings");
 
-                RibbonPanel walls = GetSetRibbonPanel(a, "SuperTab", "Walls");
+                RibbonPanel walls = GetSetRibbonPanel(a, tabName, "Walls");
+#if DEBUG
+                RibbonPanel geometry = GetSetRibbonPanel(a, tabName, "Geometry");
+#endif
+                RibbonPanel commandPanel = GetSetRibbonPanel(a, tabName, "Command Line");
 
-                RibbonPanel geometry = GetSetRibbonPanel(a, "SuperTab", "Geometry");
+                RibbonPanel zeroState = GetSetRibbonPanel(a, tabName, "Zero State");
 
-                RibbonPanel commandPanel = GetSetRibbonPanel(a, "SuperTab", "Command Line");
 
-                RibbonPanel zeroState = GetSetRibbonPanel(a, "SuperTab", "Zero State");
+#region Documentation
 
-                #region Documentation
-                
                 IList<PushButtonData> splitButtonsViews = new List<PushButtonData>();
 
                 splitButtonsViews.Add(CreatePushButton("btnSheetAddCurrentView", "Add View\nto Sheet","","pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
@@ -83,6 +93,7 @@ namespace ReviTab
 
                 AddStackedButton(docsPanel, stackedButtonsSheets, "SheetsButton", "Sheets");
 
+#if DEBUG
                 //TextFonts and LineStyles
                 IList<PushButtonData> stackedButtonsTextAndLines = new List<PushButtonData>
                 {
@@ -94,7 +105,7 @@ namespace ReviTab
                 };
 
                 AddStackedButton(docsPanel, stackedButtonsTextAndLines, "TextAndLines", "TextLines");            
-
+#endif
                 // Excel interop
                 IList<PushButtonData> splitButtonsDataToExcel = new List<PushButtonData>();
                 
@@ -111,6 +122,7 @@ namespace ReviTab
 
                 AddSplitButton(docsPanel, splitButtonsDataToExcel, "ExcelButton", "ExcelLink");
 
+#if DEBUG
                 //DB interop
                 IList<PushButtonData> splitButtonsInterop = new List<PushButtonData>();
                 
@@ -123,11 +135,11 @@ namespace ReviTab
 
 
                 AddSplitButton(docsPanel, splitButtonsInterop, "InteropDBButton", "InteropDB");
+#endif
+#endregion
 
-                #endregion
 
-
-                #region Tools
+#region Tools
 
                 IList<PushButtonData> splitButtonsSections = new List<PushButtonData>();
                 
@@ -188,10 +200,10 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Print Selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                #endregion
+#endregion
 
-                #region Structural Framing
-                
+#region Structural Framing
+#if DEBUG
                 IList<PushButtonData> stackedButtonsCQT = new List<PushButtonData>();
 
                 stackedButtonsCQT.Add(CreatePushButton("btnPlaceVoidByFace", "Place Void" + Environment.NewLine + "By Face", "","pack://application:,,,/ReviTab;component/Resources/addBeamOpening.png", "ReviTab.VoidByFace", "Place a void on a beam face"));
@@ -205,10 +217,10 @@ namespace ReviTab
                 stackedButtonsCQT.Add(CreatePushButton("btnPlaceDimensions", "Lock Openings", "", "pack://application:,,,/ReviTab;component/Resources/lock.png", "ReviTab.LockOpenings", "Place a dimension between an opening and a reference plane and lock it."));
 
                 AddSplitButton(beams, stackedButtonsCQT, "CQTButton", "CQT");
-
+#endif
                 IList<PushButtonData> beamsEdit = new List<PushButtonData>();
                 
-                beamsEdit.Add(CreatePushButton("btnBeamByTypeMark", "Beam by\nIdentity Type Mark", "", "pack://application:,,,/ReviTab;component/Resources/elementType.png", "ReviTab.BeamByTypeMark", "Provide an Identity Type Mark to change the selected beam type."));
+                beamsEdit.Add(CreatePushButton("btnBeamByTypeMark", "Beam by\nIdType Mark", "", "pack://application:,,,/ReviTab;component/Resources/elementType.png", "ReviTab.BeamByTypeMark", "Provide an Identity Type Mark to change the selected beam type."));
 
                 beamsEdit.Add(CreatePushButton("btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point"));
 
@@ -235,9 +247,9 @@ namespace ReviTab
                 //}
 
 
-                #endregion
+#endregion
 
-                #region Splitter
+#region Splitter
 
                 if (AddPushButton(walls, "btnWallSplitter", "Split Wall" + Environment.NewLine + "By Levels", "", "pack://application:,,,/ReviTab;component/Resources/splitWalls.png", "ReviTab.WallSplitter", "Split a wall by levels. NOTE: The original wall will be deleted.") == false)
                 {
@@ -249,10 +261,10 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Split Column", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                #endregion
+#endregion
 
-                #region Geometry
-
+#region Geometry
+#if DEBUG
                 IList<PushButtonData> stackedButtonsGroupGeometry = new List<PushButtonData>();
 
                 stackedButtonsGroupGeometry.Add(CreatePushButton("btnSATtoDS", "Element to DirectShape", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element."));
@@ -262,12 +274,12 @@ namespace ReviTab
                 stackedButtonsGroupGeometry.Add(CreatePushButton("btnDrawAxis", "Draw Axis", "pack://application:,,,/ReviTab;component/Resources/axis.png", "", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface."));
 
                 AddStackedButton(geometry, stackedButtonsGroupGeometry, "GeometryButton", "Geometry");
+#endif
+#endregion
 
-                #endregion
-                
-                #region Zero State
+#region Zero State
 
-
+#if DEBUG
                 IList<PushButtonData> stackedButtonsZeroState = new List<PushButtonData>();
 
                 stackedButtonsZeroState.Add(CreatePushButton("btnClaritySetup", "Clarity Setup", "", "pack://application:,,,/ReviTab;component/Resources/claSetup.png", "ReviTab.ClaritySetup", "Open a model in background and create a 3d view for Clarity IFC export.", "ReviTab.Availability"));
@@ -298,9 +310,13 @@ namespace ReviTab
                 stackedButtonsGroupMetadata.Add(CreatePushButton("btnAddMetadata", "Metadata", "", "pack://application:,,,/ReviTab;component/Resources/AddMetadataIcon.png", "ReviTab.AddPDFcustomProperties", "Add custom properties to a list of pdfs"));
                 
                 AddSplitButton(zeroState, stackedButtonsGroupMetadata, "MetadataCommands", "Metadata");
-
-
-                #endregion
+#else
+                if (AddZeroStatePushButton(zeroState, "btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability")==false)
+                {
+                    MessageBox.Show("Failed to add button Info", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+#endif
+#endregion
 
                 if (AddTextBox(commandPanel, "btnCommandLine", "*Structural Framing+Length>10000 \n *Walls+Mark!aa \n sheets: all \n sheets: A101 A103 A201\n tblocks: all") == false)
                 {
