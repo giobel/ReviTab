@@ -162,6 +162,7 @@
       <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <!-- MULTIVERSION REVIT API REFERENCES START -->
     <!-- DEBUG -->
     <!-- 2017 -->
@@ -200,7 +201,7 @@
       <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-<!--SAM-->
+    <!--SAM-->
     <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'SAM'">
       <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -209,7 +210,6 @@
       <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <!-- MULTIVERSION REVIT API REFERENCES END -->
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
@@ -224,9 +224,11 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons Documentation\DuplicateSheets.cs" />
     <Compile Include="Buttons Documentation\BeamByTypeMark.cs" />
     <Compile Include="Buttons Documentation\CreateSheetByNumber.cs" />
     <Compile Include="Buttons Documentation\ExportToSVG.cs" />
@@ -236,6 +238,8 @@
     <Compile Include="Buttons Documentation\LineStyles.cs" />
     <Compile Include="Buttons Documentation\SelectAllTagsInViewport.cs" />
     <Compile Include="Buttons Framings and Walls\VoidByRefPlane.cs" />
+    <Compile Include="Buttons Geometry\DrawModelCurve.cs" />
+    <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
     <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
@@ -296,9 +300,10 @@
     <Compile Include="Commands\AddMetadataHelpers.cs" />
     <Compile Include="Commands\ButtonPickPoint.cs" />
     <Compile Include="Commands\ElementFilters.cs" />
+    <Compile Include="Commands\GeomUtils.cs" />
     <Compile Include="Commands\GlobalObjects.cs" />
     <Compile Include="Commands\Helpers.cs" />
-    <Compile Include="Buttons Tools\SATtoDirectShape.cs" />
+    <Compile Include="Buttons Geometry\SATtoDirectShape.cs" />
     <Compile Include="Commands\PlaceTags\AcceptChanges.cs" />
     <Compile Include="Commands\PlaceTags\HelpersPlaceTags.cs" />
     <Compile Include="Commands\PlaceTags\PlaceTags.cs" />
@@ -323,6 +328,9 @@
     </Compile>
     <Compile Include="Forms\FormCreateSheet.Designer.cs">
       <DependentUpon>FormCreateSheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDuplicateSheets.xaml.cs">
+      <DependentUpon>FormDuplicateSheets.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormHowl.cs">
       <SubType>Form</SubType>
@@ -495,7 +503,12 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Forms\FormDuplicateSheets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

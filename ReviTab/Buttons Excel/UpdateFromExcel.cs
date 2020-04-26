@@ -79,7 +79,9 @@ namespace ReviTab
                                         p.Set(values[i]);
                                     }
                                 }
-                                catch (Exception ex) { TaskDialog.Show("Error", ex.Message); }
+                                catch (Exception ex) { 
+                                    //TaskDialog.Show("Error", ex.Message); 
+                                }
 
                             }
 
