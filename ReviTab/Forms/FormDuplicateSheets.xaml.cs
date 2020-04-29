@@ -13,17 +13,21 @@ namespace ReviTab.Forms
     public partial class FormDuplicateSheets : Window
     {
 
-        public ObservableCollection<Element> SheetsList { get; set; }
+        public ObservableCollection<ViewSheet> SheetsList { get; set; }
+        public IList<ViewSheet> SelectedSheets { get; set; }
+        public string textSuffix { get; internal set; }
 
         public FormDuplicateSheets()
         {
             InitializeComponent();
             this.DataContext = this;
+            SelectedSheets = new List<ViewSheet>();
         }
 
         private void CheckBoxZone_Checked(object sender, RoutedEventArgs e)
         {
-            CheckBox chkZone = (CheckBox)sender;
+            //CheckBox chkZone = (CheckBox)sender;
+            //selectedSheets.Add(chkZone.Content as ViewSheet);
             //ZoneText.Text = "Selected Zone Name= " + chkZone.Content.ToString();
             //ZoneValue.Text = "Selected Zone Value= " + chkZone.Tag.ToString();
         }
@@ -31,7 +35,14 @@ namespace ReviTab.Forms
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(SheetsList.Count.ToString());
+            SelectedSheets.Clear();
+            foreach (ViewSheet element in listBoxZone.SelectedItems)
+            {
+                SelectedSheets.Add(element);
+            }
+            //MessageBox.Show(selectedSheets.Count.ToString());
+            textSuffix = tboxSuffix.Text;
+            DialogResult = true;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

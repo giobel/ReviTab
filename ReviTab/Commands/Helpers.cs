@@ -2618,8 +2618,27 @@ namespace ReviTab
             }
 
 
-            overrideSettings.SetProjectionFillPatternId(solidPatternId);
 
+#if REVIT2019
+
+            overrideSettings.SetSurfaceForegroundPatternId(solidPatternId);
+
+            if (oldMark == newMark)
+            {
+                overrideSettings.SetProjectionLineColor(new Color(0, 255, 0));
+            }
+            else if (oldMark == "")
+            {
+                overrideSettings.SetProjectionLineColor(new Color(255, 255, 0));
+            }
+            else
+            {
+                overrideSettings.SetProjectionLineColor(new Color(255, 0, 0));
+            }
+
+#else
+            overrideSettings.SetProjectionFillPatternId(solidPatternId);
+            
             if (oldMark == newMark)
             {
                 overrideSettings.SetProjectionFillColor(new Color(0, 255, 0));
@@ -2632,6 +2651,9 @@ namespace ReviTab
             {
                 overrideSettings.SetProjectionFillColor(new Color(255, 0, 0));
             }
+
+#endif
+
 
             try
             {
