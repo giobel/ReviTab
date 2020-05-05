@@ -145,7 +145,7 @@ namespace ReviTab
                 
                 splitButtonsSections.Add(CreatePushButton("btnCreateSectionsColumns", "Column Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSectionColumns", "Create multiple sections for selected columns."));
 
-                splitButtonsSections.Add(CreatePushButton("btnCreateSections", "Wall/Beam" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections for selected columns."));
+                splitButtonsSections.Add(CreatePushButton("btnCreateSections", "Line based" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections for line based elements (walls, beams, lines)."));
 
                 AddSplitButton(toolsPanel, splitButtonsSections, "SectionsButton", "MultipleSections");
 

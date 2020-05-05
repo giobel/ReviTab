@@ -64,35 +64,37 @@ namespace ReviTab
 
 			double scale = 0.3048;
 
-			//List<XYZ> controlPoints = new List<XYZ>();
-			//controlPoints.Add(new XYZ(0 / scale, 0 / scale, 0 / scale));
-			//controlPoints.Add(new XYZ(5 / scale, 5 / scale, 2 / scale));
-			//controlPoints.Add(new XYZ(10 / scale, 10 / scale, 5 / scale));
-			//controlPoints.Add(new XYZ(15 / scale, 10 / scale, 5 / scale));
-			//controlPoints.Add(new XYZ(20 / scale, 5 / scale, 4 / scale));
-			//controlPoints.Add(new XYZ(25 / scale, 5 / scale, 3 / scale));
+            #region Test
+            //List<XYZ> controlPoints = new List<XYZ>();
+            //controlPoints.Add(new XYZ(0 / scale, 0 / scale, 0 / scale));
+            //controlPoints.Add(new XYZ(5 / scale, 5 / scale, 2 / scale));
+            //controlPoints.Add(new XYZ(10 / scale, 10 / scale, 5 / scale));
+            //controlPoints.Add(new XYZ(15 / scale, 10 / scale, 5 / scale));
+            //controlPoints.Add(new XYZ(20 / scale, 5 / scale, 4 / scale));
+            //controlPoints.Add(new XYZ(25 / scale, 5 / scale, 3 / scale));
 
-			//List<double> weights = new List<double>();
-			//weights.Add(1.0);
-			//weights.Add(1.0);
-			//weights.Add(1.0);
-			//weights.Add(1.0);
-			//weights.Add(1.0);
-			//weights.Add(1.0);
+            //List<double> weights = new List<double>();
+            //weights.Add(1.0);
+            //weights.Add(1.0);
+            //weights.Add(1.0);
+            //weights.Add(1.0);
+            //weights.Add(1.0);
+            //weights.Add(1.0);
 
-			//List<double> knots = new List<double>();
-			//knots.Add(0); //1revit
-			//knots.Add(0); //2
-			//knots.Add(0); //3
-			//knots.Add(0); //4
-			//knots.Add(10.76); //5
-			//knots.Add(21.51); //6
-			//knots.Add(32.27); //7
-			//knots.Add(32.27);
-			//knots.Add(32.27); //9
-			//knots.Add(32.27);//revit
+            //List<double> knots = new List<double>();
+            //knots.Add(0); //1revit
+            //knots.Add(0); //2
+            //knots.Add(0); //3
+            //knots.Add(0); //4
+            //knots.Add(10.76); //5
+            //knots.Add(21.51); //6
+            //knots.Add(32.27); //7
+            //knots.Add(32.27);
+            //knots.Add(32.27); //9
+            //knots.Add(32.27);//revit
+            #endregion
 
-			HermiteSpline hermspline = HermiteSpline.Create(controlPoints, false);
+            HermiteSpline hermspline = HermiteSpline.Create(controlPoints, false);
 
 			//Curve nurbSpline = NurbSpline.Create(hermspline);
 			Curve nurbSpline = NurbSpline.CreateCurve(3, knots, controlPoints, weights);
@@ -102,17 +104,18 @@ namespace ReviTab
 			Transform nurbsTr = nurbSpline.ComputeDerivatives(0, true);
 
 			XYZ startPoint = nurbsTr.Origin;
-			//PrintPoint("a", nurbsTr.Origin);
+            //PrintPoint("a", nurbsTr.Origin);
 
-			//Plane geomPlane = Autodesk.Revit.DB.Plane.CreateByOriginAndBasis(nurbsTr.Origin, nurbsTr.BasisY.Normalize(), nurbsTr.BasisZ.Normalize());
-			//Plane geomPlane = Autodesk.Revit.DB.Plane.CreateByOriginAndBasis(nurbSpline.GetEndPoint(0), nurbsTr.BasisY.Normalize(), nurbsTr.BasisZ.Normalize());
-			//Frame f = new Frame(nurbSpline.GetEndPoint(0), nurbsTr.BasisY.Normalize(), nurbsTr.BasisZ.Normalize(), nurbsTr.BasisX.Normalize());
-			//Plane geomPlane = Autodesk.Revit.DB.Plane.CreateByThreePoints(XYZ.Zero, XYZ.BasisX, XYZ.BasisZ);
-			//Plane geomPlane = Plane.CreateByNormalAndOrigin(nurbsTr.BasisX.Normalize(), nurbSpline.GetEndPoint(1)); funziona
-			//Plane geomPlane = Plane.CreateByThreePoints(startPoint, startPoint + nurbsTr.BasisX.Normalize(), startPoint + XYZ.BasisZ);
-
-			//XYZ curveDir = controlPoints[1] - controlPoints[0];
-			XYZ curveDir = nurbsTr.BasisX;
+            #region Test Plane
+            //Plane geomPlane = Autodesk.Revit.DB.Plane.CreateByOriginAndBasis(nurbsTr.Origin, nurbsTr.BasisY.Normalize(), nurbsTr.BasisZ.Normalize());
+            //Plane geomPlane = Autodesk.Revit.DB.Plane.CreateByOriginAndBasis(nurbSpline.GetEndPoint(0), nurbsTr.BasisY.Normalize(), nurbsTr.BasisZ.Normalize());
+            //Frame f = new Frame(nurbSpline.GetEndPoint(0), nurbsTr.BasisY.Normalize(), nurbsTr.BasisZ.Normalize(), nurbsTr.BasisX.Normalize());
+            //Plane geomPlane = Autodesk.Revit.DB.Plane.CreateByThreePoints(XYZ.Zero, XYZ.BasisX, XYZ.BasisZ);
+            //Plane geomPlane = Plane.CreateByNormalAndOrigin(nurbsTr.BasisX.Normalize(), nurbSpline.GetEndPoint(1)); funziona
+            //Plane geomPlane = Plane.CreateByThreePoints(startPoint, startPoint + nurbsTr.BasisX.Normalize(), startPoint + XYZ.BasisZ);
+            #endregion
+            //XYZ curveDir = controlPoints[1] - controlPoints[0];
+            XYZ curveDir = nurbsTr.BasisX;
 			XYZ perpDir = curveDir.CrossProduct(startPoint + XYZ.BasisZ).Normalize();
 			Plane perpPlane = Plane.CreateByNormalAndOrigin(curveDir, startPoint);
 			//Plane vertPlane = Plane.CreateByThreePoints(startPoint, perpPlane.XVec, XYZ.BasisZ);
@@ -120,8 +123,29 @@ namespace ReviTab
 
 			//PrintPoint("per", perpDir);
 
-			List<PtCoord> pointsCoordinates = new List<PtCoord>(){new PtCoord(5,0), new PtCoord(2,2), new PtCoord(-14,0),
-					new PtCoord(2,-2)};
+			List<PtCoord> pointsCoordinates = new List<PtCoord>();
+
+			using (var form = new FormAddActiveView("Enter coordinates in clockwise order"))
+			{
+				form.ShowDialog();
+
+				//if the user hits cancel just drop out of macro
+				if (form.DialogResult == System.Windows.Forms.DialogResult.Cancel)
+				{
+					return Result.Cancelled;
+				}
+
+				string[] inputs = form.TextString.Split(';');
+
+				foreach (string coord in inputs)
+				{
+					string[] xy = coord.Split(',');
+					pointsCoordinates.Add(new PtCoord(Double.Parse(xy[0])/(scale*1000), Double.Parse(xy[1])/(scale*1000) ) );
+				}
+
+			}
+
+//			List<PtCoord> pointsCoordinates = new List<PtCoord>(){new PtCoord(5,0), new PtCoord(2,2), new PtCoord(-14,0), new PtCoord(2,-2)};
 
 			List<XYZ> pts = VertexPoints(nurbsTr.Origin, pointsCoordinates, vertPlane);
 
@@ -143,7 +167,8 @@ namespace ReviTab
 
 			var profileLoop = LoopPoints(pts);
 
-			double rotAngle = -15.216 * Math.PI / 180;
+			//double rotAngle = -2.543 * Math.PI / 180;
+			double rotAngle = -15 * Math.PI / 180;
 			var transform = Transform.CreateRotationAtPoint(nurbsTr.BasisX, rotAngle, nurbsTr.Origin);
 
 			profileLoop.Transform(transform);
@@ -165,7 +190,7 @@ namespace ReviTab
 			{
 				t.Start();
 
-				ElementId categoryId = new ElementId(BuiltInCategory.OST_GenericModel);
+				ElementId categoryId = new ElementId(BuiltInCategory.OST_Floors);
 
 				DirectShape ds = DirectShape.CreateElement(doc, categoryId);
 

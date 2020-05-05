@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -29,13 +27,14 @@ namespace ReviTab
 
             List<Element> myElements = new List<Element>();
 
-            int s = 0;
+            string  s = "";
 
             foreach (var e in r)
             {
                 myElements.Add(doc.GetElement(e));
             }
 
+            ViewSection vs = null;
             
             using (var form = new  FormCreateSections())
             {
@@ -57,8 +56,8 @@ namespace ReviTab
 
                             foreach (Element e in myElements)
                             {
-                                Helpers.CreateSectionParallel(doc, uidoc, e, form.sectionPositionOffset, form.farClipOffset, form.bottomLevel, form.topLevel);
-                                s += 1;
+                                vs = Helpers.CreateSectionParallel(doc, uidoc, e, form.sectionPositionOffset, form.farClipOffset, form.bottomLevel, form.topLevel);
+                                s += $"{vs.Name}\n";
                             }
 
                         else
@@ -70,19 +69,27 @@ namespace ReviTab
                             }
                         }
 
-                        TaskDialog.Show("Result", $"{s.ToString()} sections created");
+                        
 
                         tx.Commit();
                     }
-                    catch
+                    catch (System.Exception ex)
                     {
 
-                        TaskDialog.Show("Result", "Something went wrong");
+                        TaskDialog.Show("Error", ex.Message);
                     }
                 }
 
 
             }//close form
+
+            if (null != vs)
+            {
+                uidoc.ActiveView = vs;
+            }
+
+
+            TaskDialog.Show("Result", $"{s} Created");
 
             return Result.Succeeded;
         }

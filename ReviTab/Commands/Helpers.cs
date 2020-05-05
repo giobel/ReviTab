@@ -22,7 +22,7 @@ namespace ReviTab
         /// </summary>
         public static void leannSays()
         {
-            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "i am angel", "I smash you", "You I know can you guys delete it after finish ready. Thanks", "book my set tomorrow. donot forget thanks", "i am coming back on thuesday. \nthis is the day i will in office", "i try to found you last Friday you not in office" };
+            string[] leanneDictionary = { "Ciao a tutti!", "You are Evil", "i am angel", "I smash you", "You I know can you guys delete it after finish ready. Thanks", "book my set tomorrow. donot forget thanks", "i am coming back on thuesday. \nthis is the day i will in office", "i try to found you last Friday you not in office", "coffee i thing" };
 
             Random rand = new Random();
 
@@ -348,7 +348,7 @@ namespace ReviTab
         /// <param name="farClipOffset"></param>
         /// <param name="bottomLevel"></param>
         /// <param name="topLevel"></param>
-        public static void CreateSectionParallel(Document doc, UIDocument uidoc, Element ele, double sectionPosition, double farClipOffset, double bottomLevel, double topLevel)
+        public static ViewSection CreateSectionParallel(Document doc, UIDocument uidoc, Element ele, double sectionPosition, double farClipOffset, double bottomLevel, double topLevel)
         {
 
             Element wall = ele;
@@ -398,6 +398,7 @@ namespace ReviTab
 
             vs = ViewSection.CreateSection(doc, vft.Id, sectionBox);
 
+            return vs;
         }
 
         public static void CreateColumnSection(Document doc, Element columnElement, double offsetFromAlignment, double farClip, double bottomZ, double topZ, bool flipDirection, string columnParameter)
@@ -1252,7 +1253,13 @@ namespace ReviTab
                 {
                     t.Start();
 
-                    Parameter revision = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Rev.");
+                    Parameter revision = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Rev."); 
+                    
+                    if (null == revision)
+                    {
+                        revision = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Revision");
+                    }
+
                     revision.Set(revisionObj.NewRevision);
 
                     Parameter sheetRevision = vs.LookupParameter("ARUP_BDR_ISSUE");
@@ -1262,14 +1269,25 @@ namespace ReviTab
                     description.Set(revisionObj.Description);
 
                     Parameter modeledBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Modeled By");
+
+                    if (null == modeledBy)
+                    {
+                        modeledBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Drawn By");
+                    }
+ 
                     modeledBy.Set(revisionObj.DrawnBy);
 
                     Parameter checkedBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Checked");
                     checkedBy.Set(revisionObj.Checker);
 
                     Parameter approved = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Approv.");
-                    approved.Set(revisionObj.Approver);
 
+                    if (null == approved)
+                    {
+                        approved = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Approved");
+                    }
+                    
+                    approved.Set(revisionObj.Approver);
 
                     t.Commit();
                 }
@@ -1291,8 +1309,14 @@ namespace ReviTab
         /// <returns></returns>
         private static RevisionObj IncrementNonLetterRevision(ViewSheet vs, int i)
         {
-
             Parameter p = vs.LookupParameter(String.Format("{0} - Rev.", i));
+            
+            if (null == p)
+            {
+                p = vs.LookupParameter(String.Format("{0} - Revision", i));
+            }
+
+
             //numeric digit 
             string revision = new String(p.AsString().Where(Char.IsDigit).ToArray());
 
@@ -1408,6 +1432,12 @@ namespace ReviTab
                 {
                     //revision can be P01, T03, 11, A
                     Parameter p = vs.LookupParameter(String.Format("{0} - Rev.", i));
+                    
+                    if (null == p)
+                    {
+                        p = vs.LookupParameter(String.Format("{0} - Revision", i));
+                    }
+
                     Parameter dateParam = vs.LookupParameter(String.Format("{0} - Date", i));
                     string date = dateParam.AsString();
 
@@ -1443,9 +1473,26 @@ namespace ReviTab
 
             RevisionObj lastRev = lastRevisions.First();
 
-            lastRev.DrawnBy = vs.LookupParameter($"{lastRev.RevisionIndex} - Modeled By").AsString();
+            Parameter drawnBy = vs.LookupParameter($"{lastRev.RevisionIndex} - Modeled By");
+            
+            if (null == drawnBy)
+            {
+                drawnBy = vs.LookupParameter($"{lastRev.RevisionIndex} - Drawn By");
+            }
+
+            lastRev.DrawnBy = drawnBy.AsString();
+            
             lastRev.Checker = vs.LookupParameter($"{lastRev.RevisionIndex} - Checked").AsString();
-            lastRev.Approver = vs.LookupParameter($"{lastRev.RevisionIndex} - Approv.").AsString();
+            
+            Parameter approver = vs.LookupParameter($"{lastRev.RevisionIndex} - Approv.");
+
+            if (null == approver)
+            {
+                approver = vs.LookupParameter($"{lastRev.RevisionIndex} - Approved");
+            }
+            
+            lastRev.Approver = approver.AsString();
+
             lastRev.Description = vs.LookupParameter($"{lastRev.RevisionIndex} - Description").AsString();
 
             return lastRev;

@@ -282,7 +282,7 @@
     <Compile Include="Buttons Documentation\AddMultipleViewsToSheet.cs" />
     <Compile Include="Buttons Framings and Walls\AddTagsApplyUndo.cs" />
     <Compile Include="Buttons Zero State\ClaritySetup.cs" />
-    <Compile Include="Buttons Tools\CreateSectionsByLocationCurve.cs" />
+    <Compile Include="Buttons Tools\CreateSections.cs" />
     <Compile Include="Buttons Documentation\CreateViewSet.cs" />
     <Compile Include="Buttons Framings and Walls\EditBeamJoin.cs" />
     <Compile Include="Buttons Tools\OverrideDimensions.cs" />
