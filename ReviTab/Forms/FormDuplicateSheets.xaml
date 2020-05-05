@@ -4,22 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReviTab.Forms"
-             mc:Ignorable="d" Width="490.164" Height="464.755" WindowStartupLocation="CenterScreen">
-    <Grid Margin="0,10,10,0" Height="414" VerticalAlignment="Top" HorizontalAlignment="Right" Width="462">
+             mc:Ignorable="d" Width="325.639" Height="452.081" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
-        <Button Content="OK" Height="30" Margin="0,353,377,0" Width="85" Click="Button_Click" HorizontalAlignment="Right" VerticalAlignment="Top"></Button>
 
-        <Button Content="Cancel" Height="30" Margin="266,361,0,0" Click="Button_Click_1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="196"/>
-
-        <ListBox Name="listBoxZone" ItemsSource="{Binding SheetsList}" Background="AntiqueWhite" Margin="0,0,196,70">
+        <ListBox Grid.Row="0"  Grid.ColumnSpan="2" Name="listBoxZone" ItemsSource="{Binding SheetsList}"  SelectionMode="Multiple" Margin="5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox Name="CheckBoxZone" Content="{Binding SheetNumber}"
+                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
      Tag="{Binding TheValue}" Checked="CheckBoxZone_Checked"  
-     Margin="0,5,0,0"/>
+     Margin="5"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <TextBox Grid.Row="1" Grid.ColumnSpan="2" x:Name="tboxSuffix"  TextWrapping="Wrap" Text="Suffix text" Margin="5"/>
+
+        
+        <Button Grid.Row="2" Content="OK" Click="Button_Click" Margin="5"></Button>
+
+        <Button Grid.Row="2" Grid.Column="1" Content="Cancel" Click="Button_Click_1" IsCancel="True" Margin="5"/>
 
 
     </Grid>

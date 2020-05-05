@@ -30,9 +30,9 @@ namespace ReviTab
                 using (Transaction t = new Transaction(doc, "Duplicate Sheet"))
                 {
 
-                ICollection<Element> sheetsElement = new FilteredElementCollector(doc).OfClass(typeof(ViewSheet)).ToElements();
+                IEnumerable<ViewSheet> sheetsElement = new FilteredElementCollector(doc).OfClass(typeof(ViewSheet)).ToElements().Cast<ViewSheet>();
 
-                form.SheetsList = new ObservableCollection<Element>(sheetsElement);
+                form.SheetsList = new ObservableCollection<ViewSheet>(sheetsElement.OrderBy(x=>x.SheetNumber));
 
                 form.ShowDialog();
                                
@@ -43,6 +43,11 @@ namespace ReviTab
                 }
 
                 t.Start();
+
+                foreach (ViewSheet item in form.SelectedSheets)
+                {
+                    TaskDialog.Show("r", item.Name+form.textSuffix);
+                }
 
                 t.Commit();
 
