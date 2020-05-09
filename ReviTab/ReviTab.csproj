@@ -215,11 +215,8 @@
       <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Rhino.UI, Version=6.25.20114.5270, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
-      <HintPath>..\packages\RhinoCommon.6.25.20114.5271\lib\net45\Rhino.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="RhinoCommon, Version=6.25.20114.5270, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
-      <HintPath>..\packages\RhinoCommon.6.25.20114.5271\lib\net45\RhinoCommon.dll</HintPath>
+    <Reference Include="Rhino3dmIO, Version=6.25.20114.5270, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\lib\net45\Rhino3dmIO.dll</HintPath>
     </Reference>
     <!-- MULTIVERSION REVIT API REFERENCES END -->
     <Reference Include="System" />
@@ -323,6 +320,7 @@
     <Compile Include="Commands\PlaceTags\UndoChanges.cs" />
     <Compile Include="Commands\Press.cs" />
     <Compile Include="Buttons Zero State\SuppressWarnings.cs" />
+    <Compile Include="Commands\Rhynamo.cs" />
     <Compile Include="Commands\VoidByLineHelpers.cs" />
     <Compile Include="Forms\CmdWindowHandleForm.cs">
       <SubType>Form</SubType>
@@ -544,5 +542,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\RhinoCommon.6.25.20114.5271\build\net45\RhinoCommon.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RhinoCommon.6.25.20114.5271\build\net45\RhinoCommon.targets'))" />
+    <Error Condition="!Exists('..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets'))" />
   </Target>
+  <Import Project="..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets" Condition="Exists('..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets')" />
 </Project>
