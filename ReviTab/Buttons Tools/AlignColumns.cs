@@ -26,8 +26,27 @@ namespace ReviTab
             
             IList<Reference> linkModelColumns = uidoc.Selection.PickObjects(ObjectType.LinkedElement, "Select Columns in Linked Model");
 
-            IList<Reference> currentModelColumns = uidoc.Selection.PickObjects(ObjectType.Element, "Select Columns in Current Model");
+            if (linkModelColumns.Count == 0)
+            {
+                TaskDialog td = new TaskDialog("Warning");
+                td.MainContent = "No columns in the linked model have been selected";
+                td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+                td.Show();
+                return Result.Cancelled;
+            }
 
+            IList<Reference> currentModelColumns = uidoc.Selection.PickObjects(ObjectType.Element, "No columns in the current model have been selected");
+
+
+            if (currentModelColumns.Count == 0)
+            {
+                TaskDialog td = new TaskDialog("Warning");
+                td.MainContent = "Please select some columns the current model";
+                td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+                td.Show();
+                return Result.Cancelled;
+
+            }
             List<XYZ> linkedColumnsLocations = new List<XYZ>();
 
             foreach (Reference linkedColumn in linkModelColumns)
@@ -42,8 +61,8 @@ namespace ReviTab
                 LocationPoint lp = eLinked.Location as LocationPoint;
                 XYZ columnPoint = lp.Point;
 
-                linkedColumnsLocations.Add(columnPoint);
-                //linkedColumnsLocations.Add(TransformPoint(columnPoint, transf));
+                //linkedColumnsLocations.Add(columnPoint);
+                linkedColumnsLocations.Add(TransformPoint(columnPoint, transf));
 
             }
 
@@ -61,8 +80,8 @@ namespace ReviTab
 
                         XYZ closestPoint = FindClosestPointTolerance(currentModelColumnLocation.Point, linkedColumnsLocations, 3);
 
-                        //TaskDialog.Show("Result", closestPoint.X.ToString());
-                        currentModelColumnElement.Location.Move(closestPoint - currentModelColumnLocation.Point);
+                        if (null != closestPoint)
+                            currentModelColumnElement.Location.Move(closestPoint - currentModelColumnLocation.Point);
                         //ElementTransformUtils.MoveElement(doc, currentModelColumnElement.Id, closestPoint-currentModelColumnLocation.Point);
 
                     }
