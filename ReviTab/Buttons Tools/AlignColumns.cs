@@ -51,22 +51,32 @@ namespace ReviTab
 
             foreach (Reference linkedColumn in linkModelColumns)
             {
-                
+
                 Element e = doc.GetElement(linkedColumn.ElementId);
+
                 RevitLinkInstance revitLinkInst = e as RevitLinkInstance;
                 Document linkRvtDoc = (e as RevitLinkInstance).GetLinkDocument();
 
                 Element eLinked = linkRvtDoc.GetElement(linkedColumn.LinkedElementId);
-                Transform transf = revitLinkInst.GetTransform();
-                LocationPoint lp = eLinked.Location as LocationPoint;
-                XYZ columnPoint = lp.Point;
 
-                //linkedColumnsLocations.Add(columnPoint);
-                linkedColumnsLocations.Add(TransformPoint(columnPoint, transf));
+                //TaskDialog.Show("r", eLinked.Name);
 
+                if (eLinked.Category.Name == "Structural Columns")
+                {
+                    Transform transf = revitLinkInst.GetTransform();
+                    LocationPoint lp = eLinked.Location as LocationPoint;
+                    XYZ columnPoint = lp.Point;
+                    
+                    //linkedColumnsLocations.Add(columnPoint);
+                    linkedColumnsLocations.Add(TransformPoint(columnPoint, transf));
+                }
             }
 
-                using (Transaction t = new Transaction(doc, "Move Columns"))
+            int linkedColumns = linkedColumnsLocations.Count/2;
+            int selectedColumns = currentModelColumns.Count;
+            int columnMoved = 0;
+
+            using (Transaction t = new Transaction(doc, "Move Columns"))
             {
 
                 t.Start();
@@ -81,8 +91,13 @@ namespace ReviTab
                         XYZ closestPoint = FindClosestPointTolerance(currentModelColumnLocation.Point, linkedColumnsLocations, 3);
 
                         if (null != closestPoint)
+                        {
+                            //move column but does not rotate it. Rotation can be access via LocationPoint.Rotation
                             currentModelColumnElement.Location.Move(closestPoint - currentModelColumnLocation.Point);
-                        //ElementTransformUtils.MoveElement(doc, currentModelColumnElement.Id, closestPoint-currentModelColumnLocation.Point);
+
+                            //ElementTransformUtils.MoveElement(doc, currentModelColumnElement.Id, closestPoint-currentModelColumnLocation.Point);
+                            columnMoved++;
+                        }
 
                     }
                 }
@@ -93,6 +108,8 @@ namespace ReviTab
 
                 t.Commit();
             }
+
+            TaskDialog.Show("Result", $"Linked columns selected: {linkedColumns}\nColumns to be moved: {selectedColumns}\nColumns moved: {columnMoved}");
 
             return Result.Succeeded;
 
