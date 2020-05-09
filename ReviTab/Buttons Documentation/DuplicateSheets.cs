@@ -46,7 +46,9 @@ namespace ReviTab
 
                 foreach (ViewSheet item in form.SelectedSheets)
                 {
-                    TaskDialog.Show("r", item.Name+form.textSuffix);
+                    Helpers.DuplicateSheet(doc, item, form.textSuffix);
+
+                    //TaskDialog.Show("r", item.Name+form.textSuffix);
                 }
 
                 t.Commit();

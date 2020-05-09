@@ -1039,6 +1039,112 @@ namespace ReviTab
 
         #region SHEET VIEWS
 
+        /// <summary>
+        /// http://revitcoaster.blogspot.com/2015/02/quick-macro-for-duplicating-existing.html
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="vs"></param>
+        /// <param name="suffix"></param>
+        /// <returns></returns>
+        public static bool DuplicateSheet(Document doc, ViewSheet vs, string suffix)
+        {
+
+            try
+            {
+                FamilyInstance titleblock = new FilteredElementCollector(doc).OfClass(typeof(FamilyInstance))
+    .OfCategory(BuiltInCategory.OST_TitleBlocks).Cast<FamilyInstance>()
+    .First(q => q.OwnerViewId == vs.Id);
+
+                ViewSheet newsheet = ViewSheet.Create(doc, titleblock.GetTypeId());
+                newsheet.SheetNumber = vs.SheetNumber + suffix;
+                newsheet.Name = vs.Name;
+
+                // all views but schedules
+                foreach (ElementId eid in vs.GetAllPlacedViews())
+                {
+                    View ev = doc.GetElement(eid) as View;
+
+                    View newview = null;
+
+                    // legends
+                    if (ev.ViewType == ViewType.Legend)
+                    {
+                        newview = ev;
+                    }
+                    // all non-legend and non-schedule views
+                    else
+                    {
+                        ElementId newviewid = ev.Duplicate(ViewDuplicateOption.WithDetailing);
+                        newview = doc.GetElement(newviewid) as View;
+                        newview.Name = ev.Name + suffix;
+                    }
+
+                    foreach (Viewport vp in new FilteredElementCollector(doc).OfClass(typeof(Viewport)))
+                    {
+
+                        if (vp.SheetId == vs.Id && vp.ViewId == ev.Id)
+                        {
+                            BoundingBoxXYZ vpbb = vp.get_BoundingBox(vs);
+                            XYZ initialCenter = (vpbb.Max + vpbb.Min) / 2;
+
+                            Viewport newvp = Viewport.Create(doc, newsheet.Id, newview.Id, XYZ.Zero);
+
+                            BoundingBoxXYZ newvpbb = newvp.get_BoundingBox(newsheet);
+                            XYZ newCenter = (newvpbb.Max + newvpbb.Min) / 2;
+
+                            ElementTransformUtils.MoveElement(doc, newvp.Id, new XYZ(
+                                initialCenter.X - newCenter.X,
+                                initialCenter.Y - newCenter.Y,
+                                0));
+                        }
+
+                    }
+
+                }
+
+                // schedules
+
+                foreach (ScheduleSheetInstance si in (new FilteredElementCollector(doc).OfClass(typeof(ScheduleSheetInstance))))
+                {
+                    if (si.OwnerViewId == vs.Id)
+                    {
+                        if (!si.IsTitleblockRevisionSchedule)
+                        {
+                            foreach (ViewSchedule vsc in new FilteredElementCollector(doc).OfClass(typeof(ViewSchedule)))
+                            {
+                                if (si.ScheduleId == vsc.Id)
+                                {
+                                    BoundingBoxXYZ sibb = si.get_BoundingBox(vs);
+                                    XYZ initialCenter = (sibb.Max + sibb.Min) / 2;
+
+                                    ScheduleSheetInstance newssi = ScheduleSheetInstance.Create(doc, newsheet.Id, vsc.Id, XYZ.Zero);
+
+                                    BoundingBoxXYZ newsibb = newssi.get_BoundingBox(newsheet);
+                                    XYZ newCenter = (newsibb.Max + newsibb.Min) / 2;
+
+                                    ElementTransformUtils.MoveElement(doc, newssi.Id, new XYZ(
+                                        initialCenter.X - newCenter.X,
+                                        initialCenter.Y - newCenter.Y,
+                                        0));
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("r", ex.Message);
+                return false;
+            }
+            
+
+        }
+
+
         public static ViewSheet FindViewSheetByName(Document doc, string ViewSheetName)
         {
             FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
@@ -2671,7 +2777,7 @@ namespace ReviTab
 
 
 
-#if REVIT2019
+#if REVIT2019 || SAM
 
             overrideSettings.SetSurfaceForegroundPatternId(solidPatternId);
 
