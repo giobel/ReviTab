@@ -242,6 +242,7 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\AlignColumns.cs" />
     <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
     <Compile Include="Buttons Tools\PropagateGridExtents.cs" />
     <Compile Include="Buttons Excel\UpdateViewportsFromExcel.cs" />

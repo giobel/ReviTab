@@ -1450,7 +1450,7 @@ namespace ReviTab
                         lastRevisions.Add(new RevisionObj(500, i, letter.ToString(), letter.ToString(), date, newRevision.ToString()));
 
                     }
-                    else
+                    else if (date.Length > 2)
                     {
 
                         lastRevisions.Add(IncrementNonLetterRevision(vs, i));
@@ -1469,9 +1469,14 @@ namespace ReviTab
 
 
             }
-            lastRevisions.Sort((x, y) => y.TempRevision.CompareTo(x.TempRevision));
 
-            RevisionObj lastRev = lastRevisions.First();
+
+            // WHY WAS THIS REQUIRED? IT DOES NOT WORK WHEN REVISION IS SINGLE LETTER C
+            //lastRevisions.Sort((x, y) => y.TempRevision.CompareTo(x.TempRevision));
+
+            //RevisionObj lastRev = lastRevisions.First();
+
+            RevisionObj lastRev = lastRevisions.Last();
 
             Parameter drawnBy = vs.LookupParameter($"{lastRev.RevisionIndex} - Modeled By");
             

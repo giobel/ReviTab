@@ -33,8 +33,16 @@ namespace ReviTab
 
                     t.Start();
 
+                    //TO BE UPDATED WITH REVISION AND DRAWN BY
+
+                    Parameter p = vs.LookupParameter($"2 - Rev.");
 
                     List<string> parameters = new List<string>() { "Rev.", "Date", "Modeled By", "Approv.", "Checked", "Description" };
+
+                    if (null == p)
+                    {
+                        parameters = new List<string>() { "Revision", "Date", "Drawn By", "Approved", "Checked", "Description" };
+                    }
 
                     for (int i = 2; i < 11; i++)
                     {
