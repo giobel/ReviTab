@@ -37,6 +37,8 @@ namespace ReviTab
             
             List<Rhino.Geometry.LineCurve> rh_lines = new List<Rhino.Geometry.LineCurve>();
 
+            List<Rhino.Geometry.GeometryBase> rh_text = new List<GeometryBase>();
+
             foreach (var item in rhinoObjects)
             {
                 GeometryBase geo = item.Geometry;
@@ -48,7 +50,16 @@ namespace ReviTab
                     Rhino.Geometry.LineCurve ln = geo as Rhino.Geometry.LineCurve;
                     rh_lines.Add(ln);
                 }
+
+                if (geo is Rhino.Geometry.TextEntity)
+                {
+                    //TextEntity te = geo as Rhino.Geometry.TextEntity;
+                    rh_text.Add(geo);
+                }
+
             }
+
+            TaskDialog.Show("r", rh_text.Count.ToString());
 
             Rhynamo.clsGeometryConversionUtils rh_ds = new Rhynamo.clsGeometryConversionUtils();
 
@@ -56,7 +67,9 @@ namespace ReviTab
             {
                 t.Start();
 
-                rh_ds.Convert_LinesToDS(doc, rh_lines, "3 Continuos");
+                rh_ds.Convert_rhLinesToRevitDetailCurve(doc, rh_lines, "3 Arup Continuous Line");
+
+                rh_ds.RhinoTextToRevitNote(doc, rh_text);
                 
                 t.Commit();
             }

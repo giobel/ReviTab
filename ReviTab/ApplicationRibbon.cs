@@ -77,7 +77,9 @@ namespace ReviTab
                 splitButtonsViews.Add(CreatePushButton("btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select views on sheets in the project browser first then click on this button."));
 
                 splitButtonsViews.Add(CreatePushButton("btnTagInView", "Tag Elements", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.TagElementsInViewport", "Tag all the columns within the selected Viewports."));
-                
+               
+                splitButtonsViews.Add(CreatePushButton("btnImportRhino", "Rhino Import", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.RhinoImport", "Import details from Rhino to Revit drafting view."));
+
                 AddSplitButton(docsPanel, splitButtonsViews, "DocumentationButton", "Documentation");
 
                 //Titleblock revisions

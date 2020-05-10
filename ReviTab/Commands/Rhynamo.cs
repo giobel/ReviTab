@@ -18,12 +18,14 @@ namespace Rhynamo
             // widen scope
         }
 
+        private double scale = 304.8;
+
         /// <summary>
         /// Converts Rhino lines to DesignScript lines.
         /// </summary>
         /// <param name="rh_lines">List of Rhino lines</param>
         /// <returns>List of DesignScript lines</returns>
-        public List<DetailCurve> Convert_LinesToDS(Document doc, List<Rhino.Geometry.LineCurve> rh_lines, string layer)
+        public List<DetailCurve> Convert_rhLinesToRevitDetailCurve(Document doc, List<Rhino.Geometry.LineCurve> rh_lines, string layer)
         {
 
                 List<DetailCurve> ds_lines = new List<DetailCurve>();
@@ -35,9 +37,10 @@ namespace Rhynamo
 
                     try
                     {
+                    
                         // convert end points
-                        XYZ ds_start = new XYZ(rh_start.X, rh_start.Y, rh_start.Z);
-                        XYZ ds_end = new XYZ(rh_end.X, rh_end.Y, rh_end.Z);
+                        XYZ ds_start = new XYZ(rh_start.X/scale, rh_start.Y/scale, rh_start.Z/scale);
+                        XYZ ds_end = new XYZ(rh_end.X/scale, rh_end.Y/scale, rh_end.Z/scale);
 
                         // make Revit line
                         Autodesk.Revit.DB.Line ds_ln = Autodesk.Revit.DB.Line.CreateBound(ds_start, ds_end);
@@ -63,6 +66,62 @@ namespace Rhynamo
 
         }
 
+
+        public List<Autodesk.Revit.DB.TextNote> RhinoTextToRevitNote(Document doc, List<Rhino.Geometry.GeometryBase> rh_TextGeometry)
+        {
+            List<DetailCurve> ds_lines = new List<DetailCurve>();
+
+            TextNoteOptions noteOptions = new TextNoteOptions();
+            noteOptions.HorizontalAlignment = HorizontalTextAlignment.Left;
+
+            noteOptions.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
+            
+
+            foreach (Rhino.Geometry.GeometryBase textGeo in rh_TextGeometry)
+            {
+                Rhino.Geometry.TextEntity text = textGeo as TextEntity;
+
+                double noteWidth = text.FormatWidth;
+
+                XYZ position = new XYZ( text.Plane.Origin.X/scale, text.Plane.Origin.Y/scale, 0);
+
+                TextNote.Create(doc, doc.ActiveView.Id, position, text.PlainText, noteOptions);
+            }
+
+                return null;
+        }
+
+
+        /// <summary>
+        /// Converts Rhino points to DesignScript points
+        /// </summary>
+        /// <param name="rh_points">list of Rhino points</param>
+        /// <returns>List of DesignScript points</returns>
+        public List<Autodesk.Revit.DB.XYZ> Convert_PointsToDS(List<Rhino.Geometry.Point> rh_points)
+        {
+            try
+            {
+                List<Autodesk.Revit.DB.XYZ> ds_points = new List<Autodesk.Revit.DB.XYZ>();
+                foreach (Rhino.Geometry.Point pt in rh_points)
+                {
+                    // get x, y, z coordinates
+                    double x = pt.Location.X;
+                    double y = pt.Location.Y;
+                    double z = pt.Location.Z;
+
+                    try
+                    {
+                        // create DesignScript point
+                        Autodesk.Revit.DB.XYZ ds_pt = new XYZ(x, y, z);
+                        ds_points.Add(ds_pt);
+                    }
+                    catch { ds_points.Add(null); }
+
+                }
+                return ds_points;
+            }
+            catch { return null; }
+        }
 
         /*
         #region "Rhino to DesignScript"
@@ -1181,640 +1240,7 @@ namespace Rhynamo
         }
         #endregion
 
-        #region "DesignScript to Rhino"
-        /// <summary>
-        /// Converts DesignScript points to Rhino points
-        /// </summary>
-        /// <param name="pt">DesignScript points</param>
-        /// <returns>Rhino points</returns>
-        public Rhino.Geometry.Point Convert_PointsTo3dm(Autodesk.Revit.DB.Point pt)
-        {
-            try
-            {
-                // get x, y, z coordinates
-                double x = Math.Round(pt.X, 3);
-                double y = Math.Round(pt.Y, 3);
-                double z = Math.Round(pt.Z, 3);
-
-                // create Rhino point
-                Rhino.Geometry.Point3d rh_pt3d = new Rhino.Geometry.Point3d(x, y, z);
-                Rhino.Geometry.Point rh_pt = new Rhino.Geometry.Point(rh_pt3d);
-
-                return rh_pt;
-            }
-            catch { return null; }
-        }
-
-        /// <summary>
-        /// Converts DesignScript curves to Rhino curves
-        /// </summary>
-        /// <param name="crv">DesignScript curves</param>
-        /// <returns>Rhino curves</returns>
-        public Rhino.Geometry.Curve Convert_CurvesTo3dm(Autodesk.Revit.DB.Curve crv)
-        {
-            try
-            {
-                // master list of Rhino curves
-                Rhino.Geometry.Curve rh_curve = null;
-
-                // is line?
-                Autodesk.Revit.DB.Line lntest = null;
-                try
-                {
-                    lntest = crv as Autodesk.Revit.DB.Line;
-                }
-                catch { }
-                // is arc?
-                Autodesk.Revit.DB.Arc arctest = null;
-                try
-                {
-                    arctest = crv as Autodesk.Revit.DB.Arc;
-                }
-                catch { }
-                // is NurbsCurve?
-                Autodesk.Revit.DB.NurbsCurve nurbstest = null;
-                try
-                {
-                    nurbstest = crv as Autodesk.Revit.DB.NurbsCurve;
-                }
-                catch { }
-                // is PolyCurve?
-                Autodesk.Revit.DB.PolyCurve pcrvtest = null;
-                try
-                {
-                    pcrvtest = crv as Autodesk.Revit.DB.PolyCurve;
-                }
-                catch { }
-
-                bool success = false;
-                if (crv is Autodesk.Revit.DB.Line || lntest != null)
-                {
-                    // Rhino line curve
-                    Rhino.Geometry.LineCurve rh_lncrv = Convert_LineTo3dm(crv as Autodesk.Revit.DB.Line);
-
-                    // set converted curve
-                    rh_curve = rh_lncrv;
-
-                    success = true;
-                }
-                else if (crv is Autodesk.Revit.DB.Arc || arctest != null)
-                {
-                    // rhino arc curve
-                    Rhino.Geometry.ArcCurve rh_arccrv = Convert_ArcTo3dm(crv as Autodesk.Revit.DB.Arc);
-
-                    // set converted curve
-                    rh_curve = rh_arccrv;
-
-                    success = true;
-                }
-                else if (crv is Autodesk.Revit.DB.NurbsCurve || nurbstest != null)
-                {
-                    // rhino nurbs curve
-                    Rhino.Geometry.NurbsCurve rh_nurbscrv = Convert_NurbsCurveTo3dm(crv as Autodesk.Revit.DB.NurbsCurve);
-
-                    // set converted curve
-                    rh_curve = rh_nurbscrv;
-
-                    success = true;
-                }
-                else if (crv is Autodesk.Revit.DB.PolyCurve || pcrvtest != null)
-                {
-                    if (crv is Autodesk.Revit.DB.Rectangle)
-                    {
-                        // rhino nurbs curve
-                        Rhino.Geometry.Rectangle3d rh_rect = Convert_RectangleTo3dm(crv as Autodesk.Revit.DB.Rectangle);
-
-                        // set converted curve
-                        rh_curve = rh_rect.ToNurbsCurve();
-
-                        success = true;
-                    }
-                    else
-                    {
-                        // rhino nurbs curve
-                        Rhino.Geometry.PolyCurve rh_polycrv = Convert_PolyCurveTo3dm(crv as Autodesk.Revit.DB.PolyCurve);
-
-                        // set converted curve
-                        rh_curve = rh_polycrv;
-
-                        success = true;
-                    }
-
-                }
-
-                // last ditch effort
-                if (success == false)
-                {
-                    Autodesk.Revit.DB.NurbsCurve ds_nurbs = crv.ToNurbsCurve();
-
-                    // rhino nurbs curve
-                    Rhino.Geometry.NurbsCurve rh_nurbscrv = Convert_NurbsCurveTo3dm(ds_nurbs);
-
-                    // set converted curve
-                    rh_curve = rh_nurbscrv;
-
-                }
-
-                return rh_curve;
-            }
-            catch { return null; }
-        }
-
-        /// <summary>
-        /// Converts DesignScript surfaces to Rhino surfaces
-        /// </summary>
-        /// <param name="srf">DesignScript surface</param>
-        /// <returns>Rhino surface</returns>
-        public Rhino.Geometry.NurbsSurface Convert_SurfacesTo3dm(Autodesk.Revit.DB.NurbsSurface srf)
-        {
-            try
-            {
-                Rhino.Geometry.NurbsSurface rh_surfaces = null;
-
-                // define the nurbs surface
-                Rhino.Geometry.NurbsSurface rh_srf = Rhino.Geometry.NurbsSurface.Create(3, false, srf.DegreeU + 1, srf.DegreeV + 1, srf.NumControlPointsU, srf.NumControlPointsV);
-
-                // add the knots
-                double[] m_knotsU = srf.UKnots();
-                double[] m_knotsV = srf.VKnots();
-                for (int i = 1; i < m_knotsU.Length - 1; i++)
-                {
-                    rh_srf.KnotsU[i - 1] = m_knotsU[i];
-                }
-                for (int j = 1; j < m_knotsV.Length - 1; j++)
-                {
-                    rh_srf.KnotsV[j - 1] = m_knotsV[j];
-                }
-
-                // add the control points
-                Autodesk.Revit.DB.Point[][] m_ctrlpts = srf.ControlPoints();
-                int numU = srf.NumControlPointsU;
-                int numV = srf.NumControlPointsV;
-
-                for (int i = 0; i < numU; i++)
-                {
-                    for (int j = 0; j < numV; j++)
-                    {
-                        Autodesk.Revit.DB.Point ctrlpt = m_ctrlpts[i][j];
-
-                        double x = ctrlpt.X;
-                        double y = ctrlpt.Y;
-                        double z = ctrlpt.Z;
-                        Point3d pt = new Point3d(x, y, z);
-
-                        // create the control point
-                        ControlPoint rh_ctrlpt = new ControlPoint(pt);
-                        rh_srf.Points.SetControlPoint(i, j, rh_ctrlpt);
-                    }
-                }
-
-                // set domains
-                Interval m_uint = new Interval(0, 1);
-                Interval m_vint = new Interval(0, 1);
-                rh_srf.SetDomain(0, m_uint);
-                rh_srf.SetDomain(1, m_vint);
-
-                rh_surfaces = rh_srf;
-                return rh_surfaces;
-            }
-            catch { return null; }
-        }
-
-        /// <summary>
-        /// Converts DesignScript PolySurfaces to Rhino breps
-        /// </summary>
-        /// <param name="ds_polysurface"></param>
-        /// <returns></returns>
-        public Rhino.Geometry.Brep Convert_PolySurfaceTo3dm(Autodesk.Revit.DB.PolySurface ds_polysurface)
-        {
-            try
-            {
-                // DesignSript PolySurface Components
-                Autodesk.Revit.DB.Surface[] ds_surfaces = ds_polysurface.Surfaces();
-
-                // Rhino Brep
-                Rhino.Geometry.Brep rh_brep = new Rhino.Geometry.Brep();
-
-                foreach (Autodesk.Revit.DB.Surface surf in ds_surfaces)
-                {
-                    // get edge geometry
-                    Autodesk.Revit.DB.Curve[] ds_3dedges = surf.PerimeterCurves();
-                    Autodesk.Revit.DB.Curve[] ds_2dedges = Make2DParameterCurves(surf.ToNurbsSurface(), ds_3dedges);
-
-                    // get edge geometry
-                    List<Rhino.Geometry.Curve> rh_3dcrvs = new List<Rhino.Geometry.Curve>();
-                    foreach (Autodesk.Revit.DB.Curve crv in ds_3dedges)
-                    {
-                        // convert DesignScript edge loops to 3DM
-                        Rhino.Geometry.Curve rh_crv = Convert_CurvesTo3dm(crv.ToNurbsCurve());
-                        rh_3dcrvs.Add(rh_crv);
-                    }
-
-                    // get trim geometry
-                    List<Rhino.Geometry.Curve> rh_2dcrvs = new List<Rhino.Geometry.Curve>();
-                    foreach (Autodesk.Revit.DB.Curve crv in ds_2dedges)
-                    {
-                        // convert DesignScript trim loops to 3DM
-                        Rhino.Geometry.Curve rh_crv = Convert_CurvesTo3dm(crv.ToNurbsCurve());
-                        rh_2dcrvs.Add(rh_crv);
-                    }
-
-                    // get nurbs surface geometry
-                    Autodesk.Revit.DB.NurbsSurface ds_nurbssurface = surf.ToNurbsSurface();
-                    Rhino.Geometry.NurbsSurface rh_nurbssurface = Convert_SurfacesTo3dm(ds_nurbssurface);
-
-                    // face
-                    Rhino.Geometry.Brep rh_face = new Rhino.Geometry.Brep();
-
-                    // add surface
-                    rh_face.AddSurface(rh_nurbssurface);
-
-                    // join perimeter curves into polycurve loops
-                    List<Rhino.Geometry.PolyCurve> rh_3dloops = JoinPerimeterCurves(rh_3dcrvs);
-                    List<Rhino.Geometry.PolyCurve> rh_2dloops = JoinPerimeterCurves(rh_2dcrvs);
-
-                    // sort all edge curves based on inner/outer loops
-                    clsRhinoBrepUtils m_sortededges = new clsRhinoBrepUtils(rh_2dloops, rh_3dloops, rh_nurbssurface);
-                    rh_2dcrvs = m_sortededges.Curve2DSegments;
-                    rh_3dcrvs = m_sortededges.Curve3DSegments;
-                    rh_2dloops = m_sortededges.Curve2DLoops;
-                    rh_3dloops = m_sortededges.Curve3DLoops;
-
-                    // add vertices to brep face
-                    try
-                    {
-                        foreach (Rhino.Geometry.Curve c in rh_3dcrvs)
-                        {
-                            Point3d pt = c.PointAtStart;
-                            rh_face.Vertices.Add(pt, 0.0);
-                        }
-                    }
-                    catch { }
-
-                    // add edges to brep face
-                    try
-                    {
-                        int m_segindex = 0;
-                        foreach (Rhino.Geometry.PolyCurve pc in rh_3dloops)
-                        {
-                            int start = m_segindex;
-                            int end;
-                            for (int i = 0; i < pc.SegmentCount; i++)
-                            {
-                                if (i + 1 > pc.SegmentCount - 1)
-                                {
-                                    start = m_segindex;
-                                    end = m_segindex - (pc.SegmentCount - 1);
-                                }
-                                else
-                                {
-                                    start = m_segindex;
-                                    end = m_segindex + 1;
-                                }
-
-                                // add curves
-                                rh_face.AddEdgeCurve(rh_3dcrvs[m_segindex]);
-
-                                // add edge
-                                rh_face.Edges.Add(start, end, m_segindex, 0.0);
-
-                                m_segindex++;
-                            }
-                        }
-                    }
-                    catch { }
-
-                    //add trim curves to brep face
-                    try
-                    {
-                        foreach (Rhino.Geometry.Curve c in rh_2dcrvs)
-                        {
-                            // add curve
-                            rh_face.AddTrimCurve(c);
-                        }
-                    }
-                    catch { }
-
-                    // add the face
-                    rh_face.Faces.Add(0);
-
-                    // add trims & loops
-                    try
-                    {
-                        int m_segindex = 0;
-                        int m_loopindex = 0;
-                        foreach (Rhino.Geometry.PolyCurve pc in rh_3dloops)
-                        {
-                            BrepLoop m_loop = null;
-                            if (m_loopindex == rh_3dloops.Count - 1)
-                            {
-                                m_loop = rh_face.Loops.Add(BrepLoopType.Outer, rh_face.Faces[0]);
-                            }
-                            else
-                            {
-                                m_loop = rh_face.Loops.Add(BrepLoopType.Inner, rh_face.Faces[0]);
-                            }
-
-                            for (int i = 0; i < pc.SegmentCount; i++)
-                            {
-                                BrepEdge m_edge = rh_face.Edges[m_segindex];
-                                bool rev3d = false;
-
-                                // make new trim
-                                BrepTrim m_trim = rh_face.Trims.Add(m_edge, rev3d, m_loop, m_segindex);
-                                m_trim.TrimType = BrepTrimType.Boundary;
-                                m_trim.SetTolerances(0.0, 0.0);
-
-                                m_segindex++;
-                            }
-                            m_loopindex++;
-                        }
-                    }
-                    catch { }
-
-                    // add face to brep
-                    rh_brep.Append(rh_face);
-                }
-
-                // Rhino Brep
-                if (rh_brep.Surfaces.Count > 0 || rh_brep.Faces.Count > 0)
-                {
-                    return rh_brep;
-                }
-                else
-                {
-                    return null;
-                }
-
-            }
-            catch { return null; }
-        }
-
-        /// <summary>
-        /// Converts DesignScript meshes to Rhino meshes
-        /// </summary>
-        /// <param name="ds_mesh">DesignScript mesh</param>
-        /// <returns>Rhino mesh</returns>
-        public Rhino.Geometry.Mesh Convert_MeshTo3dm(Autodesk.Revit.DB.Mesh ds_mesh)
-        {
-            try
-            {
-                // DesignScript mesh components
-                Autodesk.Revit.DB.Point[] ds_verts = ds_mesh.VertexPositions;
-                IndexGroup[] ds_faces = ds_mesh.FaceIndices;
-
-                // Rhino Mesh
-                Rhino.Geometry.Mesh rh_mesh = new Rhino.Geometry.Mesh();
-
-                // Populate vertices
-                foreach (Autodesk.Revit.DB.Point pt in ds_verts)
-                {
-                    double x = pt.X;
-                    double y = pt.Y;
-                    double z = pt.Z;
-                    rh_mesh.Vertices.Add(new Point3d(x, y, z));
-                }
-
-                // Populate faces
-                foreach (Autodesk.Revit.DB.IndexGroup ig in ds_faces)
-                {
-                    // 3-point face (Triangle)
-                    if (ig.Count == 3)
-                    {
-                        int A = (int)ig.A;
-                        int B = (int)ig.B;
-                        int C = (int)ig.C;
-                        rh_mesh.Faces.AddFace(A, B, C);
-                    }
-                    // 4-point face (Quad)
-                    if (ig.Count == 4)
-                    {
-                        int A = (int)ig.A;
-                        int B = (int)ig.B;
-                        int C = (int)ig.C;
-                        int D = (int)ig.D;
-                        rh_mesh.Faces.AddFace(A, B, C, D);
-                    }
-                }
-                return rh_mesh;
-            }
-            catch { return null; }
-        }
-
-        /// <summary>
-        /// Converts DesignScript Line curves to Rhino Line curves
-        /// </summary>
-        /// <param name="ds_ln">DesignScript Line</param>
-        /// <returns>Rhino Line Curve</returns>
-        private Rhino.Geometry.LineCurve Convert_LineTo3dm(Autodesk.Revit.DB.Line ds_ln)
-        {
-            try
-            {
-                // point 1
-                double x1 = Math.Round(ds_ln.StartPoint.X, 3);
-                double y1 = Math.Round(ds_ln.StartPoint.Y, 3);
-                double z1 = Math.Round(ds_ln.StartPoint.Z, 3);
-                Point3d pt1 = new Point3d(x1, y1, z1);
-
-                // point 2
-                double x2 = Math.Round(ds_ln.EndPoint.X, 3);
-                double y2 = Math.Round(ds_ln.EndPoint.Y, 3);
-                double z2 = Math.Round(ds_ln.EndPoint.Z, 3);
-                Point3d pt2 = new Point3d(x2, y2, z2);
-
-                // rhino line
-                Rhino.Geometry.Line rh_ln = new Rhino.Geometry.Line(pt1, pt2);
-                Rhino.Geometry.LineCurve rh_lncrv = new Rhino.Geometry.LineCurve(rh_ln);
-
-                return rh_lncrv;
-            }
-            catch { return null; }
-        }
-
-        /// <summary>
-        /// Converts DesignScript Arc curves to Rhino Arc curves
-        /// </summary>
-        /// <param name="ds_arc">DesignScript Arc</param>
-        /// <returns>Rhino Arc curve</returns>
-        private Rhino.Geometry.ArcCurve Convert_ArcTo3dm(Autodesk.Revit.DB.Arc ds_arc)
-        {
-            try
-            {
-                // point 1
-                double x1 = Math.Round(ds_arc.StartPoint.X, 3);
-                double y1 = Math.Round(ds_arc.StartPoint.Y, 3);
-                double z1 = Math.Round(ds_arc.StartPoint.Z, 3);
-                Point3d startpt = new Point3d(x1, y1, z1);
-
-                // point 2
-                double x2 = Math.Round(ds_arc.EndPoint.X, 3);
-                double y2 = Math.Round(ds_arc.EndPoint.Y, 3);
-                double z2 = Math.Round(ds_arc.EndPoint.Z, 3);
-                Point3d endpt = new Point3d(x2, y2, z2);
-
-                // middle point
-                double x3 = Math.Round(ds_arc.PointAtParameter(0.5).X, 3);
-                double y3 = Math.Round(ds_arc.PointAtParameter(0.5).Y, 3);
-                double z3 = Math.Round(ds_arc.PointAtParameter(0.5).Z, 3);
-                Point3d midpt = new Point3d(x3, y3, z3);
-
-                // rhino line
-                Rhino.Geometry.Arc rh_arc = new Rhino.Geometry.Arc(startpt, midpt, endpt);
-                Rhino.Geometry.ArcCurve rh_arccrv = new Rhino.Geometry.ArcCurve(rh_arc);
-
-                return rh_arccrv;
-            }
-            catch { return null; }
-        }
-
-        /// <summary>
-        /// Converts DesignScript Nurbs curves to Rhino Nurbs curves
-        /// </summary>
-        /// <param name="ds_nurbs">DesignScript NurbsCurve</param>
-        /// <returns>Rhino Nurbs curve</returns>
-        private Rhino.Geometry.NurbsCurve Convert_NurbsCurveTo3dm(Autodesk.Revit.DB.NurbsCurve ds_nurbs)
-        {
-            try
-            {
-                // get points & knots
-                Autodesk.Revit.DB.Point[] nurbspts = ds_nurbs.ControlPoints();
-                double[] nurbsweights = ds_nurbs.Weights();
-                double[] nurbsknots = ds_nurbs.Knots();
-                int nurbsdegree = ds_nurbs.Degree;
-
-                // list for weights
-                List<Rhino.Geometry.Point3d> rh_pts = new List<Rhino.Geometry.Point3d>();
-
-                // points
-                for (int i = 0; i < nurbspts.Length; i++)
-                {
-                    Autodesk.Revit.DB.Point nurbspt = nurbspts[i];
-                    double x = Math.Round(nurbspt.X, 3);
-                    double y = Math.Round(nurbspt.Y, 3);
-                    double z = Math.Round(nurbspt.Z, 3);
-
-                    Rhino.Geometry.Point3d rh_pt = new Rhino.Geometry.Point3d(x, y, z);
-                    rh_pts.Add(rh_pt);
-                }
-
-                // create new nurbs curve
-                Rhino.Geometry.NurbsCurve rh_nurbscrv = Rhino.Geometry.NurbsCurve.Create(false, nurbsdegree, rh_pts);
-
-                // add knots
-                for (int i = 1; i < nurbsknots.Length - 1; i++)
-                {
-                    rh_nurbscrv.Knots[i - 1] = nurbsknots[i];
-                }
-
-                // add weights
-                //for (int i = 0; i < nurbsweights.Length; i++)
-                //{
-                //  NurbsCurvePointList cpts = rh_nurbscrv.Points;
-                //  cpts[i] = nurbsweights[i];
-
-                //}
-
-                return rh_nurbscrv;
-            }
-            catch { return null; }
-        }
-
-        /// <summary>
-        /// Convert DesignScript Rectangles to Rhino Rectangle3D
-        /// </summary>
-        /// <param name="ds_rect"></param>
-        /// <returns></returns>
-        private Rhino.Geometry.Rectangle3d Convert_RectangleTo3dm(Autodesk.Revit.DB.Rectangle ds_rect)
-        {
-            try
-            {
-                //plane def
-                Rhino.Geometry.Point3d m_origin = new Point3d(ds_rect.BasePlane().Origin.X, ds_rect.BasePlane().Origin.Y, ds_rect.BasePlane().Origin.Z);
-                Rhino.Geometry.Vector3d m_xaxis = new Vector3d(ds_rect.BasePlane().XAxis.X, ds_rect.BasePlane().XAxis.Y, ds_rect.BasePlane().XAxis.Z);
-                Rhino.Geometry.Vector3d m_yaxis = new Vector3d(ds_rect.BasePlane().YAxis.X, ds_rect.BasePlane().YAxis.Y, ds_rect.BasePlane().YAxis.Z);
-                Rhino.Geometry.Plane m_plane = new Rhino.Geometry.Plane(m_origin, m_xaxis, m_yaxis);
-
-                Rhino.Geometry.Rectangle3d rh_rect = new Rhino.Geometry.Rectangle3d(m_plane, ds_rect.Width, ds_rect.Height);
-
-                return rh_rect;
-            }
-            catch { return new Rhino.Geometry.Rectangle3d(); }
-        }
-
-        /// <summary>
-        /// Converts DesignScript polycurves to Rhino polycurves
-        /// </summary>
-        /// <param name="ds_polycrv"></param>
-        /// <returns></returns>
-        private Rhino.Geometry.PolyCurve Convert_PolyCurveTo3dm(Autodesk.Revit.DB.PolyCurve ds_polycrv)
-        {
-            try
-            {
-                Rhino.Geometry.PolyCurve rh_polycrv = new Rhino.Geometry.PolyCurve();
-
-                foreach (Autodesk.Revit.DB.Curve crv in ds_polycrv.Curves())
-                {
-
-                    Autodesk.Revit.DB.NurbsCurve ds_nurbs = crv.ToNurbsCurve();
-                    Rhino.Geometry.NurbsCurve rh_nurbs = Convert_NurbsCurveTo3dm(ds_nurbs);
-                    rh_polycrv.Append(rh_nurbs);
-
-                    // something is busted with DesignScript... can't perform tests to see if a curve is a line, arc, etc.
-                    //////// is line?
-                    //////Autodesk.Revit.DB.Line lntest = null;
-
-                    //////try
-                    //////{
-                    //////  lntest = crv as Autodesk.Revit.DB.Line;
-                    //////}
-                    //////catch { }
-                    //////if (crv is Autodesk.Revit.DB.Line || lntest != null)
-                    //////{
-                    //////  // Rhino line curve
-                    //////  Rhino.Geometry.LineCurve rh_lncrv = Convert_LineTo3dm(crv as Autodesk.Revit.DB.Line);
-
-                    //////  // add to rhino curves list
-                    //////  rh_polycrv.Append(rh_lncrv);
-                    //////}
-
-                    //////// is arc?
-                    //////Autodesk.Revit.DB.Arc arctest = null;
-                    //////try
-                    //////{
-                    //////  arctest = crv as Autodesk.Revit.DB.Arc;
-                    //////}
-                    //////catch { }
-                    //////if (crv is Autodesk.Revit.DB.Arc || arctest != null)
-                    //////{
-                    //////  // rhino arc curve
-                    //////  Rhino.Geometry.ArcCurve rh_arccrv = Convert_ArcTo3dm(crv as Autodesk.Revit.DB.Arc);
-
-                    //////  // add to rhino curves list
-                    //////  rh_polycrv.Append(rh_arccrv);
-                    //////}
-
-                    //////// is NurbsCurve?
-                    //////// is arc?
-                    //////Autodesk.Revit.DB.NurbsCurve nurbstest = null;
-                    //////try
-                    //////{
-                    //////  nurbstest = crv as Autodesk.Revit.DB.NurbsCurve;
-                    //////}
-                    //////catch { }
-                    //////if (crv is Autodesk.Revit.DB.NurbsCurve || nurbstest != null)
-                    //////{
-                    //////  // rhino nurbs curve
-                    //////  Rhino.Geometry.NurbsCurve rh_nurbscrv = Convert_NurbsCurveTo3dm(crv as Autodesk.Revit.DB.NurbsCurve);
-
-                    //////  // add to rhino curves list
-                    //////  rh_polycrv.Append(rh_nurbscrv);
-                    //////}
-                }
-                return rh_polycrv;
-            }
-            catch { return null; }
-        }
-        #endregion
+       
 
         #region "Private Members"
         /// <summary>
