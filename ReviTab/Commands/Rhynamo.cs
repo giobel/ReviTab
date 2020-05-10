@@ -8,6 +8,7 @@ using Rhino.FileIO;
 using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using Rhino.Collections;
+using System.Diagnostics;
 
 namespace Rhynamo
 {
@@ -67,7 +68,7 @@ namespace Rhynamo
         }
 
 
-        public List<Autodesk.Revit.DB.TextNote> RhinoTextToRevitNote(Document doc, List<Rhino.Geometry.GeometryBase> rh_TextGeometry)
+        public List<Autodesk.Revit.DB.TextNote> RhinoTextToRevitNote(Document doc, List<Rhino.Geometry.TextEntity> rh_Text)
         {
             List<DetailCurve> ds_lines = new List<DetailCurve>();
 
@@ -77,10 +78,8 @@ namespace Rhynamo
             noteOptions.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
             
 
-            foreach (Rhino.Geometry.GeometryBase textGeo in rh_TextGeometry)
+            foreach (Rhino.Geometry.TextEntity text in rh_Text)
             {
-                Rhino.Geometry.TextEntity text = textGeo as TextEntity;
-
                 double noteWidth = text.FormatWidth;
 
                 XYZ position = new XYZ( text.Plane.Origin.X/scale, text.Plane.Origin.Y/scale, 0);
@@ -91,6 +90,49 @@ namespace Rhynamo
                 return null;
         }
 
+        public List<Autodesk.Revit.DB.Dimension> RhinoToRevitDimension(Document doc, List<Rhino.Geometry.LinearDimension> rh_Dims)
+        {
+            List<Autodesk.Revit.DB.Dimension> ds_dimensions = new List<Autodesk.Revit.DB.Dimension>();
+
+            foreach (Rhino.Geometry.LinearDimension rhinoDim in rh_Dims)
+            {
+
+                XYZ dimPlaneOrigin = Convert_PointsToDS(rhinoDim.Plane.Origin);
+
+                XYZ extensionLine1End = Convert_PointsToDS(rhinoDim.ExtensionLine1End);
+                XYZ extensionLine2End = Convert_PointsToDS(rhinoDim.ExtensionLine2End);
+
+                XYZ arrowhead1 = Convert_PointsToDS(rhinoDim.Arrowhead1End);
+                XYZ arrowhead2 = Convert_PointsToDS(rhinoDim.Arrowhead2End);
+
+                Autodesk.Revit.DB.Line l = Autodesk.Revit.DB.Line.CreateBound(dimPlaneOrigin + arrowhead1, dimPlaneOrigin + arrowhead2);
+
+                Debug.WriteLine($"{rhinoDim.PlainText}");
+                Debug.WriteLine($"Plane Origin: {rhinoDim.Plane.Origin.X},{rhinoDim.Plane.Origin.Y}");
+                Debug.WriteLine($"Plane Axis: {rhinoDim.Plane.XAxis},{rhinoDim.Plane.YAxis},{rhinoDim.Plane.ZAxis}"); 
+                
+                Debug.WriteLine($"Extension line 1: {rhinoDim.ExtensionLine1End.X},{rhinoDim.ExtensionLine1End.Y}");                
+                Debug.WriteLine($"Extension line 2: {rhinoDim.ExtensionLine2End.X},{rhinoDim.ExtensionLine2End.Y}");
+
+                Debug.WriteLine($"Arrowhead line 1: {rhinoDim.Arrowhead1End.X},{rhinoDim.Arrowhead1End.Y}");
+                Debug.WriteLine($"Arrowhead line 2: {rhinoDim.Arrowhead2End.X},{rhinoDim.Arrowhead2End.Y}");
+
+
+                Debug.WriteLine("****");
+
+                DetailCurve dc = doc.Create.NewDetailCurve(doc.ActiveView, l);
+
+                Autodesk.Revit.DB.Curve crv = dc.GeometryCurve;
+
+                ReferenceArray references = new ReferenceArray();
+                references.Append(crv.GetEndPointReference(0));
+                
+                references.Append(crv.GetEndPointReference(1));
+                
+                Autodesk.Revit.DB.Dimension dimension = doc.Create.NewDimension(doc.ActiveView, l, references);
+            }
+            return null;
+        }
 
         /// <summary>
         /// Converts Rhino points to DesignScript points
@@ -105,9 +147,9 @@ namespace Rhynamo
                 foreach (Rhino.Geometry.Point pt in rh_points)
                 {
                     // get x, y, z coordinates
-                    double x = pt.Location.X;
-                    double y = pt.Location.Y;
-                    double z = pt.Location.Z;
+                    double x = pt.Location.X/scale;
+                    double y = pt.Location.Y/scale;
+                    double z = pt.Location.Z/scale;
 
                     try
                     {
@@ -122,6 +164,53 @@ namespace Rhynamo
             }
             catch { return null; }
         }
+
+        /// <summary>
+        /// Converts Rhino 2dpoint to DesignScript points
+        /// </summary>
+        /// <param name="rh_points">list of Rhino points</param>
+        /// <returns>List of DesignScript points</returns>
+        public XYZ Convert_PointsToDS(Rhino.Geometry.Point2d pt)
+        {
+            try
+            {
+                XYZ ds_pt = null;
+                    // get x, y, z coordinates
+                    double x = pt.X/scale;
+                    double y = pt.Y/scale;
+                    double z = 0;
+                
+                    ds_pt = new XYZ(x, y, z);
+                        
+                return ds_pt;
+            }
+            catch { return null; }
+        }
+
+
+        /// <summary>
+        /// Converts Rhino 3dpoint to DesignScript points
+        /// </summary>
+        /// <param name="rh_points">list of Rhino points</param>
+        /// <returns>List of DesignScript points</returns>
+        public XYZ Convert_PointsToDS(Rhino.Geometry.Point3d pt)
+        {
+            try
+            {
+                XYZ ds_pt = null;
+                // get x, y, z coordinates
+                double x = pt.X / scale;
+                double y = pt.Y / scale;
+                double z = 0;
+
+                ds_pt = new XYZ(x, y, z);
+
+                return ds_pt;
+            }
+            catch { return null; }
+        }
+
+
 
         /*
         #region "Rhino to DesignScript"

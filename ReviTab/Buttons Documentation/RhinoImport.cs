@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Rhino.FileIO;
 using Rhino.Geometry;
 using System.Linq;
+using System.Diagnostics;
 #endregion
 
 namespace ReviTab
@@ -37,7 +38,9 @@ namespace ReviTab
             
             List<Rhino.Geometry.LineCurve> rh_lines = new List<Rhino.Geometry.LineCurve>();
 
-            List<Rhino.Geometry.GeometryBase> rh_text = new List<GeometryBase>();
+            List<Rhino.Geometry.TextEntity> rh_text = new List<TextEntity>();
+
+            List<Rhino.Geometry.LinearDimension> rh_linearDimension = new List<LinearDimension>();
 
             foreach (var item in rhinoObjects)
             {
@@ -53,13 +56,19 @@ namespace ReviTab
 
                 if (geo is Rhino.Geometry.TextEntity)
                 {
-                    //TextEntity te = geo as Rhino.Geometry.TextEntity;
-                    rh_text.Add(geo);
+                    TextEntity te = geo as Rhino.Geometry.TextEntity;
+                    rh_text.Add(te);
+                }
+
+                if (geo is Rhino.Geometry.LinearDimension)
+                {
+                    LinearDimension ld = geo as Rhino.Geometry.LinearDimension;
+                    rh_linearDimension.Add(ld);
                 }
 
             }
 
-            TaskDialog.Show("r", rh_text.Count.ToString());
+            //TaskDialog.Show("r", rh_linearDimension.Count.ToString());
 
             Rhynamo.clsGeometryConversionUtils rh_ds = new Rhynamo.clsGeometryConversionUtils();
 
@@ -70,6 +79,10 @@ namespace ReviTab
                 rh_ds.Convert_rhLinesToRevitDetailCurve(doc, rh_lines, "3 Arup Continuous Line");
 
                 rh_ds.RhinoTextToRevitNote(doc, rh_text);
+
+                Debug.WriteLine("Draw dimensions");
+
+                rh_ds.RhinoToRevitDimension(doc, rh_linearDimension);
                 
                 t.Commit();
             }
