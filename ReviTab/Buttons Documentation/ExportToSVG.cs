@@ -14,7 +14,7 @@ using Autodesk.Revit.UI.Selection;
 
 namespace ReviTab
 {
-    [Transaction(TransactionMode.ReadOnly)]
+    [Transaction(TransactionMode.Manual)]
 
     public class ExportToSVG : IExternalCommand
     {

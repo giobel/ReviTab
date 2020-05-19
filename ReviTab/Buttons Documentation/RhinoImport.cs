@@ -42,6 +42,9 @@ namespace ReviTab
 
             List<Rhino.Geometry.LinearDimension> rh_linearDimension = new List<LinearDimension>();
 
+            List<Rhino.Geometry.Leader> rh_LeaderText = new List<Rhino.Geometry.Leader>();
+
+
             foreach (var item in rhinoObjects)
             {
                 GeometryBase geo = item.Geometry;
@@ -66,6 +69,12 @@ namespace ReviTab
                     rh_linearDimension.Add(ld);
                 }
 
+                if (geo is Rhino.Geometry.Leader)
+                {
+                    Rhino.Geometry.Leader leader = geo as Rhino.Geometry.Leader;
+                    rh_LeaderText.Add(leader);
+                }
+
             }
 
             //TaskDialog.Show("r", rh_linearDimension.Count.ToString());
@@ -79,6 +88,8 @@ namespace ReviTab
                 rh_ds.Convert_rhLinesToRevitDetailCurve(doc, rh_lines, "3 Arup Continuous Line");
 
                 rh_ds.RhinoTextToRevitNote(doc, rh_text);
+
+                rh_ds.RhinoTextToRevitNote(doc, rh_LeaderText);
 
                 Debug.WriteLine("Draw dimensions");
 

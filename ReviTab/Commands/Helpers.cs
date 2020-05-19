@@ -926,7 +926,7 @@ namespace ReviTab
 
             List<string> selectedTBlocks = command.Split(' ').ToList();
 
-            IEnumerable<Element> allTBlocks = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements();
+            IEnumerable<Element> allTBlocks = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks).WhereElementIsNotElementType().ToElements();
 
             ICollection<ElementId> eid = new List<ElementId>();
 
@@ -938,7 +938,7 @@ namespace ReviTab
                     {
                         eid.Add(tblock.Id);
                     }
-                    else if (selectedTBlocks.Contains(tblock.LookupParameter("Sheet Number").Definition.Name))
+                    else if (selectedTBlocks.Contains(tblock.LookupParameter("Sheet Number").AsString()))
                     {
                         eid.Add(tblock.Id);
                     }

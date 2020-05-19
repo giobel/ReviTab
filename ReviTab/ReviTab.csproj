@@ -458,6 +458,8 @@
     <Resource Include="Resources\manage.png" />
     <Resource Include="Resources\airtable.png" />
     <Resource Include="Resources\elementType.png" />
+    <Resource Include="Resources\duplicateSheets.png" />
+    <Resource Include="Resources\alignColumns.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

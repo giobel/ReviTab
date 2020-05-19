@@ -67,7 +67,6 @@ namespace Rhynamo
 
         }
 
-
         public List<Autodesk.Revit.DB.TextNote> RhinoTextToRevitNote(Document doc, List<Rhino.Geometry.TextEntity> rh_Text)
         {
             List<DetailCurve> ds_lines = new List<DetailCurve>();
@@ -90,6 +89,36 @@ namespace Rhynamo
                 return null;
         }
 
+        public List<Autodesk.Revit.DB.TextNote> RhinoTextToRevitNote(Document doc, List<Rhino.Geometry.Leader> rh_Text)
+        {
+            List<DetailCurve> ds_lines = new List<DetailCurve>();
+
+            TextNoteOptions noteOptions = new TextNoteOptions();
+            noteOptions.HorizontalAlignment = HorizontalTextAlignment.Left;
+
+            noteOptions.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
+            
+            foreach (Rhino.Geometry.Leader text in rh_Text)
+            {
+                text.GetBoundingBox(true);
+
+                //ON_3dPoint bbox_min, bbox_max;
+                //leader->GetAnnotationBoundingBox(nullptr, nullptr, 1.0, bbox_min, bbox_max, false);
+                //ON_wString text = leader->PlainText();
+
+                double noteWidth = text.FormatWidth;
+
+                Debug.WriteLine(text.Points2D);
+                Debug.WriteLine(text.PlainText);
+
+                XYZ position = new XYZ(text.Plane.Origin.X / scale, text.Plane.Origin.Y / scale, 0);
+
+                TextNote.Create(doc, doc.ActiveView.Id, position, text.PlainText, noteOptions);
+            }
+
+            return null;
+        }
+
         public List<Autodesk.Revit.DB.Dimension> RhinoToRevitDimension(Document doc, List<Rhino.Geometry.LinearDimension> rh_Dims)
         {
             List<Autodesk.Revit.DB.Dimension> ds_dimensions = new List<Autodesk.Revit.DB.Dimension>();
@@ -103,7 +132,8 @@ namespace Rhynamo
                 XYZ extensionLine2End = Convert_PointsToDS(rhinoDim.ExtensionLine2End);
 
                 XYZ arrowhead1 = Convert_PointsToDS(rhinoDim.Arrowhead1End);
-                XYZ arrowhead2 = Convert_PointsToDS(rhinoDim.Arrowhead2End);
+                XYZ arrowhead2 = Convert_PointsToDS(rhinoDim.Arrowhead2End
+);
 
                 Autodesk.Revit.DB.Line l = Autodesk.Revit.DB.Line.CreateBound(dimPlaneOrigin + arrowhead1, dimPlaneOrigin + arrowhead2);
 
@@ -133,6 +163,8 @@ namespace Rhynamo
             }
             return null;
         }
+
+        
 
         /// <summary>
         /// Converts Rhino points to DesignScript points

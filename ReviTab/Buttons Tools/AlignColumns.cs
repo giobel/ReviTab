@@ -141,7 +141,10 @@ namespace ReviTab
         {
             foreach (XYZ sourcePoint in sourcePoints)
             {
-                if (point.DistanceTo(sourcePoint) < tolerance)
+                //source point Z value is not zero -> wrong distance calculated
+                XYZ projectedPoint = new XYZ(sourcePoint.X, sourcePoint.Y, 0);
+                double distance = point.DistanceTo(projectedPoint);
+                if (distance < tolerance)
                 {
                     return sourcePoint;
                 }
