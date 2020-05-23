@@ -224,11 +224,11 @@
     </Reference>
     <!--SAM-->
     <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'SAM'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'SAM'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Rhino3dmIO, Version=6.25.20114.5270, Culture=neutral, processorArchitecture=MSIL">

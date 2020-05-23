@@ -102,7 +102,7 @@ namespace Rhynamo
 
             foreach (Rhino.Geometry.Leader textLeader in rh_TextLeader)
             {
-
+                textLeader.GetBoundingBox(true);
                 XYZ position = new XYZ(textLeader.Plane.Origin.X / scale, textLeader.Plane.Origin.Y / scale, 0);
 
                 TextNote tn = TextNote.Create(doc, doc.ActiveView.Id, position, textLeader.PlainText, noteOptions);
