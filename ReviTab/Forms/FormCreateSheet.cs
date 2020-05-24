@@ -15,18 +15,32 @@ namespace ReviTab.Forms
         public string SheetNumber { get; set; }
         public string PackageName { get; set; }
         public int Count { get; set; }
-
+        public List<string> Packages { get; set; }
 
         public FormCreateSheet()
         {
             InitializeComponent();
         }
 
+
         private void Ok_btn_Click(object sender, EventArgs e)
         {
             SheetNumber = tBoxSheetNumber.Text;
-            PackageName = tboxPackage.Text;
+            var selectedItem = cboxPackage.SelectedItem;
+            if (null != selectedItem)
+            {
+                PackageName = selectedItem.ToString();
+            }
+            else{
+                PackageName = cboxPackage.Text;
+            }
+
             Count = Int16.Parse(tBoxQuantity.Text);
+        }
+
+        private void FormCreateSheet_Load(object sender, EventArgs e)
+        {
+            cboxPackage.DataSource = Packages;
         }
     }
 }

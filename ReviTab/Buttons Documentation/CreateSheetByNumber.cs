@@ -23,11 +23,23 @@ namespace ReviTab
             UIDocument uidoc = uiapp.ActiveUIDocument;
             
             Document document = uidoc.Document;
-            
+
+            List<string> packageValues = new List<string>();
+
+            ICollection<Element> fecSheets = new FilteredElementCollector(document).OfCategory(BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements();
+
+            foreach (ViewSheet item in fecSheets)
+            {
+                string p = item.LookupParameter("Package").AsString();
+                if (null!=p && !packageValues.Contains(p))
+                {
+                    packageValues.Add(p);
+                }
+            }
 
             using (var form = new FormCreateSheet())
             {
-
+                form.Packages = packageValues;
                 form.ShowDialog();
 
                 //if the user hits cancel just drop out of macro

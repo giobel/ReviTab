@@ -26,7 +26,7 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
+            string path = @"C:\Users\gbrog\Desktop\test.3dm";
 
             File3dm rhinoModel = File3dm.Read(path);
 
@@ -40,9 +40,11 @@ namespace ReviTab
 
             List<Rhino.Geometry.TextEntity> rh_text = new List<TextEntity>();
 
+            List<Rhino.Geometry.Leader> rh_textLeader = new List<Rhino.Geometry.Leader>();
+
             List<Rhino.Geometry.LinearDimension> rh_linearDimension = new List<LinearDimension>();
 
-            List<Rhino.Geometry.Leader> rh_LeaderText = new List<Rhino.Geometry.Leader>();
+            List<Rhino.Geometry.ArcCurve> rh_arc = new List<Rhino.Geometry.ArcCurve>();
 
 
             foreach (var item in rhinoObjects)
@@ -63,18 +65,33 @@ namespace ReviTab
                     rh_text.Add(te);
                 }
 
+
+                if (geo is Rhino.Geometry.Leader)
+                {
+                    rh_textLeader.Add(geo as Rhino.Geometry.Leader);
+
+                    var text = geo as Rhino.Geometry.Leader;
+
+                    TaskDialog.Show("r", text.PlainText);
+                }
+
+                if (geo is Rhino.Geometry.AnnotationBase)
+                {
+                    var text = geo as Rhino.Geometry.AnnotationBase;
+
+                    //TaskDialog.Show("r", text.PlainText);
+                }
+
                 if (geo is Rhino.Geometry.LinearDimension)
                 {
                     LinearDimension ld = geo as Rhino.Geometry.LinearDimension;
                     rh_linearDimension.Add(ld);
                 }
 
-                if (geo is Rhino.Geometry.Leader)
+                if (geo is Rhino.Geometry.ArcCurve)
                 {
-                    Rhino.Geometry.Leader leader = geo as Rhino.Geometry.Leader;
-                    rh_LeaderText.Add(leader);
+                    rh_arc.Add(geo as Rhino.Geometry.ArcCurve);
                 }
-
             }
 
             //TaskDialog.Show("r", rh_linearDimension.Count.ToString());
@@ -89,11 +106,13 @@ namespace ReviTab
 
                 rh_ds.RhinoTextToRevitNote(doc, rh_text);
 
-                rh_ds.RhinoTextToRevitNote(doc, rh_LeaderText);
+                rh_ds.RhinoLeaderToRevitNote(doc, rh_textLeader);
 
                 Debug.WriteLine("Draw dimensions");
 
                 rh_ds.RhinoToRevitDimension(doc, rh_linearDimension);
+
+                rh_ds.Convert_ArcsToDS(doc, rh_arc);
                 
                 t.Commit();
             }

@@ -3,6 +3,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 using System.Collections.Generic;
 using forms = System.Windows.Forms;
 #endregion
@@ -65,8 +66,10 @@ namespace ReviTab
                             Viewport newvp = Viewport.Create(doc, viewSh.Id, activeView.Id, new XYZ(1.38, .974, 0));
                             interrupt = "True";
                             t.Commit();
+                            if (null != viewSh)
+                                uidoc.ActiveView = viewSh;
                         }
-                        catch
+                        catch (Exception ex)
                         {
                             if (sheetNumber == "")
                             {
@@ -82,9 +85,10 @@ namespace ReviTab
                                 //                          form.ShowDialog();
                             }
 
-                            else
+                            else 
                             {
-                                TaskDialog.Show("Warning", "The view is already placed on another sheet");
+                                //TaskDialog.Show("Warning", "The view is already placed on another sheet");
+                                TaskDialog.Show("Warning", ex.Message);
                                 t.RollBack();
                                 //                      form.ShowDialog();
                             }
