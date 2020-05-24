@@ -2345,9 +2345,24 @@ namespace ReviTab
 
             ModelPath modelPath = ModelPathUtils.ConvertUserVisiblePathToModelPath(doc.PathName);
 
-            Dictionary<string, int> linksElements = ListLinks(modelPath);
+            //Dictionary<string, int> linksElements = ListLinks(modelPath);
 
-            Dictionary<string, int> importElements = ListImports(doc);
+            //Dictionary<string, int> importElements = ListImports(doc);
+
+            Dictionary<string, int> linksElements = new Dictionary<string, int>();
+            Dictionary<string, int> importElements = new Dictionary<string, int>();
+            try
+            {
+                modelPath = ModelPathUtils.ConvertUserVisiblePathToModelPath(doc.PathName);
+                linksElements = ListLinks(modelPath);
+                importElements = ListImports(doc);
+            }
+            catch
+            {
+                //list links
+                linksElements.Add("Revit Link", 999);
+                linksElements.Add("CAD Link", 999);
+            }
 
             int countImports = 0;
 

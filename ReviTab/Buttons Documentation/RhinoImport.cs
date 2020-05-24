@@ -38,6 +38,8 @@ namespace ReviTab
             
             List<Rhino.Geometry.LineCurve> rh_lines = new List<Rhino.Geometry.LineCurve>();
 
+            List<Rhino.Geometry.ArcCurve> rh_arc = new List<Rhino.Geometry.ArcCurve>();
+
             List<Rhino.Geometry.TextEntity> rh_text = new List<TextEntity>();
 
             List<Rhino.Geometry.Leader> rh_textLeader = new List<Rhino.Geometry.Leader>();
