@@ -44,9 +44,6 @@ namespace ReviTab
 
             List<Rhino.Geometry.LinearDimension> rh_linearDimension = new List<LinearDimension>();
 
-            List<Rhino.Geometry.ArcCurve> rh_arc = new List<Rhino.Geometry.ArcCurve>();
-
-
             foreach (var item in rhinoObjects)
             {
                 GeometryBase geo = item.Geometry;
@@ -88,10 +85,6 @@ namespace ReviTab
                     rh_linearDimension.Add(ld);
                 }
 
-                if (geo is Rhino.Geometry.ArcCurve)
-                {
-                    rh_arc.Add(geo as Rhino.Geometry.ArcCurve);
-                }
             }
 
             //TaskDialog.Show("r", rh_linearDimension.Count.ToString());
@@ -105,8 +98,6 @@ namespace ReviTab
                 rh_ds.Convert_rhLinesToRevitDetailCurve(doc, rh_lines, "3 Arup Continuous Line");
 
                 rh_ds.RhinoTextToRevitNote(doc, rh_text);
-
-                rh_ds.RhinoLeaderToRevitNote(doc, rh_textLeader);
 
                 Debug.WriteLine("Draw dimensions");
 
