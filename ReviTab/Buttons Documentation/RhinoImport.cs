@@ -26,6 +26,8 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
+            //string path = @"C:\Users\gbrog\Desktop\test.3dm";
+
             string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
 
             File3dm rhinoModel = File3dm.Read(path);
@@ -71,7 +73,6 @@ namespace ReviTab
                     rh_text.Add(te);
                 }
 
-
                 if (geo is Rhino.Geometry.Leader)
                 {
                     rh_textLeader.Add(geo as Rhino.Geometry.Leader);
@@ -94,6 +95,24 @@ namespace ReviTab
                     rh_linearDimension.Add(ld);
                 }
 
+                if (geo is Rhino.Geometry.InstanceReferenceGeometry)
+                {
+                    InstanceReferenceGeometry refGeo = (InstanceReferenceGeometry)geo;
+
+                    // Lookup the parent block definition
+                    System.Guid blockDefId = refGeo.ParentIdefId;
+                    InstanceDefinitionGeometry def = rhinoModel.AllInstanceDefinitions.FindId(blockDefId);
+
+                    // block definition name
+                    string defname = def.Name;
+
+                    // transform data for block instance
+                    Rhino.Geometry.Transform xform = refGeo.Xform;
+
+                    double x = refGeo.Xform.M03;
+                    double y = refGeo.Xform.M13;
+
+                }
             }
 
             //TaskDialog.Show("r", rh_linearDimension.Count.ToString());
