@@ -26,7 +26,7 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            string path = @"C:\Users\gbrog\Desktop\test.3dm";
+            string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
 
             File3dm rhinoModel = File3dm.Read(path);
 
@@ -58,6 +58,13 @@ namespace ReviTab
                     rh_lines.Add(ln);
                 }
 
+                if (geo is Rhino.Geometry.ArcCurve)
+                {
+                    // add curve to list
+                    Rhino.Geometry.ArcCurve arc = geo as Rhino.Geometry.ArcCurve;
+                    rh_arc.Add(arc);
+                }
+
                 if (geo is Rhino.Geometry.TextEntity)
                 {
                     TextEntity te = geo as Rhino.Geometry.TextEntity;
@@ -69,9 +76,9 @@ namespace ReviTab
                 {
                     rh_textLeader.Add(geo as Rhino.Geometry.Leader);
 
-                    var text = geo as Rhino.Geometry.Leader;
+                    //var text = geo as Rhino.Geometry.Leader;
 
-                    TaskDialog.Show("r", text.PlainText);
+                    //TaskDialog.Show("r", text.PlainText);
                 }
 
                 if (geo is Rhino.Geometry.AnnotationBase)
@@ -100,6 +107,8 @@ namespace ReviTab
                 rh_ds.Convert_rhLinesToRevitDetailCurve(doc, rh_lines, "3 Arup Continuous Line");
 
                 rh_ds.RhinoTextToRevitNote(doc, rh_text);
+
+                rh_ds.RhinoLeaderToRevitNote(doc, rh_textLeader);
 
                 Debug.WriteLine("Draw dimensions");
 

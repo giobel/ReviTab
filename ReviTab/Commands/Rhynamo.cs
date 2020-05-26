@@ -103,13 +103,30 @@ namespace Rhynamo
             foreach (Rhino.Geometry.Leader textLeader in rh_TextLeader)
             {
                 textLeader.GetBoundingBox(true);
-                XYZ position = new XYZ(textLeader.Plane.Origin.X / scale, textLeader.Plane.Origin.Y / scale, 0);
 
-                TextNote tn = TextNote.Create(doc, doc.ActiveView.Id, position, textLeader.PlainText, noteOptions);
+                //relative position
+                Point2d[] listPts = textLeader.Points2D;
 
+                double width = textLeader.TextModelWidth;
+                double height = textLeader.TextHeight;
+                //world coord position
+                Point2d position = new Point2d(textLeader.Plane.Origin.X, textLeader.Plane.Origin.Y);
+
+                Point2d positionAdjusted = new Point2d(position.X - width*0.5, position.Y);
+                Point2d elbowAdjusted = position + listPts[1];
+
+                TextNote note = TextNote.Create(doc, doc.ActiveView.Id, Convert_PointsToDS(listPts.Last()+positionAdjusted), textLeader.PlainText, noteOptions);
+
+                Autodesk.Revit.DB.Leader lead = note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
+                note.LeaderLeftAttachment = LeaderAtachement.TopLine;
+                note.LeaderRightAttachment = LeaderAtachement.TopLine;
+                lead.Elbow = Convert_PointsToDS(elbowAdjusted);
+                //note.Width = width/scale;
+
+                lead.End = Convert_PointsToDS(position);
                 //tn.Width = textLeader.FormatWidth / scale;
 
-                ds_tnotes.Add(tn);
+                ds_tnotes.Add(note);
             }
 
             return ds_tnotes;
