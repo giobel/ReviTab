@@ -13,6 +13,7 @@ using Autodesk.Revit.UI;
 
 namespace Rhynamo
 {
+    //Code taken from https://bitbucket.org/archinate/rhynamo/src. Text and Dimension methods added
     class clsGeometryConversionUtils
     {
         public clsGeometryConversionUtils()
@@ -21,6 +22,8 @@ namespace Rhynamo
         }
 
         private double scale = 304.8;
+
+        #region Geometry
 
         /// <summary>
         /// Converts Rhino lines to DesignScript lines.
@@ -66,115 +69,6 @@ namespace Rhynamo
                 }
                 return ds_lines;
 
-        }
-
-        public List<Autodesk.Revit.DB.TextNote> RhinoTextToRevitNote(Document doc, List<Rhino.Geometry.TextEntity> rh_Text)
-        {
-            List<DetailCurve> ds_lines = new List<DetailCurve>();
-
-            TextNoteOptions noteOptions = new TextNoteOptions();
-            noteOptions.HorizontalAlignment = HorizontalTextAlignment.Left;
-
-            noteOptions.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
-            
-
-            foreach (Rhino.Geometry.TextEntity text in rh_Text)
-            {
-                double noteWidth = text.FormatWidth;
-
-                XYZ position = new XYZ( text.Plane.Origin.X/scale, text.Plane.Origin.Y/scale, 0);
-
-                TextNote.Create(doc, doc.ActiveView.Id, position, text.PlainText, noteOptions);
-            }
-
-                return null;
-        }
-
-        public List<Autodesk.Revit.DB.TextNote> RhinoLeaderToRevitNote(Document doc, List<Rhino.Geometry.Leader> rh_TextLeader)
-        {
-            
-            List<TextNote> ds_tnotes = new List<TextNote>();
-
-            TextNoteOptions noteOptions = new TextNoteOptions();
-            noteOptions.HorizontalAlignment = HorizontalTextAlignment.Left;
-
-            noteOptions.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
-
-            foreach (Rhino.Geometry.Leader textLeader in rh_TextLeader)
-            {
-                textLeader.GetBoundingBox(true);
-
-                //relative position
-                Point2d[] listPts = textLeader.Points2D;
-
-                double width = textLeader.TextModelWidth;
-                double height = textLeader.TextHeight;
-                //world coord position
-                Point2d position = new Point2d(textLeader.Plane.Origin.X, textLeader.Plane.Origin.Y);
-
-                Point2d positionAdjusted = new Point2d(position.X - width*0.5, position.Y);
-                Point2d elbowAdjusted = position + listPts[1];
-
-                TextNote note = TextNote.Create(doc, doc.ActiveView.Id, Convert_PointsToDS(listPts.Last()+positionAdjusted), textLeader.PlainText, noteOptions);
-
-                Autodesk.Revit.DB.Leader lead = note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
-                note.LeaderLeftAttachment = LeaderAtachement.TopLine;
-                note.LeaderRightAttachment = LeaderAtachement.TopLine;
-                lead.Elbow = Convert_PointsToDS(elbowAdjusted);
-                //note.Width = width/scale;
-
-                lead.End = Convert_PointsToDS(position);
-                //tn.Width = textLeader.FormatWidth / scale;
-
-                ds_tnotes.Add(note);
-            }
-
-            return ds_tnotes;
-        }
-
-
-        public List<Autodesk.Revit.DB.Dimension> RhinoToRevitDimension(Document doc, List<Rhino.Geometry.LinearDimension> rh_Dims)
-        {
-            List<Autodesk.Revit.DB.Dimension> ds_dimensions = new List<Autodesk.Revit.DB.Dimension>();
-
-            foreach (Rhino.Geometry.LinearDimension rhinoDim in rh_Dims)
-            {
-
-                XYZ dimPlaneOrigin = Convert_PointsToDS(rhinoDim.Plane.Origin);
-
-                XYZ extensionLine1End = Convert_PointsToDS(rhinoDim.ExtensionLine1End);
-                XYZ extensionLine2End = Convert_PointsToDS(rhinoDim.ExtensionLine2End);
-
-                XYZ arrowhead1 = Convert_PointsToDS(rhinoDim.Arrowhead1End);
-                XYZ arrowhead2 = Convert_PointsToDS(rhinoDim.Arrowhead2End);
-
-                Autodesk.Revit.DB.Line l = Autodesk.Revit.DB.Line.CreateBound(dimPlaneOrigin + arrowhead1, dimPlaneOrigin + arrowhead2);
-
-                Debug.WriteLine($"{rhinoDim.PlainText}");
-                Debug.WriteLine($"Plane Origin: {rhinoDim.Plane.Origin.X},{rhinoDim.Plane.Origin.Y}");
-                Debug.WriteLine($"Plane Axis: {rhinoDim.Plane.XAxis},{rhinoDim.Plane.YAxis},{rhinoDim.Plane.ZAxis}"); 
-                
-                Debug.WriteLine($"Extension line 1: {rhinoDim.ExtensionLine1End.X},{rhinoDim.ExtensionLine1End.Y}");                
-                Debug.WriteLine($"Extension line 2: {rhinoDim.ExtensionLine2End.X},{rhinoDim.ExtensionLine2End.Y}");
-
-                Debug.WriteLine($"Arrowhead line 1: {rhinoDim.Arrowhead1End.X},{rhinoDim.Arrowhead1End.Y}");
-                Debug.WriteLine($"Arrowhead line 2: {rhinoDim.Arrowhead2End.X},{rhinoDim.Arrowhead2End.Y}");
-
-
-                Debug.WriteLine("****");
-
-                DetailCurve dc = doc.Create.NewDetailCurve(doc.ActiveView, l);
-
-                Autodesk.Revit.DB.Curve crv = dc.GeometryCurve;
-
-                ReferenceArray references = new ReferenceArray();
-                references.Append(crv.GetEndPointReference(0));
-                
-                references.Append(crv.GetEndPointReference(1));
-                
-                Autodesk.Revit.DB.Dimension dimension = doc.Create.NewDimension(doc.ActiveView, l, references);
-            }
-            return null;
         }
 
         /// <summary>
@@ -229,7 +123,6 @@ namespace Rhynamo
             }
             catch { return null; }
         }
-
 
         /// <summary>
         /// Converts Rhino 3dpoint to DesignScript points
@@ -310,6 +203,120 @@ namespace Rhynamo
             }
             catch { return null; }
         }
+
+        #endregion
+
+
+        #region Text and Dimension
+
+        public List<Autodesk.Revit.DB.TextNote> RhinoTextToRevitNote(Document doc, List<Rhino.Geometry.TextEntity> rh_Text)
+        {
+            List<DetailCurve> ds_lines = new List<DetailCurve>();
+
+            TextNoteOptions noteOptions = new TextNoteOptions();
+            noteOptions.HorizontalAlignment = HorizontalTextAlignment.Left;
+
+            noteOptions.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
+
+
+            foreach (Rhino.Geometry.TextEntity text in rh_Text)
+            {
+                double noteWidth = text.FormatWidth;
+
+                XYZ position = new XYZ(text.Plane.Origin.X / scale, text.Plane.Origin.Y / scale, 0);
+
+                TextNote.Create(doc, doc.ActiveView.Id, position, text.PlainText, noteOptions);
+            }
+
+            return null;
+        }
+
+        public List<Autodesk.Revit.DB.TextNote> RhinoLeaderToRevitNote(Document doc, List<Rhino.Geometry.Leader> rh_TextLeader)
+        {
+
+            List<TextNote> ds_tnotes = new List<TextNote>();
+
+            TextNoteOptions noteOptions = new TextNoteOptions();
+            noteOptions.HorizontalAlignment = HorizontalTextAlignment.Left;
+
+            noteOptions.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
+
+            foreach (Rhino.Geometry.Leader textLeader in rh_TextLeader)
+            {
+                textLeader.GetBoundingBox(true);
+
+                //relative position
+                Point2d[] listPts = textLeader.Points2D;
+
+                double width = textLeader.TextModelWidth;
+                double height = textLeader.TextHeight;
+                //world coord position
+                Point2d position = new Point2d(textLeader.Plane.Origin.X, textLeader.Plane.Origin.Y);
+
+                Point2d positionAdjusted = new Point2d(position.X - width * 0.5, position.Y);
+                Point2d elbowAdjusted = position + listPts[1];
+
+                TextNote note = TextNote.Create(doc, doc.ActiveView.Id, Convert_PointsToDS(listPts.Last() + positionAdjusted), textLeader.PlainText, noteOptions);
+
+                Autodesk.Revit.DB.Leader lead = note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
+                note.LeaderLeftAttachment = LeaderAtachement.TopLine;
+                note.LeaderRightAttachment = LeaderAtachement.TopLine;
+                lead.Elbow = Convert_PointsToDS(elbowAdjusted);
+                //note.Width = width/scale;
+
+                lead.End = Convert_PointsToDS(position);
+                //tn.Width = textLeader.FormatWidth / scale;
+
+                ds_tnotes.Add(note);
+            }
+
+            return ds_tnotes;
+        }
+        
+        public List<Autodesk.Revit.DB.Dimension> RhinoToRevitDimension(Document doc, List<Rhino.Geometry.LinearDimension> rh_Dims)
+        {
+            List<Autodesk.Revit.DB.Dimension> ds_dimensions = new List<Autodesk.Revit.DB.Dimension>();
+
+            foreach (Rhino.Geometry.LinearDimension rhinoDim in rh_Dims)
+            {
+
+                XYZ dimPlaneOrigin = Convert_PointsToDS(rhinoDim.Plane.Origin);
+
+                XYZ extensionLine1End = Convert_PointsToDS(rhinoDim.ExtensionLine1End);
+                XYZ extensionLine2End = Convert_PointsToDS(rhinoDim.ExtensionLine2End);
+
+                XYZ arrowhead1 = Convert_PointsToDS(rhinoDim.Arrowhead1End);
+                XYZ arrowhead2 = Convert_PointsToDS(rhinoDim.Arrowhead2End);
+
+                Autodesk.Revit.DB.Line l = Autodesk.Revit.DB.Line.CreateBound(dimPlaneOrigin + arrowhead1, dimPlaneOrigin + arrowhead2);
+
+                Debug.WriteLine($"{rhinoDim.PlainText}");
+                Debug.WriteLine($"Plane Origin: {rhinoDim.Plane.Origin.X},{rhinoDim.Plane.Origin.Y}");
+                Debug.WriteLine($"Plane Axis: {rhinoDim.Plane.XAxis},{rhinoDim.Plane.YAxis},{rhinoDim.Plane.ZAxis}");
+
+                Debug.WriteLine($"Extension line 1: {rhinoDim.ExtensionLine1End.X},{rhinoDim.ExtensionLine1End.Y}");
+                Debug.WriteLine($"Extension line 2: {rhinoDim.ExtensionLine2End.X},{rhinoDim.ExtensionLine2End.Y}");
+
+                Debug.WriteLine($"Arrowhead line 1: {rhinoDim.Arrowhead1End.X},{rhinoDim.Arrowhead1End.Y}");
+                Debug.WriteLine($"Arrowhead line 2: {rhinoDim.Arrowhead2End.X},{rhinoDim.Arrowhead2End.Y}");
+
+
+                Debug.WriteLine("****");
+
+                DetailCurve dc = doc.Create.NewDetailCurve(doc.ActiveView, l);
+
+                Autodesk.Revit.DB.Curve crv = dc.GeometryCurve;
+
+                ReferenceArray references = new ReferenceArray();
+                references.Append(crv.GetEndPointReference(0));
+
+                references.Append(crv.GetEndPointReference(1));
+
+                Autodesk.Revit.DB.Dimension dimension = doc.Create.NewDimension(doc.ActiveView, l, references);
+            }
+            return null;
+        }
+        #endregion
 
         /*
         #region "Rhino to DesignScript"
@@ -629,52 +636,7 @@ namespace Rhynamo
             catch { return null; }
         }
 
-        /// <summary>
-        /// Converts Rhino Polyline to DesignScript Polyline
-        /// </summary>
-        /// <param name="rh_polyline">Rhino Polyline</param>
-        /// <returns>DesignScript Polyline</returns>
-        public List<Autodesk.Revit.DB.PolyCurve> Convert_PolylineToDS(List<Rhino.Geometry.PolylineCurve> rh_polyline)
-        {
-            try
-            {
-                List<Autodesk.Revit.DB.PolyCurve> ds_polycurves = new List<Autodesk.Revit.DB.PolyCurve>();
 
-                foreach (Rhino.Geometry.PolylineCurve pline in rh_polyline)
-                {
-                    List<Autodesk.Revit.DB.Curve> ds_segments = new List<Autodesk.Revit.DB.Curve>();
-                    for (int i = 0; i < pline.PointCount - 1; i++)
-                    {
-                        // start point
-                        double x1 = pline.Point(i).X;
-                        double y1 = pline.Point(i).Y;
-                        double z1 = pline.Point(i).Z;
-
-                        // end point
-                        double x2 = pline.Point(i + 1).X;
-                        double y2 = pline.Point(i + 1).Y;
-                        double z2 = pline.Point(i + 1).Z;
-
-                        // line segment
-                        Autodesk.Revit.DB.Point ds_pt1 = Autodesk.Revit.DB.Point.ByCoordinates(x1, y1, z1);
-                        Autodesk.Revit.DB.Point ds_pt2 = Autodesk.Revit.DB.Point.ByCoordinates(x2, y2, z2);
-                        Autodesk.Revit.DB.Line ds_line = Autodesk.Revit.DB.Line.ByStartPointEndPoint(ds_pt1, ds_pt2);
-                        ds_segments.Add(ds_line);
-                    }
-
-                    try
-                    {
-                        // Create DesignScript polycurve
-                        Autodesk.Revit.DB.PolyCurve ds_polycurve = Autodesk.Revit.DB.PolyCurve.ByJoinedCurves(ds_segments);
-                        ds_polycurves.Add(ds_polycurve);
-                    }
-                    catch { ds_polycurves.Add(null); }
-                }
-
-                return ds_polycurves;
-            }
-            catch { return null; }
-        }
 
         /// <summary>
         /// Converts Rhino PolyCurve to DesignScript PolyCurve

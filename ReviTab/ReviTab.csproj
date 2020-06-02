@@ -233,6 +233,7 @@
     </Reference>
     <Reference Include="Rhino3dmIO, Version=6.25.20114.5270, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\lib\net45\Rhino3dmIO.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <!-- MULTIVERSION REVIT API REFERENCES END -->
     <Reference Include="System" />
