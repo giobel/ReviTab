@@ -178,12 +178,7 @@ namespace ReviTab
                 if (AddPushButton(toolsPanel, "btnAlignColumns", "Align Columns", "", "pack://application:,,,/ReviTab;component/Resources/alignColumns.png", "ReviTab.AlignColumns", "Align the columns in the model to those selected in a linked model. There is an hardcoded tolerance of 3feet as maximum distance between the linked column and the one to be moved.") == false)
                 {
                     MessageBox.Show("Failed to add button Align Columns", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (AddPushButton(toolsPanel, "btnAlignColumns", "Align \nColumns", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.AlignColumns", "Align current columns to linked model ones.") == false)
-                {
-                    MessageBox.Show("Failed to add button Align Columns", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                }               
 
                 if (AddPushButton(toolsPanel, "btnCopyLinkedElements", "Copy Linked \nElements", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyLinkedElements", "Copy elements from linked models") == false)
                 {
