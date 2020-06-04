@@ -26,9 +26,9 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            //string path = @"C:\Users\gbrog\Desktop\test.3dm";
+            string path = @"C:\Users\gbrog\Desktop\test.3dm";
 
-            string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
+            //string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
 
             File3dm rhinoModel = File3dm.Read(path);
 
@@ -48,6 +48,8 @@ namespace ReviTab
 
             List<Rhino.Geometry.LinearDimension> rh_linearDimension = new List<LinearDimension>();
 
+            List<List<Rhino.Geometry.Point3d>> rh_polylineCurvePoints = new List<List<Point3d>>();
+
             foreach (var item in rhinoObjects)
             {
                 GeometryBase geo = item.Geometry;
@@ -66,6 +68,19 @@ namespace ReviTab
                     Rhino.Geometry.ArcCurve arc = geo as Rhino.Geometry.ArcCurve;
                     rh_arc.Add(arc);
                 }
+
+
+                if (!item.Attributes.IsInstanceDefinitionObject && geo is Rhino.Geometry.PolylineCurve)
+                {
+
+                    PolylineCurve pc = geo as PolylineCurve;
+
+                    Polyline pl = pc.ToPolyline();
+
+                    rh_polylineCurvePoints.Add(pl.ToList());
+
+                }
+
 
                 if (geo is Rhino.Geometry.TextEntity)
                 {
@@ -125,16 +140,16 @@ namespace ReviTab
 
                 rh_ds.Convert_rhLinesToRevitDetailCurve(doc, rh_lines, "3 Arup Continuous Line");
 
+                rh_ds.Convert_PolycurveToLines(doc, rh_polylineCurvePoints, "1 Arup Continuous Line");
+
+                rh_ds.Convert_ArcsToDS(doc, rh_arc);
+
                 rh_ds.RhinoTextToRevitNote(doc, rh_text);
 
                 rh_ds.RhinoLeaderToRevitNote(doc, rh_textLeader);
 
-                Debug.WriteLine("Draw dimensions");
-
                 rh_ds.RhinoToRevitDimension(doc, rh_linearDimension);
 
-                rh_ds.Convert_ArcsToDS(doc, rh_arc);
-                
                 t.Commit();
             }
 

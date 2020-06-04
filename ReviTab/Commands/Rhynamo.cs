@@ -23,7 +23,7 @@ namespace Rhynamo
 
         private double scale = 304.8;
 
-        #region Geometry
+        #region Points Arcs and Lines
 
         /// <summary>
         /// Converts Rhino lines to DesignScript lines.
@@ -76,17 +76,17 @@ namespace Rhynamo
         /// </summary>
         /// <param name="rh_points">list of Rhino points</param>
         /// <returns>List of DesignScript points</returns>
-        public List<Autodesk.Revit.DB.XYZ> Convert_PointsToDS(List<Rhino.Geometry.Point> rh_points)
+        public List<Autodesk.Revit.DB.XYZ> Convert_PointsToDS(List<Rhino.Geometry.Point3d> rh_points)
         {
             try
             {
                 List<Autodesk.Revit.DB.XYZ> ds_points = new List<Autodesk.Revit.DB.XYZ>();
-                foreach (Rhino.Geometry.Point pt in rh_points)
+                foreach (Rhino.Geometry.Point3d pt in rh_points)
                 {
                     // get x, y, z coordinates
-                    double x = pt.Location.X/scale;
-                    double y = pt.Location.Y/scale;
-                    double z = pt.Location.Z/scale;
+                    double x = pt.X/scale;
+                    double y = pt.Y/scale;
+                    double z = pt.Z/scale;
 
                     try
                     {
@@ -194,7 +194,7 @@ namespace Rhynamo
                     }
                     catch(Exception ex) { 
                         ds_arcs.Add(null);
-                        TaskDialog.Show("R", ex.Message);
+                        TaskDialog.Show("Arc Error", ex.Message);
                     }
 
 
@@ -206,6 +206,30 @@ namespace Rhynamo
 
         #endregion
 
+        #region Polycurve
+        public List<Autodesk.Revit.DB.DetailCurve> Convert_PolycurveToLines(Document doc, List<List<Rhino.Geometry.Point3d>> rh_poly, string layer)
+        {
+
+            List<DetailCurve> ds_lines = new List<DetailCurve>();
+            foreach (List<Rhino.Geometry.Point3d> pointList in rh_poly)
+            {
+                List<XYZ> pts = Convert_PointsToDS(pointList);
+
+                int j = 0;
+                while (j < pts.Count - 1)
+                {
+                    Autodesk.Revit.DB.Line ds_ln = Autodesk.Revit.DB.Line.CreateBound(pts[j], pts[j + 1]);
+                    DetailCurve dc = doc.Create.NewDetailCurve(doc.ActiveView, ds_ln);
+                    ds_lines.Add(dc);
+                    j++;
+                }
+                
+            }
+
+            return ds_lines;
+        }
+
+        #endregion
 
         #region Text and Dimension
 
@@ -638,118 +662,7 @@ namespace Rhynamo
 
 
 
-        /// <summary>
-        /// Converts Rhino PolyCurve to DesignScript PolyCurve
-        /// </summary>
-        /// <param name="rh_polycurve">Rhino PolyCurve</param>
-        /// <returns>DesignScript PolyCurve</returns>
-        public List<Autodesk.Revit.DB.PolyCurve> Convert_PolyCurveToDS(List<Rhino.Geometry.PolyCurve> rh_polycurve)
-        {
-            try
-            {
 
-                List<Autodesk.Revit.DB.PolyCurve> ds_polycurves = new List<Autodesk.Revit.DB.PolyCurve>();
-
-                // get and organize segments
-                foreach (Rhino.Geometry.PolyCurve pcrv in rh_polycurve)
-                {
-                    // segment types
-                    List<Rhino.Geometry.LineCurve> rh_lns = new List<Rhino.Geometry.LineCurve>();
-                    List<Rhino.Geometry.ArcCurve> rh_arcs = new List<Rhino.Geometry.ArcCurve>();
-                    List<Rhino.Geometry.NurbsCurve> rh_nurbs = new List<Rhino.Geometry.NurbsCurve>();
-                    List<Rhino.Geometry.NurbsCurve> rh_mspannurbs = new List<Rhino.Geometry.NurbsCurve>();
-                    List<Rhino.Geometry.PolyCurve> rh_polycurves = new List<Rhino.Geometry.PolyCurve>();
-                    List<Rhino.Geometry.PolylineCurve> rh_polylines = new List<Rhino.Geometry.PolylineCurve>();
-
-                    List<Autodesk.Revit.DB.Curve> ds_segments = new List<Autodesk.Revit.DB.Curve>();
-
-                    for (int i = 0; i < pcrv.SegmentCount; i++)
-                    {
-                        Rhino.Geometry.Curve crv = pcrv.SegmentCurve(i);
-                        if (crv is Rhino.Geometry.LineCurve)
-                        {
-                            rh_lns.Add(crv as LineCurve);
-                        }
-                        else if (crv is Rhino.Geometry.ArcCurve)
-                        {
-                            rh_arcs.Add(crv as ArcCurve);
-                        }
-                        else if (crv is Rhino.Geometry.NurbsCurve && crv.SpanCount == 1)
-                        {
-                            rh_nurbs.Add(crv as Rhino.Geometry.NurbsCurve);
-                        }
-                        else if (crv is Rhino.Geometry.NurbsCurve && crv.SpanCount > 1)
-                        {
-                            rh_mspannurbs.Add(crv as Rhino.Geometry.NurbsCurve);
-                        }
-                        else if (crv is Rhino.Geometry.PolylineCurve)
-                        {
-                            rh_polylines.Add(crv as Rhino.Geometry.PolylineCurve);
-                        }
-                        else if (crv is Rhino.Geometry.PolyCurve)
-                        {
-                            rh_mspannurbs.Add(crv.ToNurbsCurve());
-                        }
-                    }
-
-                    // convert lists of curve segments
-                    Rhynamo.classes.clsGeometryConversionUtils rh_ds = new Rhynamo.classes.clsGeometryConversionUtils();
-                    List<Autodesk.Revit.DB.Line> ds_lns = rh_ds.Convert_LinesToDS(rh_lns);
-                    List<Autodesk.Revit.DB.Arc> ds_arcs = rh_ds.Convert_ArcsToDS(rh_arcs);
-                    List<Autodesk.Revit.DB.PolyCurve> ds_polylines = rh_ds.Convert_PolylineToDS(rh_polylines);
-                    List<Autodesk.Revit.DB.NurbsCurve> ds_nurbs = rh_ds.Convert_NurbsCurveToDS(rh_nurbs);
-                    List<clsRhinoMultiSpanNurbs> ds_mspannurbs = rh_ds.Convert_MultiSpanNurbsCurveToDS(rh_mspannurbs);
-
-                    // create single segement list
-                    foreach (Autodesk.Revit.DB.Line ln in ds_lns)
-                    {
-                        ds_segments.Add(ln);
-                    }
-
-                    foreach (Autodesk.Revit.DB.Arc arc in ds_arcs)
-                    {
-                        ds_segments.Add(arc);
-                    }
-
-                    foreach (Autodesk.Revit.DB.NurbsCurve nurbs in ds_nurbs)
-                    {
-                        ds_segments.Add(nurbs);
-                    }
-
-                    foreach (clsRhinoMultiSpanNurbs pc in ds_mspannurbs)
-                    {
-                        //List<Autodesk.Revit.DB.Curve> ds_pcrvseg = new List<Autodesk.Revit.DB.Curve>();
-                        //foreach (Autodesk.Revit.DB.NurbsCurve n in pc.MultiSpanNurbsList)
-                        //{
-                        //  ds_pcrvseg.Add(n);
-                        //}
-                        //Autodesk.Revit.DB.PolyCurve polycrv = IterativeJoinCurves(ds_pcrvseg);
-                        //if (polycrv != null)
-                        //{
-                        //  ds_segments.Add(polycrv);
-                        //}
-                        foreach (Autodesk.Revit.DB.NurbsCurve n in pc.MultiSpanNurbsList)
-                        {
-                            ds_segments.Add(n);
-                        }
-                    }
-
-                    try
-                    {
-                        // Create DesignScript polycurve
-                        //remove duplicates
-                        Autodesk.Revit.DB.PolyCurve ds_polycurve = Autodesk.Revit.DB.PolyCurve.ByJoinedCurves(ds_segments);
-                        ds_polycurves.Add(ds_polycurve);
-                    }
-                    catch { ds_polycurves.Add(null); }
-                }
-
-                // return DesignScript polycurve list
-                return ds_polycurves;
-            }
-            catch { return null; }
-
-        }
 
         /// <summary>
         /// Converts all Rhino curve types to DesignScript Curve
