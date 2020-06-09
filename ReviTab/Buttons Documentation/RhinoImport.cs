@@ -26,9 +26,9 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            string path = @"C:\Users\gbrog\Desktop\test.3dm";
+            //string path = @"C:\Users\gbrog\Desktop\test.3dm";
 
-            //string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
+            string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
 
             File3dm rhinoModel = File3dm.Read(path);
 

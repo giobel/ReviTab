@@ -141,16 +141,19 @@ namespace ReviTab
 
                 AddSplitButton(docsPanel, splitButtonsInterop, "InteropDBButton", "InteropDB");
 #endif
-#endregion
+                #endregion
 
 
-#region Tools
+                #region Tools
 
-                IList<PushButtonData> splitButtonsSections = new List<PushButtonData>();
-                
-                splitButtonsSections.Add(CreatePushButton("btnCreateSectionsColumns", "Column Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSectionColumns", "Create multiple sections for selected columns."));
+                IList<PushButtonData> splitButtonsSections = new List<PushButtonData>
+                {
+                    CreatePushButton("btnCreateSectionsColumns", "Column Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSectionColumns", "Create multiple sections for selected columns."),
 
-                splitButtonsSections.Add(CreatePushButton("btnCreateSections", "Line based" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections for line based elements (walls, beams, lines)."));
+                    CreatePushButton("btnCreateSections", "Line based" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections for line based elements (walls, beams, lines)."),
+                    
+                    CreatePushButton("btnFlipSections", "Flip Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.FlipSections", "Flip multiple sections.")
+                };
 
                 AddSplitButton(toolsPanel, splitButtonsSections, "SectionsButton", "MultipleSections");
 
@@ -161,12 +164,13 @@ namespace ReviTab
 
                 //Override settings
 
-                IList<PushButtonData> gridTools = new List<PushButtonData>();
+                IList<PushButtonData> gridTools = new List<PushButtonData>
+                {
+                    CreatePushButton("btnSwapGrid", "Swap Grid" + Environment.NewLine + "Head", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.SwapGridBubbles", "Swap the head of the selected grids"),
 
-                gridTools.Add(CreatePushButton("btnSwapGrid", "Swap Grid" + Environment.NewLine + "Head", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.SwapGridBubbles", "Swap the head of the selected grids"));
+                    CreatePushButton("btnCopyGrid", "Copy Grid Extents", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.PropagateGridExtents", "Copy the grid extents from a view to the active one.")
+                };
 
-                gridTools.Add(CreatePushButton("btnCopyGrid", "Copy Grid Extents", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.PropagateGridExtents", "Copy the grid extents from a view to the active one."));
-                
                 AddSplitButton(toolsPanel, gridTools, "gridTools", "Grid Tools");
 
 
@@ -174,34 +178,35 @@ namespace ReviTab
                 {
                     MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
-                if (AddPushButton(toolsPanel, "btnAlignColumns", "Align Columns", "", "pack://application:,,,/ReviTab;component/Resources/alignColumns.png", "ReviTab.AlignColumns", "Align the columns in the model to those selected in a linked model. There is an hardcoded tolerance of 3feet as maximum distance between the linked column and the one to be moved.") == false)
+
+                IList<PushButtonData> linkFiles = new List<PushButtonData>
                 {
-                    MessageBox.Show("Failed to add button Align Columns", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }               
+                    CreatePushButton("btnAlignColumns", "Align Columns", "", "pack://application:,,,/ReviTab;component/Resources/alignColumns.png", "ReviTab.AlignColumns", "Align the columns in the model to those selected in a linked model. There is an hardcoded tolerance of 3feet as maximum distance between the linked column and the one to be moved."),
 
-                if (AddPushButton(toolsPanel, "btnCopyLinkedElements", "Copy Linked \nElements", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyLinkedElements", "Copy elements from linked models") == false)
+                    CreatePushButton("btnCopyLinkedElements", "Copy Linked \nElements", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyLinkedElements", "Copy elements from linked models")
+                };
+
+                AddSplitButton(toolsPanel, linkFiles, "linkFiles", "Link Files");
+
+
+                IList<PushButtonData> filterSelection = new List<PushButtonData>
                 {
-                    MessageBox.Show("Failed to add button Copy Linked Elements", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                    CreatePushButton("selBeams", "Select Beams", "", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionBeams", "Select Beams Only"),
 
-                IList<PushButtonData> filterSelection = new List<PushButtonData>();
-                
-                filterSelection.Add(CreatePushButton("selBeams", "Select Beams", "", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionBeams", "Select Beams Only"));
+                    CreatePushButton("selColumns", "Select Columns", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionColumns", "Select Columns Only"),
 
-                filterSelection.Add(CreatePushButton("selColumns", "Select Columns", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionColumns", "Select Columns Only"));
+                    CreatePushButton("selDim", "Select Dimensions", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionDimensions", "Select Dimensions Only"),
 
-                filterSelection.Add(CreatePushButton("selDim", "Select Dimensions", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionDimensions", "Select Dimensions Only"));
+                    CreatePushButton("selGrids", "Select Grids", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionGrids", "Select Grids Only"),
 
-                filterSelection.Add(CreatePushButton("selGrids", "Select Grids", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionGrids", "Select Grids Only"));
+                    CreatePushButton("selLines", "Select Lines", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionLines", "Select Lines Only"),
 
-                filterSelection.Add(CreatePushButton("selLines", "Select Lines", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionLines", "Select Lines Only"));
+                    CreatePushButton("selTags", "Select Tags", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionTags", "Select Tags Only"),
 
-                filterSelection.Add(CreatePushButton("selTags", "Select Tags", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionTags", "Select Tags Only"));
+                    CreatePushButton("selText", "Select Text", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionText", "Select Text Only"),
 
-                filterSelection.Add(CreatePushButton("selText", "Select Text", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionText", "Select Text Only"));
-
-                filterSelection.Add(CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionWalls", "Select Walls Only"));
+                    CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionWalls", "Select Walls Only")
+                };
 
                 AddSplitButton(toolsPanel, filterSelection, "filterSelection", "Filter Selection");
 

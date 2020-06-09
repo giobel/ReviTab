@@ -274,6 +274,26 @@ namespace ReviTab
             return vft;
         }//close method
 
+        /// <summary>
+        /// Get a section view from a selected section (element)
+        /// </summary>
+        /// <param name="_views"></param>
+        /// <param name="_section"></param>
+        /// <returns></returns>
+        public static View SectionElementToView(List<Autodesk.Revit.DB.View> _views, Element _section)
+        {
+            View viewFromSection = null;
+
+            foreach (var v in _views)
+            {
+                if (_section.Name == v.Name && _section.GetTypeId() == v.GetTypeId())
+                {
+                    viewFromSection = v;
+                    break;
+                }
+            }         
+            return viewFromSection;
+        }
 
         /// <summary>
         /// Create Section Perpendicular to the selected elements (must have location curves)
