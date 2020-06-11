@@ -23,6 +23,26 @@ namespace Rhynamo
 
         private double scale = 304.8;
 
+        #region RevitUtils
+        private Element GetRevitLinestyleByName(Document doc, DetailCurve detailCurve, string layerName)
+        {
+            
+            var styles = detailCurve.GetLineStyleIds();
+            foreach (var styleId in styles)
+            {
+                var styleEle = doc.GetElement(styleId);
+                if (styleEle.Name == layerName)
+                {
+                    return styleEle;
+                }
+            }
+
+            return null;
+        }
+        
+
+        #endregion
+
         #region Points Arcs and Lines
 
         /// <summary>
@@ -52,18 +72,9 @@ namespace Rhynamo
 
                         DetailCurve dc = doc.Create.NewDetailCurve(doc.ActiveView, ds_ln);
 
-                        var styles = dc.GetLineStyleIds();
-                        foreach (var styleId in styles)
-                        {
-                            var styleEle = doc.GetElement(styleId);
-                            if (styleEle.Name == layer)
-                            {
-                                dc.LineStyle = styleEle;
-                                break;
-                            }
-                        }
+                        dc.LineStyle = GetRevitLinestyleByName(doc, dc, layer);
 
-                    ds_lines.Add(dc);
+                        ds_lines.Add(dc);
                     }
                     catch { ds_lines.Add(null); }
                 }
@@ -304,30 +315,66 @@ namespace Rhynamo
             foreach (Rhino.Geometry.LinearDimension rhinoDim in rh_Dims)
             {
 
-                XYZ dimPlaneOrigin = Convert_PointsToDS(rhinoDim.Plane.Origin);
+                Rhino.Geometry.Transform t = new Rhino.Geometry.Transform
+                {
+                    M00 = rhinoDim.Plane.XAxis.X,
+                    M10 = rhinoDim.Plane.XAxis.Y,
+                    M20 = rhinoDim.Plane.XAxis.Z,
+                    M30 = 0,
+                          
+                    M01 = rhinoDim.Plane.YAxis.X,
+                    M11 = rhinoDim.Plane.YAxis.Y,
+                    M21 = rhinoDim.Plane.YAxis.Z,
+                    M31 = 0,
+                          
+                    M02 = rhinoDim.Plane.ZAxis.X,
+                    M12 = rhinoDim.Plane.ZAxis.Y,
+                    M22 = rhinoDim.Plane.ZAxis.Z,
+                    M32 = 0,
+                          
+                    M03 = rhinoDim.Plane.OriginX,
+                    M13 = rhinoDim.Plane.OriginY,
+                    M23 = rhinoDim.Plane.OriginZ,
+                    M33 = 1
+                };
 
-                XYZ extensionLine1End = Convert_PointsToDS(rhinoDim.ExtensionLine1End);
-                XYZ extensionLine2End = Convert_PointsToDS(rhinoDim.ExtensionLine2End);
 
-                XYZ arrowhead1 = Convert_PointsToDS(rhinoDim.Arrowhead1End);
-                XYZ arrowhead2 = Convert_PointsToDS(rhinoDim.Arrowhead2End);
+                Point2d arrowhead1 = rhinoDim.Arrowhead1End;
+                arrowhead1.Transform(t);
 
-                Autodesk.Revit.DB.Line l = Autodesk.Revit.DB.Line.CreateBound(dimPlaneOrigin + arrowhead1, dimPlaneOrigin + arrowhead2);
+                Point2d arrowhead2 = rhinoDim.Arrowhead2End;
+                arrowhead2.Transform(t);
 
-                Debug.WriteLine($"{rhinoDim.PlainText}");
-                Debug.WriteLine($"Plane Origin: {rhinoDim.Plane.Origin.X},{rhinoDim.Plane.Origin.Y}");
-                Debug.WriteLine($"Plane Axis: {rhinoDim.Plane.XAxis},{rhinoDim.Plane.YAxis},{rhinoDim.Plane.ZAxis}");
+                //XYZ dimPlaneOrigin = Convert_PointsToDS(rhinoDim.Plane.Origin);
 
-                Debug.WriteLine($"Extension line 1: {rhinoDim.ExtensionLine1End.X},{rhinoDim.ExtensionLine1End.Y}");
-                Debug.WriteLine($"Extension line 2: {rhinoDim.ExtensionLine2End.X},{rhinoDim.ExtensionLine2End.Y}");
+                XYZ arrowhead1EndTrans = Convert_PointsToDS(arrowhead1);
+                XYZ arrowhead2EndTrans = Convert_PointsToDS(arrowhead2);
 
-                Debug.WriteLine($"Arrowhead line 1: {rhinoDim.Arrowhead1End.X},{rhinoDim.Arrowhead1End.Y}");
-                Debug.WriteLine($"Arrowhead line 2: {rhinoDim.Arrowhead2End.X},{rhinoDim.Arrowhead2End.Y}");
+                //XYZ arrowhead1 = Convert_PointsToDS(rhinoDim.Arrowhead1End);
+                //XYZ arrowhead2 = Convert_PointsToDS(rhinoDim.Arrowhead2End);
 
 
-                Debug.WriteLine("****");
+
+                //Autodesk.Revit.DB.Line l = Autodesk.Revit.DB.Line.CreateBound(dimPlaneOrigin + arrowhead1, dimPlaneOrigin + arrowhead2);
+                Autodesk.Revit.DB.Line l = Autodesk.Revit.DB.Line.CreateBound(arrowhead1EndTrans, arrowhead2EndTrans);
+
+
+                //Debug.WriteLine($"{rhinoDim.PlainText}");
+                //Debug.WriteLine($"Plane Origin: {rhinoDim.Plane.Origin.X},{rhinoDim.Plane.Origin.Y}");
+                //Debug.WriteLine($"Plane Axis: {rhinoDim.Plane.XAxis},{rhinoDim.Plane.YAxis},{rhinoDim.Plane.ZAxis}");
+
+                //Debug.WriteLine($"Extension line 1: {rhinoDim.ExtensionLine1End.X},{rhinoDim.ExtensionLine1End.Y}");
+                //Debug.WriteLine($"Extension line 2: {rhinoDim.ExtensionLine2End.X},{rhinoDim.ExtensionLine2End.Y}");
+
+                //Debug.WriteLine($"Arrowhead line 1: {rhinoDim.Arrowhead1End.X},{rhinoDim.Arrowhead1End.Y}");
+                //Debug.WriteLine($"Arrowhead line 2: {rhinoDim.Arrowhead2End.X},{rhinoDim.Arrowhead2End.Y}");
+
+
+                //Debug.WriteLine("****");
 
                 DetailCurve dc = doc.Create.NewDetailCurve(doc.ActiveView, l);
+
+                dc.LineStyle = GetRevitLinestyleByName(doc, dc, "Invisible");
 
                 Autodesk.Revit.DB.Curve crv = dc.GeometryCurve;
 
@@ -345,22 +392,35 @@ namespace Rhynamo
         #region Blocks
         public List<FamilyInstance> Convert_rhBlocks(Document doc, List<Tuple<string, XYZ>> rh_Blocks)
         {
+            FilteredElementCollector fecSymbols = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol));
+
+            int studErrors = 0;
+
             foreach (var item in rh_Blocks)
             {
 
                 FamilySymbol studSymbol = null;
                 if (item.Item1.Contains("Stud"))
-                {
-                    Element fec = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).Where(x => x.Name == "19mm Dia Shear Stud").First();
+                {                  
+                    IEnumerable<Element> fecStuds = fecSymbols.Where(x => x.Name == "19mm Dia Shear Stud");
 
-                    studSymbol = fec as FamilySymbol;
+                    if (fecStuds.Count() > 0)
+                    {
+                        studSymbol = fecStuds.First() as FamilySymbol;
+                    }
+                    else
+                    {
+                        studErrors++;
+                    }
+                        
                     
                 }
                 else if(item.Item1.Contains("WC"))
                 {
-                    Element fec = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol)).Where(x => x.Name == item.Item1).First();
+                    IEnumerable<Element> fec = fecSymbols.Where(x => x.Name == item.Item1);
 
-                    studSymbol = fec as FamilySymbol;
+                    if (fec.Count() > 0)
+                        studSymbol = fec.First() as FamilySymbol;
 
                 }
 
@@ -368,7 +428,11 @@ namespace Rhynamo
                 {
                     doc.Create.NewFamilyInstance(item.Item2, studSymbol, doc.ActiveView);
                 }
+            }
 
+            if (studErrors > 0)
+            {
+                TaskDialog.Show("R", $"{studErrors} stud errors.\nPlace a stud onto the drafting view and re run the command.");
             }
 
             return null;
