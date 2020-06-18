@@ -1,11 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Reflection;
 
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
@@ -37,27 +34,10 @@ namespace ReviTab
 
             try
             {
-                var wndRoot = GetWindowRoot(uiapp);
+                
+                uiapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(Application_ViewActivated);
 
-                var docTabGroup = GetDocumentTabGroup(uiapp);
-
-                if (docTabGroup != null)
-                {
-                    var docTabs = GetDocumentTabs(docTabGroup);
-
-                    foreach (TabItem tab in docTabs)
-                    {
-                        //tab.BorderBrush = Brushes.Red;
-                        //tab.BorderThickness = new System.Windows.Thickness(2);
-
-                        if (tab.ToolTip.ToString().Contains("Plan"))
-                            tab.Background = Brushes.Aqua;
-                        
-                    }
-
-                }
-
-                    TaskDialog.Show("r", wndRoot.ToString());
+                uiapp.ApplicationClosing += new EventHandler<ApplicationClosingEventArgs>(Doc_DocumentClosing);
 
                 return Result.Succeeded;
             }
@@ -66,8 +46,43 @@ namespace ReviTab
                 TaskDialog.Show("Error", ex.Message);
                 return Result.Failed;
             }
+            
+        }
 
+        private void Doc_DocumentClosing(object sender, ApplicationClosingEventArgs e)
+        {
+            UIApplication uiapp = sender as UIApplication;
 
+            uiapp.ViewActivated -= new EventHandler<ViewActivatedEventArgs>(Application_ViewActivated);
+
+            TaskDialog.Show("R", "Unsuscribing");
+        }
+
+        public void Application_ViewActivated(object sender, ViewActivatedEventArgs args)
+        {
+ 
+            UIApplication uiapp = sender as UIApplication;
+
+            var docTabGroup = GetDocumentTabGroup(uiapp);
+
+            if (docTabGroup != null)
+            {
+                var docTabs = GetDocumentTabs(docTabGroup);
+
+                foreach (TabItem tab in docTabs)
+                {
+                    //tab.BorderBrush = Brushes.Red;
+                    //tab.BorderThickness = new System.Windows.Thickness(2);
+
+                    SolidColorBrush mySolidColorBrush = new SolidColorBrush(Colors.Aqua);
+                    mySolidColorBrush.Opacity = 0.25;
+
+                    if (tab.ToolTip.ToString().Contains("Plan"))
+                        tab.Background = mySolidColorBrush;
+
+                }
+
+            }
         }
 
         //public static Xceed.Wpf.AvalonDock.DockingManager GetDockingManager(UIApplication uiapp)
