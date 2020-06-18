@@ -249,7 +249,15 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
+    <Reference Include="UIFramework">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\UIFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.AvalonDock">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
@@ -285,6 +293,7 @@
     <Compile Include="Buttons Tools\FilterSelectionBeams.cs" />
     <Compile Include="Buttons Tools\FilterSelectionWalls.cs" />
     <Compile Include="Buttons Documentation\TagElementsInViewport.cs" />
+    <Compile Include="Buttons Zero State\ColorTab.cs" />
     <Compile Include="Buttons Zero State\AddPDFcustomProperties.cs" />
     <Compile Include="Buttons Tools\PrintSelected.cs" />
     <Compile Include="Buttons Tools\CopyLinkedElements.cs" />
