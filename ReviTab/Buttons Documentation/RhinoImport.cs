@@ -8,6 +8,7 @@ using Rhino.FileIO;
 using Rhino.Geometry;
 using System.Linq;
 using System.Diagnostics;
+using System;
 #endregion
 
 namespace ReviTab
@@ -26,9 +27,12 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            string path = @"C:\Users\gbrog\Desktop\test.3dm";
+            //duplicated in the helper file! remember to change both
+            double scale = 304.8;
 
-            //string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
+        //string path = @"C:\Users\gbrog\Desktop\test.3dm";
+
+        string path = @"C:\Users\giovanni.brogiolo\Desktop\ST00-0221.3dm";
 
             File3dm rhinoModel = File3dm.Read(path);
 
@@ -49,6 +53,8 @@ namespace ReviTab
             List<Rhino.Geometry.LinearDimension> rh_linearDimension = new List<LinearDimension>();
 
             List<List<Rhino.Geometry.Point3d>> rh_polylineCurvePoints = new List<List<Point3d>>();
+
+            List<Tuple<string, XYZ>> rh_Blocks = new List<Tuple<string, XYZ>>();
 
             foreach (var item in rhinoObjects)
             {
@@ -72,15 +78,12 @@ namespace ReviTab
 
                 if (!item.Attributes.IsInstanceDefinitionObject && geo is Rhino.Geometry.PolylineCurve)
                 {
-
                     PolylineCurve pc = geo as PolylineCurve;
 
                     Polyline pl = pc.ToPolyline();
 
                     rh_polylineCurvePoints.Add(pl.ToList());
-
                 }
-
 
                 if (geo is Rhino.Geometry.TextEntity)
                 {
@@ -121,12 +124,17 @@ namespace ReviTab
                     // block definition name
                     string defname = def.Name;
 
+                    //TaskDialog.Show("R", defname);
+
                     // transform data for block instance
                     Rhino.Geometry.Transform xform = refGeo.Xform;
 
-                    double x = refGeo.Xform.M03;
-                    double y = refGeo.Xform.M13;
+                    double x = refGeo.Xform.M03/scale;
+                    double y = refGeo.Xform.M13/scale;
 
+                    XYZ placementPt = new XYZ(x, y, 0);
+
+                    rh_Blocks.Add(new Tuple<string, XYZ>(defname, placementPt) );
                 }
             }
 
@@ -149,6 +157,8 @@ namespace ReviTab
                 rh_ds.RhinoLeaderToRevitNote(doc, rh_textLeader);
 
                 rh_ds.RhinoToRevitDimension(doc, rh_linearDimension);
+
+                rh_ds.Convert_rhBlocks(doc, rh_Blocks);
 
                 t.Commit();
             }
