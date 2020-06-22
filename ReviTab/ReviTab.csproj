@@ -272,6 +272,7 @@
     <Compile Include="Buttons Documentation\LineStyles.cs" />
     <Compile Include="Buttons Documentation\SelectAllTagsInViewport.cs" />
     <Compile Include="Buttons Framings and Walls\VoidByRefPlane.cs" />
+    <Compile Include="Buttons Geometry\CreateExtrusion.cs" />
     <Compile Include="Buttons Geometry\DrawModelCurve.cs" />
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />

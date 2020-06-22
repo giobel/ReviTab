@@ -74,12 +74,26 @@ namespace ReviTab
                     //tab.BorderBrush = Brushes.Red;
                     //tab.BorderThickness = new System.Windows.Thickness(2);
 
-                    SolidColorBrush mySolidColorBrush = new SolidColorBrush(Colors.Aqua);
-                    mySolidColorBrush.Opacity = 0.25;
+                    SolidColorBrush planBrush = new SolidColorBrush(Colors.PaleVioletRed);
+                    planBrush.Opacity = 0.75;
+
+                    SolidColorBrush sectBrush = new SolidColorBrush(Colors.PaleGoldenrod);
+                    planBrush.Opacity = 0.75;
+
+                    SolidColorBrush threeDBrush = new SolidColorBrush(Colors.PaleTurquoise);
+                    planBrush.Opacity = 0.75;
+
+                    SolidColorBrush sheetBrush = new SolidColorBrush(Colors.PaleGreen);
+                    planBrush.Opacity = 0.75;
 
                     if (tab.ToolTip.ToString().Contains("Plan"))
-                        tab.Background = mySolidColorBrush;
-
+                        tab.Background = planBrush;
+                    else if (tab.ToolTip.ToString().Contains("Section"))
+                        tab.Background = sectBrush;
+                    else if (tab.ToolTip.ToString().Contains("3D"))
+                        tab.Background = threeDBrush;
+                    else if (tab.ToolTip.ToString().Contains("Sheet"))
+                        tab.Background = sheetBrush;
                 }
 
             }
@@ -122,8 +136,9 @@ namespace ReviTab
             IntPtr wndHndle = IntPtr.Zero;
             try
             {
-
+#if DEBUG2020
                 wndHndle = uiapp.MainWindowHandle;
+#endif
             }
             catch { }
 

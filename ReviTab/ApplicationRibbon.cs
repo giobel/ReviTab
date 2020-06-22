@@ -319,6 +319,8 @@ namespace ReviTab
                 IList<PushButtonData> stackedButtonsGroupMetadata = new List<PushButtonData>();
 
                 stackedButtonsGroupMetadata.Add(CreatePushButton("btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability"));
+                
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnColor", "ColorTab", "", "pack://application:,,,/ReviTab;component/Resources/tagSmall.png", "ReviTab.ColorTab", "Color Revit Tabs based on view type.", "ReviTab.Availability"));
 
                 stackedButtonsGroupMetadata.Add(CreatePushButton("btnHowl", "Howl",  "", "pack://application:,,,/ReviTab;component/Resources/ghowlicon.png", "ReviTab.Howl", "Howl"));
 
