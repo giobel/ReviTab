@@ -26,7 +26,6 @@ namespace ReviTab.Buttons_Geometry
                 //EDGE DIRECTION
                 Reference edgeDirRef = uidoc.Selection.PickObject(ObjectType.Edge, "Select edge for direction");
 
-
                 //EDGE 
                 Element edgeBackElement = doc.GetElement(edgeBack);
                 GeometryObject edgeBackObject = edgeBackElement.GetGeometryObjectFromReference(edgeBack);
@@ -34,6 +33,29 @@ namespace ReviTab.Buttons_Geometry
                 Curve edgeBackCurve = elemEdge.AsCurve();
 
                 XYZ edgeBackDir = edgeBackCurve.GetEndPoint(1) - edgeBackCurve.GetEndPoint(0);
+
+
+            //POINT ORDER: 1-5 back edge - extrusion path, 0-1 walkway width
+            
+            /*
+            3
+            |       2 
+            |       |
+            |       |
+            |       |            5
+            0       |
+                    1
+            */
+
+
+
+            XYZ pt5 = edgeBackCurve.GetEndPoint(0);
+
+            //pt5 should be the lowest Z point
+           if (pt5.Z > edgeBackCurve.GetEndPoint(1).Z)
+            {
+                pt5 = edgeBackCurve.GetEndPoint(1);
+            }
 
                 //EDGE DIRECTION
                 Element edgeDirElement = doc.GetElement(edgeDirRef);
@@ -43,20 +65,40 @@ namespace ReviTab.Buttons_Geometry
 
                 XYZ edgeDirDir = edgeDirCurve.GetEndPoint(1) - edgeDirCurve.GetEndPoint(0);
 
-                XYZ perpVector = edgeDirDir.CrossProduct(edgeBackDir).Normalize();
-
                 double scale = 304.8;
+                double offset = 1030 / scale; //distance from back edge to baseplate
+                double width = 850 / scale; //egress width
 
                 //PROFILE
                 XYZ pt0 = edgeDirCurve.GetEndPoint(0); //towards tunnel
                 XYZ pt1 = edgeBackCurve.GetEndPoint(0); //towards earth
-                                                       //XYZ pt2 = new XYZ(pt1.X, pt1.Y, pt1.Z+(2100/scale));
+                //XYZ pt2 = new XYZ(pt1.X, pt1.Y, pt1.Z+(2100/scale));
+
+
+                if (edgeDirCurve.GetEndPoint(0).DistanceTo(edgeBackCurve.GetEndPoint(0))<
+                    edgeDirCurve.GetEndPoint(1).DistanceTo(edgeBackCurve.GetEndPoint(0)))
+                {
+                    pt1 = edgeDirCurve.GetEndPoint(0);
+                    pt0 = edgeDirCurve.GetEndPoint(1);
+                }
+                else
+                {
+                    pt1 = edgeDirCurve.GetEndPoint(1);
+                    pt0 = edgeDirCurve.GetEndPoint(0);
+                }
+
+            //XYZ perpVector = edgeDirDir.CrossProduct(edgeBackDir).Normalize();
+            XYZ perpVector = (pt5 - pt1).CrossProduct(pt0 - pt1).Normalize();
+
+            pt1 = pt1 + (pt0 - pt1).Normalize() * (offset - width);
+            pt0 = pt1 + (pt0 - pt1).Normalize() * width;
+
                 XYZ pt2 = pt1 + perpVector * 2100 / scale;
                 //XYZ pt3 = new XYZ(pt0.X, pt0.Y, pt0.Z+(2100/scale));
                 XYZ pt3 = pt0 + perpVector * 2100 / scale;
 
                 //TOP FACE PLANE
-                Plane topPlane = Plane.CreateByThreePoints(edgeBackCurve.GetEndPoint(0), edgeBackCurve.GetEndPoint(1), edgeDirCurve.GetEndPoint(0));
+                Plane topPlane = Plane.CreateByThreePoints(pt0, pt1, pt5);
 
                 CurveLoop path = CurveLoop.Create(new List<Curve> { edgeBackCurve });
 
