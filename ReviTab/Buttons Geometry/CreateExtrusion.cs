@@ -88,7 +88,10 @@ namespace ReviTab.Buttons_Geometry
                 }
 
             //XYZ perpVector = edgeDirDir.CrossProduct(edgeBackDir).Normalize();
-            XYZ perpVector = (pt5 - pt1).CrossProduct(pt0 - pt1).Normalize();
+            //XYZ perpVector = (pt5 - pt1).CrossProduct(pt0 - pt1).Normalize(); 
+
+            //XYZ BASE Z
+            XYZ perpVector = (new XYZ(pt1.X, pt1.Y, pt1.Z + 1) - pt1).Normalize();
 
             pt1 = pt1 + (pt0 - pt1).Normalize() * (offset - width);
             pt0 = pt1 + (pt0 - pt1).Normalize() * width;
