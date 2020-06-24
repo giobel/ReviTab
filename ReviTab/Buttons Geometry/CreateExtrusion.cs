@@ -101,7 +101,7 @@ namespace ReviTab.Buttons_Geometry
                 XYZ pt3 = pt0 + perpVector * 2100 / scale;
 
                 //TOP FACE PLANE
-                Plane topPlane = Plane.CreateByThreePoints(pt0, pt1, pt5);
+                //Plane topPlane = Plane.CreateByThreePoints(pt0, pt1, pt5);
 
                 CurveLoop path = CurveLoop.Create(new List<Curve> { edgeBackCurve });
 
@@ -113,9 +113,13 @@ namespace ReviTab.Buttons_Geometry
                 Line crv3 = Line.CreateBound(pt2, pt1);
 
                 CurveLoop profileLoop = CurveLoop.Create(new List<Curve> {crv0,crv1,crv2,crv3});
-            
-                //VERTICAL PLANE
-                Plane p = Plane.CreateByThreePoints(pt0, pt1, pt2);
+
+            //PrintPoint(pt0, 1);
+            //PrintPoint(pt1, 1);
+            //PrintPoint(pt2, 1);
+
+            //VERTICAL PLANE
+            Plane p = Plane.CreateByThreePoints(pt0, pt1, pt2);
 
 
             //END CURVE LOOP
@@ -159,21 +163,21 @@ namespace ReviTab.Buttons_Geometry
                         TaskDialog.Show("Error", ex.Message);
                     }
 
-                    SketchPlane sp = SketchPlane.Create(doc, p);
-                    SketchPlane spTop = SketchPlane.Create(doc, topPlane);
-                    SketchPlane spEnd = SketchPlane.Create(doc, pEnd);
+                    //SketchPlane sp = SketchPlane.Create(doc, p);
+                    //SketchPlane spTop = SketchPlane.Create(doc, topPlane);
+                    //SketchPlane spEnd = SketchPlane.Create(doc, pEnd);
                 
 
-                doc.Create.NewModelCurve(edgeBackCurve, spTop);
-                    doc.Create.NewModelCurve(crv0, sp);
-                    doc.Create.NewModelCurve(crv1, sp);
-                    doc.Create.NewModelCurve(crv2, sp);
-                    doc.Create.NewModelCurve(crv3, sp);
+                //doc.Create.NewModelCurve(edgeBackCurve, spTop);
+                //    doc.Create.NewModelCurve(crv0, sp);
+                //    doc.Create.NewModelCurve(crv1, sp);
+                //    doc.Create.NewModelCurve(crv2, sp);
+                //    doc.Create.NewModelCurve(crv3, sp);
 
-                doc.Create.NewModelCurve(crv0tr, spEnd);
-                doc.Create.NewModelCurve(crv1tr, spEnd);
-                doc.Create.NewModelCurve(crv2tr, spEnd);
-                doc.Create.NewModelCurve(crv3tr, spEnd);
+                //doc.Create.NewModelCurve(crv0tr, spEnd);
+                //doc.Create.NewModelCurve(crv1tr, spEnd);
+                //doc.Create.NewModelCurve(crv2tr, spEnd);
+                //doc.Create.NewModelCurve(crv3tr, spEnd);
 
                 t.Commit();
                 }
