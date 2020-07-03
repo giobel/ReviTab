@@ -79,11 +79,8 @@ namespace ReviTab
                             {
                                 FamilyInstance fa = ele as FamilyInstance;
 
-#if REVIT2017
                                 CreateIndependentTagColumn(doc, fa, viewId, xOffset);
-#elif REVIT2019
-                                CreateIndependentTagColumn(doc, fa, viewId, xOffset);
-#endif
+
                                 counterTagged++;
 
                             }
@@ -109,7 +106,7 @@ namespace ReviTab
         }
 
 
-#if REVIT2019 || REVIT2018
+#if REVIT2019 || REVIT2018 || REVIT2020
         /// <summary>
         /// https://forums.autodesk.com/t5/revit-api-forum/independenttag-how-do-i-call-this-in-revit/td-p/7733731
         /// </summary>

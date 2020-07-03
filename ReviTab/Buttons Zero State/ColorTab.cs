@@ -86,13 +86,13 @@ namespace ReviTab
                     SolidColorBrush sheetBrush = new SolidColorBrush(Colors.PaleGreen);
                     planBrush.Opacity = 0.75;
 
-                    if (tab.ToolTip.ToString().Contains("Plan"))
+                    if (tab.ToolTip.ToString().Contains("Plan:"))
                         tab.Background = planBrush;
-                    else if (tab.ToolTip.ToString().Contains("Section"))
+                    else if (tab.ToolTip.ToString().Contains("Section:"))
                         tab.Background = sectBrush;
-                    else if (tab.ToolTip.ToString().Contains("3D"))
+                    else if (tab.ToolTip.ToString().Contains("3D View:"))
                         tab.Background = threeDBrush;
-                    else if (tab.ToolTip.ToString().Contains("Sheet"))
+                    else if (tab.ToolTip.ToString().Contains("Sheet:"))
                         tab.Background = sheetBrush;
                 }
 
