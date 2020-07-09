@@ -136,9 +136,7 @@ namespace ReviTab
             IntPtr wndHndle = IntPtr.Zero;
             try
             {
-#if DEBUG2020
                 wndHndle = uiapp.MainWindowHandle;
-#endif
             }
             catch { }
 
