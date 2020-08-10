@@ -56,7 +56,7 @@ namespace ReviTab
 
                             foreach (Element e in myElements)
                             {
-                                vs = Helpers.CreateSectionParallel(doc, uidoc, e, form.sectionPositionOffset, form.farClipOffset, form.bottomLevel, form.topLevel);
+                                vs = Helpers.CreateSectionParallel(doc, uidoc, e, form.sectionPositionOffset, form.farClipOffset, form.bottomLevel, form.topLevel, form.columnParameter, form.flipDirection);
                                 s += $"{vs.Name}\n";
                             }
 

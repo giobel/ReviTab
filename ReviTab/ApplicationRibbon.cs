@@ -122,6 +122,8 @@ namespace ReviTab
 
                 splitButtonsDataToExcel.Add(CreatePushButton("btnVportFromExcel", "Viewport from\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.UpdateViewportsFromExcel", "Update viewports info from Excel."));
                 
+                splitButtonsDataToExcel.Add(CreatePushButton("btnSelectFromExcel", "Select from\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.SelectFromExcel", "Select elements in the project from a list of IDs saved in the clipboard from Excel (Ctrl+C the Ids in Excel, then run the command)."));
+
                 //Revision Clouds
                 splitButtonsDataToExcel.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary."));
 
@@ -144,7 +146,7 @@ namespace ReviTab
                 #endregion
 
 
-                #region Tools
+#region Tools
 
                 IList<PushButtonData> splitButtonsSections = new List<PushButtonData>
                 {

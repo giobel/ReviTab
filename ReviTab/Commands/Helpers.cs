@@ -368,7 +368,7 @@ namespace ReviTab
         /// <param name="farClipOffset"></param>
         /// <param name="bottomLevel"></param>
         /// <param name="topLevel"></param>
-        public static ViewSection CreateSectionParallel(Document doc, UIDocument uidoc, Element ele, double sectionPosition, double farClipOffset, double bottomLevel, double topLevel)
+        public static ViewSection CreateSectionParallel(Document doc, UIDocument uidoc, Element ele, double sectionPosition, double farClipOffset, double bottomLevel, double topLevel, string eleParameter, bool flipDirection)
         {
 
             Element wall = ele;
@@ -393,14 +393,24 @@ namespace ReviTab
             //double offset = 0; // offset by 3 feet. 
             //double farClipOffset = 1;
 
+            double horizontalOffset = 2;
             //Max/Min X = Section line Length, Max/Min Y is the height of the section box, Max/Min Z far clip
-            XYZ min = new XYZ(-halfLength, bottomLevel, -sectionPosition);
-            XYZ max = new XYZ(halfLength, topLevel, farClipOffset);
+            XYZ min = new XYZ(-halfLength - horizontalOffset, bottomLevel, -sectionPosition);
+            XYZ max = new XYZ(halfLength + horizontalOffset, topLevel, farClipOffset);
 
             XYZ midpoint = q + 0.5 * v; // q get lower midpoint. 
             XYZ walldir = v.Normalize();
+
+
+            if (flipDirection)
+            {
+                walldir = -walldir;
+            }
+
             XYZ up = XYZ.BasisZ;
             XYZ viewdir = walldir.CrossProduct(up);
+
+
 
             Transform t = Transform.Identity;
             t.Origin = midpoint;
@@ -417,6 +427,15 @@ namespace ReviTab
             ViewSection vs = null;
 
             vs = ViewSection.CreateSection(doc, vft.Id, sectionBox);
+
+            try
+            {
+                vs.Name = $"Section {ele.LookupParameter(eleParameter).AsString()}";
+            }
+            catch
+            {
+
+            }
 
             return vs;
         }
@@ -1752,9 +1771,13 @@ namespace ReviTab
                 {
                     foreach (Face geomFace in geomSolid.Faces)
                     {
-                        if (!areas.ContainsKey((int)geomFace.Area))
+                        if (geomFace.ComputeNormal(new UV(0.5,0.5)).Z == 0  && !areas.ContainsKey((int)geomFace.Area))
                         {
-                            areas.Add((int)geomFace.Area, geomFace);
+                            try
+                            {
+                                areas.Add((int)geomFace.Area, geomFace);
+                            }
+                            catch { }
                         }
                     }
                 }
@@ -1920,7 +1943,8 @@ namespace ReviTab
             foreach (UV pt in UVpoints)
             {
                 XYZ point = myFace.Evaluate(pt);
-                ptOnSurfaces.Add(stPt.DistanceTo(point), point);
+                if (!ptOnSurfaces.ContainsKey(stPt.DistanceTo(point)))
+                    ptOnSurfaces.Add(stPt.DistanceTo(point), point);
             }
 
             double closestDistanceToStart = ptOnSurfaces.Keys.Min();
