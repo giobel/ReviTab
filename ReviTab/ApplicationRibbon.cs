@@ -164,7 +164,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                //Override settings
+                //GRIDS
 
                 IList<PushButtonData> gridTools = new List<PushButtonData>
                 {
@@ -175,12 +175,17 @@ namespace ReviTab
 
                 AddSplitButton(toolsPanel, gridTools, "gridTools", "Grid Tools");
 
-
-                if (AddPushButton(toolsPanel, "btnOverrideDimensions", "Override \nDimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension") == false)
+                //OVERRIDES
+                IList<PushButtonData> overrideTools = new List<PushButtonData>
                 {
-                    MessageBox.Show("Failed to add button Swap Grid Head", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                    CreatePushButton("btnOverrideDimensions", "Override \nDimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension"),
 
+                    CreatePushButton("btnOverrideColoor", "Override Colours", "", "pack://application:,,,/ReviTab;component/Resources/airtable.png", "ReviTab.OverrideColors", "Override the colours of the structural elements in the active view.")
+                };
+                
+                AddSplitButton(toolsPanel, overrideTools, "overrideTools", "Override Tools");
+
+                //LINK FILES
                 IList<PushButtonData> linkFiles = new List<PushButtonData>
                 {
                     CreatePushButton("btnAlignColumns", "Align Columns", "", "pack://application:,,,/ReviTab;component/Resources/alignColumns.png", "ReviTab.AlignColumns", "Align the columns in the model to those selected in a linked model. There is an hardcoded tolerance of 3feet as maximum distance between the linked column and the one to be moved."),
