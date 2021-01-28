@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props" Condition="Exists('..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
@@ -234,9 +235,9 @@
       <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Rhino3dmIO, Version=6.25.20114.5270, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\lib\net45\Rhino3dmIO.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Rhino3dm, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rhino3dm.0.3.0\lib\net45\Rhino3dm.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <!-- MULTIVERSION REVIT API REFERENCES END -->
     <Reference Include="System" />
@@ -306,10 +307,12 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\DisableWarnings.cs" />
     <Compile Include="Buttons Tools\ExportJson.cs" />
     <Compile Include="Buttons Tools\FlipSections.cs" />
     <Compile Include="Buttons Tools\AlignColumns.cs" />
     <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
+    <Compile Include="Buttons Tools\Intersections.cs" />
     <Compile Include="Buttons Tools\OverrideColors.cs" />
     <Compile Include="Buttons Tools\PropagateGridExtents.cs" />
     <Compile Include="Buttons Excel\UpdateViewportsFromExcel.cs" />
@@ -326,6 +329,7 @@
     <Compile Include="Buttons Tools\FilterSelectionBeams.cs" />
     <Compile Include="Buttons Tools\FilterSelectionWalls.cs" />
     <Compile Include="Buttons Documentation\TagElementsInViewport.cs" />
+    <Compile Include="Buttons Tools\RhinoMesh.cs" />
     <Compile Include="Buttons Zero State\ColorTab.cs" />
     <Compile Include="Buttons Zero State\AddPDFcustomProperties.cs" />
     <Compile Include="Buttons Tools\PrintSelected.cs" />
@@ -604,5 +608,6 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets'))" />
+    <Error Condition="!Exists('..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props'))" />
   </Target>
 </Project>

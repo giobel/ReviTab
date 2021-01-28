@@ -283,19 +283,27 @@ namespace ReviTab
                     MessageBox.Show("Failed to add button Split Column", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-#endregion
+                #endregion
 
-#region Geometry
+                #region Geometry
 #if DEBUG
-                IList<PushButtonData> stackedButtonsGroupGeometry = new List<PushButtonData>();
 
-                stackedButtonsGroupGeometry.Add(CreatePushButton("btnSATtoDS", "Element to DirectShape", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element."));
+                IList<PushButtonData> stackedButtonsGroupGeometry = new List<PushButtonData>
+                {
+                    
+                    CreatePushButton("intMesh", "Intersect Mesh", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "ReviTab.AAAAAAARhinoMesh", "Intersect line with mesh"),
 
-                stackedButtonsGroupGeometry.Add(CreatePushButton("btnProjectLines", "Project Lines to Surface", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "", "ReviTab.ProjectLines", "Project some lines onto a surface."));
+                    CreatePushButton("btnSATtoDS", "Element to DirectShape", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element."),
 
-                stackedButtonsGroupGeometry.Add(CreatePushButton("btnDrawAxis", "Draw Axis", "pack://application:,,,/ReviTab;component/Resources/axis.png", "", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface."));
+                    CreatePushButton("btnProjectLines", "Project Lines to Surface", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "", "ReviTab.ProjectLines", "Project some lines onto a surface."),
 
-                AddStackedButton(geometry, stackedButtonsGroupGeometry, "GeometryButton", "Geometry");
+                    CreatePushButton("btnDrawAxis", "Draw Axis", "pack://application:,,,/ReviTab;component/Resources/axis.png", "", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface.")                    
+
+                };
+
+                AddSplitButton(geometry, stackedButtonsGroupGeometry, "GeometryButton", "Geometry");
+
+
 #endif
 #endregion
 
