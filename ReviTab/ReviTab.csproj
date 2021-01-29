@@ -391,6 +391,12 @@
     <Compile Include="Forms\CmdWindowHandleForm.Designer.cs">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormTwoTextBoxes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormTwoTextBoxes.designer.cs">
+      <DependentUpon>FormTwoTextBoxes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormAddMetadata.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -531,6 +537,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\CmdWindowHandleForm.resx">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormTwoTextBoxes.resx">
+      <DependentUpon>FormTwoTextBoxes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAddMetadata.resx">
       <DependentUpon>FormAddMetadata.cs</DependentUpon>

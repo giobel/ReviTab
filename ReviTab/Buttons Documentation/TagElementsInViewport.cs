@@ -42,8 +42,9 @@ namespace ReviTab
             StringBuilder errorlog = new StringBuilder();
 
             double xOffset = 0;
+            string category = "";
 
-            using (var form = new FormAddActiveView("Tag X-offset [mm] from column centre"))
+            using (var form = new FormTwoTextBoxes("Tag X-offset [mm] from column centre", "Category to Tag"))
             {
                 form.ShowDialog();
 
@@ -56,6 +57,7 @@ namespace ReviTab
                 try
                 {
                     xOffset = Int16.Parse(form.TextString) / 304.8;
+                    category = form.TextString2;
                 }
                 catch
                 {
@@ -75,7 +77,7 @@ namespace ReviTab
                     {
                         try
                         {
-                            if (ele.Category.Name == "Structural Columns")
+                            if (ele.Category.Name == category)
                             {
                                 FamilyInstance fa = ele as FamilyInstance;
 
