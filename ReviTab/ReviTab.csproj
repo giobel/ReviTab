@@ -307,12 +307,14 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\CreateNurbsModelCurve.cs" />
     <Compile Include="Buttons Tools\DisableWarnings.cs" />
     <Compile Include="Buttons Tools\ExportJson.cs" />
     <Compile Include="Buttons Tools\FlipSections.cs" />
     <Compile Include="Buttons Tools\AlignColumns.cs" />
     <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
     <Compile Include="Buttons Tools\Intersections.cs" />
+    <Compile Include="Buttons Tools\IntersectPlaneMesh.cs" />
     <Compile Include="Buttons Tools\OverrideColors.cs" />
     <Compile Include="Buttons Tools\PropagateGridExtents.cs" />
     <Compile Include="Buttons Excel\UpdateViewportsFromExcel.cs" />
