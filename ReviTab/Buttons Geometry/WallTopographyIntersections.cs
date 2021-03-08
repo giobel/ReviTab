@@ -99,6 +99,7 @@ namespace ReviTab
                 t.Start();
 
                 List<XYZ> intPts = new List<XYZ>();
+                WireframeBuilder builder = new WireframeBuilder();
 
                 for (int i = 0; i < geomMesh.NumTriangles; i++)
                 {
@@ -128,7 +129,7 @@ namespace ReviTab
                     //		        doc.Create.NewModelCurve(edge13, sp);
                     //		        doc.Create.NewModelCurve(edge23, sp);
 
-
+                    
 
                     foreach (PlanarFace pf in wallFaces)
                     {
@@ -169,6 +170,8 @@ namespace ReviTab
                                         {
                                             Plane wallPlane = Plane.CreateByNormalAndOrigin(pf.FaceNormal, pf.Origin);
                                             SketchPlane spWall = SketchPlane.Create(doc, wallPlane);    //PROBABLY BETTER TO USE ONLY 1 SKETCHPLANE (THE SAME FOR ALL THE CURVES -> MOVE IT OUT OF THE LOOP)
+
+                                            builder.AddCurve(Line.CreateBound(pts[0], pts[1]));
                                             doc.Create.NewModelCurve(Line.CreateBound(pts[0], pts[1]), spWall);
                                         }
                                         catch { }
@@ -190,6 +193,10 @@ namespace ReviTab
 
 
                 }
+
+                // SINGLE MODEL CURVES OR GROUPED INTO 1 DIRECTSHAPE
+                DirectShape ds = DirectShape.CreateElement(doc, new ElementId(BuiltInCategory.OST_GenericModel));
+                ds.SetShape(builder);
 
                 t.Commit();
             }
