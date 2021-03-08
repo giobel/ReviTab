@@ -168,7 +168,7 @@ namespace ReviTab
                                         try
                                         {
                                             Plane wallPlane = Plane.CreateByNormalAndOrigin(pf.FaceNormal, pf.Origin);
-                                            SketchPlane spWall = SketchPlane.Create(doc, wallPlane);
+                                            SketchPlane spWall = SketchPlane.Create(doc, wallPlane);    //PROBABLY BETTER TO USE ONLY 1 SKETCHPLANE (THE SAME FOR ALL THE CURVES -> MOVE IT OUT OF THE LOOP)
                                             doc.Create.NewModelCurve(Line.CreateBound(pts[0], pts[1]), spWall);
                                         }
                                         catch { }
