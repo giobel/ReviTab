@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using RG = Rhino.Geometry;
 
-namespace ReviTab.Buttons_Tools
+namespace ReviTab
 {
     [Transaction(TransactionMode.Manual)]
     public class CreateNurbsModelCurve : IExternalCommand

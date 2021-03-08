@@ -178,9 +178,9 @@ namespace ReviTab
                 //OVERRIDES
                 IList<PushButtonData> overrideTools = new List<PushButtonData>
                 {
-                    CreatePushButton("btnOverrideDimensions", "Override \nDimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension"),
+                    CreatePushButton("btnOverrideColoor", "Override Colours", "", "pack://application:,,,/ReviTab;component/Resources/airtable.png", "ReviTab.OverrideColors", "Override the colours of the structural elements in the active view."),
 
-                    CreatePushButton("btnOverrideColoor", "Override Colours", "", "pack://application:,,,/ReviTab;component/Resources/airtable.png", "ReviTab.OverrideColors", "Override the colours of the structural elements in the active view.")
+                    CreatePushButton("btnOverrideDimensions", "Override \nDimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension")
                 };
                 
                 AddSplitButton(toolsPanel, overrideTools, "overrideTools", "Override Tools");
@@ -291,7 +291,7 @@ namespace ReviTab
                 IList<PushButtonData> stackedButtonsGroupGeometry = new List<PushButtonData>
                 {
                     
-                    CreatePushButton("intMesh", "Intersect Mesh", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "ReviTab.AAAAAAARhinoMesh", "Intersect line with mesh"),
+                    CreatePushButton("intMesh", "Intersect Mesh", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "ReviTab.WallTopographyIntersections", "Intersect line with mesh"),
 
                     CreatePushButton("btnSATtoDS", "Element to DirectShape", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element."),
 

@@ -14,7 +14,7 @@ using rg = Rhino.Geometry;
 namespace ReviTab
 {
     [Transaction(TransactionMode.Manual)]
-    public class AAAAAAAAAAAAAAAAAIntersections : IExternalCommand
+    public class WallTopographyIntersections : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -25,8 +25,6 @@ namespace ReviTab
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
-
-
 
             //WALLS FACES
             List<PlanarFace> wallFaces = new List<PlanarFace>();

@@ -313,7 +313,7 @@
     <Compile Include="Buttons Tools\FlipSections.cs" />
     <Compile Include="Buttons Tools\AlignColumns.cs" />
     <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
-    <Compile Include="Buttons Tools\Intersections.cs" />
+    <Compile Include="Buttons Geometry\WallTopographyIntersections.cs" />
     <Compile Include="Buttons Tools\IntersectPlaneMesh.cs" />
     <Compile Include="Buttons Tools\OverrideColors.cs" />
     <Compile Include="Buttons Tools\PropagateGridExtents.cs" />
