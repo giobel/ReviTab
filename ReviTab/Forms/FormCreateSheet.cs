@@ -12,10 +12,13 @@ namespace ReviTab.Forms
 {
     public partial class FormCreateSheet : Form
     {
+        public Autodesk.Revit.DB.Element ChosenTitleblock { get; set; }
         public string SheetNumber { get; set; }
         public string PackageName { get; set; }
         public int Count { get; set; }
         public List<string> Packages { get; set; }
+
+        public ICollection<Autodesk.Revit.DB.Element> TitleblocksNames { get; set; }
 
         public FormCreateSheet()
         {
@@ -30,6 +33,7 @@ namespace ReviTab.Forms
             if (null != selectedItem)
             {
                 PackageName = selectedItem.ToString();
+                ChosenTitleblock = (Autodesk.Revit.DB.Element)comboBoxTitleblocks.SelectedItem;
             }
             else{
                 PackageName = cboxPackage.Text;
@@ -41,6 +45,8 @@ namespace ReviTab.Forms
         private void FormCreateSheet_Load(object sender, EventArgs e)
         {
             cboxPackage.DataSource = Packages;
+            comboBoxTitleblocks.DataSource = TitleblocksNames;
+            comboBoxTitleblocks.DisplayMember = "Name";
         }
     }
 }

@@ -7,6 +7,7 @@ using ReviTab.Forms;
 using System;
 using System.Collections.Generic;
 using forms = System.Windows.Forms;
+using System.Linq;
 #endregion
 
 namespace ReviTab
@@ -37,9 +38,20 @@ namespace ReviTab
                 }
             }
 
+            //List<string> tblocksNames = new List<string>();
+
+            ICollection<Element> fecTitleblocks = new FilteredElementCollector(document).OfCategory(BuiltInCategory.OST_TitleBlocks).WhereElementIsElementType().ToElements();
+
+            //foreach (Element item in fecTitleblocks)
+            //{
+            //    tblocksNames.Add(item.Name);
+            //}
+
+
             using (var form = new FormCreateSheet())
             {
                 form.Packages = packageValues;
+                form.TitleblocksNames = fecTitleblocks;
                 form.ShowDialog();
 
                 //if the user hits cancel just drop out of macro
@@ -52,7 +64,14 @@ namespace ReviTab
                 collector.OfClass(typeof(FamilySymbol));
                 collector.OfCategory(BuiltInCategory.OST_TitleBlocks);
 
-                FamilySymbol fs = collector.FirstElement() as FamilySymbol;
+                FamilySymbol fs = collector.Last() as FamilySymbol;
+
+                if (form.ChosenTitleblock != null)
+                {
+                    fs = form.ChosenTitleblock as FamilySymbol;
+                }
+
+
                 if (fs != null)
                 {
                     using (Transaction t = new Transaction(document, "Create a new ViewSheet"))
