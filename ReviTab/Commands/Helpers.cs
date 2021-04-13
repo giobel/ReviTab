@@ -371,20 +371,26 @@ namespace ReviTab
         public static ViewSection CreateSectionParallel(Document doc, UIDocument uidoc, Element ele, double sectionPosition, double farClipOffset, double bottomLevel, double topLevel, string eleParameter, bool flipDirection)
         {
 
-            Element wall = ele;
+            Element lineBasedElement = ele;
+            Line line = null;
 
-            // Create a BoundingBoxXYZ instance centered on wall
-            BoundingBoxXYZ bb = wall.get_BoundingBox(null);
-            double minZ = bb.Min.Z;
-            double maxZ = bb.Max.Z;
-            double h = maxZ - minZ;
-            Level level = doc.ActiveView.GenLevel;
-            //double top = 90 - level.Elevation;
-            //double bottom = -(level.Elevation + 25);
-
-            LocationCurve lc = wall.Location as LocationCurve;
-            Line line = lc.Curve as Line;
-
+            if (lineBasedElement.Category.Name != "Grids")
+            {
+                // Create a BoundingBoxXYZ instance centered on wall
+                BoundingBoxXYZ bb = lineBasedElement.get_BoundingBox(null);
+                double minZ = bb.Min.Z;
+                double maxZ = bb.Max.Z;
+                double h = maxZ - minZ;
+                Level level = doc.ActiveView.GenLevel;
+                LocationCurve lc = lineBasedElement.Location as LocationCurve;
+                line = lc.Curve as Line;
+            }
+            else
+            {
+                Grid grid = lineBasedElement as Grid;
+                line = grid.Curve as Line;
+            }
+            
             XYZ p = line.GetEndPoint(0);
             XYZ q = line.GetEndPoint(1);
             XYZ v = p - q; // p point 0 - q point 1 - view direction up. 

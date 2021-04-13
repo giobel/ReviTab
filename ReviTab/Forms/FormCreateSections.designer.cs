@@ -115,7 +115,7 @@ namespace ReviTab
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(213, 14);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Section Offset from Wall CL [mm]";
+            this.label1.Text = "Section Offset from Line [mm]";
             this.label1.UseCompatibleTextRendering = true;
             // 
             // label2
@@ -124,7 +124,7 @@ namespace ReviTab
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(224, 13);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Far Clip Offset from Wall CL [mm]";
+            this.label2.Text = "Far Clip Offset from Line [mm]";
             this.label2.UseCompatibleTextRendering = true;
             // 
             // farClipOffsetTxt
@@ -205,9 +205,9 @@ namespace ReviTab
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(15, 40);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(173, 13);
+            this.label5.Size = new System.Drawing.Size(176, 13);
             this.label5.TabIndex = 15;
-            this.label5.Text = "Column parameter for section name";
+            this.label5.Text = "Element parameter for section name";
             // 
             // FormCreateSections
             // 
@@ -231,7 +231,7 @@ namespace ReviTab
             this.Controls.Add(this.checkBoxCross);
             this.Controls.Add(this.checkBoxLong);
             this.Name = "FormCreateSections";
-            this.Text = "Form1";
+            this.Text = "Create Sections";
             this.Load += new System.EventHandler(this.Form1Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
