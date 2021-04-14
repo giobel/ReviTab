@@ -399,7 +399,24 @@ namespace ReviTab
                 Grid grid = lineBasedElement as Grid;
                 line = grid.Curve as Line;
             }
-            
+
+
+            //ORIENT LINES: https://forums.autodesk.com/t5/revit-api-forum/parallel-line/m-p/7662821/highlight/true#M27606
+            XYZ xyzDir = null;
+            xyzDir = line.Direction.Normalize();
+
+            if (((Math.Abs(xyzDir.X) >= Math.Abs(xyzDir.Y)) && xyzDir.X < 0) || ((Math.Abs(xyzDir.Y) > Math.Abs(xyzDir.X)) && xyzDir.Y < 0))
+            {
+                line = line.CreateReversed() as Line;
+                
+            }
+            else
+            {
+                
+            }
+
+
+
             XYZ p = line.GetEndPoint(0);
             XYZ q = line.GetEndPoint(1);
             XYZ v = p - q; // p point 0 - q point 1 - view direction up. 
@@ -416,6 +433,17 @@ namespace ReviTab
             XYZ midpoint = q + 0.5 * v; // q get lower midpoint. 
             XYZ walldir = v.Normalize();
 
+
+
+
+
+            //ORIENT TO 1,0,0 OR 0,1,0
+            //XYZ xdir = walldir.CrossProduct(new XYZ(1, 0, 0));
+            //XYZ ydir = walldir.CrossProduct(new XYZ(0, 1, 0));
+            //if ( xdir.X+xdir.Y == 0 || ydir.X+ydir.Y == 0)
+            //{
+            //    walldir = new XYZ(-Math.Abs(walldir.X), -Math.Abs(walldir.Y), -Math.Abs(walldir.Z));
+            //}
 
             if (flipDirection)
             {
