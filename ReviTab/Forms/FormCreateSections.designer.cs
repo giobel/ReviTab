@@ -50,6 +50,11 @@ namespace ReviTab
             this.checkBoxFlip = new System.Windows.Forms.CheckBox();
             this.textBoxParameter = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.prefixLabel = new System.Windows.Forms.Label();
+            this.textBoxPrefix = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBoxSectionTypes = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,10 +85,10 @@ namespace ReviTab
             // ok_button
             // 
             this.ok_button.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.ok_button.Location = new System.Drawing.Point(72, 292);
+            this.ok_button.Location = new System.Drawing.Point(72, 373);
             this.ok_button.Name = "ok_button";
             this.ok_button.Size = new System.Drawing.Size(63, 33);
-            this.ok_button.TabIndex = 2;
+            this.ok_button.TabIndex = 9;
             this.ok_button.Text = "OK";
             this.ok_button.UseCompatibleTextRendering = true;
             this.ok_button.UseVisualStyleBackColor = true;
@@ -92,90 +97,90 @@ namespace ReviTab
             // cancel_button
             // 
             this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancel_button.Location = new System.Drawing.Point(193, 292);
+            this.cancel_button.Location = new System.Drawing.Point(193, 373);
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.Size = new System.Drawing.Size(63, 33);
-            this.cancel_button.TabIndex = 3;
+            this.cancel_button.TabIndex = 10;
             this.cancel_button.Text = "Cancel";
             this.cancel_button.UseCompatibleTextRendering = true;
             this.cancel_button.UseVisualStyleBackColor = true;
             // 
             // sectionPositionTxt
             // 
-            this.sectionPositionTxt.Location = new System.Drawing.Point(15, 103);
+            this.sectionPositionTxt.Location = new System.Drawing.Point(12, 143);
             this.sectionPositionTxt.Name = "sectionPositionTxt";
-            this.sectionPositionTxt.Size = new System.Drawing.Size(54, 20);
-            this.sectionPositionTxt.TabIndex = 4;
+            this.sectionPositionTxt.Size = new System.Drawing.Size(151, 20);
+            this.sectionPositionTxt.TabIndex = 5;
             this.sectionPositionTxt.Text = "-10";
             this.sectionPositionTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(15, 84);
+            this.label1.Location = new System.Drawing.Point(12, 124);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(213, 14);
-            this.label1.TabIndex = 5;
+            this.label1.TabIndex = 99;
             this.label1.Text = "Section Offset from Line [mm]";
             this.label1.UseCompatibleTextRendering = true;
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(15, 128);
+            this.label2.Location = new System.Drawing.Point(12, 168);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(224, 13);
-            this.label2.TabIndex = 6;
+            this.label2.TabIndex = 99;
             this.label2.Text = "Far Clip Offset from Line [mm]";
             this.label2.UseCompatibleTextRendering = true;
             // 
             // farClipOffsetTxt
             // 
-            this.farClipOffsetTxt.Location = new System.Drawing.Point(15, 146);
+            this.farClipOffsetTxt.Location = new System.Drawing.Point(12, 186);
             this.farClipOffsetTxt.Name = "farClipOffsetTxt";
-            this.farClipOffsetTxt.Size = new System.Drawing.Size(54, 20);
-            this.farClipOffsetTxt.TabIndex = 7;
+            this.farClipOffsetTxt.Size = new System.Drawing.Size(151, 20);
+            this.farClipOffsetTxt.TabIndex = 6;
             this.farClipOffsetTxt.Text = "500";
             this.farClipOffsetTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // bottomLevelTxt
             // 
-            this.bottomLevelTxt.Location = new System.Drawing.Point(273, 103);
+            this.bottomLevelTxt.Location = new System.Drawing.Point(240, 143);
             this.bottomLevelTxt.Name = "bottomLevelTxt";
-            this.bottomLevelTxt.Size = new System.Drawing.Size(54, 20);
-            this.bottomLevelTxt.TabIndex = 8;
+            this.bottomLevelTxt.Size = new System.Drawing.Size(87, 20);
+            this.bottomLevelTxt.TabIndex = 7;
             this.bottomLevelTxt.Text = "-1";
             this.bottomLevelTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(246, 83);
+            this.label3.Location = new System.Drawing.Point(238, 124);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 18);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Bottom Level [m]";
+            this.label3.Size = new System.Drawing.Size(97, 18);
+            this.label3.TabIndex = 99;
+            this.label3.Text = "Bottom Level* [m]";
             this.label3.UseCompatibleTextRendering = true;
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(246, 130);
+            this.label4.Location = new System.Drawing.Point(240, 168);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 23);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Top Level [m]";
+            this.label4.Size = new System.Drawing.Size(81, 23);
+            this.label4.TabIndex = 99;
+            this.label4.Text = "Top Level* [m]";
             this.label4.UseCompatibleTextRendering = true;
             // 
             // topLevelTxt
             // 
-            this.topLevelTxt.Location = new System.Drawing.Point(273, 146);
+            this.topLevelTxt.Location = new System.Drawing.Point(240, 186);
             this.topLevelTxt.Name = "topLevelTxt";
-            this.topLevelTxt.Size = new System.Drawing.Size(54, 20);
-            this.topLevelTxt.TabIndex = 11;
+            this.topLevelTxt.Size = new System.Drawing.Size(87, 20);
+            this.topLevelTxt.TabIndex = 8;
             this.topLevelTxt.Text = "10";
             this.topLevelTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 172);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 253);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(312, 108);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -188,32 +193,81 @@ namespace ReviTab
             this.checkBoxFlip.Location = new System.Drawing.Point(238, 16);
             this.checkBoxFlip.Name = "checkBoxFlip";
             this.checkBoxFlip.Size = new System.Drawing.Size(87, 17);
-            this.checkBoxFlip.TabIndex = 13;
+            this.checkBoxFlip.TabIndex = 2;
             this.checkBoxFlip.Text = "Flip Direction";
             this.checkBoxFlip.UseVisualStyleBackColor = true;
             // 
             // textBoxParameter
             // 
-            this.textBoxParameter.Location = new System.Drawing.Point(15, 58);
+            this.textBoxParameter.Location = new System.Drawing.Point(12, 98);
             this.textBoxParameter.Name = "textBoxParameter";
             this.textBoxParameter.Size = new System.Drawing.Size(312, 20);
-            this.textBoxParameter.TabIndex = 14;
+            this.textBoxParameter.TabIndex = 4;
             this.textBoxParameter.Text = "Mark";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 40);
+            this.label5.Location = new System.Drawing.Point(12, 80);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(176, 13);
-            this.label5.TabIndex = 15;
+            this.label5.TabIndex = 99;
             this.label5.Text = "Element parameter for section name";
+            // 
+            // prefixLabel
+            // 
+            this.prefixLabel.AutoSize = true;
+            this.prefixLabel.Location = new System.Drawing.Point(12, 37);
+            this.prefixLabel.Name = "prefixLabel";
+            this.prefixLabel.Size = new System.Drawing.Size(103, 13);
+            this.prefixLabel.TabIndex = 99;
+            this.prefixLabel.Text = "Section Name Prefix";
+            // 
+            // textBoxPrefix
+            // 
+            this.textBoxPrefix.Location = new System.Drawing.Point(12, 55);
+            this.textBoxPrefix.Name = "textBoxPrefix";
+            this.textBoxPrefix.Size = new System.Drawing.Size(103, 20);
+            this.textBoxPrefix.TabIndex = 3;
+            this.textBoxPrefix.Text = "New Section";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(166, 219);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(161, 13);
+            this.label6.TabIndex = 100;
+            this.label6.Text = "*Level measured from Datum 0.0";
+            // 
+            // comboBoxSectionTypes
+            // 
+            this.comboBoxSectionTypes.FormattingEnabled = true;
+            this.comboBoxSectionTypes.Location = new System.Drawing.Point(125, 54);
+            this.comboBoxSectionTypes.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxSectionTypes.Name = "comboBoxSectionTypes";
+            this.comboBoxSectionTypes.Size = new System.Drawing.Size(203, 21);
+            this.comboBoxSectionTypes.TabIndex = 102;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(124, 39);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 13);
+            this.label7.TabIndex = 101;
+            this.label7.Text = "Section Type";
             // 
             // FormCreateSections
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(339, 336);
+            this.ClientSize = new System.Drawing.Size(339, 419);
+            this.Controls.Add(this.comboBoxSectionTypes);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.prefixLabel);
+            this.Controls.Add(this.textBoxPrefix);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBoxParameter);
             this.Controls.Add(this.checkBoxFlip);
@@ -260,5 +314,10 @@ namespace ReviTab
         private System.Windows.Forms.CheckBox checkBoxFlip;
         private System.Windows.Forms.TextBox textBoxParameter;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label prefixLabel;
+        private System.Windows.Forms.TextBox textBoxPrefix;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBoxSectionTypes;
+        private System.Windows.Forms.Label label7;
     }
 }

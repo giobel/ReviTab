@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -16,7 +17,9 @@ namespace ReviTab
 		public double topLevel {get;set;}
 		public bool flipDirection {get;set;}
 		public string columnParameter { get; set; }
-	
+		public string prefixText { get; set; }
+		public Autodesk.Revit.DB.Element chosenSection { get; set; }
+		public ICollection<Autodesk.Revit.DB.ViewFamilyType> SectionTypes { get; set; }
 		public FormCreateSections()
 		{
 			//
@@ -44,8 +47,11 @@ namespace ReviTab
 			bottomLevel = Int16.Parse(bottomLevelTxt.Text)/304.8*1000;
 			topLevel = Int16.Parse(topLevelTxt.Text)/304.8*1000;
 			columnParameter = textBoxParameter.Text;
+			prefixText = textBoxPrefix.Text;
+			chosenSection = (Autodesk.Revit.DB.Element)comboBoxSectionTypes.SelectedItem;
+
 		}
-		
+
 		void CheckBoxLong_Click(object sender, EventArgs e)
 		{
 				checkBoxCross.Checked = false;
@@ -61,7 +67,8 @@ namespace ReviTab
 		
 		void Form1Load(object sender, EventArgs e)
 		{
-			
+			comboBoxSectionTypes.DataSource = SectionTypes;
+			comboBoxSectionTypes.DisplayMember = "Name";
 		}
 
 	}

@@ -264,7 +264,7 @@ namespace ReviTab
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        private static ViewFamilyType viewFamilyType(Document doc)
+        public static ViewFamilyType viewFamilyType(Document doc)
         {
             ViewFamilyType vft = new FilteredElementCollector(doc)
                 .OfClass(typeof(ViewFamilyType))
@@ -301,7 +301,7 @@ namespace ReviTab
         /// <param name="doc"></param>
         /// <param name="uidoc"></param>
         /// <param name="ele"></param>
-        public static void CreateSectionPerpendicular(Document doc, UIDocument uidoc, Element ele)
+        public static void CreateSectionPerpendicular(Document doc, UIDocument uidoc, Element ele, string eleParameter, string prefixText)
         {
             // My library 
 
@@ -356,6 +356,15 @@ namespace ReviTab
             ViewSection vs = null;
 
             vs = ViewSection.CreateSection(doc, vft.Id, sectionBox);
+
+            try
+            {
+                vs.Name = $"{prefixText} {ele.LookupParameter(eleParameter).AsString()}";
+            }
+            catch {
+
+            }
+
         }
 
         /// <summary>
@@ -368,7 +377,7 @@ namespace ReviTab
         /// <param name="farClipOffset"></param>
         /// <param name="bottomLevel"></param>
         /// <param name="topLevel"></param>
-        public static ViewSection CreateSectionParallel(Document doc, UIDocument uidoc, Element ele, double sectionPosition, double farClipOffset, double bottomLevel, double topLevel, string eleParameter, bool flipDirection)
+        public static ViewSection CreateSectionParallel(Document doc, UIDocument uidoc, Element ele, double sectionPosition, double farClipOffset, double bottomLevel, double topLevel, string eleParameter, bool flipDirection, string prefixName, ViewFamilyType vft)
         {
 
             Element lineBasedElement = ele;
@@ -429,14 +438,14 @@ namespace ReviTab
             sectionBox.Min = min; // scope box start 
             sectionBox.Max = max; // scope box end
 
-            ViewFamilyType vft = viewFamilyType(doc);
+//            ViewFamilyType vft = viewFamilyType(doc);
             ViewSection vs = null;
 
             vs = ViewSection.CreateSection(doc, vft.Id, sectionBox);
 
             try
             {
-                vs.Name = $"Section {ele.LookupParameter(eleParameter).AsString()}";
+                vs.Name = $"{prefixName} {ele.LookupParameter(eleParameter).AsString()}";
             }
             catch
             {

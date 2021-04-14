@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -35,15 +36,26 @@ namespace ReviTab
             }
 
             ViewSection vs = null;
-            
-            using (var form = new  FormCreateSections())
+
+            ICollection<ViewFamilyType> allSectionTypes = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>().Where<ViewFamilyType>(x => ViewFamily.Section == x.ViewFamily).ToList();
+
+            using (var form = new FormCreateSections())
             {
+
+                form.SectionTypes = allSectionTypes;
 
                 form.ShowDialog();
 
                 if (form.DialogResult == winForm.DialogResult.Cancel)
                 {
                     return Result.Cancelled;
+                }
+
+                ViewFamilyType vft = Helpers.viewFamilyType(doc);
+
+                if (form.chosenSection != null)
+                {
+                    vft = form.chosenSection as ViewFamilyType;
                 }
 
                 using (Transaction tx = new Transaction(doc))
@@ -56,7 +68,7 @@ namespace ReviTab
 
                             foreach (Element e in myElements)
                             {
-                                vs = Helpers.CreateSectionParallel(doc, uidoc, e, form.sectionPositionOffset, form.farClipOffset, form.bottomLevel, form.topLevel, form.columnParameter, form.flipDirection);
+                                vs = Helpers.CreateSectionParallel(doc, uidoc, e, form.sectionPositionOffset, form.farClipOffset, form.bottomLevel, form.topLevel, form.columnParameter, form.flipDirection, form.prefixText, vft);
                                 s += $"{vs.Name}\n";
                             }
 
@@ -64,7 +76,7 @@ namespace ReviTab
                         {
                             foreach (Element e in myElements)
                             {
-                                Helpers.CreateSectionPerpendicular(doc, uidoc, e);
+                                Helpers.CreateSectionPerpendicular(doc, uidoc, e, form.columnParameter, form.prefixText);
                                 s += 1;
                             }
                         }
