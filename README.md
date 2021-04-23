@@ -145,4 +145,4 @@ Open a model in background and print its drawings. The printer setting should be
 Purge families and leave only a type called Default. Requires the Purge Unused that can be found in the Revit Purge Unused branch. Credits: Matt Taylor https://gitlab.com/MattTaylor/RevitPurgeUnused/blob/master/PurgeTool.vb
 
 ## Installation
-Extract the content of https://github.com/giobel/ReviTab/blob/master/Addin.zip in %AppData%\Autodesk\Revit\AddIns\2019
+Extract the content of the release zip file in %AppData%\Autodesk\Revit\AddIns\20xx
