@@ -51,6 +51,9 @@ namespace ReviTab
 
         private void Doc_DocumentClosing(object sender, ApplicationClosingEventArgs e)
         {
+            int tabCount = 0;
+            tabProjectNames.Clear();
+
             UIApplication uiapp = sender as UIApplication;
 
             uiapp.ViewActivated -= new EventHandler<ViewActivatedEventArgs>(Application_ViewActivated);
@@ -58,9 +61,12 @@ namespace ReviTab
             TaskDialog.Show("R", "Unsuscribing");
         }
 
+        private int tabCount = 0;
+        private List<string> tabProjectNames = new List<string>();
+        private List<SolidColorBrush> tabProjectColors = new List<SolidColorBrush> { Brushes.Coral, Brushes.RoyalBlue, Brushes.DeepPink, Brushes.SeaGreen, Brushes.Yellow, Brushes.Orange, Brushes.Green, Brushes.Blue, Brushes.Red, Brushes.Violet };
+
         public void Application_ViewActivated(object sender, ViewActivatedEventArgs args)
-        {
- 
+        { 
             UIApplication uiapp = sender as UIApplication;
 
             var docTabGroup = GetDocumentTabGroup(uiapp);
@@ -69,31 +75,49 @@ namespace ReviTab
             {
                 var docTabs = GetDocumentTabs(docTabGroup);
 
-                foreach (TabItem tab in docTabs)
-                {
-                    //tab.BorderBrush = Brushes.Red;
-                    //tab.BorderThickness = new System.Windows.Thickness(2);
+                int currentTabCount = docTabs.ToHashSet().Count;
 
-                    SolidColorBrush planBrush = new SolidColorBrush(Colors.PaleVioletRed);
-                    planBrush.Opacity = 0.75;
+                if (tabCount != currentTabCount)
+                {                    
+                    foreach (TabItem tab in docTabs)
+                    {
+                        string currentProjectName = tab.ToolTip.ToString().Split(' ')[0];
 
-                    SolidColorBrush sectBrush = new SolidColorBrush(Colors.PaleGoldenrod);
-                    planBrush.Opacity = 0.75;
+                        if (!tabProjectNames.Contains(currentProjectName))  //THE CURRENT TAB BELONGS TO A NEW PROJECT
+                        {
+                            tabProjectNames.Add(currentProjectName);
+                            tab.BorderBrush = tabProjectColors[tabProjectNames.IndexOf(currentProjectName)];
+                        }
+                        else   //THE CURRENT TAB BELONGS TO A PROJECT THAT IS ALREADY OPENED
+                        {
+                            tab.BorderBrush = tabProjectColors[tabProjectNames.IndexOf(currentProjectName)];
+                        }
 
-                    SolidColorBrush threeDBrush = new SolidColorBrush(Colors.PaleTurquoise);
-                    planBrush.Opacity = 0.75;
+                        tab.BorderThickness = new System.Windows.Thickness(0, 3, 0, 0);
 
-                    SolidColorBrush sheetBrush = new SolidColorBrush(Colors.PaleGreen);
-                    planBrush.Opacity = 0.75;
+                        SolidColorBrush planBrush = new SolidColorBrush(Colors.PaleVioletRed);
+                        planBrush.Opacity = 0.75;
 
-                    if (tab.ToolTip.ToString().Contains("Plan:"))
-                        tab.Background = planBrush;
-                    else if (tab.ToolTip.ToString().Contains("Section:"))
-                        tab.Background = sectBrush;
-                    else if (tab.ToolTip.ToString().Contains("3D View:"))
-                        tab.Background = threeDBrush;
-                    else if (tab.ToolTip.ToString().Contains("Sheet:"))
-                        tab.Background = sheetBrush;
+                        SolidColorBrush sectBrush = new SolidColorBrush(Colors.PaleGoldenrod);
+                        planBrush.Opacity = 0.75;
+
+                        SolidColorBrush threeDBrush = new SolidColorBrush(Colors.PaleTurquoise);
+                        planBrush.Opacity = 0.75;
+
+                        SolidColorBrush sheetBrush = new SolidColorBrush(Colors.PaleGreen);
+                        planBrush.Opacity = 0.75;
+
+                        if (tab.ToolTip.ToString().Contains("Plan:"))
+                            tab.Background = planBrush;
+                        else if (tab.ToolTip.ToString().Contains("Section:"))
+                            tab.Background = sectBrush;
+                        else if (tab.ToolTip.ToString().Contains("3D View:"))
+                            tab.Background = threeDBrush;
+                        else if (tab.ToolTip.ToString().Contains("Sheet:"))
+                            tab.Background = sheetBrush;
+                    }
+
+                    tabCount = docTabs.ToHashSet().Count;
                 }
 
             }
