@@ -74,7 +74,9 @@ namespace ReviTab
 
                 splitButtonsViews.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
 
-                splitButtonsViews.Add(CreatePushButton("btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select views on sheets in the project browser first then click on this button."));
+                splitButtonsViews.Add(CreatePushButton("btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select a list of views in the project browser then click on this button to pick a point on a sheet. The point will be used as a center of all the viewports of the selected views."));
+
+                splitButtonsViews.Add(CreatePushButton("btnAlignSectionCropBox", "Math Section CropView", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MatchSectionViewCrop", "Select a list of sections views in the project browser then click on this button to assign the same cropbox view to all.")); 
 
                 splitButtonsViews.Add(CreatePushButton("btnTagInView", "Tag Elements", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.TagElementsInViewport", "Tag all the columns within the selected Viewports."));
                 

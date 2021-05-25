@@ -299,6 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons Documentation\MatchSectionViewCrop.cs" />
     <Compile Include="Buttons Documentation\RhinoImport.cs" />
     <Compile Include="Buttons Documentation\DuplicateSheets.cs" />
     <Compile Include="Buttons Documentation\BeamByTypeMark.cs" />
@@ -401,6 +402,9 @@
     </Compile>
     <Compile Include="Forms\CmdWindowHandleForm.Designer.cs">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPickFromDropDown.xaml.cs">
+      <DependentUpon>FormPickFromDropDown.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormTwoTextBoxes.cs">
       <SubType>Form</SubType>
@@ -602,6 +606,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Forms\FormDuplicateSheets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\FormPickFromDropDown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
