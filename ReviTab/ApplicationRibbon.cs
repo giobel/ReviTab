@@ -76,7 +76,7 @@ namespace ReviTab
 
                 splitButtonsViews.Add(CreatePushButton("btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select a list of views in the project browser then click on this button to pick a point on a sheet. The point will be used as a center of all the viewports of the selected views."));
 
-                splitButtonsViews.Add(CreatePushButton("btnAlignSectionCropBox", "Math Section CropView", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MatchSectionViewCrop", "Select a list of sections views in the project browser then click on this button to assign the same cropbox view to all.")); 
+                splitButtonsViews.Add(CreatePushButton("btnAlignSectionCropBox", "Match Section CropView", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MatchSectionViewCrop", "Select a list of sections views in the project browser then click on this button to assign the same cropbox view to all. Section views must all be parallel between themselves.")); 
 
                 splitButtonsViews.Add(CreatePushButton("btnTagInView", "Tag Elements", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.TagElementsInViewport", "Tag all the columns within the selected Viewports."));
                 
@@ -190,9 +190,9 @@ namespace ReviTab
                 //LINK FILES
                 IList<PushButtonData> linkFiles = new List<PushButtonData>
                 {
-                    CreatePushButton("btnAlignColumns", "Align Columns", "", "pack://application:,,,/ReviTab;component/Resources/alignColumns.png", "ReviTab.AlignColumns", "Align the columns in the model to those selected in a linked model. There is an hardcoded tolerance of 3feet as maximum distance between the linked column and the one to be moved."),
+                    CreatePushButton("btnCopyLinkedElements", "Copy Linked \nElements", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyLinkedElements", "Copy elements from linked models"),
 
-                    CreatePushButton("btnCopyLinkedElements", "Copy Linked \nElements", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyLinkedElements", "Copy elements from linked models")
+                    CreatePushButton("btnAlignColumns", "Align Columns", "", "pack://application:,,,/ReviTab;component/Resources/alignColumns.png", "ReviTab.AlignColumns", "Align the columns in the model to those selected in a linked model. There is an hardcoded tolerance of 3feet as maximum distance between the linked column and the one to be moved.")
                 };
 
                 AddSplitButton(toolsPanel, linkFiles, "linkFiles", "Link Files");

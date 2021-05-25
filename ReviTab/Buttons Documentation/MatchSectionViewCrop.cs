@@ -37,7 +37,7 @@ namespace ReviTab
 
 
 			int count = 0;
-			string error = "No errors";
+			string error = "";
 
 			var form = new Forms.FormPickFromDropDown();
 
@@ -78,13 +78,18 @@ namespace ReviTab
 
 						//destinationView.CropBox.Transform.Origin = sourceViewBB.Transform.Origin;
 						//destinationView.CropBox = sourceViewBB;		
-						destinationView.GetCropRegionShapeManager().SetCropShape(sourceLoop);
+						ViewCropRegionShapeManager destinationVcr = destinationView.GetCropRegionShapeManager();
+						destinationVcr.SetCropShape(sourceLoop);
+						//if the crop is rectangular
+						if (sourceLoop.Count() == 4)
+						{
+							destinationVcr.RemoveCropRegionShape(); //Reset Crop after it has been set
+						}
 						count++;
 					}
 					catch
-					{
-						error = "";
-						error += $"{destinationView.Name}\n";
+					{						
+						error += $"Error processing view: {destinationView.Name}\n";
 					}
 				}
 
