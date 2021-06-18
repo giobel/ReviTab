@@ -180,11 +180,11 @@
     <!-- DEBUG -->
     <!-- 2017 -->
     <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2017'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2017\RevitAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2017'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2017\RevitAPIUI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- 2018 -->
@@ -598,13 +598,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\RevitPurgeUnused-master\PurgeUnused.vbproj">
-      <Project>{1fd4afac-e419-43f1-9c5d-ab8b19d55e2e}</Project>
-      <Name>PurgeUnused</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Forms\FormDuplicateSheets.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -613,6 +606,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RevitPurgeUnused\PurgeUnused.vbproj">
+      <Project>{1fd4afac-e419-43f1-9c5d-ab8b19d55e2e}</Project>
+      <Name>PurgeUnused</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

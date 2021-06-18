@@ -83,7 +83,8 @@ namespace ReviTab
 						//if the crop is rectangular
 						if (sourceLoop.Count() == 4)
 						{
-							destinationVcr.RemoveCropRegionShape(); //Reset Crop after it has been set
+                            doc.Regenerate();
+                            destinationVcr.RemoveCropRegionShape(); //Reset Crop after it has been set
 						}
 						count++;
 					}

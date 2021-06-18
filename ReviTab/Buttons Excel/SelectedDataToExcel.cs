@@ -58,8 +58,8 @@ namespace ReviTab
 
                         foreach (string s in parameters)
                         {
-                            if (!headers.Contains(s))
-                                headers += s + ",";
+                            //if (!headers.Contains(s)) //CREATE ERROR WHEN DIFFERENT PARAMETERS CONTAIN THE SAME TEXT
+                                headers += s.Trim() + ",";
 
                             string paramValue = "";
 
