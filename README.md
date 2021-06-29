@@ -3,19 +3,21 @@ WIP toolbar for Revit.
 
 ![IMG](https://i.imgur.com/IHdWlXS.png)
 
-# DOCUMENTATION
+## COMMANDS
 
-## Add View to Sheet
+## DOCUMENTATION
+
+### Add View to Sheet
 Add the active view to a sheet providing its number.
 
 ![](https://i.imgur.com/m7aWiWu.gif)
 
-## Add Multiple Views
+### Add Multiple Views
 Select multiple views in the project browser and add them to a sheet providing its number.
 
 ![](https://i.imgur.com/2UZ4ODp.gif)
 
-# TOOLS
+## TOOLS
 
 ## Create Multiple Sections
 credits: Danny Bentley and others. Create a section from a list of elements that have a location curve.
