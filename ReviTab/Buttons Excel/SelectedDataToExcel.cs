@@ -42,6 +42,7 @@ namespace ReviTab
 
                 uidoc.ActiveView = uidoc.ActiveGraphicalView;
 
+                //keep track of the parameters names
                 List<string> allParameters = new List<string>();
 
                 string headers = "ElementId,";
