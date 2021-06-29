@@ -42,6 +42,8 @@ namespace ReviTab
 
                 uidoc.ActiveView = uidoc.ActiveGraphicalView;
 
+                List<string> allParameters = new List<string>();
+
                 string headers = "ElementId,";
 
                 foreach (ElementId eid in selectedElementsId)
@@ -58,8 +60,12 @@ namespace ReviTab
 
                         foreach (string s in parameters)
                         {
-                            //if (!headers.Contains(s)) //CREATE ERROR WHEN DIFFERENT PARAMETERS CONTAIN THE SAME TEXT
+                            if (!allParameters.Contains(s))
+                            {
                                 headers += s.Trim() + ",";
+                                allParameters.Add(s);
+                            }
+                                
 
                             string paramValue = "";
 
