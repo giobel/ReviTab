@@ -63,9 +63,7 @@ namespace ReviTab
                     targetView.SetFilterVisibility(selectedFilter.Id, visibility);
 
                     t.Commit();
-
                 }
-
             }
 
             else

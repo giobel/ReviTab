@@ -50,8 +50,9 @@ namespace ReviTab.Forms
         private void BtnOkClick(object sender, RoutedEventArgs e)
         {
             SelectedViewSource = cboxSourceTemplate.SelectedItem as View;
-            SelectedFilterElement = cboxFilterSection.SelectedItem as FilterElement;
+            //SelectedFilterElement = cboxFilterSection.SelectedItem as FilterElement;
             SelectedTargetTemplate = cboxViewSection.SelectedItem as View;
+            SelectedFilterElement = filterList.SelectedItems[0] as FilterElement;
             DialogResult = true;
         }
 
