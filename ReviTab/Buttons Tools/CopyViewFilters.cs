@@ -31,27 +31,15 @@ namespace ReviTab
                 .Cast<View>()
                 .Where(v => v.IsTemplate);
 
-            View sourceView = doc.GetElement(doc.ActiveView.ViewTemplateId) as View;
-
-            ICollection<ElementId> filters = sourceView.GetFilters();
-
-            List<FilterElement> filterElements = new List<FilterElement>();
-
-            foreach (ElementId elementId in filters)
-            {
-                filterElements.Add(doc.GetElement(elementId) as FilterElement);
-            }
 
             if (doc.ActiveView.ViewTemplateId != null)
             {
 
-                var form = new Forms.FormCopyViewFilter();
+                var form = new Forms.FormCopyViewFilter(doc);
 
                 using (Transaction t = new Transaction(doc, "Copy View Template Filter"))
                 {
-
-                    form.ViewFiltersList = new ObservableCollection<FilterElement>(filterElements.OrderBy(x => x.Name));
-
+                    form.ViewTemplateList = new ObservableCollection<View>(views.OrderBy(x => x.Name));                    
                     form.TargetTemplate = new ObservableCollection<View>(views.OrderBy(x => x.Name));
 
                     form.ShowDialog();
@@ -61,15 +49,18 @@ namespace ReviTab
                         return Result.Cancelled;
                     }
 
+
+                    View sourceView = form.SelectedViewSource;
                     FilterElement selectedFilter = form.SelectedFilterElement;
                     View targetView = form.SelectedTargetTemplate;
 
                     OverrideGraphicSettings ogs = sourceView.GetFilterOverrides(selectedFilter.Id);
-
+                    bool visibility = sourceView.GetFilterVisibility(selectedFilter.Id);
                     t.Start();
 
                     targetView.AddFilter(selectedFilter.Id);
                     targetView.SetFilterOverrides(selectedFilter.Id, ogs);
+                    targetView.SetFilterVisibility(selectedFilter.Id, visibility);
 
                     t.Commit();
 

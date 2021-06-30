@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReviTab.Forms"
-             mc:Ignorable="d" Width="455" Height="208" Title="Copy View Filters" WindowStartupLocation="CenterScreen">
+             mc:Ignorable="d" Width="455" Height="270.574" Title="Copy View Filters" WindowStartupLocation="CenterScreen">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -15,7 +15,18 @@
             <RowDefinition Height="11*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <Label Margin="10,5,10,0">Select the view filter(s) in the active view template:</Label>
+            <Label Margin="10,5,10,0">Select the source View Template:</Label>
+            <ComboBox x:Name="cboxSourceTemplate"   
+                        ItemsSource="{Binding ViewTemplateList}"
+                        DisplayMemberPath="Name"
+                        Height="25"   
+                        VerticalAlignment="Top"  
+                        BorderThickness="1"  
+                        VerticalContentAlignment="Center"  
+                        Background="Transparent"  
+                        Foreground="Black"   
+                        Margin="10,0,10,0" SelectedIndex="0" SelectionChanged="CboxSourceTemplate_SelectionChanged"/>
+            <Label Margin="10,5,10,0">Select the view filter(s):</Label>
             <ComboBox x:Name="cboxFilterSection"   
                         ItemsSource="{Binding ViewFiltersList}"
                         DisplayMemberPath="Name"
