@@ -317,6 +317,7 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\CopyViewFilters.cs" />
     <Compile Include="Buttons Tools\CreateNurbsModelCurve.cs" />
     <Compile Include="Buttons Tools\DisableWarnings.cs" />
     <Compile Include="Buttons Tools\ExportJson.cs" />
@@ -402,6 +403,9 @@
     </Compile>
     <Compile Include="Forms\CmdWindowHandleForm.Designer.cs">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCopyViewFilter.xaml.cs">
+      <DependentUpon>FormCopyViewFilter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormPickFromDropDown.xaml.cs">
       <DependentUpon>FormPickFromDropDown.xaml</DependentUpon>
@@ -601,6 +605,10 @@
     <Page Include="Forms\FormDuplicateSheets.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\FormCopyViewFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\FormPickFromDropDown.xaml">
       <SubType>Designer</SubType>
