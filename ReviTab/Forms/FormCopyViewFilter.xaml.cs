@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ReviTab.Forms
 {
@@ -25,7 +26,8 @@ namespace ReviTab.Forms
             this.DataContext = this;
             _doc = doc;
             ViewFiltersList = new ObservableCollection<FilterElement>();
-
+            gBoxViewFilters.Visibility = System.Windows.Visibility.Hidden;
+            gBoxTargetTemplate.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void CboxSourceTemplate_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -72,14 +74,25 @@ namespace ReviTab.Forms
 
         private void FilterList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {            
-            targetTemplatesList.Height = 140;
-            viewTemplateLabel.Visibility = System.Windows.Visibility.Visible;
+            gBoxTargetTemplate.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void CboxSourceTemplate_DropDownOpened(object sender, System.EventArgs e)
         {
-            filterList.Height = 140;
-            viewFilterLabel.Visibility = System.Windows.Visibility.Visible;
+            gBoxViewFilters.Visibility = System.Windows.Visibility.Visible;
+        }
+
+
+        private void Label_SelectAll_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            targetTemplatesList.SelectAll();
+            
+        }
+
+        private void Label_ClearSelection_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            targetTemplatesList.UnselectAll();
+
         }
     }
 }
