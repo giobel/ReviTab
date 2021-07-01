@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReviTab.Forms"
-             mc:Ignorable="d" Width="455" Height="547.742" Title="Copy View Filters" WindowStartupLocation="CenterScreen">
+             mc:Ignorable="d" Width="455" Height="577.613" Title="Copy View Filters" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,10" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="37*"/>
+            <RowDefinition Height="40*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,10,0,0">
@@ -29,12 +29,20 @@
                 </StackPanel>
             </GroupBox>
             <GroupBox x:Name="gBoxViewFilters" Header="Select the view filter(s):" BorderThickness="0">
-                
+                <StackPanel Margin="10">
                     <ListView Name="filterList"
                       SelectionMode="Multiple" 
-                              Margin="10"
+                              
                   ItemsSource="{Binding ViewFiltersList}"
                   DisplayMemberPath="Name" SelectionChanged="FilterList_SelectionChanged" Height="140"/>
+                    <StackPanel Height="30" Orientation="Horizontal">
+                        <Label x:Name="labelSelectAllFilters"  Margin="0" MouseUp="Label_SelectAllFilters_MouseUp" Content="Select All"/>
+
+                        <Label x:Name="labelDeselectAllFilters" Content="Clear selection" MouseUp="Label_ClearSelectionTemplates_MouseUp" />
+                    </StackPanel>
+                    
+                </StackPanel>
+                  
                
             </GroupBox>
             <GroupBox x:Name="gBoxTargetTemplate" Header="Select the target View Template:" BorderThickness="0">
@@ -44,9 +52,9 @@
                   ItemsSource="{Binding TargetTemplate}"
                   DisplayMemberPath="Name" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="140" />
                     <StackPanel Height="30" Orientation="Horizontal">
-                        <Label x:Name="labelSelectAll"  Margin="0" MouseUp="Label_SelectAll_MouseUp" Content="Select All"/>
+                        <Label x:Name="labelSelectAllTemplates"  Margin="0" MouseUp="Label_SelectAllTemplates_MouseUp" Content="Select All"/>
                         
-                <Label x:Name="labelDeselectAll" Content="Clear selection" MouseUp="Label_ClearSelection_MouseUp" />
+                <Label x:Name="labelDeselectAllTemplates" Content="Clear selection" MouseUp="Label_ClearSelectionTemplates_MouseUp" />
 
                     </StackPanel>
                 </StackPanel>

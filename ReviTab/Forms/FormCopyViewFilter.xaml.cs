@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ReviTab.Forms
 {
@@ -83,16 +84,22 @@ namespace ReviTab.Forms
         }
 
 
-        private void Label_SelectAll_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Label_SelectAllTemplates_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             targetTemplatesList.SelectAll();
-            
+            labelSelectAllTemplates.Foreground = Brushes.DodgerBlue;            
         }
 
-        private void Label_ClearSelection_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Label_ClearSelectionTemplates_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             targetTemplatesList.UnselectAll();
+            labelSelectAllTemplates.Foreground = Brushes.Black;
+        }
 
+        private void Label_SelectAllFilters_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            filterList.SelectAll();
+            labelSelectAllFilters.Foreground = Brushes.DodgerBlue;
         }
     }
 }
