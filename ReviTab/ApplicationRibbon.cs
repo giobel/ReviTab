@@ -191,6 +191,8 @@ namespace ReviTab
                 IList<PushButtonData> linkFiles = new List<PushButtonData>
                 {
                     CreatePushButton("btnCopyLinkedElements", "Copy Linked \nElements", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyLinkedElements", "Copy elements from linked models"),
+                    
+                   CreatePushButton("btnCopyTemplateFilters", "Copy View Template\nFilters", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyViewFilters", "Copy View Template Filters"),
 
                     CreatePushButton("btnAlignColumns", "Align Columns", "", "pack://application:,,,/ReviTab;component/Resources/alignColumns.png", "ReviTab.AlignColumns", "Align the columns in the model to those selected in a linked model. There is an hardcoded tolerance of 3feet as maximum distance between the linked column and the one to be moved.")
                 };

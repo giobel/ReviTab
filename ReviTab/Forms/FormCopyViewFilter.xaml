@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReviTab.Forms"
-             mc:Ignorable="d" Width="455" Height="270.574" Title="Copy View Filters" WindowStartupLocation="CenterScreen">
+             mc:Ignorable="d" Width="455" Height="531.765" Title="Copy View Filters" WindowStartupLocation="CenterScreen">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -12,7 +12,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="37*"/>
-            <RowDefinition Height="11*"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Label Margin="10,5,10,0">Select the source View Template:</Label>
@@ -25,36 +25,22 @@
                         VerticalContentAlignment="Center"  
                         Background="Transparent"  
                         Foreground="Black"   
-                        Margin="10,0,10,0" SelectedIndex="0" SelectionChanged="CboxSourceTemplate_SelectionChanged"/>
-            <Label Margin="10,5,10,0">Select the view filter(s):</Label>
-            <ComboBox x:Name="cboxFilterSection"   
-                        ItemsSource="{Binding ViewFiltersList}"
-                        DisplayMemberPath="Name"
-                        Height="25"   
-                        VerticalAlignment="Top"  
-                        BorderThickness="1"  
-                        VerticalContentAlignment="Center"  
-                        Background="Transparent"  
-                        Foreground="Black"   
-                        Margin="10,0,10,0" SelectedIndex="0"/>
-            <Label Margin="10,5,10,0">Select the target View Template:</Label>
-            <ComboBox x:Name="cboxViewSection"   
-                        ItemsSource="{Binding TargetTemplate}"
-                        DisplayMemberPath="Name"
-                        Height="25"   
-                        VerticalAlignment="Top"  
-                        BorderThickness="1"  
-                        VerticalContentAlignment="Center"  
-                        Background="Transparent"  
-                        Foreground="Black"   
-                        Margin="10,0,10,0" SelectedIndex="0"/>
-        </StackPanel>
-        <Button Grid.Row="1" Grid.Column="0" Content="OK" Click="BtnOkClick" Margin="10,5,10,10"></Button>
-
-        <Button Grid.Row="1" Grid.Column="1" Content="Cancel" IsCancel="True" Margin="10,5,10,10"/>
-        <ListView Name="filterList" SelectionMode="Multiple" 
+                        Margin="10,0,10,0" SelectionChanged="CboxSourceTemplate_SelectionChanged" DropDownOpened="CboxSourceTemplate_DropDownOpened"/>
+            <Label x:Name="viewFilterLabel" Margin="10,5,10,0" Visibility="Collapsed">Select the view filter(s):</Label>
+            <ListView Name="filterList" Margin="10,5,10,0"
+                      SelectionMode="Multiple" 
                   ItemsSource="{Binding ViewFiltersList}"
-                  DisplayMemberPath="Name">
-        </ListView>
+                  DisplayMemberPath="Name" SelectionChanged="FilterList_SelectionChanged" Height="0"/>
+            <Label x:Name="viewTemplateLabel" Margin="10,5,10,0" Visibility="Collapsed">Select the target View Template:</Label>
+            <ListView Name="targetTemplatesList" Margin="10,5,10,10"
+                      SelectionMode="Multiple" 
+                  ItemsSource="{Binding TargetTemplate}"
+                  DisplayMemberPath="Name" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="0" />
+
+        </StackPanel>
+        <Button Grid.Row="1" Grid.Column="0" Content="OK" Click="BtnOkClick" Margin="10" Height="30"></Button>
+
+        <Button Grid.Row="1" Grid.Column="1" Content="Cancel" IsCancel="True" Margin="10" Height="30"/>
+
     </Grid>
 </Window>

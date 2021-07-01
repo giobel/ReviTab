@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,12 +12,12 @@ namespace ReviTab.Forms
     /// </summary>
     public partial class FormCopyViewFilter : Window
     {
-        public ObservableCollection<View> ViewTemplateList { get; set; }
+        public List<View> ViewTemplateList { get; set; }
         public ObservableCollection<FilterElement> ViewFiltersList { get; set; }
-        public ObservableCollection<View> TargetTemplate{ get; set; }
+        public List<View> TargetTemplate{ get; set; }
         public View SelectedViewSource { get; set; }
-        public FilterElement SelectedFilterElement { get; set; }
-        public View SelectedTargetTemplate { get; set; }
+        public List<FilterElement> SelectedFilterElement { get; set; }
+        public List<View> SelectedTargetTemplate { get; set; }
         private Document _doc = null;
         public FormCopyViewFilter(Document doc)
         {
@@ -24,6 +25,7 @@ namespace ReviTab.Forms
             this.DataContext = this;
             _doc = doc;
             ViewFiltersList = new ObservableCollection<FilterElement>();
+
         }
 
         private void CboxSourceTemplate_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -33,7 +35,7 @@ namespace ReviTab.Forms
 
             SelectedViewSource = cboxSourceTemplate.SelectedItem as View;
 
-            if (SelectedViewSource != null)
+            if (SelectedViewSource != null && SelectedViewSource.HasDisplayStyle() == true )
             {
                 ICollection<ElementId> filters = SelectedViewSource.GetFilters();
                 List<FilterElement> filterElements = new List<FilterElement>();
@@ -50,12 +52,34 @@ namespace ReviTab.Forms
         private void BtnOkClick(object sender, RoutedEventArgs e)
         {
             SelectedViewSource = cboxSourceTemplate.SelectedItem as View;
-            //SelectedFilterElement = cboxFilterSection.SelectedItem as FilterElement;
-            SelectedTargetTemplate = cboxViewSection.SelectedItem as View;
-            SelectedFilterElement = filterList.SelectedItems[0] as FilterElement;
+            
+            SelectedTargetTemplate = new List<View>();
+
+            foreach (var item in targetTemplatesList.SelectedItems)
+            {                
+                SelectedTargetTemplate.Add(item as View);
+            }
+
+            SelectedFilterElement = new List<FilterElement>();
+
+            foreach (var item in filterList.SelectedItems)
+            {
+                SelectedFilterElement.Add(item as FilterElement);
+            }
+
             DialogResult = true;
         }
 
-        
+        private void FilterList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {            
+            targetTemplatesList.Height = 140;
+            viewTemplateLabel.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void CboxSourceTemplate_DropDownOpened(object sender, System.EventArgs e)
+        {
+            filterList.Height = 140;
+            viewFilterLabel.Visibility = System.Windows.Visibility.Visible;
+        }
     }
 }

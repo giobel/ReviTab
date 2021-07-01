@@ -29,18 +29,16 @@ namespace ReviTab
             IEnumerable<View> views = new FilteredElementCollector(doc)
                 .OfClass(typeof(View))
                 .Cast<View>()
-                .Where(v => v.IsTemplate);
+                .Where(v => v.IsTemplate && v.HasDisplayStyle() == true);
+                
 
-
-            if (doc.ActiveView.ViewTemplateId != null)
-            {
 
                 var form = new Forms.FormCopyViewFilter(doc);
 
                 using (Transaction t = new Transaction(doc, "Copy View Template Filter"))
                 {
-                    form.ViewTemplateList = new ObservableCollection<View>(views.OrderBy(x => x.Name));                    
-                    form.TargetTemplate = new ObservableCollection<View>(views.OrderBy(x => x.Name));
+                    form.ViewTemplateList = new List<View>(views.OrderBy(x => x.Name));                    
+                    form.TargetTemplate = new List<View>(views.OrderBy(x => x.Name));
 
                     form.ShowDialog();
 
@@ -51,25 +49,27 @@ namespace ReviTab
 
 
                     View sourceView = form.SelectedViewSource;
-                    FilterElement selectedFilter = form.SelectedFilterElement;
-                    View targetView = form.SelectedTargetTemplate;
 
-                    OverrideGraphicSettings ogs = sourceView.GetFilterOverrides(selectedFilter.Id);
-                    bool visibility = sourceView.GetFilterVisibility(selectedFilter.Id);
                     t.Start();
 
-                    targetView.AddFilter(selectedFilter.Id);
-                    targetView.SetFilterOverrides(selectedFilter.Id, ogs);
-                    targetView.SetFilterVisibility(selectedFilter.Id, visibility);
+                    foreach (View targetView in form.SelectedTargetTemplate)
+                    {
+                    foreach (FilterElement selectedFilter in form.SelectedFilterElement)
+                    {
+                        if (!targetView.IsFilterApplied(selectedFilter.Id))
+                        {                                                       
+                            targetView.AddFilter(selectedFilter.Id);
+                        }
+                        bool visibility = sourceView.GetFilterVisibility(selectedFilter.Id);
+                        OverrideGraphicSettings ogs = sourceView.GetFilterOverrides(selectedFilter.Id);
+                        targetView.SetFilterOverrides(selectedFilter.Id, ogs);
+                        targetView.SetFilterVisibility(selectedFilter.Id, visibility);
+                    }                        
+                    }
+                                       
 
                     t.Commit();
                 }
-            }
-
-            else
-            {
-                TaskDialog.Show("Error", "The current view does not have a View Template applied");
-            }
 
 
                 return Result.Succeeded;
