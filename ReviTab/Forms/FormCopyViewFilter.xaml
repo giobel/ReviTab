@@ -38,7 +38,7 @@
                     <StackPanel Height="30" Orientation="Horizontal">
                         <Label x:Name="labelSelectAllFilters"  Margin="0" MouseUp="Label_SelectAllFilters_MouseUp" Content="Select All"/>
 
-                        <Label x:Name="labelDeselectAllFilters" Content="Clear selection" MouseUp="Label_ClearSelectionTemplates_MouseUp" />
+                        <Label x:Name="labelDeselectAllFilters" Content="Clear selection" MouseUp="Label_ClearSelectionFilters_MouseUp" />
                     </StackPanel>
                     
                 </StackPanel>

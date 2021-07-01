@@ -101,5 +101,11 @@ namespace ReviTab.Forms
             filterList.SelectAll();
             labelSelectAllFilters.Foreground = Brushes.DodgerBlue;
         }
+
+        private void Label_ClearSelectionFilters_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            filterList.UnselectAll();
+            labelSelectAllFilters.Foreground = Brushes.Black;
+        }
     }
 }
