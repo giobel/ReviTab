@@ -726,7 +726,6 @@ namespace ReviTab
 
         }//close method
 
-
         public static Dictionary<string, List<string>> GetSettings(string inputFile)
         {
 
@@ -811,7 +810,6 @@ namespace ReviTab
 
             return selectedElement;
         }
-
 
         /// <summary>
         /// Select all the elements by their category name
@@ -2756,8 +2754,38 @@ namespace ReviTab
 
             return listA;
         }
-        
-#endregion
+
+        #endregion
+
+        #region PARAMETERS
+
+        public static string GetParameterValue(Parameter p)
+        {
+            string paramValue = "";
+
+            StorageType parameterType = p.StorageType;
+
+            if (StorageType.Double == parameterType)
+            {
+                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS).ToString();
+            }
+            else if (StorageType.String == parameterType)
+            {
+                paramValue = p.AsString();
+            }
+            else if (StorageType.Integer == parameterType)
+            {
+                paramValue = p.AsInteger().ToString();
+            }
+            else if (StorageType.ElementId == parameterType)
+            {
+                paramValue = p.AsValueString();
+            }
+            return paramValue;
+        }
+
+
+        #endregion
 
         private static void PaintFace()
         {

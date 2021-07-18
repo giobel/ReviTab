@@ -14,7 +14,7 @@ namespace ReviTab
 {
 
         [Transaction(TransactionMode.Manual)]
-        public class SelectedDataToExcel : IExternalCommand
+        public class SelectedDataParametersToExcel : IExternalCommand
         {
             public Result Execute(
               ExternalCommandData commandData,
@@ -31,89 +31,30 @@ namespace ReviTab
                 StringBuilder sb = new StringBuilder();
 
 
-                string inputFile = @"C:\Temp\RevitSettings.csv";
-
-                Dictionary<string, List<string>> settings = Helpers.GetSettings(inputFile);
-
-
                 ICollection<ElementId> selectedElementsId = uidoc.Selection.GetElementIds();
 
                 TaskDialog.Show("r", selectedElementsId.Count.ToString() + " selected");
 
                 uidoc.ActiveView = uidoc.ActiveGraphicalView;
 
-                //keep track of the parameters names
-                List<string> allParameters = new List<string>();
+                string headers = "ElementId,Name,Value";
 
-                string headers = "ElementId,";
+                
+                    Element e = doc.GetElement(selectedElementsId.First());
 
-                foreach (ElementId eid in selectedElementsId)
-                {
+                    IList<Parameter> elementParamters = e.GetOrderedParameters();
 
-                    Element e = doc.GetElement(eid);
+                    
 
-                    string csvLine = "";
-
-                    List<string> parameters = new List<string>();
-
-                    if (settings.TryGetValue(e.Category.Name, out parameters))
-                    {
-                        if (e.Category.Name == "Text Notes")
-                        {
-                            TextElement textNote = e as TextElement;
-                            string s = textNote.Text.TrimEnd('\r','\n');
-                            csvLine += s + ",";
-                        }
-
-
-                        foreach (string s in parameters)
-                        {
-                            if (!allParameters.Contains(s))
-                            {
-                                headers += s.Trim() + ",";
-                                allParameters.Add(s);
-                            }
-                                
-
-                            string paramValue = "";
-
-                            try
-                            {
-
-                                Parameter p = e.LookupParameter(s.Trim());
-
-                                StorageType parameterType = p.StorageType;
-
-                                if (StorageType.Double == parameterType)
-                                {
-                                    paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS).ToString();
-                                }
-                                else if (StorageType.String == parameterType)
-                                {
-                                    paramValue = p.AsString();
-                                }
-                                else if (StorageType.Integer == parameterType)
-                                {
-                                    paramValue = p.AsInteger().ToString();
-                                }
-                                else if (StorageType.ElementId == parameterType)
-                                {
-                                    paramValue = p.AsValueString();
-                                }
-
-                            }
-                            catch
-                            {
-                                paramValue = s;
-                            }
-
-                            csvLine += paramValue + ",";
-
-                        }
-
-                        sb.AppendLine(String.Format("{0},{1}", e.Id, csvLine));
+                    foreach (Parameter p in elementParamters)
+                    {                        
+                        string csvLine = $"{p.Id},{p.Definition.Name},{Helpers.GetParameterValue(p)}";
+                        sb.AppendLine(csvLine);
                     }
-                }
+
+                    
+
+                
 
                 string outputFile = @"C:\Temp\ExportedData.csv";
 

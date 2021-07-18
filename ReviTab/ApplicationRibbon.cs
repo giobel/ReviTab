@@ -125,6 +125,8 @@ namespace ReviTab
                 splitButtonsDataToExcel.Add(CreatePushButton("btnVportFromExcel", "Viewport from\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.UpdateViewportsFromExcel", "Update viewports info from Excel."));
                 
                 splitButtonsDataToExcel.Add(CreatePushButton("btnSelectFromExcel", "Select from\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.SelectFromExcel", "Select elements in the project from a list of IDs saved in the clipboard from Excel (Ctrl+C the Ids in Excel, then run the command)."));
+                
+                splitButtonsDataToExcel.Add(CreatePushButton("btnParametersExcel", "Parameter to\nExcel", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.SelectedDataParametersToExcel", "Export selected element parameters names and values to Excel for easy manipulation."));
 
                 //Revision Clouds
                 splitButtonsDataToExcel.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary."));
@@ -137,12 +139,12 @@ namespace ReviTab
                 
                 splitButtonsInterop.Add(CreatePushButton("btnManage", "Update Status", "", "pack://application:,,,/ReviTab;component/Resources/manage.png", "ReviTab.UpdateModelStatus", "Update model status dashboard."));
                 
-                splitButtonsInterop.Add(CreatePushButton("btnAirtable", "Push to Airtable", "", "pack://application:,,,/ReviTab;component/Resources/airtable.png", "ReviTab.PushToAirtable", "Push the Model Status content to Airtable table"));
+               /* splitButtonsInterop.Add(CreatePushButton("btnAirtable", "Push to Airtable", "", "pack://application:,,,/ReviTab;component/Resources/airtable.png", "ReviTab.PushToAirtable", "Push the Model Status content to Airtable table"));
 
 
                 splitButtonsInterop.Add(CreatePushButton("btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
 
-
+                */
                 AddSplitButton(docsPanel, splitButtonsInterop, "InteropDBButton", "InteropDB");
 #endif
                 #endregion

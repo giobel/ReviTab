@@ -30,8 +30,11 @@ namespace ReviTab
                 .OfClass(typeof(View))
                 .Cast<View>()
                 .Where(v => v.IsTemplate && v.HasDisplayStyle() == true);
-                
 
+            
+            int countFilterAdded = 0;
+            int countFilterModified = 0;
+            int countViewTemplatesModified = 0;
 
                 var form = new Forms.FormCopyViewFilter(doc);
 
@@ -54,24 +57,27 @@ namespace ReviTab
 
                     foreach (View targetView in form.SelectedTargetTemplate)
                     {
-                    foreach (FilterElement selectedFilter in form.SelectedFilterElement)
-                    {
-                        if (!targetView.IsFilterApplied(selectedFilter.Id))
-                        {                                                       
-                            targetView.AddFilter(selectedFilter.Id);
+                        foreach (FilterElement selectedFilter in form.SelectedFilterElement)
+                        {
+                            if (!targetView.IsFilterApplied(selectedFilter.Id))
+                            {                                                       
+                                targetView.AddFilter(selectedFilter.Id);
+                                countFilterAdded++;
+                            }
+                            bool visibility = sourceView.GetFilterVisibility(selectedFilter.Id);
+                            OverrideGraphicSettings ogs = sourceView.GetFilterOverrides(selectedFilter.Id);
+                            targetView.SetFilterOverrides(selectedFilter.Id, ogs);
+                            targetView.SetFilterVisibility(selectedFilter.Id, visibility);
+                        countFilterModified++;
                         }
-                        bool visibility = sourceView.GetFilterVisibility(selectedFilter.Id);
-                        OverrideGraphicSettings ogs = sourceView.GetFilterOverrides(selectedFilter.Id);
-                        targetView.SetFilterOverrides(selectedFilter.Id, ogs);
-                        targetView.SetFilterVisibility(selectedFilter.Id, visibility);
-                    }                        
+                        countViewTemplatesModified++;
                     }
                                        
 
                     t.Commit();
                 }
 
-
+            TaskDialog.Show("Completed", $"View Template modified: {countViewTemplatesModified}\nFilter modified: {countFilterModified}\nFilter added: {countFilterAdded}");
                 return Result.Succeeded;
 
         }//close Execute

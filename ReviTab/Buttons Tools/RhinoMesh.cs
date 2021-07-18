@@ -14,7 +14,7 @@ using rg = Rhino.Geometry;
 namespace ReviTab
 {
 	[Transaction(TransactionMode.Manual)]
-	class AAAAAAARhinoMesh : IExternalCommand
+	class RhinoMesh : IExternalCommand
 	{		
 
 

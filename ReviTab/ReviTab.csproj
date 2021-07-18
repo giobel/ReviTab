@@ -310,6 +310,7 @@
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
     <Compile Include="Buttons Documentation\LineStyles.cs" />
     <Compile Include="Buttons Documentation\SelectAllTagsInViewport.cs" />
+    <Compile Include="Buttons Excel\SelectedDataParametersToExcel.cs" />
     <Compile Include="Buttons Excel\SelectFromExcel.cs" />
     <Compile Include="Buttons Framings and Walls\VoidByRefPlane.cs" />
     <Compile Include="Buttons Geometry\CreateExtrusion.cs" />
@@ -317,6 +318,7 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\AAAAAddRevClouds.cs" />
     <Compile Include="Buttons Tools\CopyViewFilters.cs" />
     <Compile Include="Buttons Tools\CreateNurbsModelCurve.cs" />
     <Compile Include="Buttons Tools\DisableWarnings.cs" />
