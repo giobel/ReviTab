@@ -138,6 +138,8 @@ namespace ReviTab
                             XYZ pt1 = bbox.Min;
                             XYZ pt3 = bbox.Max;
                             //TaskDialog.Show("BBox width", $"{(pt3.X-pt1.X)}, {(pt3.Y-pt1.Y)}");
+                            XYZ pt1Sheet = pt1 / scale;
+                            XYZ pt3Sheet = pt3 / scale;
 
                             //BOUNDING BOX MIN-MAX
                             if (doc.ActiveView.SketchPlane != null)
@@ -158,7 +160,9 @@ namespace ReviTab
                                 //pt3 = new XYZ(pt3.Y, pt3.Z, pt3.X);
                                 viewCenter = (pts[0] + pts[3])/2;
                                 viewCenter = ProjectOnto(p, viewCenter);
-                                doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(pt1, pt3));
+                                pt1Sheet = SectionToPlan(pt1 / scale);
+                                pt3Sheet = SectionToPlan(pt3 / scale);
+                                //doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(pt1, pt3));
                             }
                             //TaskDialog.Show("BBox width", $"{(pt3.X - pt1.X)}, {(pt3.Y - pt1.Y)}");
                             
@@ -175,8 +179,8 @@ namespace ReviTab
                             double yOffset = (viewCenter.Y - bboxCenter.Y) / scale;
                             double zOffset = (viewCenter.Z - bboxCenter.Z) / scale;
 
-                            XYZ pt1Sheet = SectionToPlan(pt1 / scale);
-                            XYZ pt3Sheet = SectionToPlan(pt3 / scale);
+                            
+                            
                             XYZ pt2Sheet = new XYZ(pt3Sheet.X, pt1Sheet.Y, pt3Sheet.Z);
                             XYZ pt4Sheet = new XYZ(pt1Sheet.X, pt3Sheet.Y, pt1Sheet.Z);
                             XYZ ptSheetMid = (pt3Sheet + pt1Sheet) / 2;
@@ -189,7 +193,18 @@ namespace ReviTab
                             pt2Sheet = pt2Sheet.Add(moveToVPCenter);
                             pt4Sheet = pt4Sheet.Add(moveToVPCenter);
 
-                            XYZ moveToViewLocation = new XYZ(yOffset, -zOffset, -xOffset);
+                            XYZ moveToViewLocation = null;
+
+                            //IF IT IS A PLAN VIEW
+                            if (doc.ActiveView.SketchPlane != null)
+                            {
+                                moveToViewLocation = new XYZ(-xOffset, -yOffset, 0);
+                            }
+                            else //IF IT IS A SECTION
+                            {
+                                moveToViewLocation = new XYZ(yOffset, -zOffset, -xOffset);
+                            }
+
                             pt1Sheet = pt1Sheet.Add(moveToViewLocation);
                             pt3Sheet = pt3Sheet.Add(moveToViewLocation);
                             pt2Sheet = pt2Sheet.Add(moveToViewLocation);
