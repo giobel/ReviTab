@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ReviTab
 {
     [Transaction(TransactionMode.Manual)]
-    public class AAAARevClouds : IExternalCommand
+    public class RevClouds : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -144,6 +144,7 @@ namespace ReviTab
                                 Plane p = doc.ActiveView.SketchPlane.GetPlane();
                                 pt1 = ProjectOnto(p, pt1);
                                 pt3 = ProjectOnto(p, pt3);
+                                viewCenter = ProjectOnto(p, viewCenter);
                                 doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(pt1, pt3));
                             }
                             else
@@ -152,6 +153,7 @@ namespace ReviTab
                                 Plane p = Plane.CreateByNormalAndOrigin(doc.ActiveView.ViewDirection, doc.ActiveView.Origin);
                                 pt1 = ProjectOnto(p, pt1);
                                 pt3 = ProjectOnto(p, pt3);
+                                viewCenter = (pts[0] + pts[3])/2;
                                 doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(pt1, pt3));
                             }
 
@@ -188,18 +190,18 @@ namespace ReviTab
                             //ElementTransformUtils.MoveElement(doc, cloudSheet.Id, vpCen - ptSheetMid);
                             //ElementTransformUtils.MoveElement(doc, cloudSheet.Id, new XYZ(-xOffset, -yOffset,0));
 
- 
 
 
-                            //Line l = Line.CreateBound(pts[0], pts[3]);
+                            //CHECK
+                            //VIEW AnnotationCropShape DIAGONAL
+                            Line l = Line.CreateBound(pts[0], pts[3]);
+                            doc.Create.NewDetailCurve(doc.ActiveView, l);
 
-                            //doc.Create.NewDetailCurve(doc.ActiveView, l);
-
-
-                            //doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(viewCenter, FlattenPoint(bboxCenter)));
+                            //BBOX CENTER TO VIEW CENTER
+                            doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(viewCenter, bboxCenter));
 
                             // SHEET 0,0,0 TO VIEWPORT CENTER
-                            //doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(XYZ.Zero, new XYZ(changedVPcenter.X, changedVPcenter.Y, 0)));
+                            doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(XYZ.Zero, new XYZ(changedVPcenter.X, changedVPcenter.Y, 0)));
 
                             //VIEWPORT CENTRE
                             //viewport.GetBoxCenter()
@@ -339,8 +341,8 @@ namespace ReviTab
             }
             area *= 3;
 
-            return (area == 0) ? XYZ.Zero : new XYZ(x /= area, y /= area, nodes.First().Z);
-            //return (area == 0) ? XYZ.Zero : new XYZ(x /= area, y /= area, 0);
+            //return (area == 0) ? XYZ.Zero : new XYZ(x /= area, y /= area, nodes.First().Z);
+            return (area == 0) ? XYZ.Zero : new XYZ(x /= area, y /= area, 0);
         }
 
     }

@@ -318,7 +318,8 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
-    <Compile Include="Buttons Tools\AAAAAddRevClouds.cs" />
+    <Compile Include="Buttons Tools\AAAAAddRevClouds Section.cs" />
+    <Compile Include="Buttons Tools\RevClouds.cs" />
     <Compile Include="Buttons Tools\CopyViewFilters.cs" />
     <Compile Include="Buttons Tools\CreateNurbsModelCurve.cs" />
     <Compile Include="Buttons Tools\DisableWarnings.cs" />
