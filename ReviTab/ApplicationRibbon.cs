@@ -131,6 +131,9 @@ namespace ReviTab
                 //Revision Clouds
                 splitButtonsDataToExcel.Add(CreatePushButton("btnSetRevCloud", "Rev Cloud\nSummary", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.RevisionCloudsSummary", "Export revision cloud summary."));
 
+                //View Templates
+                splitButtonsDataToExcel.Add(CreatePushButton("btnExportVT", "Export View\nTemplates", "", "pack://application:,,,/ReviTab;component/Resources/excel.png", "ReviTab.ExportViewTemplates", "Export all view templates."));
+                
                 AddSplitButton(docsPanel, splitButtonsDataToExcel, "ExcelButton", "ExcelLink");
 
 #if DEBUG

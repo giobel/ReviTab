@@ -310,6 +310,7 @@
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
     <Compile Include="Buttons Documentation\LineStyles.cs" />
     <Compile Include="Buttons Documentation\SelectAllTagsInViewport.cs" />
+    <Compile Include="Buttons Excel\ExportViewTemplates.cs" />
     <Compile Include="Buttons Excel\SelectedDataParametersToExcel.cs" />
     <Compile Include="Buttons Excel\SelectFromExcel.cs" />
     <Compile Include="Buttons Framings and Walls\VoidByRefPlane.cs" />
