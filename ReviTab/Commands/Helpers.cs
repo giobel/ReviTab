@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -1379,7 +1380,8 @@ namespace ReviTab
 
                         finally { i++; }
                     }
-                        RevisionObj ro = FindLatestRevision(vs);
+                    //TO UPDATE WITH PROJECT SPECIFIC PARAMETER NAMES:
+                        RevisionObj ro = FindLatestRevision(vs, "REV", "DATE", "DES", "CHK", "APR", "DESC",8);
                     return String.Format($"{vs.Id}," +
                         $"{vs.SheetNumber}," +
                         $"{cloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString()}," +
@@ -1431,7 +1433,7 @@ namespace ReviTab
 
         }
 
-        public static bool UpRevSheet(Document doc, ViewSheet vs, RevisionObj revisionObj)
+        public static bool UpRevSheet(Document doc, ViewSheet vs, RevisionObj revisionObj, string RevName, string DateName, string DescriptionName, string DrawnByName, string CheckedByName, string ApprovedByName, string BorderIssue)
         {
             try
             {
@@ -1439,41 +1441,72 @@ namespace ReviTab
                 {
                     t.Start();
 
-                    Parameter revision = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Rev."); 
-                    
-                    if (null == revision)
-                    {
-                        revision = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Revision");
-                    }
+                    Parameter revision = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - {RevName}"); 
 
                     revision.Set(revisionObj.NewRevision);
 
-                    Parameter sheetRevision = vs.LookupParameter("ARUP_BDR_ISSUE");
+                    Parameter sheetRevision = vs.LookupParameter(BorderIssue);
                     sheetRevision.Set(revisionObj.NewRevision);
 
-                    Parameter description = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Description");
+                    Parameter description = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - {DescriptionName}");
                     description.Set(revisionObj.Description);
 
-                    Parameter modeledBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Modeled By");
-
-                    if (null == modeledBy)
-                    {
-                        modeledBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Drawn By");
-                    }
+                    Parameter modeledBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - {DrawnByName}");
  
                     modeledBy.Set(revisionObj.DrawnBy);
 
-                    Parameter checkedBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Checked");
+                    Parameter checkedBy = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - {CheckedByName}");
                     checkedBy.Set(revisionObj.Checker);
 
-                    Parameter approved = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Approv.");
-
-                    if (null == approved)
-                    {
-                        approved = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - Approved");
-                    }
+                    Parameter approved = vs.LookupParameter($"{revisionObj.RevisionIndex + 1} - {ApprovedByName}");
                     
                     approved.Set(revisionObj.Approver);
+
+                    t.Commit();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        private static string GetExpandoProperty(ExpandoObject eo, string propertyName)
+        {
+            foreach (KeyValuePair<string, object> kvp in ((IDictionary<string, object>)eo))
+            {
+                if (kvp.Key == propertyName)
+                    return kvp.Value.ToString();
+            }
+            return null;
+        }
+
+        public static bool UpRevSheetExpando(Document doc, ViewSheet vs, ExpandoObject revisionObj, string borderRevisionName, string RevName, List<string> ParametersToUpdate)
+        {
+            try
+            {
+                int revIndex = int.Parse(GetExpandoProperty(revisionObj, "RevIndex"));
+
+                using (Transaction t = new Transaction(doc, "Uprev sheet"))
+                {
+                    t.Start();
+                    string newRev = GetExpandoProperty(revisionObj, "NewRevision");
+                    Parameter revision = vs.LookupParameter($"{revIndex + 1} - {RevName}");
+                    revision.Set(newRev);
+
+                    Parameter sheetRevision = vs.LookupParameter(borderRevisionName);
+                    sheetRevision.Set(newRev);
+
+                    foreach (string item in ParametersToUpdate)
+                    {
+                        Parameter p = vs.LookupParameter($"{revIndex + 1} - {item.Trim()}");
+                        string pvalue = GetExpandoProperty(revisionObj, item.Trim());
+                        p.Set(pvalue);
+                    }
+
 
                     t.Commit();
                 }
@@ -1493,15 +1526,9 @@ namespace ReviTab
         /// <param name="vs"></param>
         /// <param name="i"></param>
         /// <returns></returns>
-        private static RevisionObj IncrementNonLetterRevision(ViewSheet vs, int i)
+        private static RevisionObj IncrementNonLetterRevision(ViewSheet vs, int i, string RevName, string DateName)
         {
-            Parameter p = vs.LookupParameter(String.Format("{0} - Rev.", i));
-            
-            if (null == p)
-            {
-                p = vs.LookupParameter(String.Format("{0} - Revision", i));
-            }
-
+            Parameter p = vs.LookupParameter($"{i} - {RevName}");
 
             //numeric digit 
             string revision = new String(p.AsString().Where(Char.IsDigit).ToArray());
@@ -1536,7 +1563,7 @@ namespace ReviTab
 
             }
 
-            Parameter dateParam = vs.LookupParameter(String.Format("{0} - Date", i));
+            Parameter dateParam = vs.LookupParameter($"{i} - {DateName}");
 
             string date = dateParam.AsString();
 
@@ -1549,16 +1576,26 @@ namespace ReviTab
             return new RevisionObj();
         }
 
+        public static void AddProperty(ExpandoObject expando, string propertyName, object propertyValue)
+        {
+            // ExpandoObject supports IDictionary so we can extend it like this
+            var expandoDict = expando as IDictionary<string, object>;
+            if (expandoDict.ContainsKey(propertyName))
+                expandoDict[propertyName] = propertyValue;
+            else
+                expandoDict.Add(propertyName, propertyValue);
+        }
+
         /// <summary>
         /// Finds the latest revision and its date on a titleblock. 
         /// </summary>
         /// <param name="vs"></param>
         /// <returns></returns>
-        public static RevisionObj FindLatestRevision(ViewSheet vs)
+        public static RevisionObj FindLatestRevision(ViewSheet vs, string RevName, string DateName, string DescriptionName, string DrawnByName, string CheckedByName, string ApprovedByName, int RevisionCounter)
         {
 
             List<RevisionObj> lastRevisions = new List<RevisionObj>();
-
+            
             # region Old method. Does not work with letters.
             /*for (int i = 0; i < 10; i++)
             {
@@ -1612,19 +1649,87 @@ namespace ReviTab
             //new method. Works with letters
             //for (int i = 0; i < 10; i++)
             int i = 1;
-            while (i < 10) 
+
+            while (i < RevisionCounter) 
+            {
+                try
+                {                    
+                    //revision can be P01, T03, 11, A
+                    Parameter p = vs.LookupParameter($"{i} - {RevName}");
+
+                    Parameter dateParam = vs.LookupParameter($"{i} - {DateName}");
+                    string date = dateParam.AsString();
+
+                    if (p.AsString().Length == 1 && Char.IsLetter(p.AsString().ToCharArray().First()))
+                    {
+                        Char letter = p.AsString().ToCharArray().First();
+
+                        Char newRevision = (Char)(Convert.ToUInt16(letter) + 1);
+
+                        lastRevisions.Add(new RevisionObj(500, i, letter.ToString(), letter.ToString(), date, newRevision.ToString()));                        
+                    }
+                    else if (date.Length > 2)
+                    {
+                        lastRevisions.Add(IncrementNonLetterRevision(vs, i, RevName, DateName));
+                    }                    
+                }
+                catch
+                {
+                    //TaskDialog.Show("R", ex.Message);
+                    //lastRevisions.Add(p.AsString(), 0);
+                }
+                finally
+                {
+                    i++;
+                }
+            }
+
+
+            // WHY WAS THIS REQUIRED? IT DOES NOT WORK WHEN REVISION IS SINGLE LETTER C
+            //lastRevisions.Sort((x, y) => y.TempRevision.CompareTo(x.TempRevision));
+
+            //RevisionObj lastRev = lastRevisions.First();
+            RevisionObj lastRev = lastRevisions.Last();
+
+            ExpandoObject eo = new ExpandoObject();
+
+            AddProperty(eo, "NewRevision", lastRev.NewRevision);
+
+            Parameter drawnBy = vs.LookupParameter($"{lastRev.RevisionIndex} - {DrawnByName}");            
+            lastRev.DrawnBy = drawnBy.AsString();
+            AddProperty(eo, DrawnByName, drawnBy.AsString());
+            
+            Parameter checkBy = vs.LookupParameter($"{lastRev.RevisionIndex} - {CheckedByName}");
+            lastRev.Checker = checkBy.AsString();
+            AddProperty(eo, CheckedByName, drawnBy.AsString());
+
+            Parameter approver = vs.LookupParameter($"{lastRev.RevisionIndex} - {ApprovedByName}");        
+            lastRev.Approver = approver.AsString();
+            AddProperty(eo, ApprovedByName, approver.AsString());
+
+            Parameter description = vs.LookupParameter($"{lastRev.RevisionIndex} - {DescriptionName}");
+            lastRev.Description = description.AsString();
+            AddProperty(eo, DescriptionName, description.AsString());
+
+            return lastRev;
+
+        }
+
+
+        public static ExpandoObject FindLatestRevisioneExpando(ViewSheet vs, string RevName, string DateName, int RevisionCounter, List<string> ParametersToUpdate)
+        {
+            List<RevisionObj> lastRevisions = new List<RevisionObj>();
+
+            int i = 1;
+
+            while (i < RevisionCounter)
             {
                 try
                 {
                     //revision can be P01, T03, 11, A
-                    Parameter p = vs.LookupParameter(String.Format("{0} - Rev.", i));
-                    
-                    if (null == p)
-                    {
-                        p = vs.LookupParameter(String.Format("{0} - Revision", i));
-                    }
+                    Parameter p = vs.LookupParameter($"{i} - {RevName}");
 
-                    Parameter dateParam = vs.LookupParameter(String.Format("{0} - Date", i));
+                    Parameter dateParam = vs.LookupParameter($"{i} - {DateName}");
                     string date = dateParam.AsString();
 
                     if (p.AsString().Length == 1 && Char.IsLetter(p.AsString().ToCharArray().First()))
@@ -1634,61 +1739,44 @@ namespace ReviTab
                         Char newRevision = (Char)(Convert.ToUInt16(letter) + 1);
 
                         lastRevisions.Add(new RevisionObj(500, i, letter.ToString(), letter.ToString(), date, newRevision.ToString()));
-
                     }
                     else if (date.Length > 2)
                     {
-
-                        lastRevisions.Add(IncrementNonLetterRevision(vs, i));
-
+                        lastRevisions.Add(IncrementNonLetterRevision(vs, i, RevName, DateName));
                     }
-
                 }
                 catch
                 {
+                    //TaskDialog.Show("R", ex.Message);
                     //lastRevisions.Add(p.AsString(), 0);
                 }
                 finally
                 {
                     i++;
                 }
-
-
             }
-
-
-            // WHY WAS THIS REQUIRED? IT DOES NOT WORK WHEN REVISION IS SINGLE LETTER C
-            //lastRevisions.Sort((x, y) => y.TempRevision.CompareTo(x.TempRevision));
-
-            //RevisionObj lastRev = lastRevisions.First();
 
             RevisionObj lastRev = lastRevisions.Last();
 
-            Parameter drawnBy = vs.LookupParameter($"{lastRev.RevisionIndex} - Modeled By");
+            ExpandoObject eo = new ExpandoObject();
+            AddProperty(eo, "RevIndex", lastRev.RevisionIndex);
+            AddProperty(eo, "NewRevision", lastRev.NewRevision);
+            AddProperty(eo, DateName, lastRev.Date);
             
-            if (null == drawnBy)
+
+            foreach (string item in ParametersToUpdate)
             {
-                drawnBy = vs.LookupParameter($"{lastRev.RevisionIndex} - Drawn By");
+                Parameter itemParameter = vs.LookupParameter($"{lastRev.RevisionIndex} - {item.Trim()}");
+                string paramValue = itemParameter.AsString();
+                if (paramValue != null)
+                    AddProperty(eo, item.Trim(), paramValue);
+                else
+                    AddProperty(eo, item, "ZZ");
             }
 
-            lastRev.DrawnBy = drawnBy.AsString();
-            
-            lastRev.Checker = vs.LookupParameter($"{lastRev.RevisionIndex} - Checked").AsString();
-            
-            Parameter approver = vs.LookupParameter($"{lastRev.RevisionIndex} - Approv.");
-
-            if (null == approver)
-            {
-                approver = vs.LookupParameter($"{lastRev.RevisionIndex} - Approved");
-            }
-            
-            lastRev.Approver = approver.AsString();
-
-            lastRev.Description = vs.LookupParameter($"{lastRev.RevisionIndex} - Description").AsString();
-
-            return lastRev;
-
+            return eo;
         }
+
 
         public static List<CardContent> CountViewsNotOnSheet(FilteredElementCollector allViews)
         {
