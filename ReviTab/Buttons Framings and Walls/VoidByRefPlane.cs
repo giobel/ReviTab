@@ -119,7 +119,7 @@ namespace ReviTab
 #if REVIT2017
 
 #endif
-#if REVIT2019
+#if REVIT2020
                                 IList<Reference> fir1 = fi.GetReferences(FamilyInstanceReferenceType.WeakReference);
 
                                 ReferenceArray rea = new ReferenceArray();
