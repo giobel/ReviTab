@@ -13,6 +13,8 @@ using System.Linq;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.ExternalService;
 using Application = Autodesk.Revit.ApplicationServices.Application;
+using System.Windows.Interop;
+using System.IO;
 
 #endregion
 
@@ -168,10 +170,10 @@ namespace ReviTab
                 };
 
                 AddSplitButton(toolsPanel, splitButtonsSections, "SectionsButton", "MultipleSections");
-
-                if (AddPushButton(toolsPanel, "btnSelectText", "Select All" + Environment.NewLine + "Text", "", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "ReviTab.SelectAllText", "Select all text notes in the project. Useful if you want to run the check the spelling.") == false)
+                
+                if (AddPushButton(toolsPanel, "btnRevCloudSelected", "Cloud Selection", null, Resource1.revClouds, "ReviTab.RevCloudsSelected", "Cloud the selected elements on sheet") == false)
                 {
-                    MessageBox.Show("Failed to add button Select all text", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to add button Cloud Selection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 //GRIDS
@@ -207,7 +209,7 @@ namespace ReviTab
 
                 AddSplitButton(toolsPanel, linkFiles, "linkFiles", "Link Files");
 
-
+                //FILTER SELECTION
                 IList<PushButtonData> filterSelection = new List<PushButtonData>
                 {
                     CreatePushButton("selBeams", "Select Beams", "", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionBeams", "Select Beams Only"),
@@ -224,8 +226,10 @@ namespace ReviTab
 
                     CreatePushButton("selText", "Select Text", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionText", "Select Text Only"),
 
-                    CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionWalls", "Select Walls Only")
-                };
+                    CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionWalls", "Select Walls Only"),
+
+                    CreatePushButton("btnSelectText", "Select All Text", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "ReviTab.SelectAllText", "Select all text notes in the project.Useful if you want to run the check the spelling.")
+                    };
 
                 AddSplitButton(toolsPanel, filterSelection, "filterSelection", "Filter Selection");
 
@@ -617,6 +621,62 @@ namespace ReviTab
             }
         }
 
+        public BitmapImage Convert(System.Drawing.Bitmap src)
+        {
+            MemoryStream ms = new MemoryStream();
+            ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+            return image;
+        }
+
+        private Boolean AddPushButton(RibbonPanel Panel, string ButtonName, string ButtonText, System.Drawing.Bitmap Image16, System.Drawing.Bitmap Image32, string dllClass, string Tooltip)
+        {
+            
+            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+
+            try
+            {
+                PushButtonData m_pbData = new PushButtonData(ButtonName, ButtonText, thisAssemblyPath, dllClass);
+
+                if (Image16 != null)
+                {
+                    try
+                    {
+                        m_pbData.Image = Convert(Resource1.revClouds);
+                    }
+                    catch
+                    {
+                        //Could not find the image
+                    }
+                }
+                if (Image32 != null)
+                {
+                    try
+                    {
+                        m_pbData.LargeImage = Convert(Resource1.revClouds);
+                    }
+                    catch
+                    {
+                        //Could not find the image
+                    }
+                }
+
+                m_pbData.ToolTip = Tooltip;
+
+
+                PushButton m_pb = Panel.AddItem(m_pbData) as PushButton;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Add a push button visible in Revit Zero State mode

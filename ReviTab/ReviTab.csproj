@@ -319,8 +319,8 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
-    <Compile Include="Buttons Tools\AAAAAddRevClouds Section.cs" />
-    <Compile Include="Buttons Tools\RevClouds.cs" />
+    <Compile Include="Buttons Tools\RevCloudsSelected.cs" />
+    <Compile Include="Buttons Tools\RevCloudsOLD.cs" />
     <Compile Include="Buttons Tools\CopyViewFilters.cs" />
     <Compile Include="Buttons Tools\CreateNurbsModelCurve.cs" />
     <Compile Include="Buttons Tools\DisableWarnings.cs" />
@@ -387,6 +387,11 @@
     <Compile Include="Buttons Framings and Walls\VoidByLine.cs" />
     <Compile Include="Buttons Framings and Walls\ColumnSplitter.cs" />
     <Compile Include="Buttons Framings and Walls\WallSplitter.cs" />
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
     <Compile Include="RevitElementDrawingServer.cs" />
     <Compile Include="Commands\AddMetadataHelpers.cs" />
     <Compile Include="Commands\ButtonPickPoint.cs" />
@@ -556,6 +561,7 @@
     <Resource Include="Resources\elementType.png" />
     <Resource Include="Resources\duplicateSheets.png" />
     <Resource Include="Resources\alignColumns.png" />
+    <None Include="Resources\2998130_cloud_clouds_cloudy_network_weather_icon.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
@@ -600,6 +606,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormJoin.resx">
       <DependentUpon>FormJoin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

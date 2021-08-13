@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ReviTab
 {
     [Transaction(TransactionMode.Manual)]
-    public class AAAARevClouds : IExternalCommand
+    public class RevCloudsSelected : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
