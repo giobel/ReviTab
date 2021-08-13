@@ -123,7 +123,9 @@ namespace ReviTab
                             int scale = elementView.Scale;
 
 
-                            t.Start("Add rev cloud");
+
+
+                            
 
                             //VIEWPORT CENTER							
                             //XYZ vpMax = viewport.GetBoxOutline().MaximumPoint;
@@ -133,7 +135,29 @@ namespace ReviTab
 
 
                             //FIND ELEMENT BBOX FOR REVISION CLOUDS
-                            BoundingBoxXYZ bbox = e.get_BoundingBox(doc.ActiveView);
+                            BoundingBoxXYZ bbox = null;
+                            if (e.Category.Name == "Text Notes")
+                            {
+                                TextNote textNote = e as TextNote;
+ 
+                                    t.Start("Get Text bounding box");
+
+                                    textNote.RemoveLeaders();
+
+                                    doc.Regenerate();
+                                    bbox = textNote.get_BoundingBox(doc.ActiveView);
+                                    //bbox.Max = e.get_BoundingBox(doc.ActiveView).Max;
+                                    //bbox.Min = e.get_BoundingBox(doc.ActiveView).Min;
+
+                                    t.RollBack();
+                                
+                            }
+                            else
+                            {
+                                bbox = e.get_BoundingBox(doc.ActiveView);
+                            }
+
+                            t.Start("Add rev cloud");
 
                             XYZ pt1 = bbox.Min;
                             XYZ pt3 = bbox.Max;

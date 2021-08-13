@@ -562,6 +562,7 @@
     <Resource Include="Resources\duplicateSheets.png" />
     <Resource Include="Resources\alignColumns.png" />
     <None Include="Resources\2998130_cloud_clouds_cloudy_network_weather_icon.png" />
+    <None Include="Resources\Icon1.ico" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
