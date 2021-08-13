@@ -387,6 +387,7 @@
     <Compile Include="Buttons Framings and Walls\VoidByLine.cs" />
     <Compile Include="Buttons Framings and Walls\ColumnSplitter.cs" />
     <Compile Include="Buttons Framings and Walls\WallSplitter.cs" />
+    <Compile Include="RevitElementDrawingServer.cs" />
     <Compile Include="Commands\AddMetadataHelpers.cs" />
     <Compile Include="Commands\ButtonPickPoint.cs" />
     <Compile Include="Commands\ElementFilters.cs" />

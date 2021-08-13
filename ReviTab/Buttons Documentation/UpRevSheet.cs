@@ -31,7 +31,15 @@ namespace ReviTab
 
             using (var reader = new System.IO.StreamReader(inputFile))
             {
-                parameters = reader.ReadLine().Split(',').ToList();
+                while (!reader.EndOfStream)
+                {
+                    string row = reader.ReadLine();
+                    if (!string.IsNullOrEmpty(row) && row[0] != '#')
+                    {
+                        parameters = row.Split(',').ToList();
+                    }
+                }
+                
             }
 
             string borderRevision = parameters[0].Trim();

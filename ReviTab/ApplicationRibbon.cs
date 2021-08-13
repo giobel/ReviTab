@@ -10,6 +10,10 @@ using System.Reflection;
 using System.Windows.Media.Imaging;
 using System.Windows.Forms;
 using System.Linq;
+using Autodesk.Revit.DB.Events;
+using Autodesk.Revit.DB.ExternalService;
+using Application = Autodesk.Revit.ApplicationServices.Application;
+
 #endregion
 
 namespace ReviTab
@@ -24,25 +28,24 @@ namespace ReviTab
         }
     }
 
-    [Regeneration(RegenerationOption.Manual)]
+
+
+  [Regeneration(RegenerationOption.Manual)]
     class ApplicationRibbon : IExternalApplication
     {
 
         public Result OnStartup(UIControlledApplication a)
         {
 
-            
-
-#if SAM
+            #if SAM
             string tabName = "SAM";
-
-#else
+            #else
             string tabName = "SuperTab";
-#endif
+            #endif
 
             try
             {
-                               
+                              
                 AddRibbonPanel(a,tabName);
 
                 RibbonPanel docsPanel = GetSetRibbonPanel(a, tabName, "Documentation");
@@ -364,8 +367,7 @@ namespace ReviTab
                     MessageBox.Show("Failed to add Text Box", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 
-                // Return Success
-                return Result.Succeeded;
+
             }
             catch
             {
@@ -373,15 +375,14 @@ namespace ReviTab
                 return Result.Failed;
             }
 
-
+            // Return Success
+            return Result.Succeeded;
         }
 
         public Result OnShutdown(UIControlledApplication a)
         {
             try
             {
-                // Begin Code Here
-                // Return Success
                 return Result.Succeeded;
             }
             catch
@@ -390,6 +391,11 @@ namespace ReviTab
                 return Result.Failed;
             }
         }
+
+
+
+
+
 
         /// <summary>
         /// Create a Ribbon Tab and a Ribbon Panel
@@ -779,4 +785,6 @@ namespace ReviTab
         }
 
     }
+
+
 }
