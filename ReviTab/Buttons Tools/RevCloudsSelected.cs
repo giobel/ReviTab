@@ -28,6 +28,8 @@ namespace ReviTab
             // get elements from user selection
             List<Element> selectedElements = new List<Element>();
 
+            
+
             foreach (Reference r in uidoc.Selection.PickObjects(ObjectType.Element))
             {
                 Element e = doc.GetElement(r);
@@ -49,6 +51,9 @@ namespace ReviTab
                         List<Curve> curvesSheet = new List<Curve>();
                         //THIS ONLY WORKS BY ACTIVATING THE VIEWPORT AND SELECTING THE ELEMENTS. AUTOMATICALLY FIND THE SELECTED ELEMENT VIEW -> TBC
                         ViewSheet selectedViewSheet = GetElementViewSheet(doc, doc.ActiveView);
+                        ICollection<ElementId> linesToDelete = new List<ElementId>();
+
+                        XYZ viewCenter = null;
 
                         foreach (Element e in selectedElements)
                         {
@@ -87,8 +92,22 @@ namespace ReviTab
                             Categories groups = doc.Settings.Categories;
                             categoryToIsolate.Add(groups.get_Item(BuiltInCategory.OST_Loads).Id);
 
-                            XYZ viewCenter = null;
+                            
                             XYZ changedVPcenter = null;
+
+                            if (elementView.ViewType == ViewType.DraftingView)
+                            {
+                                t.Start("Draw center");
+
+                                XYZ centerOnSheet = FlattenPoint(viewport.GetBoxCenter());
+
+                                DetailCurve xCenter = doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(centerOnSheet, centerOnSheet+new XYZ(0.1,0,0)));
+                                DetailCurve yCenter = doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(centerOnSheet, centerOnSheet + new XYZ(0, 0.1, 0)));
+                                linesToDelete.Add(xCenter.Id);
+                                linesToDelete.Add(yCenter.Id);
+                                t.Commit();
+
+                            }
 
                             t.Start("Hide Categories");
 
@@ -118,9 +137,13 @@ namespace ReviTab
                                 viewCenter = GetCentroid(pts, pts.Count);
                             }
                             else
-                            {
+                            {                                            
                                 //TaskDialog.Show("r", "View type is drafting");
-                                viewCenter = uidoc.Selection.PickPoint();
+                                if (viewCenter == null)
+                                {
+                                    viewCenter = uidoc.Selection.PickPoint(ObjectSnapTypes.None, "Select center of View");
+                                }
+
 
                                 //pts.Add(uidoc.Selection.PickPoint());
                             }
@@ -258,15 +281,15 @@ namespace ReviTab
                             //doc.Create.NewDetailCurve(doc.ActiveView, l);
 
                             //BBOX CENTER TO VIEW CENTER
-                            doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(viewCenter, bboxCenter));
+                            //doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(viewCenter, bboxCenter));
 
                             // SHEET 0,0,0 TO VIEWPORT CENTER
                             //doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(XYZ.Zero, new XYZ(changedVPcenter.X, changedVPcenter.Y, 0)));
 
                             //VIEWPORT CENTRE
                             //viewport.GetBoxCenter()
-                            doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(new XYZ(0,0,0), FlattenPoint(vpCen)));
-                            doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(new XYZ(0,0,0), FlattenPoint(viewport.GetBoxCenter())));
+                            //doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(new XYZ(0,0,0), FlattenPoint(vpCen)));
+                            //doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(new XYZ(0,0,0), FlattenPoint(viewport.GetBoxCenter())));
 
                             //INSIDE VIEW
 
@@ -299,8 +322,10 @@ namespace ReviTab
 
                         t.Start("Draw Clouds on Sheet");
 
-
                         RevisionCloud cloudSheet = RevisionCloud.Create(doc, selectedViewSheet, rev[0], curvesSheet);
+
+                        doc.Delete(linesToDelete);
+
                         t.Commit();
                     }
                     catch (Exception ex)
