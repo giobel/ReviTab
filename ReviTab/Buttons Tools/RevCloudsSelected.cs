@@ -92,40 +92,46 @@ namespace ReviTab
 
                             t.Start("Hide Categories");
 
-                            elementView.IsolateCategoriesTemporary(categoryToIsolate);
-
-                            //Use the annotation crop region to find the view centroid
-                            ViewCropRegionShapeManager vcr = elementView.GetCropRegionShapeManager();
-                            //Set the annotation offset to the minimum (3mm)
-                            vcr.BottomAnnotationCropOffset = 3 / 304.8;
-                            vcr.TopAnnotationCropOffset = 3 / 304.8;
-                            vcr.LeftAnnotationCropOffset = 3 / 304.8;
-                            vcr.RightAnnotationCropOffset = 3 / 304.8;
-                            //Get the Viewport Center. This will match the View centroid
-                            changedVPcenter = viewport.GetBoxCenter();
-
-                            //Find the view centroid using the annotation crop shape (it should always be a rectangle, while the cropbox shape can be a polygon).
-                            CurveLoop cloop = vcr.GetAnnotationCropShape();
                             List<XYZ> pts = new List<XYZ>();
 
-                            foreach (Curve crv in cloop)
+                            if (elementView.ViewType != ViewType.DraftingView)
                             {
-                                pts.Add(crv.GetEndPoint(0));
-                                pts.Add(crv.GetEndPoint(1));
+                                elementView.IsolateCategoriesTemporary(categoryToIsolate);
+                                //Use the annotation crop region to find the view centroid
+                                ViewCropRegionShapeManager vcr = elementView.GetCropRegionShapeManager();
+                                //Set the annotation offset to the minimum (3mm)
+                                vcr.BottomAnnotationCropOffset = 3 / 304.8;
+                                vcr.TopAnnotationCropOffset = 3 / 304.8;
+                                vcr.LeftAnnotationCropOffset = 3 / 304.8;
+                                vcr.RightAnnotationCropOffset = 3 / 304.8;
+
+                                //Find the view centroid using the annotation crop shape (it should always be a rectangle, while the cropbox shape can be a polygon).
+                                CurveLoop cloop = vcr.GetAnnotationCropShape();
+                                
+                                foreach (Curve crv in cloop)
+                                {
+                                    pts.Add(crv.GetEndPoint(0));
+                                    pts.Add(crv.GetEndPoint(1));
+                                }
+
+                                //View centroid with elements hidden
+                                viewCenter = GetCentroid(pts, pts.Count);
+                            }
+                            else
+                            {
+                                //TaskDialog.Show("r", "View type is drafting");
+                                viewCenter = uidoc.Selection.PickPoint();
+
+                                //pts.Add(uidoc.Selection.PickPoint());
                             }
 
-                            //View centroid with elements hidden
-                            viewCenter = GetCentroid(pts, pts.Count);
+                            //Get the Viewport Center. This will match the View centroid
+                            changedVPcenter = viewport.GetBoxCenter();
 
                             t.RollBack();
 
 
                             int scale = elementView.Scale;
-
-
-
-
-                            
 
                             //VIEWPORT CENTER							
                             //XYZ vpMax = viewport.GetBoxOutline().MaximumPoint;
@@ -173,6 +179,13 @@ namespace ReviTab
                                 pt3 = ProjectOnto(p, pt3);
                                 viewCenter = ProjectOnto(p, viewCenter);
                                 //doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(pt1, pt3));
+                            }
+                            else if (doc.ActiveView.ViewType == ViewType.DraftingView)
+                            {
+                                Plane p = Plane.CreateByNormalAndOrigin(XYZ.BasisZ, XYZ.Zero);
+                                pt1 = ProjectOnto(p, pt1);
+                                pt3 = ProjectOnto(p, pt3);
+                                viewCenter = ProjectOnto(p, viewCenter);
                             }
                             else
                             {
@@ -224,6 +237,10 @@ namespace ReviTab
                             {
                                 moveToViewLocation = new XYZ(-xOffset, -yOffset, 0);
                             }
+                            else if (doc.ActiveView.ViewType == ViewType.DraftingView)
+                            {
+                                moveToViewLocation = new XYZ(-xOffset, -yOffset, 0);
+                            }
                             else //IF IT IS A SECTION
                             {
                                 moveToViewLocation = new XYZ(yOffset, -zOffset, -xOffset);
@@ -241,15 +258,15 @@ namespace ReviTab
                             //doc.Create.NewDetailCurve(doc.ActiveView, l);
 
                             //BBOX CENTER TO VIEW CENTER
-                            //doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(viewCenter, bboxCenter));
+                            doc.Create.NewDetailCurve(doc.ActiveView, Line.CreateBound(viewCenter, bboxCenter));
 
                             // SHEET 0,0,0 TO VIEWPORT CENTER
                             //doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(XYZ.Zero, new XYZ(changedVPcenter.X, changedVPcenter.Y, 0)));
 
                             //VIEWPORT CENTRE
                             //viewport.GetBoxCenter()
-                            //doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(new XYZ(0,0,0), FlattenPoint(vpCen)));
-                            //doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(new XYZ(0,0,0), FlattenPoint(viewport.GetBoxCenter())));
+                            doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(new XYZ(0,0,0), FlattenPoint(vpCen)));
+                            doc.Create.NewDetailCurve(selectedViewSheet, Line.CreateBound(new XYZ(0,0,0), FlattenPoint(viewport.GetBoxCenter())));
 
                             //INSIDE VIEW
 
