@@ -367,6 +367,7 @@
     <Compile Include="Buttons Framings and Walls\SwitchJoin.cs" />
     <Compile Include="Buttons Framings and Walls\UnjoinAll.cs" />
     <Compile Include="Buttons Framings and Walls\UnjoinElements.cs" />
+    <Compile Include="Buttons Zero State\PanicButton.cs" />
     <Compile Include="Buttons Zero State\VersionInfo.cs" />
     <Compile Include="Buttons Documentation\AddLegendToSheets.cs" />
     <Compile Include="Buttons Documentation\AddMultipleViewsToSheet.cs" />
@@ -534,7 +535,6 @@
     <Resource Include="Resources\copyLinked.png" />
     <Resource Include="Resources\changebeamlocation.png" />
     <Resource Include="Resources\info16x16.png" />
-    <Resource Include="Resources\AddMetadataIcon.png" />
     <Resource Include="Resources\ghowlicon16x16.png" />
     <Resource Include="Resources\multipleJoin.png" />
     <Resource Include="Resources\switchJoin.png" />
@@ -561,8 +561,13 @@
     <Resource Include="Resources\elementType.png" />
     <Resource Include="Resources\duplicateSheets.png" />
     <Resource Include="Resources\alignColumns.png" />
-    <None Include="Resources\2998130_cloud_clouds_cloudy_network_weather_icon.png" />
-    <None Include="Resources\Icon1.ico" />
+    <Resource Include="Resources\Icon1.ico" />
+    <Resource Include="Resources\panButton.png" />
+    <Resource Include="Resources\panButton_small.png" />
+    <Resource Include="Resources\rainbow.png" />
+    <Resource Include="Resources\metadata.png" />
+    <Resource Include="Resources\cloudSelection.png" />
+    <Resource Include="Resources\cloudSelectionCopy.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
@@ -639,7 +644,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetDir)ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2020\ReviTab"
+    <PostBuildEvent>Copy "$(TargetDir)ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2021\ReviTab"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

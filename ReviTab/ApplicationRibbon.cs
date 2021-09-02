@@ -171,7 +171,7 @@ namespace ReviTab
 
                 AddSplitButton(toolsPanel, splitButtonsSections, "SectionsButton", "MultipleSections");
                 
-                if (AddPushButton(toolsPanel, "btnRevCloudSelected", "Cloud Selection", null, Resource1.revClouds, "ReviTab.RevCloudsSelected", "Cloud the selected elements on sheet") == false)
+                if (AddPushButton(toolsPanel, "btnRevCloudSelected", "Cloud Selection", null, Resource1.cloudSelection, "ReviTab.RevCloudsSelected", "Cloud the selected elements on sheet") == false)
                 {
                     MessageBox.Show("Failed to add button Cloud Selection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -258,7 +258,7 @@ namespace ReviTab
 #endif
                 IList<PushButtonData> beamsEdit = new List<PushButtonData>();
                 
-                beamsEdit.Add(CreatePushButton("btnBeamByTypeMark", "Beam by\nIdType Mark", "", "pack://application:,,,/ReviTab;component/Resources/elementType.png", "ReviTab.BeamByTypeMark", "Provide an Identity Type Mark to change the selected beam type."));
+                beamsEdit.Add(CreatePushButton("btnBeamByTypeMark", "Beam by\nIdType Mark", null, Resource1.cloudSelectionCopy, "ReviTab.BeamByTypeMark", "Provide an Identity Type Mark to change the selected beam type."));
 
                 beamsEdit.Add(CreatePushButton("btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point"));
 
@@ -331,7 +331,7 @@ namespace ReviTab
                 stackedButtonsZeroState.Add(CreatePushButton("btnClaritySetup", "Clarity Setup", "", "pack://application:,,,/ReviTab;component/Resources/claSetup.png", "ReviTab.ClaritySetup", "Open a model in background and create a 3d view for Clarity IFC export.", "ReviTab.Availability"));
 
 
-                stackedButtonsZeroState.Add(CreatePushButton("btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
+                //stackedButtonsZeroState.Add(CreatePushButton("btnPush", "Push to DB", "", "pack://application:,,,/ReviTab;component/Resources/arrowUp.png", "ReviTab.PushToDB", "Push date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount to 127.0.0.1"));
 
                 stackedButtonsZeroState.Add(CreatePushButton("btnPurgeFamilies", "Families", "", "pack://application:,,,/ReviTab;component/Resources/wiping.png", "ReviTab.PurgeFamily", "Purge families and leave only a type called Default", "ReviTab.Availability"));
 
@@ -350,13 +350,17 @@ namespace ReviTab
                 IList<PushButtonData> stackedButtonsGroupMetadata = new List<PushButtonData>();
 
                 stackedButtonsGroupMetadata.Add(CreatePushButton("btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability"));
-                
-                stackedButtonsGroupMetadata.Add(CreatePushButton("btnColor", "ColorTab", "", "pack://application:,,,/ReviTab;component/Resources/tagSmall.png", "ReviTab.ColorTab", "Color Revit Tabs based on view type.", "ReviTab.Availability"));
 
-                stackedButtonsGroupMetadata.Add(CreatePushButton("btnHowl", "Howl",  "", "pack://application:,,,/ReviTab;component/Resources/ghowlicon.png", "ReviTab.Howl", "Howl"));
+                //Icon made Freepik from www.flaticon.com
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnColor", "ColorTab", null, Resource1.rainbow, "ReviTab.ColorTab", "Color Revit Tabs based on view type.", "ReviTab.Availability"));
 
-                stackedButtonsGroupMetadata.Add(CreatePushButton("btnAddMetadata", "Metadata", "", "pack://application:,,,/ReviTab;component/Resources/AddMetadataIcon.png", "ReviTab.AddPDFcustomProperties", "Add custom properties to a list of pdfs"));
-                
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnHowl", "Howl",  null, Resource1.ghowlicon, "ReviTab.Howl", "Howl"));
+
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnAddMetadata", "Metadata", null, Resource1.metadata, "ReviTab.AddPDFcustomProperties", "Add custom properties to a list of pdfs"));
+
+                stackedButtonsGroupMetadata.Add(CreatePushButton("btnPanic", "Panic", Resource1.panButton_small, Resource1.panButton, "ReviTab.PanicButton", "Add custom properties to a list of pdfs"));
+                //stackedButtonsGroupMetadata.Add(CreatePushButton("btnPanic", "Panic", "", "pack://application:,,,/ReviTab;component/Resources/panButton_small.png", "ReviTab.PanicButton", "Add custom properties to a list of pdfs"));
+
                 AddSplitButton(zeroState, stackedButtonsGroupMetadata, "MetadataCommands", "Metadata");
 #else
                 if (AddZeroStatePushButton(zeroState, "btnInfo", "Info", "", "pack://application:,,,/ReviTab;component/Resources/info.png", "ReviTab.VersionInfo", "Display Version Info Task Dialog.", "ReviTab.Availability")==false)
@@ -572,6 +576,50 @@ namespace ReviTab
             }
         }
 
+        private PushButtonData CreatePushButton(string ButtonName, string ButtonText, System.Drawing.Bitmap Image16, System.Drawing.Bitmap Image32, string dllClass, string Tooltip, string availability = "")
+        {
+
+            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+
+            try
+            {
+                PushButtonData m_pbData = new PushButtonData(ButtonName, ButtonText, thisAssemblyPath, dllClass);
+
+                m_pbData.AvailabilityClassName = availability;
+
+                if (Image16 != null)
+                {
+                    try
+                    {
+                        m_pbData.Image = Convert(Image16);
+                    }
+                    catch
+                    {
+                        //Could not find the image
+                    }
+                }
+                if (Image32 != null)
+                {
+                    try
+                    {
+                        m_pbData.LargeImage = Convert(Image32);
+                    }
+                    catch
+                    {
+                        //Could not find the image
+                    }
+                }
+
+                m_pbData.ToolTip = Tooltip;
+
+                return m_pbData;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         ///<summary>
         ///Add a PushButton to the Ribbon Panel
@@ -621,21 +669,9 @@ namespace ReviTab
             }
         }
 
-        public BitmapImage Convert(System.Drawing.Bitmap src)
-        {
-            MemoryStream ms = new MemoryStream();
-            ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            ms.Seek(0, SeekOrigin.Begin);
-            image.StreamSource = ms;
-            image.EndInit();
-            return image;
-        }
-
         private Boolean AddPushButton(RibbonPanel Panel, string ButtonName, string ButtonText, System.Drawing.Bitmap Image16, System.Drawing.Bitmap Image32, string dllClass, string Tooltip)
         {
-            
+
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
             try
@@ -646,7 +682,7 @@ namespace ReviTab
                 {
                     try
                     {
-                        m_pbData.Image = Convert(Resource1.revClouds);
+                        m_pbData.Image = Convert(Image16);
                     }
                     catch
                     {
@@ -657,7 +693,7 @@ namespace ReviTab
                 {
                     try
                     {
-                        m_pbData.LargeImage = Convert(Resource1.revClouds);
+                        m_pbData.LargeImage = Convert(Image32);
                     }
                     catch
                     {
@@ -676,6 +712,18 @@ namespace ReviTab
             {
                 return false;
             }
+        }
+
+        public BitmapImage Convert(System.Drawing.Bitmap src)
+        {
+            MemoryStream ms = new MemoryStream();
+            ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+            return image;
         }
 
         /// <summary>

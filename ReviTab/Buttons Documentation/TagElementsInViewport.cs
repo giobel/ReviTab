@@ -44,7 +44,7 @@ namespace ReviTab
             double xOffset = 0;
             string category = "";
 
-            using (var form = new FormTwoTextBoxes("Tag X-offset [mm] from column centre", "Category to Tag"))
+            using (var form = new FormTwoTextBoxes("Tag X-offset [mm] from centreline", "Category to Tag"))
             {
                 form.ShowDialog();
 
@@ -81,9 +81,17 @@ namespace ReviTab
                             {
                                 FamilyInstance fa = ele as FamilyInstance;
 
-                                CreateIndependentTagColumn(doc, fa, viewId, xOffset);
+                                if (category == "Structural Columns")
+                                {
+                                    CreateIndependentTagColumn(doc, fa, viewId, xOffset, category);
+                                }
+                                else if (category == "Walls")
+                                {
+                                    Wall wall = ele as Wall;
+                                    CreateIndependentTagWall(doc, wall, viewId, xOffset, category);
+                                }
 
-                                counterTagged++;
+                                    counterTagged++;
 
                             }
                         }
@@ -116,7 +124,7 @@ namespace ReviTab
         /// <param name="column"></param>
         /// <param name="viewId"></param>
         /// <returns></returns>
-        private IndependentTag CreateIndependentTagColumn(Document document, FamilyInstance column, ElementId viewId, double Xoffset)
+        private IndependentTag CreateIndependentTagColumn(Document document, FamilyInstance famInstance, ElementId viewId, double Xoffset, string ElementCategory)
         {
             View view = document.GetElement(viewId) as View;
 
@@ -124,16 +132,25 @@ namespace ReviTab
             TagMode tagMode = TagMode.TM_ADDBY_CATEGORY;
             TagOrientation tagorn = TagOrientation.Horizontal;
 
-            // Add the tag to the middle of the colunm
-            Reference columnRef = new Reference(column);
+            Reference elementReference = null;
 
-            BoundingBoxXYZ bbox = column.get_BoundingBox(view);
+            if (ElementCategory == "Structural Columns")
+            {                
+                elementReference= new Reference(famInstance);
+            }
+            else
+            {
+                TaskDialog.Show("Error", "Works only with Columns and Walls");
+            }
+
+            // Add the tag to the middle of the colunm
+            BoundingBoxXYZ bbox = famInstance.get_BoundingBox(view);
 
             XYZ centroid = new XYZ((bbox.Max.X + bbox.Min.X) / 2, (bbox.Max.Y + bbox.Min.Y) / 2, (bbox.Max.Z + bbox.Min.Z) / 2);
 
             XYZ position = centroid + new XYZ(Xoffset, 0, 0);
 
-            IndependentTag newTag = IndependentTag.Create(document, viewId, columnRef, false, tagMode, tagorn, position);
+            IndependentTag newTag = IndependentTag.Create(document, viewId, elementReference, false, tagMode, tagorn, position);
 
             if (null == newTag)
             {
@@ -142,6 +159,44 @@ namespace ReviTab
 
             return newTag;
         }
+
+
+        private IndependentTag CreateIndependentTagWall(Document document, Wall famInstance, ElementId viewId, double Xoffset, string ElementCategory)
+        {
+            View view = document.GetElement(viewId) as View;
+
+            // define tag mode and tag orientation for new tag
+            TagMode tagMode = TagMode.TM_ADDBY_CATEGORY;
+            TagOrientation tagorn = TagOrientation.Horizontal;
+
+            Reference elementReference = null;
+
+            if (ElementCategory == "Walls")
+            {
+                elementReference = new Reference(famInstance);
+            }
+            else
+            {
+                TaskDialog.Show("Error", "Works only with Columns and Walls");
+            }
+
+            // Add the tag to the middle of the colunm
+            BoundingBoxXYZ bbox = famInstance.get_BoundingBox(view);
+
+            XYZ centroid = new XYZ((bbox.Max.X + bbox.Min.X) / 2, (bbox.Max.Y + bbox.Min.Y) / 2, (bbox.Max.Z + bbox.Min.Z) / 2);
+
+            XYZ position = centroid + new XYZ(Xoffset, 0, 0);
+
+            IndependentTag newTag = IndependentTag.Create(document, viewId, elementReference, false, tagMode, tagorn, position);
+
+            if (null == newTag)
+            {
+                throw new Exception("Create IndependentTag Failed.");
+            }
+
+            return newTag;
+        }
+
 #elif REVIT2017
 
         /// <summary>
