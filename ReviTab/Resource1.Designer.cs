@@ -22,7 +22,7 @@ namespace ReviTab {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource1 {
+    public class Resource1 {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ReviTab {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ReviTab.Resource1", typeof(Resource1).Assembly);
@@ -51,7 +51,7 @@ namespace ReviTab {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,35 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cloudSelection {
+        public static System.Drawing.Bitmap bground {
+            get {
+                object obj = ResourceManager.GetObject("bground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Bongocha {
+            get {
+                return ResourceManager.GetStream("Bongocha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Buzz {
+            get {
+                return ResourceManager.GetStream("Buzz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap cloudSelection {
             get {
                 object obj = ResourceManager.GetObject("cloudSelection", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +101,7 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cloudSelectionCopy {
+        public static System.Drawing.Bitmap cloudSelectionCopy {
             get {
                 object obj = ResourceManager.GetObject("cloudSelectionCopy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +111,7 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ghowlicon {
+        public static System.Drawing.Bitmap ghowlicon {
             get {
                 object obj = ResourceManager.GetObject("ghowlicon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +121,7 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap metadata {
+        public static System.Drawing.Bitmap metadata {
             get {
                 object obj = ResourceManager.GetObject("metadata", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +131,7 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap panButton {
+        public static System.Drawing.Bitmap panButton {
             get {
                 object obj = ResourceManager.GetObject("panButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +141,7 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap panButton_small {
+        public static System.Drawing.Bitmap panButton_small {
             get {
                 object obj = ResourceManager.GetObject("panButton_small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,10 +151,92 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rainbow {
+        public static System.Drawing.Bitmap panic_button {
+            get {
+                object obj = ResourceManager.GetObject("panic_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap rainbow {
             get {
                 object obj = ResourceManager.GetObject("rainbow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Rooster_Crowing {
+            get {
+                return ResourceManager.GetStream("Rooster Crowing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Stampede_Large {
+            get {
+                return ResourceManager.GetStream("Stampede Large", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Store_Door_Chime {
+            get {
+                return ResourceManager.GetStream("Store Door Chime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Temple_Bell_Small {
+            get {
+                return ResourceManager.GetStream("Temple Bell Small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Whistling {
+            get {
+                return ResourceManager.GetStream("Whistling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Woop_Woop {
+            get {
+                return ResourceManager.GetStream("Woop Woop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Yahoo {
+            get {
+                return ResourceManager.GetStream("Yahoo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Zombie_In_Pain {
+            get {
+                return ResourceManager.GetStream("Zombie In Pain", resourceCulture);
             }
         }
     }

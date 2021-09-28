@@ -24,9 +24,11 @@ namespace ReviTab
 
 			string date = DateTime.Today.ToShortDateString();
 
-            TaskDialog.Show("R", "Doine");
+            var form = new Forms.Neuromorphism();
 
-			return Result.Succeeded;
+            form.ShowDialog();
+
+                return Result.Succeeded;
         }
     }
 }
