@@ -121,12 +121,6 @@
   <data name="bground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\bground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Bongocha" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\bongocha.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Buzz" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Buzz-SoundBible.com-1790490578.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="cloudSelection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\cloudSelection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -150,29 +144,5 @@
   </data>
   <data name="rainbow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\rainbow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Rooster Crowing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Rooster Crowing-SoundBible.com-43612401.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Stampede Large" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Stampede_Large-Mike_Koenig-829800776.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Store Door Chime" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Store_Door_Chime-Mike_Koenig-570742973.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Temple Bell Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Japanese Temple Bell Small-SoundBible.com-113624364.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Whistling" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Whistling-SoundBible.com-1246385697.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Woop Woop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Woop Woop-SoundBible.com-198943467.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Yahoo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Yahoo-SoundBible.com-1888534056.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Zombie In Pain" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Zombie In Pain-SoundBible.com-134322253.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

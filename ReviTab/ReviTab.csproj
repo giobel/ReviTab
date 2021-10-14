@@ -572,17 +572,7 @@
     <Resource Include="Resources\cloudSelection.png" />
     <Resource Include="Resources\cloudSelectionCopy.png" />
     <Resource Include="Resources\bground.png" />
-    <Resource Include="Resources\bongocha.wav" />
-    <Resource Include="Resources\Buzz-SoundBible.com-1790490578.wav" />
-    <Resource Include="Resources\Japanese Temple Bell Small-SoundBible.com-113624364.wav" />
     <Resource Include="Resources\panic-button.png" />
-    <Resource Include="Resources\Rooster Crowing-SoundBible.com-43612401.wav" />
-    <Resource Include="Resources\Stampede_Large-Mike_Koenig-829800776.wav" />
-    <Resource Include="Resources\Store_Door_Chime-Mike_Koenig-570742973.wav" />
-    <Resource Include="Resources\Whistling-SoundBible.com-1246385697.wav" />
-    <Resource Include="Resources\Woop Woop-SoundBible.com-198943467.wav" />
-    <Resource Include="Resources\Yahoo-SoundBible.com-1888534056.wav" />
-    <Resource Include="Resources\Zombie In Pain-SoundBible.com-134322253.wav" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
