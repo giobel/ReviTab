@@ -300,6 +300,7 @@
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
     <Compile Include="Buttons Documentation\MatchSectionViewCrop.cs" />
+    <Compile Include="Buttons Documentation\PlaceTags - Copy.cs" />
     <Compile Include="Buttons Documentation\RhinoImport.cs" />
     <Compile Include="Buttons Documentation\DuplicateSheets.cs" />
     <Compile Include="Buttons Documentation\BeamByTypeMark.cs" />
@@ -309,6 +310,8 @@
     <Compile Include="Buttons Documentation\AlignViews.cs" />
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
     <Compile Include="Buttons Documentation\LineStyles.cs" />
+    <Compile Include="Buttons Documentation\PlaceTags.cs" />
+    <Compile Include="Buttons Documentation\SaveTags.cs" />
     <Compile Include="Buttons Documentation\SelectAllTagsInViewport.cs" />
     <Compile Include="Buttons Excel\ExportViewTemplates.cs" />
     <Compile Include="Buttons Excel\SelectedDataParametersToExcel.cs" />
