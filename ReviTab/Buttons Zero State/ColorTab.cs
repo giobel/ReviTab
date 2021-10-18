@@ -23,12 +23,13 @@ namespace ReviTab
     [Transaction(TransactionMode.Manual)]
     public class ColorTab : IExternalCommand
     {
+        private static UIApplication uiapp;
         public Result Execute(
           ExternalCommandData commandData,
           ref string message,
           ElementSet elements)
         {
-            UIApplication uiapp = commandData.Application;
+            uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
@@ -55,11 +56,12 @@ namespace ReviTab
             int tabCount = 0;
             tabProjectNames.Clear();
 
-            UIApplication uiapp = sender as UIApplication;
+            //sender is null and causes error
+            //UIApplication uiapp = sender as UIApplication;
 
-            uiapp.ViewActivated -= new EventHandler<ViewActivatedEventArgs>(Application_ViewActivated);
+            uiapp.ViewActivated -= Application_ViewActivated;
 
-            TaskDialog.Show("R", "Unsuscribing");
+            //TaskDialog.Show("R", "Unsuscribing");
         }
 
         private int tabCount = 0;
@@ -68,15 +70,15 @@ namespace ReviTab
 
         public void Application_ViewActivated(object sender, ViewActivatedEventArgs args)
         {
-            Debug.WriteLine("View Activated");
+            //Debug.WriteLine("View Activated");
 
             UIApplication uiapp = sender as UIApplication;
 
-            Debug.WriteLine(uiapp.ActiveUIDocument.Document.PathName);
+            //Debug.WriteLine(uiapp.ActiveUIDocument.Document.PathName);
 
             var docTabGroup = GetDocumentTabGroup(uiapp);
 
-            Debug.WriteLine("got docTabGroup");
+            //Debug.WriteLine("got docTabGroup");
 
             if (docTabGroup != null)
             {

@@ -157,6 +157,9 @@
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AirtableApiClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Airtable.1.1.0\lib\netstandard2.0\AirtableApiClient.dll</HintPath>
@@ -220,8 +223,12 @@
       <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AdWindows">
+    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2020'">
       <HintPath>C:\Program Files\Autodesk\Revit 2020\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2020'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- 2021 -->
@@ -233,8 +240,12 @@
       <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AdWindows">
+    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2021'">
       <HintPath>C:\Program Files\Autodesk\Revit 2021\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2021'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!--RELEASE-->
@@ -311,10 +322,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="WindowsBase" />
-    <Reference Include="Xceed.Wpf.AvalonDock">
-      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\Xceed.Wpf.AvalonDock.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
@@ -364,7 +371,8 @@
     <Compile Include="Buttons Tools\FilterSelectionBeams.cs" />
     <Compile Include="Buttons Tools\FilterSelectionWalls.cs" />
     <Compile Include="Buttons Tools\RhinoMesh.cs" />
-    <Compile Include="Buttons Zero State\UpdateViewTest.cs" />
+    <Compile Include="Buttons Zero State\Unsuscribe.cs" />
+    <Compile Include="Buttons Zero State\UpdateSuscribe.cs" />
     <Compile Include="Buttons Zero State\ColorTab.cs" />
     <Compile Include="Buttons Zero State\AddPDFcustomProperties.cs" />
     <Compile Include="Buttons Tools\PrintSelected.cs" />
@@ -676,8 +684,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetDir)ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2021\ReviTab"
-</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -698,4 +704,8 @@
     <Error Condition="!Exists('..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets'))" />
     <Error Condition="!Exists('..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2020\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2020\ReviTab"
+copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2021\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2021\ReviTab"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -21,22 +21,26 @@ namespace ReviTab
     /// All credits to pyrevit https://github.com/eirannejad/pyRevit/blob/4afd56ccb4d77e4e0228b8e64d80d1f541bc791e/pyrevitlib/pyrevit/runtime/EventHandling.cs
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    public class UpdateViewTest : IExternalCommand
+    public class UpdateSuscribe : IExternalCommand
     {
+        private static UIApplication uiapp;
         public Result Execute(
           ExternalCommandData commandData,
           ref string message,
           ElementSet elements)
         {
-            UIApplication uiapp = commandData.Application;
+            uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
-
+            bool registered = false;
             try
             {
-
-                uiapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(My_Application_ViewActivated);
+                if (registered == false)
+                {
+                    uiapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(My_Application_ViewActivated);
+                    registered = true;
+                }
 
                 //uiapp.ApplicationClosing += new EventHandler<ApplicationClosingEventArgs>(Doc_DocumentClosing);
                 doc.DocumentClosing += new EventHandler<DocumentClosingEventArgs>(Doc_DocumentClosing);
@@ -52,11 +56,11 @@ namespace ReviTab
 
         private void Doc_DocumentClosing(object sender, DocumentClosingEventArgs e)
         {
+            //sender is null and causes error
+            //UIApplication uiapp = sender as UIApplication;
 
-            UIApplication uiapp = sender as UIApplication;
-
-            uiapp.ViewActivated -= new EventHandler<ViewActivatedEventArgs>(My_Application_ViewActivated);
-
+            uiapp.ViewActivated -= My_Application_ViewActivated;
+            
             Debug.WriteLine("Unsuscribed");
         }
 
@@ -71,60 +75,11 @@ namespace ReviTab
 
             Debug.WriteLine(uiapp.ActiveUIDocument.Document.PathName);
 
-            var docTabGroup = GetDocumentTabGroup(uiapp);
+            var wndRoot = GetWindowRoot(uiapp);
 
-            Debug.WriteLine("got docTabGroup");
+            Debug.WriteLine("docTabGroup");
 
-            if (docTabGroup != null)
-            {
-                var docTabs = GetDocumentTabs(docTabGroup);
-
-                int currentTabCount = docTabs.ToHashSet().Count;
-
-                if (tabCount != currentTabCount)
-                {
-                    foreach (TabItem tab in docTabs)
-                    {
-                        string currentProjectName = tab.ToolTip.ToString().Split(' ')[0];
-
-                        if (!tabProjectNames.Contains(currentProjectName))  //THE CURRENT TAB BELONGS TO A NEW PROJECT
-                        {
-                            tabProjectNames.Add(currentProjectName);
-                            tab.BorderBrush = tabProjectColors[tabProjectNames.IndexOf(currentProjectName)];
-                        }
-                        else   //THE CURRENT TAB BELONGS TO A PROJECT THAT IS ALREADY OPENED
-                        {
-                            tab.BorderBrush = tabProjectColors[tabProjectNames.IndexOf(currentProjectName)];
-                        }
-
-                        tab.BorderThickness = new System.Windows.Thickness(0, 3, 0, 0);
-
-                        SolidColorBrush planBrush = new SolidColorBrush(Colors.PaleVioletRed);
-                        planBrush.Opacity = 0.75;
-
-                        SolidColorBrush sectBrush = new SolidColorBrush(Colors.PaleGoldenrod);
-                        planBrush.Opacity = 0.75;
-
-                        SolidColorBrush threeDBrush = new SolidColorBrush(Colors.PaleTurquoise);
-                        planBrush.Opacity = 0.75;
-
-                        SolidColorBrush sheetBrush = new SolidColorBrush(Colors.PaleGreen);
-                        planBrush.Opacity = 0.75;
-
-                        if (tab.ToolTip.ToString().Contains("Plan:"))
-                            tab.Background = planBrush;
-                        else if (tab.ToolTip.ToString().Contains("Section:"))
-                            tab.Background = sectBrush;
-                        else if (tab.ToolTip.ToString().Contains("3D View:"))
-                            tab.Background = threeDBrush;
-                        else if (tab.ToolTip.ToString().Contains("Sheet:"))
-                            tab.Background = sheetBrush;
-                    }
-
-                    tabCount = docTabs.ToHashSet().Count;
-                }
-
-            }
+            
 
         }
 
