@@ -18,7 +18,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ReviTab</RootNamespace>
     <AssemblyName>ReviTab</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -151,6 +151,12 @@
     <DefineConstants>TRACE;DEBUG;REVIT2020</DefineConstants>
     <OutputPath>bin\x64\Debug2020\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2021|AnyCPU'">
+    <OutputPath>bin\Debug2021\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2021</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AirtableApiClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Airtable.1.1.0\lib\netstandard2.0\AirtableApiClient.dll</HintPath>
@@ -216,6 +222,19 @@
     </Reference>
     <Reference Include="AdWindows">
       <HintPath>C:\Program Files\Autodesk\Revit 2020\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2021 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2021'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2021'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdWindows">
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!--RELEASE-->
@@ -300,7 +319,6 @@
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
     <Compile Include="Buttons Documentation\MatchSectionViewCrop.cs" />
-    <Compile Include="Buttons Documentation\PlaceTags - Copy.cs" />
     <Compile Include="Buttons Documentation\RhinoImport.cs" />
     <Compile Include="Buttons Documentation\DuplicateSheets.cs" />
     <Compile Include="Buttons Documentation\BeamByTypeMark.cs" />
@@ -310,9 +328,6 @@
     <Compile Include="Buttons Documentation\AlignViews.cs" />
     <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
     <Compile Include="Buttons Documentation\LineStyles.cs" />
-    <Compile Include="Buttons Documentation\PlaceTags.cs" />
-    <Compile Include="Buttons Documentation\SaveTags.cs" />
-    <Compile Include="Buttons Documentation\SelectAllTagsInViewport.cs" />
     <Compile Include="Buttons Excel\ExportViewTemplates.cs" />
     <Compile Include="Buttons Excel\SelectedDataParametersToExcel.cs" />
     <Compile Include="Buttons Excel\SelectFromExcel.cs" />
@@ -348,8 +363,8 @@
     <Compile Include="Buttons Tools\FilterSelectionLines.cs" />
     <Compile Include="Buttons Tools\FilterSelectionBeams.cs" />
     <Compile Include="Buttons Tools\FilterSelectionWalls.cs" />
-    <Compile Include="Buttons Documentation\TagElementsInViewport.cs" />
     <Compile Include="Buttons Tools\RhinoMesh.cs" />
+    <Compile Include="Buttons Zero State\UpdateViewTest.cs" />
     <Compile Include="Buttons Zero State\ColorTab.cs" />
     <Compile Include="Buttons Zero State\AddPDFcustomProperties.cs" />
     <Compile Include="Buttons Tools\PrintSelected.cs" />
@@ -394,6 +409,11 @@
     <Compile Include="Forms\FormNeumorphism.xaml.cs">
       <DependentUpon>FormNeumorphism.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Button Tags\PlaceTags - Copy.cs" />
+    <Compile Include="Button Tags\PlaceTags.cs" />
+    <Compile Include="Button Tags\SaveTags.cs" />
+    <Compile Include="Button Tags\SelectAllTagsInViewport.cs" />
+    <Compile Include="Button Tags\TagElementsInViewport.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

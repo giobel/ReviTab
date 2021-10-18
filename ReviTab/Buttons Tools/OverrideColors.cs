@@ -46,13 +46,13 @@ namespace ReviTab
 
 			//TaskDialog.Show("r", grouped.First().First().Name);
 			OverrideGraphicSettings ogs = new OverrideGraphicSettings();
-			#if REVIT2020
-				ogs.SetSurfaceForegroundPatternId(solidFillPattern.Id);
-			#else
-				ogs.SetProjectionFillPatternId(solidFillPattern.Id);
-			#endif
+#if REVIT2020 || REVIT2021
+				ogs.SetSurfaceForegroundPatternId(solidFillPattern.Id);            
+#else
+            ogs.SetProjectionFillPatternId(solidFillPattern.Id);
+#endif
 
-			using (Transaction t = new Transaction(doc, "Override Colors"))
+            using (Transaction t = new Transaction(doc, "Override Colors"))
 			{
 				t.Start();
 				foreach (var element in grouped)
@@ -62,8 +62,8 @@ namespace ReviTab
 					iG = Convert.ToByte(pRand.Next(0, 255));
 					iB = Convert.ToByte(pRand.Next(0, 255));
 					Autodesk.Revit.DB.Color pcolor = new Autodesk.Revit.DB.Color(iR, iG, iB);
-					#if REVIT2020
-						ogs.SetSurfaceForegroundPatternColor(pcolor);
+                    #if REVIT2020 || REVIT2021
+                    ogs.SetSurfaceForegroundPatternColor(pcolor);
 					#else
 						ogs.SetProjectionFillColor(pcolor);
 					#endif

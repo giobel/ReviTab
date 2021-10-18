@@ -2995,7 +2995,7 @@ namespace ReviTab
 
 
 
-#if REVIT2019 || SAM || REVIT2020
+#if REVIT2019 || SAM || REVIT2020 || REVIT2021
 
             overrideSettings.SetSurfaceForegroundPatternId(solidPatternId);
 

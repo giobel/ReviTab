@@ -21,7 +21,7 @@ namespace ReviTab
     /// All credits to pyrevit https://github.com/eirannejad/pyRevit/blob/4afd56ccb4d77e4e0228b8e64d80d1f541bc791e/pyrevitlib/pyrevit/runtime/EventHandling.cs
     /// </summary>
     [Transaction(TransactionMode.Manual)]
-    public class ColorTab : IExternalCommand
+    public class UpdateViewTest : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -35,11 +35,11 @@ namespace ReviTab
 
             try
             {
-                
-                uiapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(Application_ViewActivated);
 
-                uiapp.ApplicationClosing += new EventHandler<ApplicationClosingEventArgs>(Doc_DocumentClosing);
+                uiapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(My_Application_ViewActivated);
 
+                //uiapp.ApplicationClosing += new EventHandler<ApplicationClosingEventArgs>(Doc_DocumentClosing);
+                doc.DocumentClosing += new EventHandler<DocumentClosingEventArgs>(Doc_DocumentClosing);
                 return Result.Succeeded;
             }
             catch (Exception ex)
@@ -47,29 +47,26 @@ namespace ReviTab
                 TaskDialog.Show("Error", ex.Message);
                 return Result.Failed;
             }
-            
+
         }
 
-        private void Doc_DocumentClosing(object sender, ApplicationClosingEventArgs e)
+        private void Doc_DocumentClosing(object sender, DocumentClosingEventArgs e)
         {
-            int tabCount = 0;
-            tabProjectNames.Clear();
 
             UIApplication uiapp = sender as UIApplication;
 
-            uiapp.ViewActivated -= new EventHandler<ViewActivatedEventArgs>(Application_ViewActivated);
+            uiapp.ViewActivated -= new EventHandler<ViewActivatedEventArgs>(My_Application_ViewActivated);
 
-            TaskDialog.Show("R", "Unsuscribing");
+            Debug.WriteLine("Unsuscribed");
         }
 
         private int tabCount = 0;
         private List<string> tabProjectNames = new List<string>();
         private List<SolidColorBrush> tabProjectColors = new List<SolidColorBrush> { Brushes.Coral, Brushes.RoyalBlue, Brushes.DeepPink, Brushes.SeaGreen, Brushes.Yellow, Brushes.Orange, Brushes.Green, Brushes.Blue, Brushes.Red, Brushes.Violet };
 
-        public void Application_ViewActivated(object sender, ViewActivatedEventArgs args)
+        public void My_Application_ViewActivated(object sender, ViewActivatedEventArgs args)
         {
-            Debug.WriteLine("View Activated");
-
+            Debug.WriteLine("Test View Activated");
             UIApplication uiapp = sender as UIApplication;
 
             Debug.WriteLine(uiapp.ActiveUIDocument.Document.PathName);
@@ -85,7 +82,7 @@ namespace ReviTab
                 int currentTabCount = docTabs.ToHashSet().Count;
 
                 if (tabCount != currentTabCount)
-                {                    
+                {
                     foreach (TabItem tab in docTabs)
                     {
                         string currentProjectName = tab.ToolTip.ToString().Split(' ')[0];
@@ -128,18 +125,8 @@ namespace ReviTab
                 }
 
             }
-        }
 
-        //public static Xceed.Wpf.AvalonDock.DockingManager GetDockingManager(UIApplication uiapp)
-        //{
-        //    //var wndRoot = (MainWindow)GetWindowRoot(uiapp);
-        //    var wndRoot = (MainWindow)GetWindowRoot(uiapp);
-        //    if (wndRoot != null)
-        //    {
-        //        return MainWindow.FindFirstChild<Xceed.Wpf.AvalonDock.DockingManager>(wndRoot);
-        //    }
-        //    return null;
-        //}
+        }
 
         public static IEnumerable<TabItem> GetDocumentTabs(LayoutDocumentPaneGroupControl docPane)
         {
@@ -159,7 +146,7 @@ namespace ReviTab
             if (wndRoot != null)
             {
                 return MainWindow.FindFirstChild<LayoutDocumentPaneGroupControl>((MainWindow)wndRoot);
-                
+
             }
             return null;
         }
@@ -167,11 +154,10 @@ namespace ReviTab
         public static Visual GetWindowRoot(UIApplication uiapp)
         {
             IntPtr wndHndle = IntPtr.Zero;
-            try
-            {
-                wndHndle = uiapp.MainWindowHandle;
-            }
-            catch { }
+
+            wndHndle = uiapp.MainWindowHandle;
+            
+           
 
             if (wndHndle != IntPtr.Zero)
             {

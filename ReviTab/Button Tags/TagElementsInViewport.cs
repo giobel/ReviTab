@@ -116,7 +116,7 @@ namespace ReviTab
         }
 
 
-#if REVIT2019 || REVIT2018 || REVIT2020
+#if REVIT2019 || REVIT2018 || REVIT2020 || REVIT2021
         /// <summary>
         /// https://forums.autodesk.com/t5/revit-api-forum/independenttag-how-do-i-call-this-in-revit/td-p/7733731
         /// </summary>
