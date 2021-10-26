@@ -152,6 +152,7 @@
             this.Name = "FormAddMultipleViews";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add Multiple Views";
+            this.Load += new System.EventHandler(this.FormAddMultipleViews_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

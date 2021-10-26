@@ -28,16 +28,6 @@ namespace ReviTab
 
                 IEnumerable<Element>tagLocationElements = new FilteredElementCollector(doc, doc.ActiveView.Id).OfClass(typeof(FamilyInstance)).WhereElementIsNotElementType().Where(x=>x.Name == "Tag Location");
 
-            List<XYZ> tagLocationDistances = new List<XYZ>();
-
-            foreach (Element item in tagLocationElements)
-            {
-                LocationPoint lp = item.Location as LocationPoint;
-                tagLocationDistances.Add(lp.Point);
-            }
-
-            double refPointZ = tagLocationDistances.First().Z;
-
             //how to find the closest element to a tagLocation? 
             // Option 1: Create a plane with the element location curve and find the smallest distance between plane and point
             // Option 2: Raycast -> does not work in 2d
@@ -46,6 +36,17 @@ namespace ReviTab
             ICollection<Element> fecElements = new FilteredElementCollector(doc, doc.ActiveView.Id)
                                                                 .Where(c => c.Category !=null)
                                                                 .Where(x => x.Category.Name.Contains("Framing")).ToList();
+
+            Dictionary<Curve, Element> lineBasedElements = new Dictionary<Curve, Element>();
+
+            foreach (Element item in fecElements)
+            {
+                LocationCurve lc = item.Location as LocationCurve;
+                Curve crv = lc.Curve;
+                lineBasedElements.Add(crv, item);
+            }
+
+
             ICollection<ElementId> result = new List<ElementId>();
 
             TagMode tagMode = TagMode.TM_ADDBY_CATEGORY;
@@ -55,28 +56,17 @@ namespace ReviTab
             {
                 t.Start();
 
-                foreach (Element item in fecElements)
+                foreach (Element item in tagLocationElements)
                 {
-                    LocationCurve lc = item.Location as LocationCurve;
-                    Curve crv = lc.Curve;
-
-                    XYZ stPt = crv.GetEndPoint(0);
-                    XYZ endPt = crv.GetEndPoint(1);
-
-                    XYZ newSt = ProjectedZPoint(stPt, refPointZ);
-                    XYZ newEnd = ProjectedZPoint(endPt, refPointZ);
-
-                    Curve projectedCurve = Line.CreateBound(newSt, newEnd);
-
-                    //XYZ zPoint = new XYZ(crv.GetEndPoint(0).X, crv.GetEndPoint(0).Y, 1);
-                    //Plane pl = Plane.CreateByThreePoints(crv.GetEndPoint(0), crv.GetEndPoint(1), zPoint);
-                    //XYZ closestPoint = ClosestPtToPlane(pl, tagLocationDistances);
-                    XYZ closestPoint = ClosestPtToCurve(projectedCurve, tagLocationDistances);
-                    if (closestPoint != null)
+                    
+                    LocationPoint tagLp = item.Location as LocationPoint;
+                    Curve closestCurve = ClosestPtToCurve(tagLp.Point, lineBasedElements.Keys.ToList());
+                    
+                    if (closestCurve != null)
                     {
-                        tagLocationDistances.Remove(closestPoint);
-                        Reference refe = new Reference(item);
-                        IndependentTag newTag = IndependentTag.Create(doc, doc.ActiveView.Id, refe, false, tagMode, tagorn, closestPoint);
+                        //tagLocationDistances.Remove(closestPoint);
+                        Reference refe = new Reference(lineBasedElements[closestCurve]);
+                        IndependentTag newTag = IndependentTag.Create(doc, doc.ActiveView.Id, refe, false, tagMode, tagorn, tagLp.Point );
                     }
                     
                     //TaskDialog.Show("R", resulta.X.ToString());
@@ -94,30 +84,57 @@ namespace ReviTab
             TaskDialog.Show("R", "done");
             return Result.Succeeded;
             }
-        public XYZ ProjectedZPoint (XYZ pt, double z)
+        public static XYZ ProjectedZPoint (XYZ pt, double z)
         {
             return new XYZ(pt.X, pt.Y, z);
         }
+
+
+        public static Curve ClosestPtToCurve(XYZ pt, List<Curve> curves)
+        {
+            double distance = 500;
+            Curve closestCurve = null;
+
+            foreach (Curve crv in curves)
+            {
+                XYZ stPt = crv.GetEndPoint(0);
+                XYZ endPt = crv.GetEndPoint(1);
+
+                XYZ newSt = ProjectedZPoint(stPt, pt.Z);
+                XYZ newEnd = ProjectedZPoint(endPt, pt.Z);
+
+                Curve projectedCurve = Line.CreateBound(newSt, newEnd);
+
+                double currentDistance = Math.Abs(projectedCurve.Distance(pt));
+                if (currentDistance < distance)
+                {
+                    distance = currentDistance * 304.8; //in mm
+                    closestCurve = crv;
+                }
+            }
+            return closestCurve;
+        }
+
+
         public static XYZ ClosestPtToCurve(Curve crv, List<XYZ> points)
         {
-            double distance = 1;
+            double distance = 500;
             XYZ pt = null;
             foreach (XYZ point in points)
             {
                 double currentDistance = Math.Abs(crv.Distance(point));
                 if (currentDistance < distance)
                 {
-                    distance = currentDistance;
+                    distance = currentDistance * 304.8; //in mm
                     pt = point;
                 }
             }
-
             return pt;
         }
 
         public static XYZ ClosestPtToPlane(Plane plane, List<XYZ> points)
         {
-            double distance = 1000;
+            double distance = 2;
             XYZ pt = null; 
             foreach (XYZ point in points)
             {

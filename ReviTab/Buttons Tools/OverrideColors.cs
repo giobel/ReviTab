@@ -62,7 +62,7 @@ namespace ReviTab
 					iG = Convert.ToByte(pRand.Next(0, 255));
 					iB = Convert.ToByte(pRand.Next(0, 255));
 					Autodesk.Revit.DB.Color pcolor = new Autodesk.Revit.DB.Color(iR, iG, iB);
-                    #if REVIT2020 || REVIT2021
+                    #if REVIT2020 || REVIT2021 
                     ogs.SetSurfaceForegroundPatternColor(pcolor);
 					#else
 						ogs.SetProjectionFillColor(pcolor);

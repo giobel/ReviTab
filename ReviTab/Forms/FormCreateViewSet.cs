@@ -25,5 +25,10 @@ namespace ReviTab
             tBoxViewsetName = formTBoxViewsetName.Text;
             tBoxSheetNumber = formTBoxSheetNumbers.Text;
         }
+
+        private void FormCreateViewSet_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

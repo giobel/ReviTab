@@ -57,5 +57,10 @@ namespace ReviTab
         {
 
         }
+
+        private void FormAddMultipleViews_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

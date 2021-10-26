@@ -59,8 +59,8 @@ namespace ReviTab
             //sender is null and causes error
             //UIApplication uiapp = sender as UIApplication;
 
-            uiapp.ViewActivated -= My_Application_ViewActivated;
-            
+            //uiapp.ViewActivated -= My_Application_ViewActivated;
+            uiapp.ViewActivated  -= new EventHandler<ViewActivatedEventArgs>(My_Application_ViewActivated);
             Debug.WriteLine("Unsuscribed");
         }
 

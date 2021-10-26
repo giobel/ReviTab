@@ -102,6 +102,7 @@
             this.Controls.Add(this.ok_btn);
             this.Name = "FormCreateViewSet";
             this.Text = "FormCreateViewSet";
+            this.Load += new System.EventHandler(this.FormCreateViewSet_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
