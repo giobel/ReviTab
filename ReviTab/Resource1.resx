@@ -130,6 +130,9 @@
   <data name="ghowlicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ghowlicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="isoCategory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\isoCategory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="metadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\metadata.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

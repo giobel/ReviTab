@@ -103,6 +103,16 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap isoCategory {
+            get {
+                object obj = ResourceManager.GetObject("isoCategory", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap metadata {
             get {
                 object obj = ResourceManager.GetObject("metadata", resourceCulture);

@@ -613,6 +613,7 @@
     <Resource Include="Resources\cloudSelectionCopy.png" />
     <Resource Include="Resources\bground.png" />
     <Resource Include="Resources\panic-button.png" />
+    <None Include="Resources\isoCategory.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

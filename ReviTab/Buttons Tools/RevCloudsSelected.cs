@@ -79,7 +79,7 @@ namespace ReviTab
                             foreach (ElementId eid in viewportIds)
                             {
                                 Viewport vp = doc.GetElement(eid) as Viewport;
-                                //TaskDialog.Show("Check", String.Format("{0} : {1}", vp.ViewId.ToString(), elementView.Id.ToString()));
+                                TaskDialog.Show("Check", String.Format("{0} : {1}", vp.ViewId.ToString(), elementView.Id.ToString()));
                                 if (vp.ViewId.ToString() == elementView.Id.ToString())
                                 {
                                     viewport = vp;

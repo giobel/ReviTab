@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -43,9 +45,12 @@ namespace ReviTab
 
 			Random pRand = new Random();
 
+            var words = ("She sells sea shells on the sea shore but the sea " +
+             "shells she sells are sea shells no more.").Split(' ');
+            var md5 = MD5.Create();
 
-			//TaskDialog.Show("r", grouped.First().First().Name);
-			OverrideGraphicSettings ogs = new OverrideGraphicSettings();
+            //TaskDialog.Show("r", grouped.First().First().Name);
+            OverrideGraphicSettings ogs = new OverrideGraphicSettings();
 #if REVIT2020 || REVIT2021
 				ogs.SetSurfaceForegroundPatternId(solidFillPattern.Id);            
 #else
@@ -57,12 +62,21 @@ namespace ReviTab
 				t.Start();
 				foreach (var element in grouped)
 				{
-					byte iR, iG, iB;
+
+
+                    var value = element.First() ;
+                        var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(value.Name));
+                    //var color = Color.FromArgb(hash[0], hash[1], hash[2]);
+
+                    byte iR, iG, iB;
 					iR = Convert.ToByte(pRand.Next(0, 255));
 					iG = Convert.ToByte(pRand.Next(0, 255));
 					iB = Convert.ToByte(pRand.Next(0, 255));
-					Autodesk.Revit.DB.Color pcolor = new Autodesk.Revit.DB.Color(iR, iG, iB);
-                    #if REVIT2020 || REVIT2021 
+                    //Autodesk.Revit.DB.Color pcolor = new Autodesk.Revit.DB.Color(iR, iG, iB);
+
+                    Autodesk.Revit.DB.Color pcolor = new Autodesk.Revit.DB.Color(hash[0], hash[1], hash[2]);
+
+                    #if REVIT2020 || REVIT2021
                     ogs.SetSurfaceForegroundPatternColor(pcolor);
 					#else
 						ogs.SetProjectionFillColor(pcolor);

@@ -23,7 +23,7 @@ namespace ReviTab
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            IList<Reference> selectedElementRefList = uidoc.Selection.PickObjects(ObjectType.Element, "Select a detail Item");
+            IList<Reference> selectedElementRefList = uidoc.Selection.PickObjects(ObjectType.Element, "Select elements");
 
             ICollection<ElementId> isolateElements = new List<ElementId>();
 

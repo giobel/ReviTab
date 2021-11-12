@@ -232,7 +232,9 @@ namespace ReviTab
 
                     CreatePushButton("selWalls", "Select Walls", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionWalls", "Select Walls Only"),
 
-                    CreatePushButton("btnSelectText", "Select All Text", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "ReviTab.SelectAllText", "Select all text notes in the project.Useful if you want to run the check the spelling.")
+                    CreatePushButton("btnSelectText", "Select All Text", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "ReviTab.SelectAllText", "Select all text notes in the project.Useful if you want to run the check the spelling."),
+
+                    CreatePushButton("btnIsolateCategories", "Isolate Categories", null, Resource1.isoCategory, "ReviTab.IsolateCategories", "Isolate the selected elements categories in the active view"),
                     };
 
                 AddSplitButton(toolsPanel, filterSelection, "filterSelection", "Filter Selection");
