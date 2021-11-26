@@ -3,10 +3,11 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
-using forms = System.Windows.Forms;
 #endregion
 
 namespace ReviTab
@@ -30,6 +31,24 @@ namespace ReviTab
 
             StringBuilder sb = new StringBuilder();
 
+            List<Tuple<View, ViewSheet>> legendsOnSheet = new List<Tuple<View, ViewSheet>>();
+
+            //find clouds in legends
+            foreach (ViewSheet vs in new FilteredElementCollector(doc).OfClass(typeof(ViewSheet)).Cast<ViewSheet>())
+            {
+                foreach (ElementId eid in vs.GetAllPlacedViews())
+                {
+                    View v = doc.GetElement(eid) as View;
+
+                    if (v.ViewType == ViewType.Legend)
+                    {
+                        legendsOnSheet.Add(new Tuple<View, ViewSheet> (v, vs));
+                        //vs.LookupParameter("Sheet Number").AsString();
+                    }
+                }
+            }
+
+
             ICollection<ElementId> fec = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_RevisionClouds).WhereElementIsNotElementType().ToElementIds();
 
             foreach (ElementId eid in fec)
@@ -39,22 +58,42 @@ namespace ReviTab
                 
                 View view = doc.GetElement(cloud.OwnerViewId) as View;
                 string cloudDescr = cloud.LookupParameter("Revision Description").AsString();
-                string sheetNumber = "";
-                ViewSheet vs = null;
+                
+                List<ViewSheet> vs = new List<ViewSheet>();
 
                 if (view.ViewType == ViewType.DrawingSheet)
                 {
-                    vs = view as ViewSheet;                    
+                    vs.Add(view as ViewSheet);                    
+                }
+                //Legends can be placed on multiple sheets
+                else if (view.ViewType == ViewType.Legend)
+                {
+                    foreach (Tuple<View, ViewSheet> legend in legendsOnSheet)
+                    {
+                        if (legend.Item1.Name == view.Name)
+                        {
+                            vs.Add(legend.Item2);
+                        }
+                    }
                 }
                 else
                 {
-                    vs = Helpers.FindViewSheetByName(doc, view.Name);
+                    vs.Add(Helpers.FindViewSheetByName(doc, view.Name));
                 }
 
-                if (vs != null)
-                    sheetNumber = vs.SheetNumber;
+                if (vs.Count > 1)
+                {
+                    foreach (ViewSheet viewSheet in vs)
+                    {
+                        sb.AppendLine($"{cloud.Id}, {view.Name}, {viewSheet.SheetNumber}, {cloudDescr}");
+                    }
+                }
+                else if (vs[0] != null)
+                {
+                    sb.AppendLine($"{cloud.Id}, {view.Name}, {vs[0].SheetNumber}, {cloudDescr}");
+                }
 
-                sb.AppendLine($"{cloud.Id}, {view.Name}, {sheetNumber}, {cloudDescr}");
+                
             }
 
 
