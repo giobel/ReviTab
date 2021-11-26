@@ -25,8 +25,7 @@ namespace ReviTab
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
 
-            try
-            {
+
                 
                 Reference refWall = uidoc.Selection.PickObject(ObjectType.Element, "Select a wall");
 
@@ -108,11 +107,7 @@ namespace ReviTab
                 TaskDialog.Show("Result", String.Format("The wall has been splitted in {0} parts at: \n{1}", topConstraintList.Count(), splittingLevels));
 
                 return Result.Succeeded;
-            }
-            catch
-            {
-                return Result.Failed;
-            }
+
 
 
         }

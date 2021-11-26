@@ -380,6 +380,7 @@
     <Compile Include="Buttons Tools\FilterSelectionBeams.cs" />
     <Compile Include="Buttons Tools\FilterSelectionWalls.cs" />
     <Compile Include="Buttons Tools\RhinoMesh.cs" />
+    <Compile Include="Buttons Tools\SwapLevelsBubble.cs" />
     <Compile Include="Buttons Zero State\Unsuscribe.cs" />
     <Compile Include="Buttons Zero State\UpdateSuscribe.cs" />
     <Compile Include="Buttons Zero State\ColorTab.cs" />
@@ -614,6 +615,7 @@
     <Resource Include="Resources\bground.png" />
     <Resource Include="Resources\panic-button.png" />
     <None Include="Resources\isoCategory.png" />
+    <None Include="Resources\swapLevels.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

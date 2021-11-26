@@ -186,7 +186,9 @@ namespace ReviTab
                 {
                     CreatePushButton("btnSwapGrid", "Swap Grid" + Environment.NewLine + "Head", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.SwapGridBubbles", "Swap the head of the selected grids"),
 
-                    CreatePushButton("btnCopyGrid", "Copy Grid Extents", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.PropagateGridExtents", "Copy the grid extents from a view to the active one.")
+                    CreatePushButton("btnCopyGrid", "Copy Grid Extents", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.PropagateGridExtents", "Copy the grid extents from a view to the active one."),
+                    
+                    CreatePushButton("btnSwapLevels", "Swap Level Bubble", null, Resource1.swapLevels, "ReviTab.SwapLevelsBubbles", "Swap the head of the selected levels")
                 };
 
                 AddSplitButton(toolsPanel, gridTools, "gridTools", "Grid Tools");

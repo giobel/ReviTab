@@ -35,11 +35,30 @@ namespace ReviTab
             foreach (ElementId eid in fec)
             {
 
-                sb.AppendLine(Helpers.RevCloudSheet(doc, eid));
+                RevisionCloud cloud = doc.GetElement(eid) as RevisionCloud;
+                
+                View view = doc.GetElement(cloud.OwnerViewId) as View;
+                string cloudDescr = cloud.LookupParameter("Revision Description").AsString();
+                string sheetNumber = "";
+                ViewSheet vs = null;
+
+                if (view.ViewType == ViewType.DrawingSheet)
+                {
+                    vs = view as ViewSheet;                    
+                }
+                else
+                {
+                    vs = Helpers.FindViewSheetByName(doc, view.Name);
+                }
+
+                if (vs != null)
+                    sheetNumber = vs.SheetNumber;
+
+                sb.AppendLine($"{cloud.Id}, {view.Name}, {sheetNumber}, {cloudDescr}");
             }
 
 
-            File.WriteAllText(outputFile, "SheetId, Sheet Number, Revision Cloud Description, BDR_ISSUE, Revision without date, Revision with date, Last Revision Date\n");
+            File.WriteAllText(outputFile, "CloudId, View Name, Sheet Number, Revision Cloud Description\n");
 
             File.AppendAllText(outputFile, sb.ToString());
 
