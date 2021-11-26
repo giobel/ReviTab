@@ -31,7 +31,7 @@ namespace ReviTab
             int check = 0;
             int sheetsNumber = 0;
             int viewsNumber = 0;
-            int schedulesNumber = 0;
+            //int schedulesNumber = 0;
             int furnitureElements = 0;
 
             

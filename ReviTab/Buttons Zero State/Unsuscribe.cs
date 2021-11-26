@@ -24,7 +24,7 @@ namespace ReviTab
     [Transaction(TransactionMode.Manual)]
     public class Unsuscribe : IExternalCommand
     {
-        private int tabCount = 0;
+        //private int tabCount = 0;
         private List<string> tabProjectNames = new List<string>();
         private List<SolidColorBrush> tabProjectColors = new List<SolidColorBrush> { Brushes.Coral, Brushes.RoyalBlue, Brushes.DeepPink, Brushes.SeaGreen, Brushes.Yellow, Brushes.Orange, Brushes.Green, Brushes.Blue, Brushes.Red, Brushes.Violet };
 

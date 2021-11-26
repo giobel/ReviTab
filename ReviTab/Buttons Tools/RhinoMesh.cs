@@ -28,7 +28,7 @@ namespace ReviTab
 			Application app = uiapp.Application;
 			Document doc = uidoc.Document;
 
-			double scale = 304.8;
+			//double scale = 304.8;
 			#region TEST
 
 			////cut line endpoints

@@ -53,7 +53,7 @@ namespace ReviTab
 
         private void Doc_DocumentClosing(object sender, ApplicationClosingEventArgs e)
         {
-            int tabCount = 0;
+            //int tabCount = 0;
             tabProjectNames.Clear();
 
             //sender is null and causes error

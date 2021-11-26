@@ -757,6 +757,7 @@ namespace ReviTab
 
         }
 
+        [Obsolete]
         public static ElementId FilterElementIds(Element _ele, string _param, string _valueToCheck, string _operatorValue)
         {
             ElementId selectedElement = null;
@@ -817,6 +818,7 @@ namespace ReviTab
         /// </summary>
         /// <param name="uidoc"></param>
         /// <param name="message"></param>
+        [Obsolete]
         public static void SelectAllElements(UIDocument uidoc, string message)
         {
 
@@ -2847,6 +2849,7 @@ namespace ReviTab
 
         #region PARAMETERS
 
+        [Obsolete]
         public static string GetParameterValue(Parameter p)
         {
             string paramValue = "";
