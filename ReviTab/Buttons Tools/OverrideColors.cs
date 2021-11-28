@@ -52,11 +52,12 @@ namespace ReviTab
             //TaskDialog.Show("r", grouped.First().First().Name);
             OverrideGraphicSettings ogs = new OverrideGraphicSettings();
 #if REVIT2020 || REVIT2021
-				ogs.SetSurfaceForegroundPatternId(solidFillPattern.Id);            
+				ogs.SetSurfaceForegroundPatternId(solidFillPattern.Id);
 #else
             ogs.SetProjectionFillPatternId(solidFillPattern.Id);
 #endif
 
+            string error = "";
             using (Transaction t = new Transaction(doc, "Override Colors"))
 			{
 				t.Start();
@@ -76,6 +77,8 @@ namespace ReviTab
 
                     Autodesk.Revit.DB.Color pcolor = new Autodesk.Revit.DB.Color(hash[0], hash[1], hash[2]);
 
+                    
+
                     #if REVIT2020 || REVIT2021
                     ogs.SetSurfaceForegroundPatternColor(pcolor);
 					#else
@@ -83,23 +86,27 @@ namespace ReviTab
 					#endif
 					try
                     {
-						foreach (FamilyInstance item in element)
-						{
+                        //foreach (FamilyInstance item in element)
+                        foreach (var item in element)
+                        {
 							doc.ActiveView.SetElementOverrides(item.Id, ogs);
 
 						}
 
 					}
-                    catch
+                    catch(Exception ex)
                     {
-
+                        error = ex.Message;
                     }
 				}
 
 				t.Commit();
 			}
 
-
+            if (error!= "")
+            {
+                TaskDialog.Show("Error", error);
+            }
 
 			return Result.Succeeded;
             
