@@ -87,6 +87,9 @@ namespace ReviTab
                 
                 splitButtonsViews.Add(CreatePushButton("btnDuplicateViews", "Duplicate Views", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.DuplicateSheets", "Duplicate selected sheets with viewports, schedules and legends."));
 
+                splitButtonsViews.Add(CreatePushButton("btnExtractDetail", "Extract Detail", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.ExtractDetail", "Cut and Paste lines to a new detail"));
+                
+
 #if !SAM
                 splitButtonsViews.Add(CreatePushButton("btnImportRhino", "Rhino Import", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.RhinoImport", "Import details from Rhino to Revit drafting view."));
 #endif

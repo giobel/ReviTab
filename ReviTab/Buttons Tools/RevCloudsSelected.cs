@@ -58,12 +58,10 @@ namespace ReviTab
                         foreach (Element e in selectedElements)
                         {
 
-                            View elementView = doc.GetElement(e.OwnerViewId) as View;
+                            //Element OwnerView does not work with dependant views...simplified by using ActiveView
+                            //View elementView = doc.GetElement(e.OwnerViewId) as View;
 
-                            if (elementView == null)
-                            {
-                                elementView = doc.ActiveView;
-                            }
+                            View elementView = doc.ActiveView;
 
                             //MOVED OUT THE FOREACH LOOP -> ALL CLOUDS ARE GROUPED. WHAT IF WE HAVE MULTIPLE SHEETS?
                             //ViewSheet selectedViewSheet = GetElementViewSheet(doc, elementView);
@@ -79,7 +77,7 @@ namespace ReviTab
                             foreach (ElementId eid in viewportIds)
                             {
                                 Viewport vp = doc.GetElement(eid) as Viewport;
-                                TaskDialog.Show("Check", String.Format("{0} : {1}", vp.ViewId.ToString(), elementView.Id.ToString()));
+                                //TaskDialog.Show("Check", String.Format("{0} : {1}", vp.ViewId.ToString(), elementView.Id.ToString()));
                                 if (vp.ViewId.ToString() == elementView.Id.ToString())
                                 {
                                     viewport = vp;
@@ -115,6 +113,7 @@ namespace ReviTab
 
                             if (elementView.ViewType != ViewType.DraftingView)
                             {
+                                //TaskDialog.Show("R", $"{elementView.Id},{elementView.Name}");
                                 elementView.IsolateCategoriesTemporary(categoryToIsolate);
                                 //Use the annotation crop region to find the view centroid
                                 ViewCropRegionShapeManager vcr = elementView.GetCropRegionShapeManager();
@@ -180,6 +179,20 @@ namespace ReviTab
 
                                     t.RollBack();
                                 
+                            }
+                            else if (e.Category.Name == "Keynote Tags")
+                            {
+                                IndependentTag keynoteTag = e as IndependentTag;
+
+                                t.Start("Get Text bounding box");
+
+                                keynoteTag.LookupParameter("Leader Line").Set(0);
+
+                                doc.Regenerate();
+                                bbox = keynoteTag.get_BoundingBox(doc.ActiveView);
+
+                                t.RollBack();
+
                             }
                             else
                             {
