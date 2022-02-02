@@ -88,6 +88,8 @@ namespace ReviTab
                 splitButtonsViews.Add(CreatePushButton("btnDuplicateViews", "Duplicate Views", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.DuplicateSheets", "Duplicate selected sheets with viewports, schedules and legends."));
 
                 splitButtonsViews.Add(CreatePushButton("btnExtractDetail", "Extract Detail", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.ExtractDetail", "Cut and Paste lines to a new detail"));
+
+                splitButtonsViews.Add(CreatePushButton("btnMoveViewport", "Move Viewports", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.MoveViewportToSheet", "Move selected viewports to another Sheet"));
                 
 
 #if !SAM

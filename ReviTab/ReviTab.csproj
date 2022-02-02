@@ -333,6 +333,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons Documentation\MoveViewportToSheet.cs" />
     <Compile Include="Buttons Documentation\ExtractDetail.cs" />
     <Compile Include="Buttons Documentation\MatchSectionViewCrop.cs" />
     <Compile Include="Buttons Documentation\RhinoImport.cs" />
