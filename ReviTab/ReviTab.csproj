@@ -354,6 +354,8 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\ShowSelected.cs" />
+    <Compile Include="Buttons Tools\SelectTitleblocks.cs" />
     <Compile Include="Buttons Tools\IsolateCategories.cs" />
     <Compile Include="Buttons Tools\RevCloudsSelected.cs" />
     <Compile Include="Buttons Tools\RevCloudsOLD.cs" />
@@ -618,6 +620,8 @@
     <Resource Include="Resources\panic-button.png" />
     <None Include="Resources\isoCategory.png" />
     <None Include="Resources\swapLevels.png" />
+    <None Include="Resources\tblock.png" />
+    <None Include="Resources\show.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

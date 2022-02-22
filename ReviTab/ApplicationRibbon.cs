@@ -91,21 +91,21 @@ namespace ReviTab
 
                 splitButtonsViews.Add(CreatePushButton("btnMoveViewport", "Move Viewports", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.MoveViewportToSheet", "Move selected viewports to another Sheet"));
                 
-
-#if !SAM
                 splitButtonsViews.Add(CreatePushButton("btnImportRhino", "Rhino Import", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.RhinoImport", "Import details from Rhino to Revit drafting view."));
-#endif
+
+                splitButtonsViews.Add(CreatePushButton("btnSetTitleblock", "Set Titleblock\nScale", "", "pack://application:,,,/ReviTab;component/Resources/rulerSmall.png", "ReviTab.SetTitleblockScale", "Set the current sheet titleblock scale to the most used."));
+
                 AddSplitButton(docsPanel, splitButtonsViews, "DocumentationButton", "Documentation");
 
                 //Titleblock revisions
 
                 IList<PushButtonData> stackedButtonsSheets = new List<PushButtonData>
                 {
-                    CreatePushButton("btnSetTitleblock", "Set Titleblock\nScale", "pack://application:,,,/ReviTab;component/Resources/rulerSmall.png", "", "ReviTab.SetTitleblockScale", "Set the current sheet titleblock scale to the most used."),
-
                     CreatePushButton("btnUpRevSheet", "Uprev Sheet", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.UpRevSheet", "Up rev the current sheet. It copies the content from the previous revision excluding the date"),
 
-                    CreatePushButton("btnRemoveRev", "Remove first\nRevision", "pack://application:,,,/ReviTab;component/Resources/deleteRev.png", "", "ReviTab.RemoveFirstRevision", "Remove the first revision of a titleblock (i.e. shift revisions down).")
+                    CreatePushButton("btnTextFonts", "List TextNotes", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.TextFonts", "List all the TextNotes in the project to the active view. Set View Scale to 1:1 to display the list correctly."),
+
+                    CreatePushButton("btnLineStyles", "List Line Styles", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.LineStyles", "List all the Line Styles in the project to the active view. Set View Scale to 1:1 to display the list correctly.")
                 };
 
                 AddStackedButton(docsPanel, stackedButtonsSheets, "SheetsButton", "Sheets");
@@ -114,13 +114,15 @@ namespace ReviTab
                 //TextFonts and LineStyles
                 IList<PushButtonData> stackedButtonsTextAndLines = new List<PushButtonData>
                 {
-                    CreatePushButton("btnTextFonts", "List TextNotes", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.TextFonts", "List all the TextNotes in the project to the active view. Set View Scale to 1:1 to display the list correctly."),
+
+                    CreatePushButton("btnRemoveRev", "Remove first\nRevision", "pack://application:,,,/ReviTab;component/Resources/deleteRev.png", "", "ReviTab.RemoveFirstRevision", "Remove the first revision of a titleblock (i.e. shift revisions down)."),
 
                     CreatePushButton("btnDeleteTextNotes", "Delete TextNotes Types", "pack://application:,,,/ReviTab;component/Resources/deleteRev.png", "", "ReviTab.DeleteTextFont", "Delete the selcted TextNotes types."),
 
-                    CreatePushButton("btnLineStyles", "List Line Styles", "pack://application:,,,/ReviTab;component/Resources/addRev.png", "", "ReviTab.LineStyles", "List all the Line Styles in the project to the active view. Set View Scale to 1:1 to display the list correctly.")
+                    CreatePushButton("btnDeleteLineStyles", "Delete Line Styles", "pack://application:,,,/ReviTab;component/Resources/deleteRev.png", "", "ReviTab.DeleteLineStyles", "Delete the selcted Line Style. Lines with that line style will be changed to Thin Lines.")
+                    
                 };
-
+                
                 AddStackedButton(docsPanel, stackedButtonsTextAndLines, "TextAndLines", "TextLines");            
 #endif
                 
@@ -241,8 +243,15 @@ namespace ReviTab
 
                     CreatePushButton("btnSelectText", "Select All Text", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "pack://application:,,,/ReviTab;component/Resources/selectText.png", "ReviTab.SelectAllText", "Select all text notes in the project.Useful if you want to run the check the spelling."),
 
+                    CreatePushButton("btnSelectTblocks", "Select Titleblocks", null, Resource1.tblock, "ReviTab.SelectTitleblocks", "Get the Titleblocks of the selected Sheets"),
+                    
                     CreatePushButton("btnIsolateCategories", "Isolate Categories", null, Resource1.isoCategory, "ReviTab.IsolateCategories", "Isolate the selected elements categories in the active view"),
+
+                    //<a href="https://www.flaticon.com/free-icons/eye" title="eye icons">Eye icons created by Freepik - Flaticon</a>
+                    CreatePushButton("btnShowSelected", "Show Selected Elements", null, Resource1.show, "ReviTab.ShowSelected", "Show the selected elements in their own view"),
                     };
+
+                
 
                 AddSplitButton(toolsPanel, filterSelection, "filterSelection", "Filter Selection");
 

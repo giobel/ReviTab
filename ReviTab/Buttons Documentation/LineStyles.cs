@@ -50,6 +50,8 @@ namespace ReviTab
 
                 var output = dict.OrderBy(e => e.Key).Select(e => new { graphicStyle = e.Value, linestyleName = e.Key }).ToList();
 
+                FilteredElementCollector fec = new FilteredElementCollector(doc);
+                ElementCategoryFilter ecf = new ElementCategoryFilter(BuiltInCategory.OST_Lines);
 
                 using (Transaction t = new Transaction(doc, "Place Lines"))
                 {
@@ -60,17 +62,21 @@ namespace ReviTab
                     foreach (var item in output)
                     {
 
-                        //					GraphicsStyle gs = lineStyle.GetGraphicsStyle(GraphicsStyleType.Projection);
+                        //GraphicsStyle gs = lineStyle.GetGraphicsStyle(GraphicsStyleType.Projection);
 
                         XYZ newOrigin = new XYZ(origin.X, origin.Y + offset, 0);
                         XYZ offsetPoint = new XYZ(origin.X + width, origin.Y + offset, 0);
 
                         Line L1 = Line.CreateBound(newOrigin, offsetPoint);
 
+                        List<CurveElement> els = fec.WherePasses(ecf).WhereElementIsNotElementType().ToElements().Cast<CurveElement>()
+                            .Where(x => x.LineStyle.Id == item.graphicStyle.Id).ToList();
+
+
                         try
                         {
 
-                            TextNote note = TextNote.Create(doc, doc.ActiveView.Id, new XYZ(origin.X - 0.2, origin.Y + offset + 0.01, 0), 0.2, item.linestyleName, options);
+                            TextNote note = TextNote.Create(doc, doc.ActiveView.Id, new XYZ(origin.X - 0.2, origin.Y + offset + 0.01, 0), 0.2, $"{item.linestyleName} : {els.Count()}", options);
 
                             DetailCurve e = doc.Create.NewDetailCurve(doc.ActiveView, L1);
 
@@ -84,6 +90,7 @@ namespace ReviTab
 
                         }
                         offset -= 0.03;
+
                     }
 
                     t.Commit();
