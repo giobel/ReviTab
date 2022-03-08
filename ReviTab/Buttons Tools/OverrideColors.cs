@@ -51,7 +51,7 @@ namespace ReviTab
 
             //TaskDialog.Show("r", grouped.First().First().Name);
             OverrideGraphicSettings ogs = new OverrideGraphicSettings();
-#if REVIT2020 || REVIT2021
+#if REVIT2020 || REVIT2021 || REVIT2022
 				ogs.SetSurfaceForegroundPatternId(solidFillPattern.Id);
 #else
             ogs.SetProjectionFillPatternId(solidFillPattern.Id);
@@ -79,7 +79,7 @@ namespace ReviTab
 
                     
 
-                    #if REVIT2020 || REVIT2021
+                    #if REVIT2020 || REVIT2021 || REVIT2022
                     ogs.SetSurfaceForegroundPatternColor(pcolor);
 					#else
 						ogs.SetProjectionFillColor(pcolor);

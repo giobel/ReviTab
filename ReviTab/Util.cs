@@ -1249,12 +1249,14 @@ namespace ReviTab
         + PointArrayString( curve.Tessellate() );
     }
 
-    /// <summary>
-    /// Convert a UnitSymbolType enumeration value
-    /// to a brief human readable abbreviation string.
-    /// </summary>
-    public static string UnitSymbolTypeString(
-      UnitSymbolType u )
+
+
+#if !REVIT2022
+        /// <summary>
+        /// Convert a UnitSymbolType enumeration value
+        /// to a brief human readable abbreviation string.
+        /// </summary>
+        public static string UnitSymbolTypeString( UnitSymbolType u )
     {
       string s = u.ToString();
 
@@ -1268,10 +1270,16 @@ namespace ReviTab
 
       return s;
     }
-    #endregion // Formatting
 
-    #region Display a message
-    const string _caption = "The Building Coder";
+#endif
+
+
+#endregion // Formatting
+
+
+
+#region Display a message
+        const string _caption = "The Building Coder";
 
     public static void InfoMsg( string msg )
     {
@@ -1392,9 +1400,9 @@ namespace ReviTab
     {
       return ( (LocationPoint) fi?.Location )?.Point;
     }
-    #endregion // Display a message
+#endregion // Display a message
 
-    #region Element Selection
+#region Element Selection
     public static Element SelectSingleElement(
       UIDocument uidoc,
       string description )
@@ -1532,9 +1540,9 @@ namespace ReviTab
       }
       return 0 < a.Count;
     }
-    #endregion // Element Selection
+#endregion // Element Selection
 
-    #region Element Filtering
+#region Element Filtering
     /// <summary>
     /// Return all elements of the requested class i.e. System.Type
     /// matching the given built-in category in the given document.
@@ -1701,9 +1709,9 @@ namespace ReviTab
         .First( q => q.Name.Equals( name ) )
           as FamilySymbol;
     }
-    #endregion // Element Filtering
+#endregion // Element Filtering
 
-    #region MEP utilities
+#region MEP utilities
     /// <summary>
     /// Return the given element's connector manager, 
     /// using either the family instance MEPModel or 
@@ -1871,9 +1879,9 @@ namespace ReviTab
       return cons.Distinct( new ConnectorXyzComparer() )
         .ToHashSet();
     }
-    #endregion // MEP utilities
+#endregion // MEP utilities
 
-    #region Compatibility fix for spelling error change
+#region Compatibility fix for spelling error change
     /// <summary>
     /// Wrapper to fix a spelling error prior to Revit 2016.
     /// </summary>
@@ -1929,10 +1937,10 @@ namespace ReviTab
           as Definition;
       }
     }
-    #endregion // Compatibility fix for spelling error change
+#endregion // Compatibility fix for spelling error change
   }
 
-  #region Extension Method Classes
+#region Extension Method Classes
 
   public static class IEnumerableExtensions
   {
@@ -2340,9 +2348,9 @@ namespace ReviTab
       return s;
     }
   }
-  #endregion // Extension Method Classes
+#endregion // Extension Method Classes
 
-  #region Compatibility Methods by Magson Leone
+#region Compatibility Methods by Magson Leone
   /// <summary>
   /// These compatibility helper methods make use of 
   /// Reflection to determine which Revit method is
@@ -2352,7 +2360,7 @@ namespace ReviTab
   /// </summary>
   public static class CompatibilityMethods
   {
-    #region Autodesk.Revit.DB.Curve
+#region Autodesk.Revit.DB.Curve
     public static XYZ GetPoint2(
       this Curve curva,
       int i )
@@ -2375,9 +2383,9 @@ namespace ReviTab
 
       return value;
     }
-    #endregion // Autodesk.Revit.DB.Curve
+#endregion // Autodesk.Revit.DB.Curve
 
-    #region Autodesk.Revit.DB.Definitions
+#region Autodesk.Revit.DB.Definitions
     public static Definition Create2(
       this Definitions definitions,
       Document doc,
@@ -2417,9 +2425,9 @@ namespace ReviTab
       }
       return value;
     }
-    #endregion // Autodesk.Revit.DB.Definitions
+#endregion // Autodesk.Revit.DB.Definitions
 
-    #region Autodesk.Revit.DB.Document
+#region Autodesk.Revit.DB.Document
     public static Element GetElement2(
       this Document doc,
       ElementId id )
@@ -2708,9 +2716,9 @@ namespace ReviTab
               .Id } );
       }
     }
-    #endregion // Autodesk.Revit.DB.Document
+#endregion // Autodesk.Revit.DB.Document
 
-    #region Autodesk.Revit.DB.Element
+#region Autodesk.Revit.DB.Element
     public static Element Level2( this Element ele )
     {
       Element value = null;
@@ -2856,9 +2864,9 @@ namespace ReviTab
       }
       return value;
     }
-    #endregion // Autodesk.Revit.DB.Element
+#endregion // Autodesk.Revit.DB.Element
 
-    #region Autodesk.Revit.DB.FamilySymbol
+#region Autodesk.Revit.DB.FamilySymbol
     public static void EnableFamilySymbol2(
       this FamilySymbol fsymbol )
     {
@@ -2869,9 +2877,9 @@ namespace ReviTab
         met.Invoke( fsymbol, null );
       }
     }
-    #endregion // Autodesk.Revit.DB.FamilySymbol
+#endregion // Autodesk.Revit.DB.FamilySymbol
 
-    #region Autodesk.Revit.DB.InternalDefinition
+#region Autodesk.Revit.DB.InternalDefinition
     public static void VaryGroup2(
       this InternalDefinition def, Document doc )
     {
@@ -2886,9 +2894,9 @@ namespace ReviTab
         met.Invoke( def, parametros );
       }
     }
-    #endregion // Autodesk.Revit.DB.InternalDefinition
+#endregion // Autodesk.Revit.DB.InternalDefinition
 
-    #region Autodesk.Revit.DB.Part
+#region Autodesk.Revit.DB.Part
     public static ElementId GetSource2( this Part part )
     {
       ElementId value = null;
@@ -2912,9 +2920,9 @@ namespace ReviTab
       }
       return value;
     }
-    #endregion // Autodesk.Revit.DB.Part
+#endregion // Autodesk.Revit.DB.Part
 
-    #region Autodesk.Revit.UI.Selection.Selection
+#region Autodesk.Revit.UI.Selection.Selection
     public static List<Element> GetSelection2(
       this Selection sel, Document doc )
     {
@@ -3002,9 +3010,9 @@ namespace ReviTab
         met.Invoke( sel, new object[] { ids } );
       }
     }
-    #endregion // Autodesk.Revit.UI.Selection.Selection
+#endregion // Autodesk.Revit.UI.Selection.Selection
 
-    #region Autodesk.Revit.UI.UIApplication
+#region Autodesk.Revit.UI.UIApplication
     public static System.Drawing.Rectangle
       GetDrawingArea2( this UIApplication ui )
     {
@@ -3012,9 +3020,9 @@ namespace ReviTab
       .Windows.Forms.Screen.PrimaryScreen.Bounds;
       return value;
     }
-    #endregion // Autodesk.Revit.UI.UIApplication
+#endregion // Autodesk.Revit.UI.UIApplication
 
-    #region Autodesk.Revit.DB.View
+#region Autodesk.Revit.DB.View
     public static ElementId Duplicate2( this View view )
     {
       ElementId value = null;
@@ -3087,9 +3095,9 @@ namespace ReviTab
         met.Invoke( view, new object[] { ids, espessura } );
       }
     }
-    #endregion // Autodesk.Revit.DB.View
+#endregion // Autodesk.Revit.DB.View
 
-    #region Autodesk.Revit.DB.Viewplan
+#region Autodesk.Revit.DB.Viewplan
     public static ElementId GetViewTemplateId2(
       this ViewPlan view )
     {
@@ -3114,9 +3122,9 @@ namespace ReviTab
         prop.SetValue( view, id, null );
       }
     }
-    #endregion // Autodesk.Revit.DB.Viewplan
+#endregion // Autodesk.Revit.DB.Viewplan
 
-    #region Autodesk.Revit.DB.Wall
+#region Autodesk.Revit.DB.Wall
     public static void FlipWall2( this Wall wall )
     {
       string metodo = "Flip";
@@ -3133,7 +3141,7 @@ namespace ReviTab
         met.Invoke( wall, null );
       }
     }
-    #endregion // Autodesk.Revit.DB.Wall
+#endregion // Autodesk.Revit.DB.Wall
   }
-  #endregion // Compatibility Methods by Magson Leone
+#endregion // Compatibility Methods by Magson Leone
 }

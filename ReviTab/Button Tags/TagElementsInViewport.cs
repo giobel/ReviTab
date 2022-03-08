@@ -80,15 +80,26 @@ namespace ReviTab
                             if (ele.Category.Name == category)
                             {
                                 FamilyInstance fa = ele as FamilyInstance;
+                                var eleRef = new Reference(ele);
 
                                 if (category == "Structural Columns")
                                 {
+#if !REVIT2022
                                     CreateIndependentTagColumn(doc, fa, viewId, xOffset, category);
+#else
+                                    
+                                    IndependentTag.Create(doc, fa.Id, viewId, eleRef, false, TagOrientation.AnyModelDirection, eleRef.GlobalPoint);
+#endif
                                 }
                                 else if (category == "Walls")
                                 {
                                     Wall wall = ele as Wall;
+                                    //var wallref = new Reference(wall); 
+#if !REVIT2022
                                     CreateIndependentTagWall(doc, wall, viewId, xOffset, category);
+#else
+                                    IndependentTag.Create(doc, fa.Id, viewId, eleRef, false, TagOrientation.AnyModelDirection, eleRef.GlobalPoint);
+#endif
                                 }
 
                                     counterTagged++;

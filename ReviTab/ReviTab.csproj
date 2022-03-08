@@ -160,6 +160,19 @@
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2022|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2022\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2022</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2022|x64'">
+    <OutputPath>bin\x64\Debug2022\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AirtableApiClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Airtable.1.1.0\lib\netstandard2.0\AirtableApiClient.dll</HintPath>
@@ -246,6 +259,23 @@
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2021'">
       <HintPath>C:\Program Files\Autodesk\Revit 2021\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2022 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2022'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2022'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2022'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2022\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2022'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2022\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <!--RELEASE-->
@@ -724,6 +754,7 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2020\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2020\ReviTab"
-copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2021\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2021\ReviTab"</PostBuildEvent>
+copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2021\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2021\ReviTab"
+copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2022\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2022\ReviTab"</PostBuildEvent>
   </PropertyGroup>
 </Project>

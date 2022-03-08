@@ -772,7 +772,12 @@ namespace ReviTab
             StorageType parameterType = p.StorageType;
             if (StorageType.Double == parameterType)
             {
+#if !REVIT2022
                 paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
+#else
+#endif
+
+
                 test = "Double";
             }
             else if (StorageType.String == parameterType)
@@ -906,7 +911,13 @@ namespace ReviTab
                             StorageType parameterType = p.StorageType;
                             if (StorageType.Double == parameterType)
                             {
+#if !REVIT2022
                                 paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
+#else
+                                ForgeTypeId a = SpecTypeId.Length;
+                                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), a);
+#endif
+
                                 test = "Double";
                             }
                             else if (StorageType.String == parameterType)
@@ -1118,9 +1129,9 @@ namespace ReviTab
 
             return categoryList;
         }
-        #endregion
+#endregion
 
-        #region SHEET VIEWS
+#region SHEET VIEWS
 
         /// <summary>
         /// http://revitcoaster.blogspot.com/2015/02/quick-macro-for-duplicating-existing.html
@@ -1598,7 +1609,7 @@ namespace ReviTab
 
             List<RevisionObj> lastRevisions = new List<RevisionObj>();
             
-            # region Old method. Does not work with letters.
+#region Old method. Does not work with letters.
             /*for (int i = 0; i < 10; i++)
             {
                 try
@@ -1646,7 +1657,7 @@ namespace ReviTab
 
 
             }*/
-            #endregion
+#endregion
 
             //new method. Works with letters
             //for (int i = 0; i < 10; i++)
@@ -1800,9 +1811,9 @@ namespace ReviTab
             return viewsNotOnSheet;
         }
 
-        #endregion
+#endregion
 
-        #region STRUCTURAL FRAMINGS
+#region STRUCTURAL FRAMINGS
 
         private static Options pickOptions(Document doc)
         {
@@ -2273,9 +2284,9 @@ namespace ReviTab
 
         }//close method
 
-        #endregion
+#endregion
 
-        #region GEOMETRY
+#region GEOMETRY
 
         public void SetBeamLocationCurves(UIDocument uidoc)
         {
@@ -2384,9 +2395,9 @@ namespace ReviTab
 
 
         }//close method
-        #endregion
+#endregion
 
-        #region PERFORMANCE ADVISER
+#region PERFORMANCE ADVISER
 
         public static PerformanceAdviserRuleId GetPerformanceRuleByName(IList<PerformanceAdviserRuleId> listAllRuleIds, string purgeGuid)
         {
@@ -2429,9 +2440,9 @@ namespace ReviTab
         }
 
 
-        #endregion
+#endregion
 
-        #region MANAGE MODEL
+#region MANAGE MODEL
 
         public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings, int purgeableElements, int viewsNotOnSheet)
         {
@@ -2845,11 +2856,10 @@ namespace ReviTab
             return listA;
         }
 
-        #endregion
+#endregion
 
-        #region PARAMETERS
+#region PARAMETERS
 
-        [Obsolete]
         public static string GetParameterValue(Parameter p)
         {
             string paramValue = "";
@@ -2858,7 +2868,12 @@ namespace ReviTab
 
             if (StorageType.Double == parameterType)
             {
+#if !REVIT2022
                 paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS).ToString();
+#else
+                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), UnitTypeId.Millimeters).ToString();
+#endif
+
             }
             else if (StorageType.String == parameterType)
             {
@@ -2876,7 +2891,7 @@ namespace ReviTab
         }
 
 
-        #endregion
+#endregion
 
         private static void PaintFace()
         {
@@ -2998,7 +3013,7 @@ namespace ReviTab
 
 
 
-#if REVIT2019 || SAM || REVIT2020 || REVIT2021
+#if REVIT2019 || SAM || REVIT2020 || REVIT2021 || REVIT2022
 
             overrideSettings.SetSurfaceForegroundPatternId(solidPatternId);
 

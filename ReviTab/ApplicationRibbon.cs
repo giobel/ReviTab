@@ -248,7 +248,7 @@ namespace ReviTab
                     CreatePushButton("btnIsolateCategories", "Isolate Categories", null, Resource1.isoCategory, "ReviTab.IsolateCategories", "Isolate the selected elements categories in the active view"),
 
                     //<a href="https://www.flaticon.com/free-icons/eye" title="eye icons">Eye icons created by Freepik - Flaticon</a>
-                    CreatePushButton("btnShowSelected", "Show Selected Elements", null, Resource1.show, "ReviTab.ShowSelected", "Show the selected elements in their own view"),
+                    CreatePushButton("btnShowSelected", "Show Selected", null, Resource1.show, "ReviTab.ShowSelected", "Show the selected elements in their own view"),
                     };
 
                 

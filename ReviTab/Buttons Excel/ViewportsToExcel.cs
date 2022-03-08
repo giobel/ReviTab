@@ -90,7 +90,11 @@ namespace ReviTab
 
                                     if (StorageType.Double == parameterType)
                                     {
+#if !REVIT2022
                                         paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS).ToString();
+#else
+                                        paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), UnitTypeId.Millimeters).ToString();
+#endif
                                     }
                                     else if (StorageType.String == parameterType)
                                     {
@@ -143,7 +147,7 @@ namespace ReviTab
                 return Result.Failed;
             }
 
-                #region Old Method
+#region Old Method
                 //try
                 //{
                 //        ICollection<ElementId> selectedSheetsId = uidoc.Selection.GetElementIds();
@@ -211,7 +215,7 @@ namespace ReviTab
                 //        return Result.Failed;
                 //    //}
 
-                #endregion
+#endregion
             }
         }
 
