@@ -3,6 +3,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,7 @@ namespace ReviTab
                 Application app = uiapp.Application;
                 Document doc = uidoc.Document;
 
+            double feetConversion = 304.8;
             try
             {
                 
@@ -35,33 +37,28 @@ namespace ReviTab
 
                     t.Start();
 
-                    using (var reader = new StreamReader(inputFile))
+
+                    using (TextFieldParser parser = new TextFieldParser(inputFile))
                     {
+                        parser.TextFieldType = FieldType.Delimited;
+                        parser.SetDelimiters(",");
 
-                        List<string> parameters = reader.ReadLine().Split(',').ToList();
+                        
+                        List<string> parameters = parser.ReadLine().Split(',').ToList();
 
-
-                        while (!reader.EndOfStream)
+                        while (!parser.EndOfData)
                         {
-
-                            var line = reader.ReadLine();
+                            var line = parser.ReadLine();
 
                             var values = line.Split(',').ToList();
 
-                            //TaskDialog.Show("R", values.Count.ToString());
+                                int id = Convert.ToInt32(values[0]);
 
-                            int id = Convert.ToInt32(values[0]);
-
-//                            TaskDialog.Show("R", id.ToString());
-
-                            ElementId currentId = new ElementId(id);
-
+                                ElementId currentId = new ElementId(id);
 
                             //item 0 in elementId -> skip
                             for (int i = 1; i < parameters.Count; i++)
                             {
-
-
                                 try
                                 {
 
@@ -74,19 +71,88 @@ namespace ReviTab
                                     {
                                         p.Set(Convert.ToInt32(values[i]));
                                     }
+                                    else if (p.StorageType == StorageType.Double)
+                                    {
+                                        p.Set(Convert.ToDouble(values[i]) / feetConversion);
+                                    }
                                     else
                                     {
                                         p.Set(values[i]);
                                     }
                                 }
-                                catch { 
+                                catch
+                                {
                                     //TaskDialog.Show("Error", ex.Message); 
                                 }
 
                             }
-
+                            
                         }
-                    }//close reader
+                    }
+
+
+#if OLDMethod
+                                using (var reader = new StreamReader(inputFile))
+                                    {
+
+
+                                      List<string> parameters = reader.ReadLine().Split(',').ToList();
+
+
+                                    while (!reader.EndOfStream)
+                                        {
+
+                                            var line = reader.ReadLine();
+
+                                            var values = line.Split(',').ToList();
+
+                                            //TaskDialog.Show("R", values.Count.ToString());
+
+                                            int id = Convert.ToInt32(values[0]);
+
+                                            //                            TaskDialog.Show("R", id.ToString());
+
+                                            ElementId currentId = new ElementId(id);
+
+
+                                            //item 0 in elementId -> skip
+                                            for (int i = 1; i < parameters.Count; i++)
+                                            {
+
+
+                                                try
+                                                {
+
+                                                    Element e = doc.GetElement(currentId);
+
+                                                    Parameter p = e.LookupParameter(parameters[i].Trim());
+
+
+                                                    if (p.StorageType == StorageType.Integer)
+                                                    {
+                                                        p.Set(Convert.ToInt32(values[i]));
+                                                    }
+                                                    else if (p.StorageType == StorageType.Double)
+                                                    {
+                                                        p.Set(Convert.ToDouble(values[i]) / feetConversion);
+                                                    }
+                                                    else
+                                                    {
+                                                        p.Set(values[i]);
+                                                    }
+                                                }
+                                                catch {
+                                                    //TaskDialog.Show("Error", ex.Message); 
+                                                }
+
+                                            }
+
+                                        }
+                                    }//close reader
+            
+#endif
+
+
                     t.Commit();
                 }//close transaction
 
