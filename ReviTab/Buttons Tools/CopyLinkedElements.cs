@@ -26,8 +26,15 @@ namespace ReviTab
             
             IList<Reference> linkModelRefs = uidoc.Selection.PickObjects(ObjectType.LinkedElement, "Select Elements");
 
+
+
+
+
             //group selected elements by rvt link
             var refGroupByLinkModel = linkModelRefs.GroupBy(item => doc.GetElement(item).Id).Select(refs => refs.ToList());
+
+            //TaskDialog.Show("Selected Elements", )
+
 
             using (Transaction t = new Transaction(doc, "Copy Linked Elements"))
             {
@@ -43,7 +50,6 @@ namespace ReviTab
                     foreach (List<Reference> linkedModelRef in refGroupByLinkModel)
                     {
 
-
                         ICollection<ElementId> eleToCopy = new List<ElementId>();
 
                         Element e = doc.GetElement(linkedModelRef.First().ElementId);
@@ -51,25 +57,79 @@ namespace ReviTab
                         Document linkRvtDoc = (e as RevitLinkInstance).GetLinkDocument();
                         Transform transf = revitLinkInst.GetTransform();
 
+                        Dictionary<string, int> elementsSummary = new Dictionary<string, int>();
+
                         foreach (Reference elementRef in linkedModelRef)
                         {
 
 
                             Element eLinked = linkRvtDoc.GetElement(elementRef.LinkedElementId);
-                            eleToCopy.Add(eLinked.Id);
+
+                            //reference are duplicated. avoid copying the same object twice
+                            if (!eleToCopy.Contains(eLinked.Id))
+                            {
+                                string eLinkedCategoryName = eLinked.Category.Name;
+
+                                if (elementsSummary.ContainsKey(eLinkedCategoryName))
+                                {
+                                    elementsSummary[eLinkedCategoryName]++;
+                                }
+                                else
+                                {
+                                    elementsSummary.Add(eLinked.Category.Name, 1);
+                                }
+                                eleToCopy.Add(eLinked.Id);
+
+                            }
                         }
+
+                        string result = "Selected elements:\n\n";
+                        
+
+                        foreach (var item in elementsSummary)
+                        {
+                            result += $"{item.Key} : {item.Value}\n";
+                        }
+
+
+                        TaskDialog td = new TaskDialog("Selected Elements");
+                        td.MainContent = result;
+                        td.AddCommandLink(TaskDialogCommandLinkId.CommandLink1,
+                                           "Copy Elements");
+                        td.AddCommandLink(TaskDialogCommandLinkId.CommandLink2,
+                                            "Cancel");
+
+
+                        switch (td.Show())
+                        {
+                            case TaskDialogResult.CommandLink1:
+                                // do the simple stuff
+                                break;
+
+                            case TaskDialogResult.CommandLink2:
+                                throw new Exception("Command cancelled by Owen");
+                                break;
+
+                            default:
+                                // handle any other case.
+                                break;
+                        }
+
 
                         ElementTransformUtils.CopyElements(linkRvtDoc, eleToCopy, doc, transf, copyPasteOption);
 
-                        TaskDialog.Show("elements to copy", String.Format("{0} elements have been copied from model {1}", eleToCopy.Count, revitLinkInst.Name));
+                        TaskDialog.Show("elements to copy", $"{eleToCopy.Count} elements have been copied from model {revitLinkInst.Name}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    TaskDialog.Show("e", ex.Message);
+                    TaskDialog.Show("Warning", ex.Message);
                 }
 
-                t.Commit();
+                finally
+                {
+                    t.Commit();
+                }
             }
 
             return Result.Succeeded;

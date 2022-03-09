@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
-using forms = System.Windows.Forms;
+using System.Linq;
 #endregion
 
 namespace ReviTab
@@ -24,30 +24,37 @@ namespace ReviTab
             Document doc = uidoc.Document;
             View activeView = doc.ActiveView;
 
-            using (var form = new FormAddActiveView("Enter Sheet Number"))
+            List<string> sheetNumbers = new List<string>();
+            foreach (UIView uiview in uidoc.GetOpenUIViews())
             {
+                var openView = doc.GetElement(uiview.ViewId);
+                if (openView is ViewSheet)
+                {
+                    ViewSheet vs = openView as ViewSheet;
+                    sheetNumbers.Add(vs.SheetNumber.ToString());
+                }
+            }
+
+
+            var form = new Forms.FormInputCombobox();
+            
                 using (Transaction t = new Transaction(doc))
                 {
 
-                    string interrupt = "False";
+                    form.ViewSheetList = new List<string>(sheetNumbers.ToList());
+                    // form.ViewSheetList = new List<string>() { "S001", "S002" };
+                    //form.ViewTemplateList = new List<View>(views.OrderBy(x => x.Name));
 
-                    while (interrupt == "False")
-                    {
-                        //use ShowDialog to show the form as a modal dialog box. 
-
-
-
-                        form.ShowDialog();
+                    form.ShowDialog();
 
                         //if the user hits cancel just drop out of macro
-                        if (form.DialogResult == forms.DialogResult.Cancel)
+                        if (form.DialogResult == false)
                         {
                             return Result.Cancelled;
                         }
 
-
-
-                        string sheetNumber = form.TextString.ToString();
+                        //string sheetNumber = form.TextString.ToString();
+                        string sheetNumber = form.SelectedViewSheet;
 
                         ViewSheet viewSh = null;
 
@@ -64,7 +71,6 @@ namespace ReviTab
                         try
                         {
                             Viewport newvp = Viewport.Create(doc, viewSh.Id, activeView.Id, new XYZ(1.38, .974, 0));
-                            interrupt = "True";
                             t.Commit();
                             if (null != viewSh)
                                 uidoc.ActiveView = viewSh;
@@ -94,9 +100,9 @@ namespace ReviTab
                             }
                         }//close catch
 
-                    }//close while
 
-                }
+
+                
 
             }
 
