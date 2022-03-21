@@ -1415,6 +1415,24 @@ namespace ReviTab
             }
         }
 
+        internal static void OpenView(UIDocument uiDoc, string message)
+        {
+            string sheetNumber = message.Split(' ')[1];
+
+            ViewSheet viewSh = null;
+
+            FilteredElementCollector sheets = new FilteredElementCollector(uiDoc.Document).OfClass(typeof(ViewSheet));
+
+            foreach (ViewSheet sht in sheets)
+            {
+                if (sht.SheetNumber == sheetNumber)
+                    viewSh = sht;
+            }
+
+            uiDoc.ActiveView = viewSh;
+
+        }
+
         public struct RevisionObj
         {
 

@@ -878,6 +878,9 @@ namespace ReviTab
             if (message.StartsWith("+viewset"))
                 caseSwitch = "createViewSet";
 
+            if (message.StartsWith("open"))
+                caseSwitch = "openView";
+
             switch (caseSwitch)
             {
                 case "default":
@@ -908,6 +911,9 @@ namespace ReviTab
                     break;
                 case "selectTBlocks":
                     Helpers.HighlightSelectTitleBlocks(uiDoc, message);
+                    break;
+                case "openView":
+                    Helpers.OpenView(uiDoc, message);
                     break;
             }
 
