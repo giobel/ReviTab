@@ -71,7 +71,7 @@ namespace ReviTab
 
                 splitButtonsViews.Add(CreatePushButton("btnSheetAddCurrentView", "Add View\nto Sheet","","pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.AddActiveViewToSheet",  "Add the active view to a sheet"));
                 
-                splitButtonsViews.Add(CreatePushButton("btnAddSheetByNumber", "Add Sheet\nby Number", "", "pack://application:,,,/ReviTab;component/Resources/addView.png", "ReviTab.CreateSheetByNumber", "Create a Sheet by providing its number and package."));
+                splitButtonsViews.Add(CreatePushButton("btnAddSheetByNumber", "Add Sheet\nby Number", null, Resource1.addSheetByNumber, "ReviTab.CreateSheetByNumber", "Create a Sheet by providing its number and package."));
 
                 splitButtonsViews.Add(CreatePushButton("btnAddMultipleViews", "Add Multiple\nViews","", "pack://application:,,,/ReviTab;component/Resources/addMultipleViews.png", "ReviTab.AddMultipleViewsToSheet", "Add multiple views to a sheet. Select the views in the project browser."));
 
@@ -79,19 +79,19 @@ namespace ReviTab
 
                 splitButtonsViews.Add(CreatePushButton("btnCreateViewset", "Create\nViewset", "", "pack://application:,,,/ReviTab;component/Resources/createViewSet.png", "ReviTab.CreateViewSet", "Create a Viewset from a list of Sheet Numbers"));
 
-                splitButtonsViews.Add(CreatePushButton("btnAlignViews", "Align Viewports", "", "pack://application:,,,/ReviTab;component/Resources/revCloud.png", "ReviTab.AlignViews", "Select a list of views in the project browser then click on this button to pick a point on a sheet. The point will be used as a center of all the viewports of the selected views."));
+                splitButtonsViews.Add(CreatePushButton("btnAlignViews", "Align Viewports", null, Resource1.alignViewports, "ReviTab.AlignViews", "Select a list of views in the project browser then click on this button to pick a point on a sheet. The point will be used as a center of all the viewports of the selected views."));
 
                 splitButtonsViews.Add(CreatePushButton("btnAlignSectionCropBox", "Match Section CropView", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MatchSectionViewCrop", "Select a list of sections views in the project browser then click on this button to assign the same cropbox view to all. Section views must all be parallel between themselves.")); 
 
                 splitButtonsViews.Add(CreatePushButton("btnTagInView", "Tag Elements", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.TagElementsInViewport", "Tag all the columns within the selected Viewports."));
                 
-                splitButtonsViews.Add(CreatePushButton("btnDuplicateViews", "Duplicate Views", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.DuplicateSheets", "Duplicate selected sheets with viewports, schedules and legends."));
+                splitButtonsViews.Add(CreatePushButton("btnDuplicateViews", "Duplicate Views", null, Resource1.duplicateView, "ReviTab.DuplicateSheets", "Duplicate selected sheets with viewports, schedules and legends."));
 
-                splitButtonsViews.Add(CreatePushButton("btnExtractDetail", "Extract Detail", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.ExtractDetail", "Cut and Paste lines to a new detail"));
+                splitButtonsViews.Add(CreatePushButton("btnExtractDetail", "Extract Detail", null, Resource1.extractDetail, "ReviTab.ExtractDetail", "Cut and Paste lines to a new detail"));
 
-                splitButtonsViews.Add(CreatePushButton("btnMoveViewport", "Move Viewports", "", "pack://application:,,,/ReviTab;component/Resources/duplicateSheets.png", "ReviTab.MoveViewportToSheet", "Move selected viewports to another Sheet"));
+                splitButtonsViews.Add(CreatePushButton("btnMoveViewport", "Move Viewports", null, Resource1.moveViewports, "ReviTab.MoveViewportToSheet", "Move selected viewports to another Sheet"));
                 
-                splitButtonsViews.Add(CreatePushButton("btnImportRhino", "Rhino Import", "", "pack://application:,,,/ReviTab;component/Resources/tag.png", "ReviTab.RhinoImport", "Import details from Rhino to Revit drafting view."));
+                splitButtonsViews.Add(CreatePushButton("btnImportRhino", "Rhino Import", null, Resource1.rhinoImport, "ReviTab.RhinoImport", "Import details from Rhino to Revit drafting view."));
 
                 splitButtonsViews.Add(CreatePushButton("btnSetTitleblock", "Set Titleblock\nScale", "", "pack://application:,,,/ReviTab;component/Resources/rulerSmall.png", "ReviTab.SetTitleblockScale", "Set the current sheet titleblock scale to the most used."));
 
@@ -173,11 +173,11 @@ namespace ReviTab
 
                 IList<PushButtonData> splitButtonsSections = new List<PushButtonData>
                 {
-                    CreatePushButton("btnCreateSectionsColumns", "Column Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSectionColumns", "Create multiple sections for selected columns."),
+                    CreatePushButton("btnCreateSectionsColumns", "Column Sections", null, Resource1.columnSection, "ReviTab.CreateSectionColumns", "Create multiple sections for selected columns."),
 
-                    CreatePushButton("btnCreateSections", "Line based" + Environment.NewLine + "Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.CreateSections", "Create multiple sections for line based elements (walls, beams, lines)."),
+                    CreatePushButton("btnCreateSections", "Line based" + Environment.NewLine + "Sections", null, Resource1.lineSection, "ReviTab.CreateSections", "Create multiple sections for line based elements (walls, beams, lines)."),
                     
-                    CreatePushButton("btnFlipSections", "Flip Sections", "", "pack://application:,,,/ReviTab;component/Resources/multipleSections.png", "ReviTab.FlipSections", "Flip multiple sections.")
+                    CreatePushButton("btnFlipSections", "Flip Sections", null, Resource1.flipSection, "ReviTab.FlipSections", "Flip multiple sections.")
                 };
 
                 AddSplitButton(toolsPanel, splitButtonsSections, "SectionsButton", "MultipleSections");
@@ -193,7 +193,7 @@ namespace ReviTab
                 {
                     CreatePushButton("btnSwapGrid", "Swap Grid" + Environment.NewLine + "Head", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.SwapGridBubbles", "Swap the head of the selected grids"),
 
-                    CreatePushButton("btnCopyGrid", "Copy Grid Extents", "", "pack://application:,,,/ReviTab;component/Resources/swapGrids.png", "ReviTab.PropagateGridExtents", "Copy the grid extents from a view to the active one."),
+                    CreatePushButton("btnCopyGrid", "Copy Grid Extents", null, Resource1.copyGridExtents, "ReviTab.PropagateGridExtents", "Copy the grid extents from a view to the active one."),
                     
                     CreatePushButton("btnSwapLevels", "Swap Level Bubble", null, Resource1.swapLevels, "ReviTab.SwapLevelsBubbles", "Swap the head of the selected levels")
                 };
@@ -248,8 +248,12 @@ namespace ReviTab
                     CreatePushButton("btnIsolateCategories", "Isolate Categories", null, Resource1.isoCategory, "ReviTab.IsolateCategories", "Isolate the selected elements categories in the active view"),
 
                     //<a href="https://www.flaticon.com/free-icons/eye" title="eye icons">Eye icons created by Freepik - Flaticon</a>
-                    CreatePushButton("btnShowSelected", "Show Selected", null, Resource1.show, "ReviTab.ShowSelected", "Show the selected elements in their own view"),
+                    CreatePushButton("btnShowSelected", "Show Selected", null, Resource1.showSelected, "ReviTab.ShowSelected", "Show the selected elements in their own view"),
+                    
+                    CreatePushButton("btnShowLastCreatedView", "Show Latest View", null, Resource1.showLatest, "ReviTab.OpenLastCreatedView", "Open the latest created view")
+
                     };
+
 
                 
 

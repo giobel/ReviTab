@@ -385,6 +385,7 @@
     <Compile Include="Buttons Geometry\RhinoSpline.cs" />
     <Compile Include="Buttons Management\PushToAirtable.cs" />
     <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\OpenLastCreatedView.cs" />
     <Compile Include="Buttons Tools\ShowSelected.cs" />
     <Compile Include="Buttons Tools\SelectTitleblocks.cs" />
     <Compile Include="Buttons Tools\IsolateCategories.cs" />
@@ -656,6 +657,18 @@
     <None Include="Resources\swapLevels.png" />
     <None Include="Resources\tblock.png" />
     <None Include="Resources\show.png" />
+    <None Include="Resources\showSelected.png" />
+    <None Include="Resources\showLatest.png" />
+    <None Include="Resources\addSheetByNumber.png" />
+    <None Include="Resources\rhinoImport.png" />
+    <None Include="Resources\duplicateView.png" />
+    <None Include="Resources\extractDetail.png" />
+    <None Include="Resources\moveViewports.png" />
+    <None Include="Resources\alignViewports.png" />
+    <None Include="Resources\lineSection.png" />
+    <None Include="Resources\flipSection.png" />
+    <None Include="Resources\copyGridExtents.png" />
+    <None Include="Resources\columnSection.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>

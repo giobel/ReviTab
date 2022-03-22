@@ -118,6 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="addSheetByNumber" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\addSheetByNumber.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="alignViewports" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\alignViewports.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="bground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\bground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -127,14 +133,35 @@
   <data name="cloudSelectionCopy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\cloudSelectionCopy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="columnSection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\columnSection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="copyGridExtents" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\copyGridExtents.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="duplicateView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\duplicateView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="extractDetail" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\extractDetail.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="flipSection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\flipSection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ghowlicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ghowlicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="isoCategory" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\isoCategory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="lineSection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\lineSection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="metadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\metadata.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="moveViewports" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\moveViewports.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="panButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\panButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,8 +175,17 @@
   <data name="rainbow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\rainbow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="rhinoImport" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\rhinoImport.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="show" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\show.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="showLatest" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\showLatest.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="showSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\showSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="swapLevels" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\swapLevels.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
