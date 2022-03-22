@@ -133,6 +133,16 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap copyViewFilter {
+            get {
+                object obj = ResourceManager.GetObject("copyViewFilter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap duplicateView {
             get {
                 object obj = ResourceManager.GetObject("duplicateView", resourceCulture);
@@ -213,6 +223,16 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap overrideColors {
+            get {
+                object obj = ResourceManager.GetObject("overrideColors", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap panButton {
             get {
                 object obj = ResourceManager.GetObject("panButton", resourceCulture);
@@ -256,6 +276,66 @@ namespace ReviTab {
         public static System.Drawing.Bitmap rhinoImport {
             get {
                 object obj = ResourceManager.GetObject("rhinoImport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap selectBeams {
+            get {
+                object obj = ResourceManager.GetObject("selectBeams", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap selectColumn {
+            get {
+                object obj = ResourceManager.GetObject("selectColumn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap selectDimensions {
+            get {
+                object obj = ResourceManager.GetObject("selectDimensions", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap selectGrid {
+            get {
+                object obj = ResourceManager.GetObject("selectGrid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap selectLines {
+            get {
+                object obj = ResourceManager.GetObject("selectLines", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap selectTags {
+            get {
+                object obj = ResourceManager.GetObject("selectTags", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

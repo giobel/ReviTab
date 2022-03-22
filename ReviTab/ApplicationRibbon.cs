@@ -203,7 +203,7 @@ namespace ReviTab
                 //OVERRIDES
                 IList<PushButtonData> overrideTools = new List<PushButtonData>
                 {
-                    CreatePushButton("btnOverrideColoor", "Override Colours", "", "pack://application:,,,/ReviTab;component/Resources/airtable.png", "ReviTab.OverrideColors", "Override the colours of the structural elements in the active view."),
+                    CreatePushButton("btnOverrideColoor", "Override Colours", null, Resource1.overrideColors, "ReviTab.OverrideColors", "Override the colours of the structural elements in the active view."),
 
                     CreatePushButton("btnOverrideDimensions", "Override \nDimension", "", "pack://application:,,,/ReviTab;component/Resources/dimensionOverride.png", "ReviTab.OverrideDimensions", "Override the text of a dimension")
                 };
@@ -215,7 +215,7 @@ namespace ReviTab
                 {
                     CreatePushButton("btnCopyLinkedElements", "Copy Linked \nElements", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyLinkedElements", "Copy elements from linked models"),
                     
-                   CreatePushButton("btnCopyTemplateFilters", "Copy View Template\nFilters", "", "pack://application:,,,/ReviTab;component/Resources/copyLinked.png", "ReviTab.CopyViewFilters", "Copy View Template Filters"),
+                   CreatePushButton("btnCopyTemplateFilters", "Copy View Template\nFilters", null, Resource1.copyViewFilter, "ReviTab.CopyViewFilters", "Copy View Template Filters"),
 
                     CreatePushButton("btnAlignColumns", "Align Columns", "", "pack://application:,,,/ReviTab;component/Resources/alignColumns.png", "ReviTab.AlignColumns", "Align the columns in the model to those selected in a linked model. There is an hardcoded tolerance of 3feet as maximum distance between the linked column and the one to be moved.")
                 };
@@ -225,17 +225,17 @@ namespace ReviTab
                 //FILTER SELECTION
                 IList<PushButtonData> filterSelection = new List<PushButtonData>
                 {
-                    CreatePushButton("selBeams", "Select Beams", "", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionBeams", "Select Beams Only"),
+                    CreatePushButton("selBeams", "Select Beams", Resource1.selectBeams, Resource1.selectBeams, "ReviTab.FilterSelectionBeams", "Select Beams Only"),
 
-                    CreatePushButton("selColumns", "Select Columns", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionColumns", "Select Columns Only"),
+                    CreatePushButton("selColumns", "Select Columns", Resource1.selectColumn, Resource1.selectColumn, "ReviTab.FilterSelectionColumns", "Select Columns Only"),
 
-                    CreatePushButton("selDim", "Select Dimensions", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionDimensions", "Select Dimensions Only"),
+                    CreatePushButton("selDim", "Select Dimensions", Resource1.selectDimensions, Resource1.selectDimensions, "ReviTab.FilterSelectionDimensions", "Select Dimensions Only"),
 
-                    CreatePushButton("selGrids", "Select Grids", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionGrids", "Select Grids Only"),
+                    CreatePushButton("selGrids", "Select Grids", Resource1.selectGrid, Resource1.selectGrid, "ReviTab.FilterSelectionGrids", "Select Grids Only"),
 
-                    CreatePushButton("selLines", "Select Lines", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionLines", "Select Lines Only"),
+                    CreatePushButton("selLines", "Select Lines", Resource1.selectLines, Resource1.selectLines, "ReviTab.FilterSelectionLines", "Select Lines Only"),
 
-                    CreatePushButton("selTags", "Select Tags", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionTags", "Select Tags Only"),
+                    CreatePushButton("selTags", "Select Tags", Resource1.selectTags, Resource1.selectTags, "ReviTab.FilterSelectionTags", "Select Tags Only"),
 
                     CreatePushButton("selText", "Select Text", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "pack://application:,,,/ReviTab;component/Resources/selectFilter.png", "ReviTab.FilterSelectionText", "Select Text Only"),
 

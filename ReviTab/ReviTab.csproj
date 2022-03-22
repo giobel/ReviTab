@@ -669,6 +669,14 @@
     <None Include="Resources\flipSection.png" />
     <None Include="Resources\copyGridExtents.png" />
     <None Include="Resources\columnSection.png" />
+    <None Include="Resources\copyViewFilter.png" />
+    <None Include="Resources\selectLines.png" />
+    <None Include="Resources\selectTags.png" />
+    <None Include="Resources\selectGrid.png" />
+    <None Include="Resources\selectDimensions.png" />
+    <None Include="Resources\selectColumn.png" />
+    <None Include="Resources\selectBeams.png" />
+    <None Include="Resources\overrideColors.png" />
     <Content Include="ReviTab.addin" />
   </ItemGroup>
   <ItemGroup>
