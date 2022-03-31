@@ -3,48 +3,22 @@ WIP toolbar for Revit.
 
 ![image](https://user-images.githubusercontent.com/27025848/160990246-d376e8cd-b8a3-4b4b-b5c7-de72a09704a3.png)
 
-## COMMANDS
-
 ## DOCUMENTATION
+![image](https://user-images.githubusercontent.com/27025848/160990371-f87d7a4a-1ff2-45b7-9494-cc4150e89d4c.png)
 
-### Add View to Sheet
-Add the active view to a sheet providing its number.
+![image](https://user-images.githubusercontent.com/27025848/160990610-2ce33976-22ff-424e-9a5e-ac59f5f10a22.png)
 
-![](https://i.imgur.com/m7aWiWu.gif)
-
-### Add Multiple Views
-Select multiple views in the project browser and add them to a sheet providing its number.
-
-![](https://i.imgur.com/2UZ4ODp.gif)
+![image](https://user-images.githubusercontent.com/27025848/160991215-4b6a412d-351d-43d1-8e04-91f47bbff651.png)
 
 ## TOOLS
 
-## Create Multiple Sections
-credits: Danny Bentley and others. Create a section from a list of elements that have a location curve.
+![image](https://user-images.githubusercontent.com/27025848/160991351-4eb6b5ba-05b1-4e7d-a668-f3c0080e7374.png)
 
-![](https://i.imgur.com/YXTKVMw.gif)
+![image](https://user-images.githubusercontent.com/27025848/160991591-3fed961c-4991-4388-914d-1e98174b55ac.png)
 
-## Select All Text
-Select all text notes in the project and launch the spelling check.
+![image](https://user-images.githubusercontent.com/27025848/160991727-dc0fd5bb-4647-4040-aaaa-283b4f6ba4f7.png)
 
-## Create Viewset
-Create a viewset from a list of sheet numbers.
-
-## Swap Grid Head
-Swap the grid head bubble in the active view. Note: does not work for multi-segmented grids.
-
-[![Watch the video](https://img.youtube.com/vi/bHYYYyHRt1o/maxresdefault.jpg)](https://youtu.be/bHYYYyHRt1o)
-
-## Override Dimension
-Set the text dimension to "" for a selected dimension. Does not work on multiple elements or multi-segment dimensions.
-
-[![Watch the video](https://img.youtube.com/vi/OwpogSyYWfg/maxresdefault.jpg)](https://youtu.be/OwpogSyYWfg)
-
-## Copy Linked Elements
-![alt text](images/copyLinkedElements.gif)
-
-## Filter Element Selection
-![alt text](images/FilterSelection.gif)
+![image](https://user-images.githubusercontent.com/27025848/160991938-ef3b65a7-5064-478a-a96a-494f07f9f5d1.png)
 
 # STRUCTURAL FRAMINGS
 
