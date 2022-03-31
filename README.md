@@ -4,11 +4,7 @@ WIP toolbar for Revit.
 ![image](https://user-images.githubusercontent.com/27025848/160990246-d376e8cd-b8a3-4b4b-b5c7-de72a09704a3.png)
 
 ## DOCUMENTATION
-![image](https://user-images.githubusercontent.com/27025848/160990371-f87d7a4a-1ff2-45b7-9494-cc4150e89d4c.png)
-
-![image](https://user-images.githubusercontent.com/27025848/160990610-2ce33976-22ff-424e-9a5e-ac59f5f10a22.png)
-
-![image](https://user-images.githubusercontent.com/27025848/160991215-4b6a412d-351d-43d1-8e04-91f47bbff651.png)
+![image](https://user-images.githubusercontent.com/27025848/161166243-9a661181-e34d-451e-a487-c082f08e5cf0.png)
 
 ## TOOLS
 
