@@ -1,7 +1,7 @@
 # ReviTab
 WIP toolbar for Revit. 
 
-![IMG](https://i.imgur.com/IHdWlXS.png)
+![image](https://user-images.githubusercontent.com/27025848/160990246-d376e8cd-b8a3-4b4b-b5c7-de72a09704a3.png)
 
 ## COMMANDS
 
