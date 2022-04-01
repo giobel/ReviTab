@@ -13,7 +13,7 @@
 ![image](https://user-images.githubusercontent.com/27025848/161169545-8b4210f0-8f2c-464c-8ff2-cec40efef923.png)
 
 ## Command Line
-![image](https://user-images.githubusercontent.com/27025848/161169853-8ad3907e-b53b-4860-8af4-3763eaec4a52.png)
+![image](https://user-images.githubusercontent.com/27025848/161181261-5fc09d44-a1a8-46fd-befb-645f9c067ba6.png)
 
 ## Zero State
 ![image](https://user-images.githubusercontent.com/27025848/161169848-0f945d9a-48cd-4e77-9400-ced3e69500c0.png)
