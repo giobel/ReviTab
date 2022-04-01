@@ -4,42 +4,15 @@ WIP toolbar for Revit.
 ![image](https://user-images.githubusercontent.com/27025848/160990246-d376e8cd-b8a3-4b4b-b5c7-de72a09704a3.png)
 
 ## DOCUMENTATION
-![image](https://user-images.githubusercontent.com/27025848/161166243-9a661181-e34d-451e-a487-c082f08e5cf0.png)
+![image](https://user-images.githubusercontent.com/27025848/161169121-58d85f10-16ed-46c7-9ecc-9d82976c1f98.png)
 
 ## TOOLS
 
-![image](https://user-images.githubusercontent.com/27025848/160991351-4eb6b5ba-05b1-4e7d-a668-f3c0080e7374.png)
-
-![image](https://user-images.githubusercontent.com/27025848/160991591-3fed961c-4991-4388-914d-1e98174b55ac.png)
-
-![image](https://user-images.githubusercontent.com/27025848/160991727-dc0fd5bb-4647-4040-aaaa-283b4f6ba4f7.png)
-
-![image](https://user-images.githubusercontent.com/27025848/160991938-ef3b65a7-5064-478a-a96a-494f07f9f5d1.png)
+![image](https://user-images.githubusercontent.com/27025848/161169145-a438a256-4c28-42c9-86a9-df168cd945e3.png)
 
 # STRUCTURAL FRAMINGS
 
-## Place Void By Face
-Add one ore more voids to a beam face providing the distance(s) from the beam start, mid or end point and its size.
 
-[![Watch the video](https://img.youtube.com/vi/fi9HgS9kjw4/maxresdefault.jpg)](https://drive.google.com/open?id=1bFOfLDT6K9uV7vxEvi5O8D7sZDU91_z4)
-<iframe src="https://drive.google.com/file/d/1bFOfLDT6K9uV7vxEvi5O8D7sZDU91_z4/preview" width="640" height="480"></iframe>
-
-## Void By Line
-Place a void by face at the intersection between a 2d line (on plan) and a beam. The opening will acquire distance and size from the line style name.
-
-[![Watch the video](https://img.youtube.com/vi/jvsqUJG3uHA/maxresdefault.jpg)](https://youtu.be/jvsqUJG3uHA)
-
-## Place Tags
-Modeless window that calculates the distance from the origin to the beam centerpoint and saves it as Mark. The user can accept or refuse the changes.
-
-## Move beam end
-Move a beam or multiple beams end point to another element location curve closest point.
-
-## Change Beam Location
-![alt text](images/ChangeBeamLocation.gif)
-
-## Edit Beam End Join
-![alt text](images/EditBeamJoins.gif)
 
 # WALLS
 
