@@ -3,6 +3,8 @@
 
 ![image](https://user-images.githubusercontent.com/27025848/160990246-d376e8cd-b8a3-4b4b-b5c7-de72a09704a3.png)
 
+Refer to [Wiki](https://github.com/giobel/ReviTab/wiki) for more info.
+
 ## Documentation
 ![image](https://user-images.githubusercontent.com/27025848/161169121-58d85f10-16ed-46c7-9ecc-9d82976c1f98.png)
 
