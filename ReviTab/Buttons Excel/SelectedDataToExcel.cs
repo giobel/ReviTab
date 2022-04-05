@@ -84,6 +84,7 @@ namespace ReviTab
 
                                 StorageType parameterType = p.StorageType;
 
+                                
                                 if (StorageType.Double == parameterType)
                                 {
 #if !REVIT2022
@@ -93,7 +94,9 @@ namespace ReviTab
                                     paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), UnitTypeId.Millimeters).ToString();
 #endif
 
-
+                                }
+                                else if (p.Definition.Name == "Workset"){
+                                    paramValue = p.AsValueString();
                                 }
                                 else if (StorageType.String == parameterType)
                                 {
