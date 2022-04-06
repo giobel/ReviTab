@@ -2,7 +2,7 @@
 layout: default
 title: Text Note and Line Styles
 parent: Documentation
-nav_order: 2
+nav_order: 3
 ---
 
 # Views
