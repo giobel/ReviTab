@@ -2,7 +2,7 @@
 layout: default
 title: Excel Link
 parent: Documentation
-nav_order: 2
+nav_order: 5
 ---
 
 # Excel Link
