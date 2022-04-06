@@ -14,7 +14,7 @@ using forms = System.Windows.Forms;
 namespace ReviTab
 {
     [Transaction(TransactionMode.Manual)]
-    public class BeamByTypeMark : IExternalCommand
+    public class BeamByTypeName : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -52,7 +52,7 @@ namespace ReviTab
                             return Result.Cancelled;
                         }
 
-                        string identityTypeMark = form.TextString.ToUpper().ToString();
+                        string beamTypeName = form.TextString.ToUpper().ToString();
 
                         FilteredElementCollector beamTypesCollector = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming).WhereElementIsElementType();
 
@@ -60,7 +60,7 @@ namespace ReviTab
 
                         var wte = beamTypesCollector.FirstOrDefault((e) =>
                         {
-                            if (string.Equals(e.LookupParameter("Identity_Type Mark").AsString(), identityTypeMark))
+                            if (string.Equals(e.Name.ToUpper(), beamTypeName.ToUpper()))
                                 return true;
                             else
                             {
@@ -83,14 +83,14 @@ namespace ReviTab
                         }
                         catch(Exception ex)
                         {
-                            if (identityTypeMark == "")
+                            if (beamTypeName == "")
                             {
                                 TaskDialog.Show("Warning", "Please enter an identity type mark");
                                 t.RollBack();
                                 //                                form.ShowDialog();
                             }
 
-                            else if (identityTypeMark == null)
+                            else if (beamTypeName == null)
                             {
                                 TaskDialog.Show("Warning", "This identity type mark not exist");
                                 t.RollBack();

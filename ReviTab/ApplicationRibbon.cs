@@ -284,7 +284,7 @@ namespace ReviTab
 #endif
                 IList<PushButtonData> beamsEdit = new List<PushButtonData>();
                 
-                beamsEdit.Add(CreatePushButton("btnBeamByTypeMark", "Beam by\nIdType Mark", null, Resource1.cloudSelectionCopy, "ReviTab.BeamByTypeMark", "Provide an Identity Type Mark to change the selected beam type."));
+                beamsEdit.Add(CreatePushButton("btnBeamByTypeMark", "Beam by\nIdType Mark", null, Resource1.cloudSelectionCopy, "ReviTab.BeamByTypeName", "Provide an Type Name to change the selected beam type."));
 
                 beamsEdit.Add(CreatePushButton("btnMoveBeamEnd", "Move Beam End", "", "pack://application:,,,/ReviTab;component/Resources/movement-arrows.png", "ReviTab.MoveBeamEnd", "Move a beam endpoint to match a selected beam closest point"));
 
