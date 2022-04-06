@@ -2,7 +2,7 @@
 layout: default
 title: Views
 parent: Documentation
-nav_order: 1
+nav_order: 2
 ---
 
 # Views
