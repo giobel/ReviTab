@@ -6,11 +6,12 @@ description: "Documentation for ReviTab"
 permalink: /
 ---
 
-# Revitab documentation.
+#Revitab documentation
 {: .fs-9 }
 
- WIP toolbar for Revit. 
- {: .fs-6 .fw-300 }
+WIP toolbar for Revit
+{: .fs-6 .fw-300 }
+---
 
 ![image](https://user-images.githubusercontent.com/27025848/160990246-d376e8cd-b8a3-4b4b-b5c7-de72a09704a3.png)
 
@@ -29,5 +30,5 @@ permalink: /
 ## Zero State
 ![image](https://user-images.githubusercontent.com/27025848/161169848-0f945d9a-48cd-4e77-9400-ced3e69500c0.png)
 
----
+
 
