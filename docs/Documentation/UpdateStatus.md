@@ -2,7 +2,7 @@
 layout: default
 title: Update Status
 parent: Documentation
-nav_order: 2
+nav_order: 4
 ---
 
 # Views
