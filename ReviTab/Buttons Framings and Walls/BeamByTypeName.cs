@@ -32,9 +32,9 @@ namespace ReviTab
                 using (Transaction t = new Transaction(doc))
                 {
 
-                    Reference selectedBeam = uidoc.Selection.PickObject(ObjectType.Element, "Select a beam");
+                    IList<Reference> selectedBeams = uidoc.Selection.PickObjects(ObjectType.Element, "Select a beam");
 
-                    FamilyInstance beam = doc.GetElement(selectedBeam) as FamilyInstance;
+                    
 
                     string interrupt = "False";
 
@@ -60,7 +60,8 @@ namespace ReviTab
 
                         var wte = beamTypesCollector.FirstOrDefault((e) =>
                         {
-                            if (string.Equals(e.Name.ToUpper(), beamTypeName.ToUpper()))
+                            if (e.Name.ToUpper().Contains(beamTypeName.ToUpper()))
+//                            if (string.Equals(e.Name.ToUpper(), beamTypeName.ToUpper()))
                                 return true;
                             else
                             {
@@ -73,11 +74,15 @@ namespace ReviTab
                         ElementType et = wte as ElementType;
 
 
-                        t.Start("Add view to sheet");
+                        t.Start("Change Beam Type");
 
                         try
                         {
-                            beam.ChangeTypeId(et.Id);
+                            foreach (var selectedBeam in selectedBeams)
+                            {
+                                FamilyInstance beam = doc.GetElement(selectedBeam) as FamilyInstance;
+                                beam.ChangeTypeId(et.Id);                                
+                            }
                             interrupt = "True";
                             t.Commit();
                         }
