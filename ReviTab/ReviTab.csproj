@@ -471,6 +471,9 @@
     <Compile Include="Forms\FormPickFromDropDown.xaml.cs">
       <DependentUpon>FormPickFromDropDown.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormCopyLinkedElements.xaml.cs">
+      <DependentUpon>FormCopyLinkedElements.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -752,6 +755,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Forms\FormCopyLinkedElements.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RevitPurgeUnused\PurgeUnused.vbproj">
@@ -784,6 +791,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2020\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2020\ReviTab"
 copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2021\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2021\ReviTab"
-copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2022\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2022\ReviTab"</PostBuildEvent>
+copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2022\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2022\ReviTab"
+SET ERRORLEVEL = 0</PostBuildEvent>
   </PropertyGroup>
 </Project>

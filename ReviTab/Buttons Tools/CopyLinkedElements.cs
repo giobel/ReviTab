@@ -84,12 +84,22 @@ namespace ReviTab
                         }
 
                         string result = "Selected elements:\n\n";
-                        
+
+
+                        List<string> catNames = new List<string>();
 
                         foreach (var item in elementsSummary)
                         {
+                            catNames.Add(item.Key.ToString());
                             result += $"{item.Key} : {item.Value}\n";
                         }
+
+
+                        var form = new Forms.FormCopyLinkedElements(catNames);
+
+                        form.ShowDialog();
+
+
 
 
                         TaskDialog td = new TaskDialog("Selected Elements");
