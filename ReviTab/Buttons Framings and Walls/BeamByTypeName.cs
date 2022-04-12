@@ -32,9 +32,8 @@ namespace ReviTab
                 using (Transaction t = new Transaction(doc))
                 {
 
-                    IList<Reference> selectedBeams = uidoc.Selection.PickObjects(ObjectType.Element, "Select a beam");
-
-                    
+                    ISelectionFilter beamFilter = new CategorySelectionFilter("Structural Framing");
+                    IList<Reference> selectedBeams = uidoc.Selection.PickObjects(ObjectType.Element, beamFilter, "Select a beam");
 
                     string interrupt = "False";
 
