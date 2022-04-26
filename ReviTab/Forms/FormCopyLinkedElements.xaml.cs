@@ -23,6 +23,7 @@ namespace ReviTab.Forms
     {
         StackPanel innerStack;
         List<string> categories;
+        public List<string> selectedCategories;
         public FormCopyLinkedElements(List<string> categoriesNames)
         {
             categories = categoriesNames;
@@ -43,9 +44,10 @@ namespace ReviTab.Forms
                 foreach (var catName in categories)
                 {
                     CheckBox cb = new CheckBox();
-//                    cb.Name = catName;
+//                  cb.Name = catName;
                     cb.Content = catName;
                     innerStack.Children.Add(cb);
+                    //cb.IsChecked = true;
                 }
                 Grid.SetColumn(innerStack, 0) /*Set the column of your stackPanel, default is 0*/;
                 Grid.SetRow(innerStack, 0)  /*Set the row of your stackPanel, default is 0*/;
@@ -55,6 +57,17 @@ namespace ReviTab.Forms
 
             }
             catch(Exception ex) { TaskDialog.Show("Error", ex.Message); };
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var list = innerStack.Children.OfType<CheckBox>().Where(x => x.IsChecked == true);
+            selectedCategories = new List<string>();
+            foreach (var item in list)
+            {
+                selectedCategories.Add(item.Content.ToString().Split(':')[0].Trim());
+            }
+            DialogResult = true;
         }
     }
 }

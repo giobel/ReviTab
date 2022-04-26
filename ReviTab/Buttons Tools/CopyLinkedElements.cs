@@ -83,15 +83,15 @@ namespace ReviTab
                             }
                         }
 
-                        string result = "Selected elements:\n\n";
+                        //string result = "Selected elements:\n\n";
 
 
                         List<string> catNames = new List<string>();
 
                         foreach (var item in elementsSummary)
                         {
-                            catNames.Add(item.Key.ToString());
-                            result += $"{item.Key} : {item.Value}\n";
+                            catNames.Add($"{item.Key} : {item.Value}");
+                            //result += $"{item.Key} : {item.Value}\n";
                         }
 
 
@@ -100,35 +100,58 @@ namespace ReviTab
                         form.ShowDialog();
 
 
-
-
-                        TaskDialog td = new TaskDialog("Selected Elements");
-                        td.MainContent = result;
-                        td.AddCommandLink(TaskDialogCommandLinkId.CommandLink1,
-                                           "Copy Elements");
-                        td.AddCommandLink(TaskDialogCommandLinkId.CommandLink2,
-                                            "Cancel");
-
-
-                        switch (td.Show())
+                        if (form.DialogResult == false)
                         {
-                            case TaskDialogResult.CommandLink1:
-                                // do the simple stuff
-                                break;
-
-                            case TaskDialogResult.CommandLink2:
-                                throw new Exception("Command cancelled by Owen");
-                                break;
-
-                            default:
-                                // handle any other case.
-                                break;
+                            return Result.Cancelled;
                         }
 
+                        //TaskDialog td = new TaskDialog("Selected Elements");
+                        //td.MainContent = result;
+                        //td.AddCommandLink(TaskDialogCommandLinkId.CommandLink1,
+                        //                   "Copy Elements");
+                        //td.AddCommandLink(TaskDialogCommandLinkId.CommandLink2,
+                        //                    "Cancel");
 
-                        ElementTransformUtils.CopyElements(linkRvtDoc, eleToCopy, doc, transf, copyPasteOption);
 
-                        TaskDialog.Show("elements to copy", $"{eleToCopy.Count} elements have been copied from model {revitLinkInst.Name}");
+                        //switch (td.Show())
+                        //{
+                        //    case TaskDialogResult.CommandLink1:
+                        //        // do the simple stuff
+                        //        break;
+
+                        //    case TaskDialogResult.CommandLink2:
+                        //        throw new Exception("Command cancelled by Owen");
+                        //        break;
+
+                        //    default:
+                        //        // handle any other case.
+                        //        break;
+                        //}
+
+
+                        ICollection<ElementId> filteredEleToCopy = new List<ElementId>();
+
+                        foreach (ElementId item in eleToCopy)
+                        {
+                            string itemCategory = null;
+                            try
+                            {
+                                itemCategory = linkRvtDoc.GetElement(item).Category.Name.ToString();
+                            }
+                            catch { }
+
+                            if (itemCategory != null && form.selectedCategories.Contains(itemCategory))
+                            {
+                                filteredEleToCopy.Add(item);
+                            }
+                            //TaskDialog.Show("r", item);
+
+                        }
+
+                        if (filteredEleToCopy.Count >0)
+                        ElementTransformUtils.CopyElements(linkRvtDoc, filteredEleToCopy, doc, transf, copyPasteOption);
+
+                        TaskDialog.Show("elements to copy", $"{filteredEleToCopy.Count} elements have been copied from model {revitLinkInst.Name}");
                     }
                 }
                 catch (Exception ex)
