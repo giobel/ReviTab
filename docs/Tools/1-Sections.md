@@ -5,8 +5,6 @@ parent: Tools
 nav_order: 1
 ---
 
-![image](https://user-images.githubusercontent.com/27025848/165198015-0f0239b5-c2b5-4bed-a729-58836088c494.png)
-
 ## Column Sections
 
 Columns are point based elements. An offset is applied to the location point to create the section box
@@ -21,6 +19,7 @@ XYZ v = q - p;
 XYZ min = new XYZ(-v.GetLength() / 2 - 1, bottomZ, offsetFromAlignment);
 XYZ max = new XYZ(v.GetLength() / 2 + 1, topZ, farClip);
 ```
+![image](https://user-images.githubusercontent.com/27025848/165198015-0f0239b5-c2b5-4bed-a729-58836088c494.png)
 
 ## Line based sections
 
@@ -29,3 +28,4 @@ Works with walls, structural framings and lines.
 ## Flip Sections
 
 Change the direction of a multiple sections. 
+

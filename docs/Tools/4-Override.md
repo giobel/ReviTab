@@ -27,3 +27,14 @@ foreach (var element in grouped) {
     Autodesk.Revit.DB.Color pcolor = new Autodesk.Revit.DB.Color(hash[0], hash[1], hash[2]);
 }
 ```
+
+## Override Dimension
+
+[Buttons Tools/OverrideDimensions.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Tools/OverrideDimensions.cs)
+
+Override the dimension value with an invisible character:
+
+```c#
+dimension.ValueOverride = "\u200E";
+```
+

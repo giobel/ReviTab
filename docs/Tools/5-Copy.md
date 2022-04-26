@@ -1,0 +1,20 @@
+---
+layout: default
+title: Copy
+parent: Tools
+nav_order: 5
+---
+
+## Copy Linked Elements
+
+Copy the selected elements from one or more Revit linked models.
+
+## Copy View Template Filters
+
+Copy View Filters from one view to another.
+
+![image](https://user-images.githubusercontent.com/27025848/165200010-c236e585-9ce8-4677-be32-ada689586e0c.png)
+
+## Align Columns
+
+Align columns in the model to columns in a linked Revit model.
