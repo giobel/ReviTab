@@ -5,17 +5,6 @@ parent: Tools
 nav_order: 3
 ---
 
-# Grids and Levels
-{: .no_toc }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
-
 ## Swap Grid Head
 
 Change the (2d) Grid Head end position in a view.

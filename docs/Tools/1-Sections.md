@@ -5,17 +5,6 @@ parent: Tools
 nav_order: 1
 ---
 
-# Sections
-{: .no_toc }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
-
 ![image](https://user-images.githubusercontent.com/27025848/165198015-0f0239b5-c2b5-4bed-a729-58836088c494.png)
 
 ## Column Sections
