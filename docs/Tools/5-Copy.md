@@ -5,11 +5,11 @@ parent: Tools
 nav_order: 5
 ---
 
-## Copy Linked Elements
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/copyLinked.png) Copy Linked Elements 
 
 Copy the selected elements from one or more Revit linked models.
 
-## Copy View Template Filters
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/copyViewFilter.png) Copy View Template Filters
 
 Copy View Filters from one view to another.
 

@@ -14,9 +14,8 @@ nav_order: 6
 1. TOC
 {:toc}
 
----
 
-## Select Beams/Columns/Dimensions...
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/selectBeams.png) Select Beams/Columns/Dimensions...
 
 Filter element selection by category in the current view. Migrated to separated addin [RevitMVVMlight](https://github.com/giobel/RevitMVVMlight)
 
@@ -31,14 +30,14 @@ Select the titleblock of the selected Sheets.
 1. Select the views in the Project Browser
 2. Launch the command
 
-## Isolate Categories
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/isoCategory.png) Isolate Categories
 
 Selects all the elements of the categories selected.
 
-## Show Selected
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/showSelected.png) Show Selected
 
 Zoom on the selected elements (can be used after (Select from Excel)[https://giobel.github.io/ReviTab/docs/Documentation/ExcelLink.html] )
 
-## Show Latest View
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/showLatest.png) Show Latest View
 
 Open the latest view created (can be used after creating a section or a callout).

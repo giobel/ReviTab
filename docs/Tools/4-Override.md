@@ -28,7 +28,7 @@ foreach (var element in grouped) {
 }
 ```
 
-## Override Dimension
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/dimensionOverride.png) Override Dimension
 
 [Buttons Tools/OverrideDimensions.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Tools/OverrideDimensions.cs)
 

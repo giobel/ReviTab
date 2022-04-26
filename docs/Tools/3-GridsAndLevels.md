@@ -5,15 +5,15 @@ parent: Tools
 nav_order: 3
 ---
 
-## Swap Grid Head
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/swapGrids.png) Swap Grid Head
 
 Change the (2d) Grid Head end position in a view.
 
-## Copy Grid Extents (WIP)
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/copyGridExtents.png) Copy Grid Extents (WIP)
 
 Copy the extents of the grid from a view to another.
 
-## Swap Level Bubble
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/swapLevels.png) Swap Level Bubble
 
 Change the (2d) Level bubble end position in a view.
 

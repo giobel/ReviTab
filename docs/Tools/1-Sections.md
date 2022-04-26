@@ -5,7 +5,7 @@ parent: Tools
 nav_order: 1
 ---
 
-## Column Sections
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/columnSection.png) Column Sections
 
 Columns are point based elements. An offset is applied to the location point to create the section box
 
@@ -21,11 +21,11 @@ XYZ max = new XYZ(v.GetLength() / 2 + 1, topZ, farClip);
 ```
 ![image](https://user-images.githubusercontent.com/27025848/165198015-0f0239b5-c2b5-4bed-a729-58836088c494.png)
 
-## Line based sections
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/lineSection.png) Line based sections
 
 Works with walls, structural framings and lines.
 
-## Flip Sections
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/flipSection.png) Flip Sections
 
 Change the direction of a multiple sections. 
 
