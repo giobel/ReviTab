@@ -16,7 +16,7 @@ nav_order: 1
 
 ---
 
-## Add View to Sheet
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/addView.png) Add View to Sheet
 Add the current view to a sheet
 
 ![image](https://user-images.githubusercontent.com/27025848/161192103-ab5435b3-bc01-4fe4-8caf-fb96d877fafc.png)
