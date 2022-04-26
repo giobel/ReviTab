@@ -21,14 +21,14 @@ Add the current view to a sheet
 
 ![image](https://user-images.githubusercontent.com/27025848/161192103-ab5435b3-bc01-4fe4-8caf-fb96d877fafc.png)
 
-![image](https://github.com/giobel/ReviTab/blob/master/ReviTab/Resources/addSheetByNumber.png)
+![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/addSheetByNumber.png)
 ## Add Sheet by Number
 Creates x number of sheets.
 Sheet must have a "Package" parameter.
 
 ![image](https://user-images.githubusercontent.com/27025848/162360255-9c70b237-4321-4ae6-b881-41b57203a2d8.png)
 
-![image](https://github.com/giobel/ReviTab/blob/master/ReviTab/Resources/addMultipleViews.png)
+![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/addMultipleViews.png)
 
 ## Add Multiple Views
 1. Select the views in the Project Browser

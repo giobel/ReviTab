@@ -5,7 +5,7 @@ parent: Tools
 nav_order: 7
 ---
 
-![printSelected](https://github.com/giobel/ReviTab/blob/master/ReviTab/Resources/backgroundPrint.png)
+![printSelected](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/backgroundPrint.png)
 
 ## Print Selected
 
