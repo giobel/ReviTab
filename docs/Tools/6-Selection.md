@@ -19,11 +19,11 @@ nav_order: 6
 
 Filter element selection by category in the current view. Migrated to separated addin [RevitMVVMlight](https://github.com/giobel/RevitMVVMlight)
 
-## Select All Text
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/selectText.png) Select All Text
 
 Select all text notes in the project.
 
-## Select Titleblocks
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/tblock.png) Select Titleblocks
 
 Select the titleblock of the selected Sheets.
 
