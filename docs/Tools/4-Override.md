@@ -5,7 +5,7 @@ parent: Tools
 nav_order: 4
 ---
 
-## Override Colours
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/overrideColors.png) Override Colours
 
 [/Buttons Tools/OverrideColors.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Tools/OverrideColors.cs)
 
@@ -27,6 +27,8 @@ foreach (var element in grouped) {
     Autodesk.Revit.DB.Color pcolor = new Autodesk.Revit.DB.Color(hash[0], hash[1], hash[2]);
 }
 ```
+
+---
 
 ## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/dimensionOverride.png) Override Dimension
 
