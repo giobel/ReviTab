@@ -16,11 +16,28 @@ nav_order: 3
 
 ---
 
-## List Text Notes
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/addRev.png) List Line Styles Notes
+[/Buttons Documentation/LineStyles.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%2020Documentation/LineStyles.cs)
 
-Text
+List all the Line Styles in the project. Set View Scale to 1:1 to display the list correctly.
 
-## Delete Text Notes Types
+---
 
-Text
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/deleteRev.png)Delete Line Styles Types
+[/Buttons Documentation/DeleteLineStyles.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%2020Documentation/DeleteLineStyles.cs)
 
+Delete the selcted Line Style. Lines with that line style will be changed to Thin Lines.
+
+---
+
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/addRev.png) List Text Notes
+[/Buttons Documentation/TextFonts.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%2020Documentation/TextFonts.cs)
+
+List all the Text Notes in the project. Set View Scale to 1:1 to display the list correctly.
+
+---
+
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/deleteRev.png)Delete Text Notes Types
+[/Buttons Documentation/DeleteTextFont.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%2020Documentation/DeleteTextFont.cs)
+
+Delete the selcted Text Notes Types.

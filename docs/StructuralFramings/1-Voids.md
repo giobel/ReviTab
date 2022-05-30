@@ -39,6 +39,6 @@ Modeless window that calculates the distance from the origin to the beam centerp
 ---
 
 ## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/lock.png) Lock Openings
-[/Buttons Framings and Walls/VoidByFace.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Framings%20and%20Walls/VoidByFace.cs)
+[/Buttons Framings and Walls/LockOpenings.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Framings%20and%20Walls/LockOpenings.cs)
 
 Lock the void families to their corresponding reference plane
