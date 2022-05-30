@@ -6,7 +6,7 @@ nav_order: 2
 ---
 
 ## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/addRev.png) Uprev Sheet
-[/Buttons Documentation/UpRevSheet.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%2020Documentation/UpRevSheet.cs)
+[/Buttons Documentation/UpRevSheet.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Documentation/UpRevSheet.cs)
 
 Add the next revision to a titleblock.
 

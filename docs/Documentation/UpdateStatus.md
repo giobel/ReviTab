@@ -6,7 +6,7 @@ nav_order: 4
 ---
 
 ## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/manage.png) Update Status
-[/Buttons Documentation/UpdateModelStatus.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%2020Documentation/UpdateModelStatus.cs)
+[/Buttons Documentation/UpdateModelStatus.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Documentation/UpdateModelStatus.cs)
 
 Populate preset families with information derived from the active Revit project.
 

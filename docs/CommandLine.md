@@ -5,9 +5,9 @@ nav_order: 8
 ---
 
 # Command Line
+[/ReviTab/ApplicationRibbon.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/ApplicationRibbon.cs#L847)
 
 Text Input in the Revit toolbar.
-[/ReviTab/ApplicationRibbon.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/ApplicationRibbon.cs#L847)
 
 ![image](https://user-images.githubusercontent.com/27025848/170902996-7963c64c-ae62-4eca-ae08-80cbd7196d7b.png)
 
