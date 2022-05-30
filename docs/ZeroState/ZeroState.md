@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Zero State
+title: ZeroState
 nav_order: 9
 has_children: true
 permalink: /docs/ZeroState
