@@ -1,9 +1,9 @@
 ---
 layout: default
-title: ZeroState
+title: Zero State
 nav_order: 9
 has_children: true
-permalink: /docs/ZeroState
+permalink: /docs/Zero-State
 ---
 
-# Tools
+# Zero State

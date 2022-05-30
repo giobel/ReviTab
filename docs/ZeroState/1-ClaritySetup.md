@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Clarity Setup
-parent: ZeroState
+parent: Zero State
 nav_order: 1
 ---
 

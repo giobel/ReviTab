@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Info
-parent: ZeroState
+parent: Zero State
 nav_order: 4
 ---
 

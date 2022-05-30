@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Background Print
-parent: ZeroState
+parent: Zero State
 nav_order: 3
 ---
 

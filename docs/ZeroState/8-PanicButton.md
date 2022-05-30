@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Panic Button
-parent: ZeroState
+parent: Zero State
 nav_order: 8
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Purge Families
-parent: ZeroState
+parent: Zero State
 nav_order: 2
 ---
 

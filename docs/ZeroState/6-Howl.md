@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Howl
-parent: ZeroState
+parent: Zero State
 nav_order: 6
 ---
 
