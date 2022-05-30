@@ -10,8 +10,7 @@ These commands have been developed for a specific project using these families: 
 ## Place Void by Face
 
 Add one ore more voids to a beam face providing the distance(s) from the beam start, mid or end point and its size.
-
-<img src="https://drive.google.com/file/d/1bFOfLDT6K9uV7vxEvi5O8D7sZDU91_z4/preview" alt="Watch the video" data-canonical-src="https://img.youtube.com/vi/jvsqUJG3uHA/maxresdefault.jpg" style="max-width: 100%;">
+[Video](https://drive.google.com/file/d/1bFOfLDT6K9uV7vxEvi5O8D7sZDU91_z4/preview)
 
 ---
 

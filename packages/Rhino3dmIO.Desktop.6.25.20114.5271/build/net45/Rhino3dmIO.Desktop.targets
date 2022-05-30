@@ -1,0 +1,26 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Ensure native libs get copied to output dir
+  -->
+  <ItemGroup>
+    <NativeLibs Include="$(MSBuildThisFileDirectory)**\*.dll" />
+    <NativeLibs Include="$(MSBuildThisFileDirectory)**\*.dylib" />
+    <None Include="@(NativeLibs)">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!--
+    Mac only: Copy native libs to app bundle (and maintain folder structure)
+  -->
+  <Target Name="_CopyRhino3dmIoNativeToBundle" AfterTargets="_CopyContentToBundle">
+    <ItemGroup>
+      <MacNativeLibs Include="$(MSBuildThisFileDirectory)**\*.dylib" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(MacNativeLibs)"
+      DestinationFolder="$(AppBundleDir)\Contents\MonoBundle\%(RecursiveDir)"
+      />
+  </Target>
+</Project>
