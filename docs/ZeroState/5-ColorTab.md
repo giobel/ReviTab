@@ -5,6 +5,7 @@ parent: ZeroState
 nav_order: 5
 ---
 
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/rainbow.png) Color Tab
 [/Buttons Zero State/ColorTab.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Zero%20State/ColorTab.cs)
 
 All credits to [pyrevit](https://github.com/eirannejad/pyRevit/blob/4afd56ccb4d77e4e0228b8e64d80d1f541bc791e/pyrevitlib/pyrevit/runtime/EventHandling.cs)

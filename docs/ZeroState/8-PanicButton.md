@@ -5,6 +5,7 @@ parent: ZeroState
 nav_order: 8
 ---
 
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/panButton.png) Panic Button
 [/Buttons Zero State/PanicButton.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Zero%20State/PanicButton.cs)
 
 A button that does nothing. Styled with [neumorphism.io](https://neumorphism.io/#e0e0e0)

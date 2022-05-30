@@ -5,6 +5,7 @@ parent: ZeroState
 nav_order: 4
 ---
 
+## ![image](https://raw.githubusercontent.com/giobel/ReviTab/master/ReviTab/Resources/info.png) Info
 [/Buttons Zero State/VersionInfo.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Zero%20State/VersionInfo.cs)
 
 Save links to useful project folders:
