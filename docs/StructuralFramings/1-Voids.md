@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Openings in beams
-parent: StructuralFramings
+parent: Structural Framings
 nav_order: 1
 ---
 

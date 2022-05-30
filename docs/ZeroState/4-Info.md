@@ -15,9 +15,9 @@ Save links to useful project folders:
 File path can be hardcoded or taken from text notes of a dedicated type:
 
 ```csharp
-			IEnumerable<Element> listOfElements = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TextNotes)
-				.WhereElementIsNotElementType()
-				.ToElements().Where(e => e.Name == "FolderLink");
+IEnumerable<Element> listOfElements = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TextNotes)
+	.WhereElementIsNotElementType()
+	.ToElements().Where(e => e.Name == "FolderLink");
 ```
 
 ![image](https://user-images.githubusercontent.com/27025848/170897665-220e4965-6db6-43cc-8e4b-2f74706f88d3.png)

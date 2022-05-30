@@ -1,13 +1,13 @@
 ---
 layout: default
 title: Beam Edit
-parent: StructuralFramings
+parent: Structural Framings
 nav_order: 2
 ---
 
 ## Beam by TypeName
 
-Change a beam type by providing a new name
+Change a beam type by providing a different type name.
 
 ## Move beam end
 

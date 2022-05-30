@@ -1,9 +1,9 @@
 ---
 layout: default
-title: StructuralFramings
+title: Structural Framings
 nav_order: 5
 has_children: true
-permalink: /docs/StructuralFramings
+permalink: /docs/Structural-Framings
 ---
 
 # Structural Framings
