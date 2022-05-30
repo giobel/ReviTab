@@ -143,6 +143,26 @@ namespace ReviTab {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap directShape {
+            get {
+                object obj = ResourceManager.GetObject("directShape", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap drawAxis {
+            get {
+                object obj = ResourceManager.GetObject("drawAxis", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap duplicateView {
             get {
                 object obj = ResourceManager.GetObject("duplicateView", resourceCulture);
@@ -156,6 +176,16 @@ namespace ReviTab {
         public static System.Drawing.Bitmap extractDetail {
             get {
                 object obj = ResourceManager.GetObject("extractDetail", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap flatten {
+            get {
+                object obj = ResourceManager.GetObject("flatten", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +286,16 @@ namespace ReviTab {
         public static System.Drawing.Bitmap panic_button {
             get {
                 object obj = ResourceManager.GetObject("panic_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap projectLines {
+            get {
+                object obj = ResourceManager.GetObject("projectLines", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -386,6 +426,16 @@ namespace ReviTab {
         public static System.Drawing.Bitmap tblock {
             get {
                 object obj = ResourceManager.GetObject("tblock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap topoIntersect {
+            get {
+                object obj = ResourceManager.GetObject("topoIntersect", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

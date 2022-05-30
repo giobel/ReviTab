@@ -327,29 +327,28 @@ namespace ReviTab
 
                 #endregion
 
-#region Geometry
-#if DEBUG
+                #region Geometry
 
+#if DEBUG
                 IList<PushButtonData> stackedButtonsGroupGeometry = new List<PushButtonData>
                 {
                     
-                    CreatePushButton("intMesh", "Intersect Mesh", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "ReviTab.WallTopographyIntersections", "Intersect line with mesh"),
+                    CreatePushButton("intMesh", "Intersect Mesh", null, Resource1.topoIntersect, "ReviTab.WallTopographyIntersections", "Intersect line with mesh"),
 
-                    CreatePushButton("btnSATtoDS", "Element to DirectShape", "pack://application:,,,/ReviTab;component/Resources/flatten.png", "", "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element."),
+                    CreatePushButton("btnSATtoDS", "Element to DirectShape", null, Resource1.directShape, "ReviTab.SATtoDirectShape", "Convert an element into a DirectShape. Deletes the original element."),
 
-                    CreatePushButton("btnProjectLines", "Project Lines to Surface", "pack://application:,,,/ReviTab;component/Resources/projectLine.png", "", "ReviTab.ProjectLines", "Project some lines onto a surface."),
+                    CreatePushButton("btnProjectLines", "Project Lines to Surface", null, Resource1.projectLines, "ReviTab.ProjectLines", "Project some lines onto a surface."),
 
-                    CreatePushButton("btnDrawAxis", "Draw Axis", "pack://application:,,,/ReviTab;component/Resources/axis.png", "", "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface.")                    
+                    CreatePushButton("btnDrawAxis", "Draw Axis", null, Resource1.drawAxis, "ReviTab.DrawObjectAxis", "Draw local and global axis on a point on a surface.")       
 
                 };
 
                 AddSplitButton(geometry, stackedButtonsGroupGeometry, "GeometryButton", "Geometry");
-
-
 #endif
+
 #endregion
 
-#region Zero State
+                #region Zero State
 
 #if DEBUG
                 IList<PushButtonData> stackedButtonsZeroState = new List<PushButtonData>();

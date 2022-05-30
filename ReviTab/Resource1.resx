@@ -142,11 +142,20 @@
   <data name="copyViewFilter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\copyViewFilter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="directShape" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\directShape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="drawAxis" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\drawAxis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="duplicateView" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\duplicateView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="extractDetail" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\extractDetail.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="flatten" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\flatten.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="flipSection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\flipSection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -177,6 +186,9 @@
   </data>
   <data name="panic_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\panic-button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="projectLines" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\projectLines.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="rainbow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\rainbow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -216,5 +228,8 @@
   </data>
   <data name="tblock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\tblock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="topoIntersect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\topoIntersect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
