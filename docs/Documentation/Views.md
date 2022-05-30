@@ -135,5 +135,3 @@ Import Text, Dimensions and Lines from Rhino to Revit.
 [/Buttons Documentation/SetTitleblockScale.cs](https://github.com/giobel/ReviTab/blob/master/ReviTab/Buttons%20Documentation/SetTitleblockScale.cs)
 
 Set the titleblock scale based on the largest scale on the sheet. Titleblock must have a "Scalebar scale" parameter.
-
-![image](https://user-images.githubusercontent.com/27025848/162382824-fe2d283e-5651-44de-9729-0d48290ee0fb.png)
