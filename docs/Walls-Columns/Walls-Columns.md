@@ -2,11 +2,10 @@
 layout: default
 title: Walls and Columns
 nav_order: 6
-has_children: true
 permalink: /docs/Walls-Columns
 ---
 
-# Walls
+# Walls and Columns
 {: .no_toc }
 
 ## Table of contents
