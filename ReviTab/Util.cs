@@ -1905,37 +1905,37 @@ namespace ReviTab
             .GetExecutingAssembly().GetType( s );
       }
 
-      object NewExternalDefinitionCreationOptions(
-        string name,
-        ParameterType parameterType )
-      {
-        object[] args = new object[] {
-          name, parameterType };
+      //object NewExternalDefinitionCreationOptions(
+      //  string name,
+      //  ParameterType parameterType )
+      //{
+      //  object[] args = new object[] {
+      //    name, parameterType };
 
-        return _external_definition_creation_options_type
-          .GetConstructor( new Type[] {
-            _external_definition_creation_options_type } )
-          .Invoke( args );
-      }
+      //  return _external_definition_creation_options_type
+      //    .GetConstructor( new Type[] {
+      //      _external_definition_creation_options_type } )
+      //    .Invoke( args );
+      //}
 
-      public Definition NewDefinition(
-        Definitions definitions,
-        string name,
-        ParameterType parameterType )
-      {
-        //return definitions.Create( 
-        //  NewExternalDefinitionCreationOptions() );
+      //public Definition NewDefinition(
+      //  Definitions definitions,
+      //  string name,
+      //  ParameterType parameterType )
+      //{
+      //  //return definitions.Create( 
+      //  //  NewExternalDefinitionCreationOptions() );
 
-        object opt
-          = NewExternalDefinitionCreationOptions(
-            name,
-            parameterType );
+      //  object opt
+      //    = NewExternalDefinitionCreationOptions(
+      //      name,
+      //      parameterType );
 
-        return typeof( Definitions ).InvokeMember(
-          "Create", BindingFlags.InvokeMethod, null,
-          definitions, new object[] { opt } )
-          as Definition;
-      }
+      //  return typeof( Definitions ).InvokeMember(
+      //    "Create", BindingFlags.InvokeMethod, null,
+      //    definitions, new object[] { opt } )
+      //    as Definition;
+      //}
     }
 #endregion // Compatibility fix for spelling error change
   }
@@ -2390,7 +2390,7 @@ namespace ReviTab
       this Definitions definitions,
       Document doc,
       string nome,
-      ParameterType tipo,
+      ForgeTypeId tipo,
       bool visibilidade )
     {
       // Does this need updating to check for 
@@ -2406,7 +2406,7 @@ namespace ReviTab
         Type t = ls[0];
         ConstructorInfo c = t
         .GetConstructor( new Type[] { typeof(string),
-                typeof(ParameterType) } );
+                typeof(ForgeTypeId) } );
         object ed = c
         .Invoke( new object[] { nome, tipo } );
         ed.GetType().GetProperty( "Visible" )
@@ -2419,7 +2419,7 @@ namespace ReviTab
       {
         value = definitions.GetType()
         .GetMethod( "Create", new Type[] { typeof(string),
-                typeof(ParameterType), typeof(bool) } ).Invoke( definitions,
+                typeof(ForgeTypeId), typeof(bool) } ).Invoke( definitions,
           new object[] { nome, tipo,
                 visibilidade } ) as Definition;
       }
