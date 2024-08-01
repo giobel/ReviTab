@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
@@ -1817,10 +1817,10 @@ namespace ReviTab
             {
                 try
                 {
-                    if (view.LookupParameter("Sheet Number").AsString() == "---" && !view.LookupParameter("View Purpose").AsString().Contains("Library"))
+                    if (view.LookupParameter("Sheet Number").AsString() == "---" && !view.LookupParameter("2_Primary View Categroy").AsString().Contains("LIBRARY"))
                     {
 
-                        viewsNotOnSheet.Add(new CardContent() { Value = 1, Content = view.Name + " - " + view.LookupParameter("View Purpose").AsString() });
+                        viewsNotOnSheet.Add(new CardContent() { Value = 1, Content = view.Name + " - " + view.LookupParameter("2_Primary View Categroy").AsString() });
                     }
 
                 }
