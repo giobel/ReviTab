@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Application ReviTab</Name>
+    <Assembly>ReviTab\ReviTab.dll</Assembly>
+    <FullClassName>ReviTab.ApplicationRibbon</FullClassName>
+    <ClientId>3dccea64-f8a9-4761-9849-d9a29c94be46</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>

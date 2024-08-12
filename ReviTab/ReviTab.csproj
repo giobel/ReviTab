@@ -1,0 +1,818 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props" Condition="Exists('..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+      None
+    </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8D7EC115-7A07-46C4-BD90-805B6F7C02C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReviTab</RootNamespace>
+    <AssemblyName>ReviTab</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2017|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2017\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2017</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2017|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug2017\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2019|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2019\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2019</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2019|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug2019\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2018|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2018\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2018</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2018|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug2018\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SAM|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\SAM\</OutputPath>
+    <DefineConstants>SAM</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SAM|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\SAM\</OutputPath>
+    <DefineConstants>SAM</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2020|AnyCPU'">
+    <OutputPath>bin\Debug2020\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2020</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2020|x64'">
+    <DefineConstants>TRACE;DEBUG;REVIT2020</DefineConstants>
+    <OutputPath>bin\x64\Debug2020\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2021|AnyCPU'">
+    <OutputPath>bin\Debug2021\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2021</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2022|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2022\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2022</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2022|x64'">
+    <OutputPath>bin\x64\Debug2022\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2024|AnyCPU'">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\Debug2024\</OutputPath>
+		<DefineConstants>TRACE;DEBUG;REVIT2024</DefineConstants>
+		<DebugType>full</DebugType>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<LangVersion>7.3</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2024|x64'">
+		<OutputPath>bin\x64\Debug2024\</OutputPath>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<LangVersion>7.3</LangVersion>
+	</PropertyGroup>
+  <ItemGroup>
+
+    <Reference Include="AirtableApiClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Airtable.1.1.0\lib\netstandard2.0\AirtableApiClient.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="MySql.Data, Version=8.0.15.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NewtonSoft.Json">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2024\NewtonSoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <!-- MULTIVERSION REVIT API REFERENCES START -->
+    <!-- DEBUG -->
+    <!-- 2017 -->
+    <!-- 2018 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2018'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2018\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPI">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2018'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2018\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2019 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2019'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2019'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2020 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2020'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2020'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2021 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2021'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2021'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2021'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2022 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2022'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2022'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2022'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2022\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UIFramework">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\UIFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2022'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2022\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- 2024 -->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2024'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2024'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2024'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2024\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2024'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2024\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UIFramework" Condition="'$(Configuration)' == 'Debug2024'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2024\UIFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!--RELEASE-->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Release'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Release'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Release'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Release'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!--SAM-->
+    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'SAM'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'SAM'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Rhino3dm, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rhino3dm.0.3.0\lib\net45\Rhino3dm.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <!-- MULTIVERSION REVIT API REFERENCES END -->
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.0\lib\net461\System.Text.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationRibbon.cs" />
+    <Compile Include="Buttons Documentation\MoveViewportToSheet.cs" />
+    <Compile Include="Buttons Documentation\ExtractDetail.cs" />
+    <Compile Include="Buttons Documentation\MatchSectionViewCrop.cs" />
+    <Compile Include="Buttons Documentation\RhinoImport.cs" />
+    <Compile Include="Buttons Documentation\DuplicateSheets.cs" />
+    <Compile Include="Buttons Framings and Walls\BeamByTypeName.cs" />
+    <Compile Include="Buttons Documentation\CreateSheetByNumber.cs" />
+    <Compile Include="Buttons Documentation\ExportToSVG.cs" />
+    <Compile Include="Buttons Documentation\ExtendGrids.cs" />
+    <Compile Include="Buttons Documentation\AlignViews.cs" />
+    <Compile Include="Buttons Documentation\DeleteLineStyles.cs" />
+    <Compile Include="Buttons Documentation\LineStyles.cs" />
+    <Compile Include="Buttons Excel\ExportViewTemplates.cs" />
+    <Compile Include="Buttons Excel\SelectedDataParametersToExcel.cs" />
+    <Compile Include="Buttons Excel\SelectFromExcel.cs" />
+    <Compile Include="Buttons Framings and Walls\VoidByRefPlane.cs" />
+    <Compile Include="Buttons Geometry\CreateExtrusion.cs" />
+    <Compile Include="Buttons Geometry\DrawModelCurve.cs" />
+    <Compile Include="Buttons Geometry\RhinoSpline.cs" />
+    <Compile Include="Buttons Management\PushToAirtable.cs" />
+    <Compile Include="Buttons Management\UpdateModelStatus.cs" />
+    <Compile Include="Buttons Tools\OpenLastCreatedView.cs" />
+    <Compile Include="Buttons Tools\ShowSelected.cs" />
+    <Compile Include="Buttons Tools\SelectTitleblocks.cs" />
+    <Compile Include="Buttons Tools\IsolateCategories.cs" />
+    <Compile Include="Buttons Tools\RevCloudsSelected.cs" />
+    <Compile Include="Buttons Tools\RevCloudsOLD.cs" />
+    <Compile Include="Buttons Tools\CopyViewFilters.cs" />
+    <Compile Include="Buttons Tools\CreateNurbsModelCurve.cs" />
+    <Compile Include="Buttons Tools\DisableWarnings.cs" />
+    <Compile Include="Buttons Tools\ExportJson.cs" />
+    <Compile Include="Buttons Tools\FlipSections.cs" />
+    <Compile Include="Buttons Tools\AlignColumns.cs" />
+    <Compile Include="Buttons Tools\CreateSectionColumns.cs" />
+    <Compile Include="Buttons Geometry\WallTopographyIntersections.cs" />
+    <Compile Include="Buttons Tools\IntersectPlaneMesh.cs" />
+    <Compile Include="Buttons Tools\OverrideColors.cs" />
+    <Compile Include="Buttons Tools\PropagateGridExtents.cs" />
+    <Compile Include="Buttons Excel\UpdateViewportsFromExcel.cs" />
+    <Compile Include="Buttons Excel\ViewportsToExcel.cs" />
+    <Compile Include="Buttons Excel\UpdateFromExcel.cs" />
+    <Compile Include="Buttons Excel\SelectedDataToExcel.cs" />
+    <Compile Include="Buttons Documentation\TextFonts.cs" />
+    <Compile Include="Buttons Tools\FilterSelectionDimensions.cs" />
+    <Compile Include="Buttons Tools\FilterSelectionTags.cs" />
+    <Compile Include="Buttons Tools\FilterSelectionText.cs" />
+    <Compile Include="Buttons Tools\FilterSelectionColumns.cs" />
+    <Compile Include="Buttons Tools\FilterSelectionGrids.cs" />
+    <Compile Include="Buttons Tools\FilterSelectionLines.cs" />
+    <Compile Include="Buttons Tools\FilterSelectionBeams.cs" />
+    <Compile Include="Buttons Tools\FilterSelectionWalls.cs" />
+    <Compile Include="Buttons Tools\RhinoMesh.cs" />
+    <Compile Include="Buttons Tools\SwapLevelsBubble.cs" />
+    <Compile Include="Buttons Zero State\Unsuscribe.cs" />
+    <Compile Include="Buttons Zero State\UpdateSuscribe.cs" />
+    <Compile Include="Buttons Zero State\ColorTab.cs" />
+    <Compile Include="Buttons Zero State\AddPDFcustomProperties.cs" />
+    <Compile Include="Buttons Tools\PrintSelected.cs" />
+    <Compile Include="Buttons Tools\CopyLinkedElements.cs" />
+    <Compile Include="Buttons Zero State\Howl.cs" />
+    <Compile Include="Buttons Framings and Walls\ChangeBeamLocation.cs" />
+    <Compile Include="Buttons Geometry\DrawObjectAxis.cs" />
+    <Compile Include="Buttons Framings and Walls\JoinMultiple.cs" />
+    <Compile Include="Buttons Geometry\ProjectLines.cs" />
+    <Compile Include="Buttons Documentation\AddActiveViewToSheet.cs" />
+    <Compile Include="Buttons Framings and Walls\LockOpenings.cs" />
+    <Compile Include="Buttons Documentation\DeleteTextFont.cs" />
+    <Compile Include="Buttons Documentation\UpRevSheet.cs" />
+    <Compile Include="Buttons Documentation\RemoveFirstRevision.cs" />
+    <Compile Include="Buttons Excel\RevisionCloudsSummary.cs" />
+    <Compile Include="Buttons Framings and Walls\SetBeamZOffset.cs" />
+    <Compile Include="Buttons Documentation\SetTitleblockScale.cs" />
+    <Compile Include="Buttons Framings and Walls\SwitchJoin.cs" />
+    <Compile Include="Buttons Framings and Walls\UnjoinAll.cs" />
+    <Compile Include="Buttons Framings and Walls\UnjoinElements.cs" />
+    <Compile Include="Buttons Zero State\PanicButton.cs" />
+    <Compile Include="Buttons Zero State\VersionInfo.cs" />
+    <Compile Include="Buttons Documentation\AddLegendToSheets.cs" />
+    <Compile Include="Buttons Documentation\AddMultipleViewsToSheet.cs" />
+    <Compile Include="Buttons Framings and Walls\AddTagsApplyUndo.cs" />
+    <Compile Include="Buttons Tools\CreateSections.cs" />
+    <Compile Include="Buttons Documentation\CreateViewSet.cs" />
+    <Compile Include="Buttons Framings and Walls\EditBeamJoin.cs" />
+    <Compile Include="Buttons Tools\OverrideDimensions.cs" />
+    <Compile Include="Buttons Documentation\Parameterizer.cs" />
+    <Compile Include="Buttons Framings and Walls\MoveBeamEnd.cs" />
+    <Compile Include="Buttons Management\PushToDB.cs" />
+    <Compile Include="Buttons Documentation\SelectByParameter.cs" />
+    <Compile Include="Buttons Framings and Walls\VoidByFace.cs" />
+    <Compile Include="Buttons Zero State\PrintInBackground.cs" />
+    <Compile Include="Buttons Tools\SwapGridBubble.cs" />
+    <Compile Include="Buttons Framings and Walls\VoidByLine.cs" />
+    <Compile Include="Buttons Framings and Walls\ColumnSplitter.cs" />
+    <Compile Include="Buttons Framings and Walls\WallSplitter.cs" />
+    <Compile Include="Forms\FormNeumorphism.xaml.cs">
+      <DependentUpon>FormNeumorphism.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Button Tags\PlaceTags - Copy.cs" />
+    <Compile Include="Button Tags\PlaceTags.cs" />
+    <Compile Include="Button Tags\SaveTags.cs" />
+    <Compile Include="Button Tags\SelectAllTagsInViewport.cs" />
+    <Compile Include="Button Tags\TagElementsInViewport.cs" />
+    <Compile Include="Forms\FormPickFromDropDown.xaml.cs">
+      <DependentUpon>FormPickFromDropDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCopyLinkedElements.xaml.cs">
+      <DependentUpon>FormCopyLinkedElements.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RevitElementDrawingServer.cs" />
+    <Compile Include="Commands\AddMetadataHelpers.cs" />
+    <Compile Include="Commands\ButtonPickPoint.cs" />
+    <Compile Include="Commands\ElementFilters.cs" />
+    <Compile Include="Commands\GeomUtils.cs" />
+    <Compile Include="Commands\GlobalObjects.cs" />
+    <Compile Include="Commands\Helpers.cs" />
+    <Compile Include="Buttons Geometry\SATtoDirectShape.cs" />
+    <Compile Include="Commands\PlaceTags\AcceptChanges.cs" />
+    <Compile Include="Commands\PlaceTags\HelpersPlaceTags.cs" />
+    <Compile Include="Commands\PlaceTags\PlaceTags.cs" />
+    <Compile Include="Commands\PlaceTags\UndoChanges.cs" />
+    <Compile Include="Commands\Press.cs" />
+    <Compile Include="Buttons Zero State\SuppressWarnings.cs" />
+    <Compile Include="Commands\Rhynamo.cs" />
+    <Compile Include="Commands\VoidByLineHelpers.cs" />
+    <Compile Include="Forms\CmdWindowHandleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CmdWindowHandleForm.Designer.cs">
+      <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCopyViewFilter.xaml.cs">
+      <DependentUpon>FormCopyViewFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormInputCombobox.xaml.cs">
+      <DependentUpon>FormInputCombobox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormTwoTextBoxes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormTwoTextBoxes.designer.cs">
+      <DependentUpon>FormTwoTextBoxes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAddMetadata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddMetadata.designer.cs">
+      <DependentUpon>FormAddMetadata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCreateSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCreateSheet.Designer.cs">
+      <DependentUpon>FormCreateSheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDuplicateSheets.xaml.cs">
+      <DependentUpon>FormDuplicateSheets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormHowl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormHowl.designer.cs">
+      <DependentUpon>FormHowl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAddMultipleViews.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddMultipleViews.Designer.cs">
+      <DependentUpon>FormAddMultipleViews.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPlaceTags.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPlaceTags.designer.cs">
+      <DependentUpon>FormPlaceTags.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAddOpening.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddOpening.designer.cs">
+      <DependentUpon>FormAddOpening.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPickSheets.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPickSheets.designer.cs">
+      <DependentUpon>FormPickSheets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormOpenFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormOpenFile.designer.cs">
+      <DependentUpon>FormOpenFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCreateSections.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCreateSections.designer.cs">
+      <DependentUpon>FormCreateSections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAddActiveView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAddActiveView.designer.cs">
+      <DependentUpon>FormAddActiveView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormJoin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormJoin.designer.cs">
+      <DependentUpon>FormJoin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gHowl\Formatter.cs" />
+    <Compile Include="gHowl\SendPattern.cs" />
+    <Compile Include="gHowl\UdpSenderComponent.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Buttons Tools\SelectAllText.cs" />
+    <Compile Include="Forms\FormCreateViewSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCreateViewSet.Designer.cs">
+      <DependentUpon>FormCreateViewSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\multipleSections.png" />
+    <Resource Include="Resources\selectText.png" />
+    <Resource Include="Resources\backgroundPrint.png" />
+    <Resource Include="Resources\swapGrids.png" />
+    <Resource Include="Resources\createViewSet.png" />
+    <Resource Include="Resources\dimensionOverride.png" />
+    <Resource Include="Resources\addBeamOpening.png" />
+    <Resource Include="Resources\tag.png" />
+    <Resource Include="Resources\movement-arrows.png" />
+    <Resource Include="Resources\wiping.png" />
+    <Resource Include="Resources\line.png" />
+    <Resource Include="Resources\arrowUp.png" />
+    <Resource Include="Resources\joinEnd.png" />
+    <Resource Include="Resources\columnSplit.png" />
+    <Resource Include="Resources\legend.png" />
+    <Resource Include="Resources\claSetup.png" />
+    <Resource Include="Resources\info.png" />
+    <Resource Include="Resources\projectLine.png" />
+    <Resource Include="Resources\splitWalls.png" />
+    <Resource Include="Resources\axis.png" />
+    <Resource Include="Resources\ghowlicon.png" />
+    <Resource Include="Resources\copyLinked.png" />
+    <Resource Include="Resources\changebeamlocation.png" />
+    <Resource Include="Resources\info16x16.png" />
+    <Resource Include="Resources\ghowlicon16x16.png" />
+    <Resource Include="Resources\multipleJoin.png" />
+    <Resource Include="Resources\switchJoin.png" />
+    <Resource Include="Resources\unjoinAll.png" />
+    <Resource Include="Resources\unjoinMultiple.png" />
+    <Resource Include="Resources\selectFilter.png" />
+    <Resource Include="Resources\addView.png" />
+    <Resource Include="Resources\addMultipleViews.png" />
+    <Resource Include="Resources\ruler.png" />
+    <Resource Include="Resources\revCloud.png" />
+    <Resource Include="Resources\revCloudsmall.png" />
+    <Resource Include="Resources\rulerSmall.png" />
+    <Resource Include="Resources\lineSmall.png" />
+    <Resource Include="Resources\tagSmall.png" />
+    <Resource Include="Resources\wipingSmall.png" />
+    <Resource Include="Resources\addBeamOpeningSmall.png" />
+    <Resource Include="Resources\arrowUpSmall.png" />
+    <Resource Include="Resources\deleteRev.png" />
+    <Resource Include="Resources\addRev.png" />
+    <Resource Include="Resources\lock.png" />
+    <Resource Include="Resources\excel.png" />
+    <Resource Include="Resources\manage.png" />
+    <Resource Include="Resources\airtable.png" />
+    <Resource Include="Resources\elementType.png" />
+    <Resource Include="Resources\duplicateSheets.png" />
+    <Resource Include="Resources\alignColumns.png" />
+    <Resource Include="Resources\Icon1.ico" />
+    <Resource Include="Resources\panButton.png" />
+    <Resource Include="Resources\panButton_small.png" />
+    <Resource Include="Resources\rainbow.png" />
+    <Resource Include="Resources\metadata.png" />
+    <Resource Include="Resources\cloudSelection.png" />
+    <Resource Include="Resources\cloudSelectionCopy.png" />
+    <Resource Include="Resources\bground.png" />
+    <Resource Include="Resources\panic-button.png" />
+    <None Include="Resources\isoCategory.png" />
+    <None Include="Resources\swapLevels.png" />
+    <None Include="Resources\tblock.png" />
+    <None Include="Resources\show.png" />
+    <None Include="Resources\showSelected.png" />
+    <None Include="Resources\showLatest.png" />
+    <None Include="Resources\addSheetByNumber.png" />
+    <None Include="Resources\rhinoImport.png" />
+    <None Include="Resources\duplicateView.png" />
+    <None Include="Resources\extractDetail.png" />
+    <None Include="Resources\moveViewports.png" />
+    <None Include="Resources\alignViewports.png" />
+    <None Include="Resources\lineSection.png" />
+    <None Include="Resources\flipSection.png" />
+    <None Include="Resources\copyGridExtents.png" />
+    <None Include="Resources\columnSection.png" />
+    <None Include="Resources\copyViewFilter.png" />
+    <None Include="Resources\selectLines.png" />
+    <None Include="Resources\selectTags.png" />
+    <None Include="Resources\selectGrid.png" />
+    <None Include="Resources\selectDimensions.png" />
+    <None Include="Resources\selectColumn.png" />
+    <None Include="Resources\selectBeams.png" />
+    <None Include="Resources\overrideColors.png" />
+    <None Include="Resources\flatten.png" />
+    <None Include="Resources\topoIntersect.png" />
+    <None Include="Resources\projectLines.png" />
+    <None Include="Resources\drawAxis.png" />
+    <None Include="Resources\directShape.png" />
+    <Content Include="ReviTab.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\CmdWindowHandleForm.resx">
+      <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormTwoTextBoxes.resx">
+      <DependentUpon>FormTwoTextBoxes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddMetadata.resx">
+      <DependentUpon>FormAddMetadata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCreateSheet.resx">
+      <DependentUpon>FormCreateSheet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormHowl.resx">
+      <DependentUpon>FormHowl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddMultipleViews.resx">
+      <DependentUpon>FormAddMultipleViews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPlaceTags.resx">
+      <DependentUpon>FormPlaceTags.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddOpening.resx">
+      <DependentUpon>FormAddOpening.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPickSheets.resx">
+      <DependentUpon>FormPickSheets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormOpenFile.resx">
+      <DependentUpon>FormOpenFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCreateSections.resx">
+      <DependentUpon>FormCreateSections.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAddActiveView.resx">
+      <DependentUpon>FormAddActiveView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCreateViewSet.resx">
+      <DependentUpon>FormCreateViewSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormJoin.resx">
+      <DependentUpon>FormJoin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Forms\FormDuplicateSheets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\FormCopyViewFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\FormPickFromDropDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\FormInputCombobox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\FormNeumorphism.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\FormCopyLinkedElements.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="AfterClean">
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2018\ReviTab.addin" />
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2018\ReviTab.dll" />
+  </Target>
+  <Import Project="..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets" Condition="Exists('..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets'))" />
+    <Error Condition="!Exists('..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>copy "C:\Users\user\Documents\Repo\ReviTab-master\ReviTab\bin\Debug2022\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2022\ReviTab"
+copy "C:\Users\user\Documents\Repo\ReviTab-master\ReviTab\bin\Debug2024\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2024\ReviTab"
+SET ERRORLEVEL = 0</PostBuildEvent>
+  </PropertyGroup>
+</Project>

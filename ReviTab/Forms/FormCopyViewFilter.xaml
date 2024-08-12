@@ -1,0 +1,72 @@
+﻿<Window x:Class="ReviTab.Forms.FormCopyViewFilter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReviTab.Forms"
+             mc:Ignorable="d" Width="455" Height="577.613" Title="Copy View Filters" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,10" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,10,0,0">
+            <GroupBox x:Name="gBoxViewTemplate" Header="Select the source View Template:" BorderThickness="0">
+                <StackPanel Margin="10">
+                    <ComboBox x:Name="cboxSourceTemplate"   
+                        ItemsSource="{Binding ViewTemplateList}"
+                        DisplayMemberPath="Name"
+                        Height="25"   
+                        VerticalAlignment="Top"  
+                        BorderThickness="1"  
+                        VerticalContentAlignment="Center"  
+                        Background="Transparent"  
+                        Foreground="Black"                         SelectionChanged="CboxSourceTemplate_SelectionChanged" DropDownOpened="CboxSourceTemplate_DropDownOpened"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox x:Name="gBoxViewFilters" Header="Select the view filter(s):" BorderThickness="0">
+                <StackPanel Margin="10">
+                    <ListView Name="filterList"
+                      SelectionMode="Multiple" 
+                              
+                  ItemsSource="{Binding ViewFiltersList}"
+                  DisplayMemberPath="Name" SelectionChanged="FilterList_SelectionChanged" Height="140"/>
+                    <StackPanel Height="30" Orientation="Horizontal">
+                        <Label x:Name="labelSelectAllFilters"  Margin="0" MouseUp="Label_SelectAllFilters_MouseUp" Content="Select All"/>
+
+                        <Label x:Name="labelDeselectAllFilters" Content="Clear selection" MouseUp="Label_ClearSelectionFilters_MouseUp" />
+                    </StackPanel>
+                    
+                </StackPanel>
+                  
+               
+            </GroupBox>
+            <GroupBox x:Name="gBoxTargetTemplate" Header="Select the target View Template:" BorderThickness="0">
+                <StackPanel Margin="10">
+                    <ListView Name="targetTemplatesList" 
+                      SelectionMode="Multiple" 
+                  ItemsSource="{Binding TargetTemplate}"
+                  DisplayMemberPath="Name" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="140" />
+                    <StackPanel Height="30" Orientation="Horizontal">
+                        <Label x:Name="labelSelectAllTemplates"  Margin="0" MouseUp="Label_SelectAllTemplates_MouseUp" Content="Select All"/>
+                        
+                <Label x:Name="labelDeselectAllTemplates" Content="Clear selection" MouseUp="Label_ClearSelectionTemplates_MouseUp" />
+
+                    </StackPanel>
+                </StackPanel>
+
+            </GroupBox>
+
+        </StackPanel>
+
+
+        <Button Grid.Row="2" Grid.Column="0" Content="OK" Click="BtnOkClick" Margin="10" Height="30"></Button>
+
+        <Button Grid.Row="2" Grid.Column="1" Content="Cancel" IsCancel="True" Margin="10" Height="30"/>
+
+    </Grid>
+</Window>
