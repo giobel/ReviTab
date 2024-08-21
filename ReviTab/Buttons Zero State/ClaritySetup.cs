@@ -8,7 +8,6 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using winForms = System.Windows.Forms;
 using System.Linq;
-using PurgeUnused;
 
 namespace ReviTab
 {
@@ -193,14 +192,14 @@ namespace ReviTab
                         {
                             ICollection<ElementId> purgeableElements = null;
 
-                            PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements);
+                            //PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements);
                             try
                             {
                                 while (purgeableElements.Count > 0)
                                 {
                                     //TaskDialog.Show("Purge Count", purgeableElements.Count().ToString());
-                                    PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements);
-                                    openDoc.Delete(purgeableElements);
+                                    //PurgeTool.GetPurgeableElements(openDoc, ref purgeableElements);
+                                    //openDoc.Delete(purgeableElements);
                                 }
 
                             }

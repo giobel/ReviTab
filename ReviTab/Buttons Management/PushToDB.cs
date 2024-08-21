@@ -7,7 +7,6 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using winForm = System.Windows.Forms;
-using PurgeUnused;
 using System.IO;
 using System.Linq;
 using System.Text;

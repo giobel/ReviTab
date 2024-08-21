@@ -7,7 +7,6 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using winForm = System.Windows.Forms;
-using PurgeUnused;
 
 
 namespace ReviTab
@@ -67,10 +66,10 @@ namespace ReviTab
 
                         ICollection<ElementId> purgeableElements = null;
 
-                        if (PurgeTool.GetPurgeableElements(open_file, ref purgeableElements) & purgeableElements.Count > 0)
-                        {
-                            open_file.Delete(purgeableElements);
-                        }
+                        //if (PurgeTool.GetPurgeableElements(open_file, ref purgeableElements) & purgeableElements.Count > 0)
+                        //{
+                        //    open_file.Delete(purgeableElements);
+                        //}
 
 
                         t.Commit();

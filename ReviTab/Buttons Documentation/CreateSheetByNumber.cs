@@ -29,9 +29,12 @@ namespace ReviTab
 
             ICollection<Element> fecSheets = new FilteredElementCollector(document).OfCategory(BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements();
 
+            string folder = "1_Sheet Discipline";
+
             foreach (ViewSheet item in fecSheets)
             {
-                string p = item.LookupParameter("Package").AsString();
+                //string p = item.LookupParameter("Package").AsString();
+                string p = item.LookupParameter(folder).AsString();
                 if (null!=p && !packageValues.Contains(p))
                 {
                     packageValues.Add(p);
@@ -80,6 +83,8 @@ namespace ReviTab
 
                         int sheetQuantity = form.Count;
 
+                        string error = "Sheets created";
+
                         for (int i = 0; i< sheetQuantity; i++)
                         {
 
@@ -99,7 +104,7 @@ namespace ReviTab
                                 }
 
 
-                            viewSheet.LookupParameter("Package").Set(form.PackageName);
+                            viewSheet.LookupParameter(folder).Set(form.PackageName);
 
                             if (null == viewSheet)
                             {
@@ -108,10 +113,12 @@ namespace ReviTab
                         }
                         catch(Exception ex)
                         {
-                                TaskDialog.Show("Error", ex.Message);
+                                error = ex.ToString();
                         }
                         }
                         t.Commit();
+
+                        TaskDialog.Show("Error", error);
                     }
                 }
 
