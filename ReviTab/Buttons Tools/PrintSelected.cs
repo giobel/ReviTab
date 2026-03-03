@@ -83,7 +83,7 @@ namespace ReviTab
 
             //Jrn.RibbonEvent "Execute external command:CustomCtrl_%CustomCtrl_%CADtools%Publish%Batch" & vbCr & "Publish:Arup.CADtools.Revit.Commands.RevitPublishCmd"
             //vbCr = "\r"
-            string name = "CustomCtrl_%CustomCtrl_%CADtools%Publish%Batch\rPublish";
+            string name = "CustomCtrl_%CustomCtrl_%CADtools%DesignTools%Batch\rPublish";
 
             RevitCommandId id = RevitCommandId.LookupCommandId(name);
             uidoc.Application.PostCommand(id);
