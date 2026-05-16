@@ -5,11 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AirtableApiClient;
+//using AirtableApiClient;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
-using MySql.Data.MySqlClient;
+//using MySql.Data.MySqlClient;
 
 namespace ReviTab
 {
@@ -773,7 +773,8 @@ namespace ReviTab
             if (StorageType.Double == parameterType)
             {
 #if !REVIT2022
-                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
+                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), UnitTypeId.Millimeters);
+                
 #else
 #endif
 
@@ -912,7 +913,7 @@ namespace ReviTab
                             if (StorageType.Double == parameterType)
                             {
 #if !REVIT2022
-                                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS);
+                                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), UnitTypeId.Millimeters);
 #else
                                 ForgeTypeId a = SpecTypeId.Length;
                                 paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), a);
@@ -2462,74 +2463,75 @@ namespace ReviTab
 
 #region MANAGE MODEL
 
-        public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings, int purgeableElements, int viewsNotOnSheet)
-        {
+        //public static bool InsertData(string tableName, DateTime dt, string user, long rvtFileSize, int elementsCount, int typesCount, int sheetsCount, int viewsCount, int viewportsCount, int countWarnings, int purgeableElements, int viewsNotOnSheet)
+        //{
 
 
-            string server = "127.0.0.1";
-            string database = "new_schema";
-            string uid = "root";
-            string password = "password";
+        //    string server = "127.0.0.1";
+        //    string database = "new_schema";
+        //    string uid = "root";
+        //    string password = "password";
 
 
-            /*
-            string server = "remotemysql.com";
-            string database = "r7BFoOjCty";
-            string uid = "r7BFoOjCty";
-            string password = "1vU3s1bj6T";
-    */
-            string connectionString;
-            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+        //    /*
+        //    string server = "remotemysql.com";
+        //    string database = "r7BFoOjCty";
+        //    string uid = "r7BFoOjCty";
+        //    string password = "1vU3s1bj6T";
+        //    */
+        //    string connectionString;
+        //    connectionString = "SERVER=" + server + ";" + "DATABASE=" +
+        //    database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
 
-            // string table = "filesize";
-            string table = tableName;
+        //    // string table = "filesize";
+        //    string table = tableName;
 
 
-            try
-            {
+        //    try
+        //    {
 
-                MySqlConnection connection = new MySqlConnection(connectionString);
+        //        MySqlConnection connection = new MySqlConnection(connectionString);
 
-                MySqlCommand cmdInsert = new MySqlCommand("", connection);
-                cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount, purgeableElements, viewsNotOnSheet) " +
-                    "VALUES (?date, ?user, ?rvtFileSize, ?elementsCount, ?typesCount, ?sheetsCount, ?viewsCount, " +
-                    "?viewportsCount, ?warningsCount, ?purgeableElements, ?viewsNotOnSheet)";
+        //        MySqlCommand cmdInsert = new MySqlCommand("", connection);
+        //        cmdInsert.CommandText = "INSERT INTO " + table + " (date, user, rvtFileSize, elementsCount, typesCount, sheetsCount, viewsCount, viewportsCount, warningsCount, purgeableElements, viewsNotOnSheet) " +
+        //            "VALUES (?date, ?user, ?rvtFileSize, ?elementsCount, ?typesCount, ?sheetsCount, ?viewsCount, " +
+        //            "?viewportsCount, ?warningsCount, ?purgeableElements, ?viewsNotOnSheet)";
 
-                cmdInsert.Parameters.Add("?date", MySqlDbType.DateTime).Value = dt;
-                cmdInsert.Parameters.Add("?user", MySqlDbType.VarChar).Value = user;
-                cmdInsert.Parameters.Add("?rvtFileSize", MySqlDbType.Int64).Value = rvtFileSize;
-                cmdInsert.Parameters.Add("?elementsCount", MySqlDbType.Int32).Value = elementsCount;
-                cmdInsert.Parameters.Add("?typesCount", MySqlDbType.Int32).Value = typesCount;
+        //        cmdInsert.Parameters.Add("?date", MySqlDbType.DateTime).Value = dt;
+        //        cmdInsert.Parameters.Add("?user", MySqlDbType.VarChar).Value = user;
+        //        cmdInsert.Parameters.Add("?rvtFileSize", MySqlDbType.Int64).Value = rvtFileSize;
+        //        cmdInsert.Parameters.Add("?elementsCount", MySqlDbType.Int32).Value = elementsCount;
+        //        cmdInsert.Parameters.Add("?typesCount", MySqlDbType.Int32).Value = typesCount;
 
-                cmdInsert.Parameters.Add("?sheetsCount", MySqlDbType.Int32).Value = sheetsCount;
-                cmdInsert.Parameters.Add("?viewsCount", MySqlDbType.Int32).Value = viewsCount;
-                cmdInsert.Parameters.Add("?viewportsCount", MySqlDbType.Int32).Value = viewportsCount;
+        //        cmdInsert.Parameters.Add("?sheetsCount", MySqlDbType.Int32).Value = sheetsCount;
+        //        cmdInsert.Parameters.Add("?viewsCount", MySqlDbType.Int32).Value = viewsCount;
+        //        cmdInsert.Parameters.Add("?viewportsCount", MySqlDbType.Int32).Value = viewportsCount;
 
-                cmdInsert.Parameters.Add("?warningsCount", MySqlDbType.Int32).Value = countWarnings;
+        //        cmdInsert.Parameters.Add("?warningsCount", MySqlDbType.Int32).Value = countWarnings;
 
-                cmdInsert.Parameters.Add("?purgeableElements", MySqlDbType.Int32).Value = purgeableElements;
+        //        cmdInsert.Parameters.Add("?purgeableElements", MySqlDbType.Int32).Value = purgeableElements;
 
-                cmdInsert.Parameters.Add("?viewsNotOnSheet", MySqlDbType.Int32).Value = viewsNotOnSheet;
-
-
-                connection.Open();
-
-                cmdInsert.ExecuteNonQuery();
-
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                TaskDialog.Show("Error", ex.Message);
-                return false;
-            }
+        //        cmdInsert.Parameters.Add("?viewsNotOnSheet", MySqlDbType.Int32).Value = viewsNotOnSheet;
 
 
-        }//close method
+        //        connection.Open();
 
+        //        cmdInsert.ExecuteNonQuery();
+
+        //        connection.Close();
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        TaskDialog.Show("Error", ex.Message);
+        //        return false;
+        //    }
+
+
+        //}//close method
+
+        
         public struct CardContent
         {
             public int Value;
@@ -2777,7 +2779,7 @@ namespace ReviTab
             return results;
 
         }
-
+        /*
         public static async Task CreateRecord(AirtableBase airtableBase, string tableName, Fields fields)
         {
             //var attachmentList = new List<AirtableAttachment>();
@@ -2873,7 +2875,7 @@ namespace ReviTab
 
             return listA;
         }
-
+        */
 #endregion
 
 #region PARAMETERS
@@ -2887,7 +2889,7 @@ namespace ReviTab
             if (StorageType.Double == parameterType)
             {
 #if !REVIT2022
-                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS).ToString();
+                paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), UnitTypeId.Millimeters).ToString();
 #else
                 paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), UnitTypeId.Millimeters).ToString();
 #endif
@@ -3031,7 +3033,7 @@ namespace ReviTab
 
 
 
-#if REVIT2019 || SAM || REVIT2020 || REVIT2021 || REVIT2022
+#if REVIT2019 || SAM || REVIT2020 || REVIT2021 || REVIT2022 || R2027
 
             overrideSettings.SetSurfaceForegroundPatternId(solidPatternId);
 

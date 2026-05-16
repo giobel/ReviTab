@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace ReviTab
 {
@@ -9,7 +10,8 @@ namespace ReviTab
       InitializeComponent();
     }
 
-    public string LabelText
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string LabelText
     {
       get
       {

@@ -24,11 +24,11 @@ namespace ReviTab
 
             Options opt = new Options();
 
-            int id_max = instances
+            long id_max = instances
                 .Where(e => null != e.Category)
                 //.Where( e => (null != e.LevelId && ElementId.InvalidElementId != e.LevelId) )
                 //.Where( e => null != e.get_Geometry( opt ) )
-                .Max<Element, int>(e => e.Id.IntegerValue);
+                .Max<Element, long>(e => e.Id.Value);
 
             ElementId last_eid = new ElementId(id_max);
 

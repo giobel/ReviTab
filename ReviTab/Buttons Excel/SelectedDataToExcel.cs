@@ -87,7 +87,7 @@ namespace ReviTab
                                 
                                 if (StorageType.Double == parameterType)
                                 {
-#if !REVIT2022
+#if REVIT2022
                                     paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS).ToString();
 #else
 
@@ -137,8 +137,12 @@ namespace ReviTab
 
                 File.AppendAllText(outputFile, sb.ToString());
 
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                process.StartInfo.FileName = outputFile;
+                var process = new System.Diagnostics.Process();
+                process.StartInfo = new System.Diagnostics.ProcessStartInfo()
+                {
+                    FileName = outputFile,
+                    UseShellExecute = true // important for CSV
+                };
                 process.Start();
 
                 return Result.Succeeded;

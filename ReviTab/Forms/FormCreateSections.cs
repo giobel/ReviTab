@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace ReviTab
 {
@@ -10,16 +11,26 @@ namespace ReviTab
 	/// </summary>
 	public partial class FormCreateSections : Form
 	{
-		public string sectionOrientation{get;set;}
-		public double sectionPositionOffset {get;set;}
-		public double farClipOffset {get;set;}
-		public double bottomLevel {get;set;}
-		public double topLevel {get;set;}
-		public bool flipDirection {get;set;}
-		public string columnParameter { get; set; }
-		public string prefixText { get; set; }
-		public Autodesk.Revit.DB.Element chosenSection { get; set; }
-		public ICollection<Autodesk.Revit.DB.ViewFamilyType> SectionTypes { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string sectionOrientation{get;set;}
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public double sectionPositionOffset {get;set;}
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public double farClipOffset {get;set;}
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public double bottomLevel {get;set;}
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public double topLevel {get;set;}
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool flipDirection {get;set;}
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string columnParameter { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string prefixText { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Autodesk.Revit.DB.Element chosenSection { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ICollection<Autodesk.Revit.DB.ViewFamilyType> SectionTypes { get; set; }
 		public FormCreateSections()
 		{
 			//

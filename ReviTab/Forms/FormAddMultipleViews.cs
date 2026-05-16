@@ -15,10 +15,14 @@ namespace ReviTab
 {
     public partial class FormAddMultipleViews : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string SheetNumber { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int Spacing { get; set; }
         UIDocument thisUIdoc { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Autodesk.Revit.DB.XYZ centerpoint { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool isCenterpoint { get; set; }
 
         public FormAddMultipleViews(UIDocument uidoc)

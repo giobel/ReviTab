@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace ReviTab
 {
@@ -8,6 +9,7 @@ namespace ReviTab
     {
 
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string TextString { get; set; }
 
 

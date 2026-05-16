@@ -50,7 +50,7 @@ namespace ReviTab
 
             List<Rhino.Geometry.Leader> rh_textLeader = new List<Rhino.Geometry.Leader>();
 
-            List<Rhino.Geometry.LinearDimension> rh_linearDimension = new List<LinearDimension>();
+            List<Rhino.Geometry.LinearDimension> rh_linearDimension = new List<Rhino.Geometry.LinearDimension>();
 
             List<List<Rhino.Geometry.Point3d>> rh_polylineCurvePoints = new List<List<Point3d>>();
 
@@ -109,7 +109,7 @@ namespace ReviTab
 
                 if (geo is Rhino.Geometry.LinearDimension)
                 {
-                    LinearDimension ld = geo as Rhino.Geometry.LinearDimension;
+                    Rhino.Geometry.LinearDimension ld = geo as Rhino.Geometry.LinearDimension;
                     rh_linearDimension.Add(ld);
                 }
 

@@ -90,7 +90,7 @@ namespace ReviTab
 
                                     if (StorageType.Double == parameterType)
                                     {
-#if !REVIT2022
+#if REVIT2022
                                         paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), DisplayUnitType.DUT_MILLIMETERS).ToString();
 #else
                                         paramValue = UnitUtils.ConvertFromInternalUnits(p.AsDouble(), UnitTypeId.Millimeters).ToString();
