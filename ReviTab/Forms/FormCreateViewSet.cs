@@ -12,7 +12,9 @@ namespace ReviTab
 {
     public partial class FormCreateViewSet : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string tBoxViewsetName { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string tBoxSheetNumber { get; set; }
 
         public FormCreateViewSet()

@@ -1,372 +1,93 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props" Condition="Exists('..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-      None
-    </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8D7EC115-7A07-46C4-BD90-805B6F7C02C2}</ProjectGuid>
+	  <PlatformTarget>x64</PlatformTarget>
+	  <ProjectGuid>{8D7EC115-7A07-46C4-BD90-805B6F7C02C2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ReviTab</RootNamespace>
     <AssemblyName>ReviTab</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+	  <TargetFramework>net47</TargetFramework>
     <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <StartAction>Program</StartAction>
-    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <StartAction>Program</StartAction>
-    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2017|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug2017\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;REVIT2017</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2017|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug2017\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2019|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug2019\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;REVIT2019</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2019|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug2019\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2018|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug2018\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;REVIT2018</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2018|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug2018\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SAM|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\SAM\</OutputPath>
-    <DefineConstants>SAM</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SAM|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\SAM\</OutputPath>
-    <DefineConstants>SAM</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2020|AnyCPU'">
-    <OutputPath>bin\Debug2020\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;REVIT2020</DefineConstants>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2020|x64'">
-    <DefineConstants>TRACE;DEBUG;REVIT2020</DefineConstants>
-    <OutputPath>bin\x64\Debug2020\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2021|AnyCPU'">
-    <OutputPath>bin\Debug2021\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;REVIT2021</DefineConstants>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2022|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug2022\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;REVIT2022</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2022|x64'">
-    <OutputPath>bin\x64\Debug2022\</OutputPath>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="AirtableApiClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Airtable.1.1.0\lib\netstandard2.0\AirtableApiClient.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>..\packages/Microsoft.Bcl.AsyncInterfaces.8.0.0/lib/net462/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="MySql.Data, Version=8.0.15.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\NewtonSoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <!-- MULTIVERSION REVIT API REFERENCES START -->
-    <!-- DEBUG -->
-    <!-- 2017 -->
-    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2017'">
-      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2017'">
-      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2018 -->
-    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2018'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2018\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2018'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2018\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2019 -->
-    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2019'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2019'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2020 -->
-    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2020'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2020'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2020'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\AdWindows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>..\packages/System.Memory.4.5.5/lib/net461/System.Memory.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages/System.Runtime.CompilerServices.Unsafe.6.0.0/lib/net461/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>..\packages/System.Text.Encodings.Web.8.0.0/lib/net462/System.Text.Encodings.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>..\packages/System.Text.Json.8.0.4/lib/net462/System.Text.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="UIFramework">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\UIFramework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2020'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\Xceed.Wpf.AvalonDock.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2021 -->
-    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2021'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2021'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2021'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2021\AdWindows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2021'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2021\Xceed.Wpf.AvalonDock.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!-- 2022 -->
-    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Debug2022'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Debug2022'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Debug2022'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2022\AdWindows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Debug2022'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2022\Xceed.Wpf.AvalonDock.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!--RELEASE-->
-    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'Release'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'Release'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdWindows" Condition="'$(Configuration)' == 'Release'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\AdWindows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'Release'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\Xceed.Wpf.AvalonDock.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <!--SAM-->
-    <Reference Include="RevitAPI" Condition="'$(Configuration)' == 'SAM'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI" Condition="'$(Configuration)' == 'SAM'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Rhino3dm, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rhino3dm.0.3.0\lib\net45\Rhino3dm.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>False</Private>
-    </Reference>
+	  <Deterministic>true</Deterministic>
+	  <TargetFrameworkProfile />
+	  <LangVersion>latest</LangVersion>
+	  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	  <UseWindowsForms>true</UseWindowsForms>
+	  <NuGetPackageImportStamp>
+	  </NuGetPackageImportStamp>
+	  <Configurations>Debug;Release;R2026;R2027</Configurations>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'R2026|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\R2026\</OutputPath>
+		<DefineConstants>DEBUG;R2026</DefineConstants>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<AssemblyName>$(AssemblyName)</AssemblyName>
+		<RevitVersion>2026</RevitVersion>
+		<WarningLevel>4</WarningLevel>
+		<LangVersion>latest</LangVersion>
+		<StartAction>Program</StartAction>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2026\Revit.exe</StartProgram>
+		<!--<EnableDefaultEmbeddedResourseItems>false</EnableDefaultEmbeddedResourseItems>-->
+		<!--<EnableDefaultCompileItems>false</EnableDefaultCompileItems>-->
+		<UseWPF>true</UseWPF>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+
+
+	<PropertyGroup>
+		<NoWarn>$(NoWarn);WFO1000</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Buttons Framings and Walls\VoidByLine.cs" />
+	  <Compile Remove="Buttons Framings and Walls\VoidByRefPlane.cs" />
+	  <Compile Remove="Buttons Management\PushToAirtable.cs" />
+	  <Compile Remove="Buttons Management\PushToDB.cs" />
+	  <Compile Remove="Buttons Tools\ExportJson.cs" />
+	  <Compile Remove="Buttons Zero State\AddPDFcustomProperties.cs" />
+	  <Compile Remove="Buttons Zero State\ClaritySetup.cs" />
+	  <Compile Remove="Commands\AddMetadataHelpers.cs" />
+	  <Compile Remove="Commands\VoidByLineHelpers.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Rhino3dm" Version="8.17.0" />
+		<PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
+	</ItemGroup>
+	
+	<!--MULTIVERSION REVIT API REFERENCES-->
+	<Choose>
+		<When Condition=" '$(Configuration)'=='R2026' ">
+			<ItemGroup>
+				<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2026.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+				<PackageReference Include="Xceed.Wpf.AvalonDock" Version="5.2.26322.8434" />
+			</ItemGroup>
+		</When>
+		<When Condition=" '$(Configuration)'=='R2027' ">
+			<ItemGroup>
+				<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2027.0.2" IncludeAssets="build; compile" PrivateAssets="All" />
+				<PackageReference Include="Xceed.Wpf.AvalonDock" Version="5.2.26322.8434" />
+			</ItemGroup>
+		</When>
+	</Choose>
+	
     <!-- MULTIVERSION REVIT API REFERENCES END -->
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.ComponentModel" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Design" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.XML" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
+   
+  <!--<ItemGroup>
     <Compile Include="ApplicationRibbon.cs" />
     <Compile Include="Buttons Documentation\MoveViewportToSheet.cs" />
     <Compile Include="Buttons Documentation\ExtractDetail.cs" />
@@ -599,97 +320,7 @@
     </Compile>
     <Compile Include="Util.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\multipleSections.png" />
-    <Resource Include="Resources\selectText.png" />
-    <Resource Include="Resources\backgroundPrint.png" />
-    <Resource Include="Resources\swapGrids.png" />
-    <Resource Include="Resources\createViewSet.png" />
-    <Resource Include="Resources\dimensionOverride.png" />
-    <Resource Include="Resources\addBeamOpening.png" />
-    <Resource Include="Resources\tag.png" />
-    <Resource Include="Resources\movement-arrows.png" />
-    <Resource Include="Resources\wiping.png" />
-    <Resource Include="Resources\line.png" />
-    <Resource Include="Resources\arrowUp.png" />
-    <Resource Include="Resources\joinEnd.png" />
-    <Resource Include="Resources\columnSplit.png" />
-    <Resource Include="Resources\legend.png" />
-    <Resource Include="Resources\claSetup.png" />
-    <Resource Include="Resources\info.png" />
-    <Resource Include="Resources\projectLine.png" />
-    <Resource Include="Resources\splitWalls.png" />
-    <Resource Include="Resources\axis.png" />
-    <Resource Include="Resources\ghowlicon.png" />
-    <Resource Include="Resources\copyLinked.png" />
-    <Resource Include="Resources\changebeamlocation.png" />
-    <Resource Include="Resources\info16x16.png" />
-    <Resource Include="Resources\ghowlicon16x16.png" />
-    <Resource Include="Resources\multipleJoin.png" />
-    <Resource Include="Resources\switchJoin.png" />
-    <Resource Include="Resources\unjoinAll.png" />
-    <Resource Include="Resources\unjoinMultiple.png" />
-    <Resource Include="Resources\selectFilter.png" />
-    <Resource Include="Resources\addView.png" />
-    <Resource Include="Resources\addMultipleViews.png" />
-    <Resource Include="Resources\ruler.png" />
-    <Resource Include="Resources\revCloud.png" />
-    <Resource Include="Resources\revCloudsmall.png" />
-    <Resource Include="Resources\rulerSmall.png" />
-    <Resource Include="Resources\lineSmall.png" />
-    <Resource Include="Resources\tagSmall.png" />
-    <Resource Include="Resources\wipingSmall.png" />
-    <Resource Include="Resources\addBeamOpeningSmall.png" />
-    <Resource Include="Resources\arrowUpSmall.png" />
-    <Resource Include="Resources\deleteRev.png" />
-    <Resource Include="Resources\addRev.png" />
-    <Resource Include="Resources\lock.png" />
-    <Resource Include="Resources\excel.png" />
-    <Resource Include="Resources\manage.png" />
-    <Resource Include="Resources\airtable.png" />
-    <Resource Include="Resources\elementType.png" />
-    <Resource Include="Resources\duplicateSheets.png" />
-    <Resource Include="Resources\alignColumns.png" />
-    <Resource Include="Resources\Icon1.ico" />
-    <Resource Include="Resources\panButton.png" />
-    <Resource Include="Resources\panButton_small.png" />
-    <Resource Include="Resources\rainbow.png" />
-    <Resource Include="Resources\metadata.png" />
-    <Resource Include="Resources\cloudSelection.png" />
-    <Resource Include="Resources\cloudSelectionCopy.png" />
-    <Resource Include="Resources\bground.png" />
-    <Resource Include="Resources\panic-button.png" />
-    <None Include="Resources\isoCategory.png" />
-    <None Include="Resources\swapLevels.png" />
-    <None Include="Resources\tblock.png" />
-    <None Include="Resources\show.png" />
-    <None Include="Resources\showSelected.png" />
-    <None Include="Resources\showLatest.png" />
-    <None Include="Resources\addSheetByNumber.png" />
-    <None Include="Resources\rhinoImport.png" />
-    <None Include="Resources\duplicateView.png" />
-    <None Include="Resources\extractDetail.png" />
-    <None Include="Resources\moveViewports.png" />
-    <None Include="Resources\alignViewports.png" />
-    <None Include="Resources\lineSection.png" />
-    <None Include="Resources\flipSection.png" />
-    <None Include="Resources\copyGridExtents.png" />
-    <None Include="Resources\columnSection.png" />
-    <None Include="Resources\copyViewFilter.png" />
-    <None Include="Resources\selectLines.png" />
-    <None Include="Resources\selectTags.png" />
-    <None Include="Resources\selectGrid.png" />
-    <None Include="Resources\selectDimensions.png" />
-    <None Include="Resources\selectColumn.png" />
-    <None Include="Resources\selectBeams.png" />
-    <None Include="Resources\overrideColors.png" />
-    <None Include="Resources\flatten.png" />
-    <None Include="Resources\topoIntersect.png" />
-    <None Include="Resources\projectLines.png" />
-    <None Include="Resources\drawAxis.png" />
-    <None Include="Resources\directShape.png" />
-    <Content Include="ReviTab.addin" />
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="Forms\CmdWindowHandleForm.resx">
       <DependentUpon>CmdWindowHandleForm.cs</DependentUpon>
@@ -767,10 +398,98 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-  </PropertyGroup>
+  </ItemGroup>-->
+	<ItemGroup>
+		<Resource Include="Resources\multipleSections.png" />
+		<Resource Include="Resources\selectText.png" />
+		<Resource Include="Resources\backgroundPrint.png" />
+		<Resource Include="Resources\swapGrids.png" />
+		<Resource Include="Resources\createViewSet.png" />
+		<Resource Include="Resources\dimensionOverride.png" />
+		<Resource Include="Resources\addBeamOpening.png" />
+		<Resource Include="Resources\tag.png" />
+		<Resource Include="Resources\movement-arrows.png" />
+		<Resource Include="Resources\wiping.png" />
+		<Resource Include="Resources\line.png" />
+		<Resource Include="Resources\arrowUp.png" />
+		<Resource Include="Resources\joinEnd.png" />
+		<Resource Include="Resources\columnSplit.png" />
+		<Resource Include="Resources\legend.png" />
+		<Resource Include="Resources\claSetup.png" />
+		<Resource Include="Resources\info.png" />
+		<Resource Include="Resources\projectLine.png" />
+		<Resource Include="Resources\splitWalls.png" />
+		<Resource Include="Resources\axis.png" />
+		<Resource Include="Resources\ghowlicon.png" />
+		<Resource Include="Resources\copyLinked.png" />
+		<Resource Include="Resources\changebeamlocation.png" />
+		<Resource Include="Resources\info16x16.png" />
+		<Resource Include="Resources\ghowlicon16x16.png" />
+		<Resource Include="Resources\multipleJoin.png" />
+		<Resource Include="Resources\switchJoin.png" />
+		<Resource Include="Resources\unjoinAll.png" />
+		<Resource Include="Resources\unjoinMultiple.png" />
+		<Resource Include="Resources\selectFilter.png" />
+		<Resource Include="Resources\addView.png" />
+		<Resource Include="Resources\addMultipleViews.png" />
+		<Resource Include="Resources\ruler.png" />
+		<Resource Include="Resources\revCloud.png" />
+		<Resource Include="Resources\revCloudsmall.png" />
+		<Resource Include="Resources\rulerSmall.png" />
+		<Resource Include="Resources\lineSmall.png" />
+		<Resource Include="Resources\tagSmall.png" />
+		<Resource Include="Resources\wipingSmall.png" />
+		<Resource Include="Resources\addBeamOpeningSmall.png" />
+		<Resource Include="Resources\arrowUpSmall.png" />
+		<Resource Include="Resources\deleteRev.png" />
+		<Resource Include="Resources\addRev.png" />
+		<Resource Include="Resources\lock.png" />
+		<Resource Include="Resources\excel.png" />
+		<Resource Include="Resources\manage.png" />
+		<Resource Include="Resources\airtable.png" />
+		<Resource Include="Resources\elementType.png" />
+		<Resource Include="Resources\duplicateSheets.png" />
+		<Resource Include="Resources\alignColumns.png" />
+		<Resource Include="Resources\Icon1.ico" />
+		<Resource Include="Resources\panButton.png" />
+		<Resource Include="Resources\panButton_small.png" />
+		<Resource Include="Resources\rainbow.png" />
+		<Resource Include="Resources\metadata.png" />
+		<Resource Include="Resources\cloudSelection.png" />
+		<Resource Include="Resources\cloudSelectionCopy.png" />
+		<Resource Include="Resources\bground.png" />
+		<Resource Include="Resources\panic-button.png" />
+		<None Include="Resources\isoCategory.png" />
+		<None Include="Resources\swapLevels.png" />
+		<None Include="Resources\tblock.png" />
+		<None Include="Resources\show.png" />
+		<None Include="Resources\showSelected.png" />
+		<None Include="Resources\showLatest.png" />
+		<None Include="Resources\addSheetByNumber.png" />
+		<None Include="Resources\rhinoImport.png" />
+		<None Include="Resources\duplicateView.png" />
+		<None Include="Resources\extractDetail.png" />
+		<None Include="Resources\moveViewports.png" />
+		<None Include="Resources\alignViewports.png" />
+		<None Include="Resources\lineSection.png" />
+		<None Include="Resources\flipSection.png" />
+		<None Include="Resources\copyGridExtents.png" />
+		<None Include="Resources\columnSection.png" />
+		<None Include="Resources\copyViewFilter.png" />
+		<None Include="Resources\selectLines.png" />
+		<None Include="Resources\selectTags.png" />
+		<None Include="Resources\selectGrid.png" />
+		<None Include="Resources\selectDimensions.png" />
+		<None Include="Resources\selectColumn.png" />
+		<None Include="Resources\selectBeams.png" />
+		<None Include="Resources\overrideColors.png" />
+		<None Include="Resources\flatten.png" />
+		<None Include="Resources\topoIntersect.png" />
+		<None Include="Resources\projectLines.png" />
+		<None Include="Resources\drawAxis.png" />
+		<None Include="Resources\directShape.png" />
+		<!--<Content Include="ReviTab.addin" />-->
+	</ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -779,21 +498,27 @@
   </Target>
   -->
   <Target Name="AfterClean">
-    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2018\ReviTab.addin" />
-    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2018\ReviTab.dll" />
+    <!--<Delete Files="$(AppData)\Autodesk\REVIT\Addins\2027\ReviTab.addin" />
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2027\ReviTab.dll" />-->
   </Target>
-  <Import Project="..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets" Condition="Exists('..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dmIO.Desktop.6.25.20114.5271\build\net45\Rhino3dmIO.Desktop.targets'))" />
-    <Error Condition="!Exists('..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dm.0.3.0\build\net45\Rhino3dm.props'))" />
-  </Target>
+	<Target Name="AfterBuild">
+		<Message Text="TargetPath = $(TargetPath)" Importance="high" />
+		<Message Text="TargetDir = $(TargetDir)" Importance="high" />
+
+	</Target>
   <PropertyGroup>
-    <PostBuildEvent>copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2020\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2020\ReviTab"
-copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2021\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2021\ReviTab"
-copy "C:\Users\giovanni.brogiolo\source\repos\ReviTab\ReviTab\bin\Debug2022\ReviTab.dll" "$(AppData)\Autodesk\Revit\Addins\2022\ReviTab"
-SET ERRORLEVEL = 0</PostBuildEvent>
+    <!--<PostBuildEvent>
+		<Message Text="TargetPath = $(TargetPath)" Importance="high" />
+		<Message Text="TargetDir = $(TargetDir)" Importance="high" />
+		set REVIT_VERSION=$(Configuration:~-4
+		xcopy "C:\Users\GioJu\AppData\Roaming\Autodesk\Revit\Addins\2027\ReviTab\" C:\Users\GioJu\source\repos\ReviTab\ReviTab\bin\R2027\net10.0-windows\ /Y /R
+		--><!--xcopy "$(TargetPath)\ReviTab" "C:\Users\GioJu\AppData\Roaming\Autodesk\Revit\Addins\2027\ReviTab\"--><!--
+		--><!--xcopy "$(ProjectDir)ReviTab.addin" "%APPDATA%\Autodesk\Revit\Addins\20027\" /Y /R--><!--
+		SET ERRORLEVEL = 1
+	</PostBuildEvent>-->
+
+
+	  
   </PropertyGroup>
+
 </Project>

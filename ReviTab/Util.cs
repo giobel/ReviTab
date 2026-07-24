@@ -1256,29 +1256,31 @@ namespace ReviTab
         /// Convert a UnitSymbolType enumeration value
         /// to a brief human readable abbreviation string.
         /// </summary>
-        public static string UnitSymbolTypeString( UnitSymbolType u )
-    {
-      string s = u.ToString();
+    //    public static string UnitSymbolTypeString( UnitSymbolType u )
+    //{
+    //  string s = u.ToString();
 
-      Debug.Assert( s.StartsWith( "UST_" ),
-        "expected UnitSymbolType enumeration value "
-        + "to begin with 'UST_'" );
+    //  Debug.Assert( s.StartsWith( "UST_" ),
+    //    "expected UnitSymbolType enumeration value "
+    //    + "to begin with 'UST_'" );
 
-      s = s.Substring( 4 )
-        .Replace( "_SUP_", "^" )
-        .ToLower();
+    //  s = s.Substring( 4 )
+    //    .Replace( "_SUP_", "^" )
+    //    .ToLower();
 
-      return s;
-    }
+    //  return s;
+    //}
+
+
 
 #endif
 
 
-#endregion // Formatting
+        #endregion // Formatting
 
 
 
-#region Display a message
+        #region Display a message
         const string _caption = "The Building Coder";
 
     public static void InfoMsg( string msg )
@@ -1348,7 +1350,7 @@ namespace ReviTab
 
       return string.Format( "{0} {1}{2}{3}<{4} {5}>",
         typeName, categoryName, familyName,
-        symbolName, e.Id.IntegerValue, e.Name );
+        symbolName, e.Id.Value, e.Name );
     }
 
     /// <summary>
@@ -2053,7 +2055,7 @@ namespace ReviTab
       // WhereElementIsViewIndependent ?
       if( e.ViewSpecific ) return false;
       // exclude specific unwanted categories
-      if( ( (BuiltInCategory) e.Category.Id.IntegerValue )
+      if( ( (BuiltInCategory) e.Category.Id.Value )
         == BuiltInCategory.OST_HVAC_Zones )
       {
         return false;

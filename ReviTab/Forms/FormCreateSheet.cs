@@ -12,12 +12,17 @@ namespace ReviTab.Forms
 {
     public partial class FormCreateSheet : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Autodesk.Revit.DB.Element ChosenTitleblock { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string SheetNumber { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string PackageName { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int Count { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<string> Packages { get; set; }
-
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ICollection<Autodesk.Revit.DB.Element> TitleblocksNames { get; set; }
 
         public FormCreateSheet()

@@ -11,6 +11,7 @@ using System.Drawing;
 using winForms = System.Windows.Forms;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using System.ComponentModel;
 
 namespace ReviTab
 {
@@ -19,8 +20,9 @@ namespace ReviTab
 	/// </summary>
 	public partial class FormAddOpening : winForms.Form
     {
-		
-		public string distances {get; set;}
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string distances {get; set;}
 
 		public List<string> familyName = new List<string>();
 		

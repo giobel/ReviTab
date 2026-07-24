@@ -288,6 +288,8 @@ namespace ReviTab
         {
             IntersectionResultArray results;
 
+
+
             SetComparisonResult result
               = line1.Intersect(line2, out results);
 

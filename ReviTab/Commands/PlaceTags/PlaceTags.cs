@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using TaskDialog = Autodesk.Revit.UI.TaskDialog;
 
 namespace ReviTab
 {
