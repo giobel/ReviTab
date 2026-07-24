@@ -15,27 +15,31 @@
 	  <Deterministic>true</Deterministic>
 	  <TargetFrameworkProfile />
 	  <LangVersion>latest</LangVersion>
+	  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	  <UseWindowsForms>true</UseWindowsForms>
 	  <NuGetPackageImportStamp>
 	  </NuGetPackageImportStamp>
-	  <Configurations>Debug;Release;R2027</Configurations>
-  </PropertyGroup>
+	  <Configurations>Debug;Release;R2026;R2027</Configurations>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	</PropertyGroup>
 
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'R2027|AnyCPU' ">
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'R2026|AnyCPU' ">
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 		<Optimize>false</Optimize>
-		<OutputPath>bin\R2027\</OutputPath>
-		<DefineConstants>DEBUG;R2027</DefineConstants>
+		<OutputPath>bin\R2026\</OutputPath>
+		<DefineConstants>DEBUG;R2026</DefineConstants>
 		<TargetFramework>net10.0-windows</TargetFramework>
 		<AssemblyName>$(AssemblyName)</AssemblyName>
-		<RevitVersion>2027</RevitVersion>
+		<RevitVersion>2026</RevitVersion>
 		<WarningLevel>4</WarningLevel>
 		<LangVersion>latest</LangVersion>
 		<StartAction>Program</StartAction>
-		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2027\Revit.exe</StartProgram>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2026\Revit.exe</StartProgram>
 		<!--<EnableDefaultEmbeddedResourseItems>false</EnableDefaultEmbeddedResourseItems>-->
 		<!--<EnableDefaultCompileItems>false</EnableDefaultCompileItems>-->
 		<UseWPF>true</UseWPF>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -60,21 +64,23 @@
 
 	<ItemGroup>
 		<PackageReference Include="Rhino3dm" Version="8.17.0" />
+		<PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
 	</ItemGroup>
 	
 	<!--MULTIVERSION REVIT API REFERENCES-->
 	<Choose>
+		<When Condition=" '$(Configuration)'=='R2026' ">
+			<ItemGroup>
+				<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2026.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+				<PackageReference Include="Xceed.Wpf.AvalonDock" Version="5.2.26322.8434" />
+			</ItemGroup>
+		</When>
 		<When Condition=" '$(Configuration)'=='R2027' ">
 			<ItemGroup>
 				<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
-				
 				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2027.0.2" IncludeAssets="build; compile" PrivateAssets="All" />
-				
-				<Reference Include="Xceed.Wpf.AvalonDock" Condition="'$(Configuration)' == 'R2027'">
-					<HintPath>C:\Program Files\Autodesk\Revit 2027\Xceed.Wpf.AvalonDock.dll</HintPath>
-					<Private>False</Private>
-				</Reference>
-				
+				<PackageReference Include="Xceed.Wpf.AvalonDock" Version="5.2.26322.8434" />
 			</ItemGroup>
 		</When>
 	</Choose>
@@ -498,12 +504,6 @@
 	<Target Name="AfterBuild">
 		<Message Text="TargetPath = $(TargetPath)" Importance="high" />
 		<Message Text="TargetDir = $(TargetDir)" Importance="high" />
-
-	</Target>
-	<Target Name="ShowPaths" AfterTargets="Build">
-		<Message Text="TargetPath = $(TargetPath)" Importance="high" />
-		<Message Text="TargetDir = $(TargetDir)" Importance="high" />
-		<Exec Command='xcopy "$(TargetPath)" "C:\Users\GioJu\AppData\Roaming\Autodesk\Revit\Addins\2027\ReviTab\" /Y /E /R /I' />
 
 	</Target>
   <PropertyGroup>
